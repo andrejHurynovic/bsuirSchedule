@@ -74,12 +74,11 @@ struct LessonView: View {
                 } else {
                     HStack {
                         Image(systemName: "person.2.circle")
-//                        if let groups = lesson.groups?.allObjects as? [Lesson] {
-//                            if let sus = groups.compactMap($0.id) {
-//
-//                            }
-//
-//                        }
+                        if let groups = self.lesson.groups?.allObjects as! [Group] {
+                            if let groupsIDs = groups.map({$0.id}) as? [String] {
+                                Text(groupsIDs.joined(separator: ", "))
+                            }
+                        }
                     }
                 }
                 Spacer()
