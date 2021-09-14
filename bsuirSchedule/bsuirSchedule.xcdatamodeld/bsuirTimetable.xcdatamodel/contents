@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19197" systemVersion="21A5506j" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Employee" representedClassName="Employee" syncable="YES">
+        <attribute name="degree" optional="YES" attributeType="String"/>
+        <attribute name="departments" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[String]"/>
+        <attribute name="favorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="firstName" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" usesScalarValueType="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String"/>
+        <attribute name="middleName" optional="YES" attributeType="String"/>
+        <attribute name="photo" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="UIImage"/>
+        <attribute name="photoLink" optional="YES" attributeType="String"/>
+        <attribute name="rank" optional="YES" attributeType="String"/>
+        <attribute name="urlID" optional="YES" attributeType="String"/>
+        <relationship name="lessons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lesson" inverseName="employee" inverseEntity="Lesson"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="Group" representedClassName="Group" syncable="YES">
+        <attribute name="course" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="educationEnd" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="educationStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="examsEnd" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="examsStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="facultyID" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="String"/>
+        <relationship name="lessons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lesson" inverseName="groups" inverseEntity="Lesson"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="Lesson" representedClassName="Lesson" syncable="YES">
+        <attribute name="auditory" optional="YES" attributeType="String"/>
+        <attribute name="employeeID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="lessonTypeValue" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="subgroup" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="subject" attributeType="String"/>
+        <attribute name="timeEnd" attributeType="String"/>
+        <attribute name="timeStart" attributeType="String"/>
+        <attribute name="weekDay" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="weekNumber" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[Int]"/>
+        <relationship name="employee" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Employee" inverseName="lessons" inverseEntity="Employee"/>
+        <relationship name="groups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="lessons" inverseEntity="Group"/>
+    </entity>
+    <elements>
+        <element name="Employee" positionX="-113.8995361328125" positionY="-16.78672790527344" width="128" height="209"/>
+        <element name="Group" positionX="-275.1432495117188" positionY="-20.14794921875" width="128" height="149"/>
+        <element name="Lesson" positionX="-261" positionY="45" width="128" height="194"/>
+    </elements>
+</model>
