@@ -18,3 +18,4 @@ struct bsuirScheduleApp: App {
         }
     }
 }
+
