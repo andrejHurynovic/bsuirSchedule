@@ -26,4 +26,14 @@ public class Group: NSManagedObject {
         
         //addToLessons(NSSet(array: groupModel.lessons))
     }
+    
+    func update(_ updatedGroup: GroupModel) {
+        self.removeFromLessons(self.lessons!)
+        self.addToLessons(NSSet(array: updatedGroup.lessons))
+        
+        self.educationStart = updatedGroup.educationStart
+        self.educationEnd = updatedGroup.educationEnd
+        self.examsStart = updatedGroup.examsStart
+        self.examsEnd = updatedGroup.examsEnd
+    }
 }

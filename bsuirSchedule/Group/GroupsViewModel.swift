@@ -25,25 +25,6 @@ class GroupsViewModel: ObservableObject {
         }
     }
     
-    func fetchGroup(_ groupID: String) {
-        URLSession(configuration: .default).dataTask(with: URL(string: "https://journal.bsuir.by/api/v1/studentGroup/schedule?studentGroup=" + groupID)!) { data, response, error in
-            if let data = data {
-                if !data.isEmpty {
-                    let group = self.groups.first(where: {$0.id == groupID})!
-                    let decoder = JSONDecoder()
-                    if let groupUpdate = try? decoder.decode(GroupModel.self, from: data) {
-                        groupUpdate.lessons.forEach { lesson in
-                            lesson.employee = EmployeeStorage.shared.employees.value.first(where: {$0.id == lesson.employeeID})
-                        }
-                        group.removeFromLessons(group.lessons!)
-                        group.addToLessons(NSSet(array: groupUpdate.lessons))
-                        GroupStorage.shared.save()
-                    }
-                }
-            }
-        }.resume()
-    }
-    
     func fetchGroups() {
         GroupStorage.shared.fetch()
     }

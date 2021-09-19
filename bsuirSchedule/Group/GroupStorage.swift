@@ -63,6 +63,23 @@ class GroupStorage: NSObject, ObservableObject {
             }
         }.resume()
     }
+    
+    func update(_ group: Group) {
+        URLSession(configuration: .default).dataTask(with: URL(string: "https://journal.bsuir.by/api/v1/studentGroup/schedule?studentGroup=" + group.id!)!) { data, response, error in
+            if let data = data {
+                if !data.isEmpty {
+                    let decoder = JSONDecoder()
+                    if let updatedGroup = try? decoder.decode(GroupModel.self, from: data) {
+                        updatedGroup.lessons.forEach { lesson in
+                            lesson.employee = EmployeeStorage.shared.employees.value.first(where: {$0.id == lesson.employeeID})
+                        }
+                        group.update(updatedGroup)
+                        GroupStorage.shared.save()
+                    }
+                }
+            }
+        }.resume()
+    }
 }
 
 extension GroupStorage: NSFetchedResultsControllerDelegate {
