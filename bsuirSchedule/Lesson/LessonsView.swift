@@ -8,48 +8,31 @@
 import SwiftUI
 
 struct LessonsView: View {
-    var group: Group?
-    var employee: Employee?
-    
-    @StateObject private var viewModel = GroupsViewModel()
+    var viewModel = LessonsViewModel()
     
     var body: some View {
         
-        if let group = group {
-            ZStack {
-                if let lessons = (group.lessons?.allObjects as! [Lesson]) {
-                    if lessons.isEmpty {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle())
-                            .onAppear {
-                                viewModel.fetchGroup(group.id!)
-                            }
-                    }
-                    List {
-                        ForEach(lessons) { lesson in
+        ZStack {
+            if viewModel.lessons.isEmpty {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+            } else {
+                List {
+                    ForEach(viewModel.dates, id: \.self) { date in
+                        Text(viewModel.dateFormatter.string(from: date))
+                            .font(.title2)
+                            .fontWeight(.bold)
+                        ForEach(viewModel.lessons(date), id: \.self) {lesson in
                             LessonView(lesson: lesson, showEmployee: true)
                         }
                     }
+                    
                 }
-                
-            }
-            .listStyle(.plain)
-            .background(.clear)
-            .navigationTitle(group.id!)
-        }
-        
-        if let employee = employee {
-            
-            if let lessons = (employee.lessons?.allObjects as? [Lesson]) {
-                List {
-                    ForEach(lessons) { lesson in
-                        LessonView(lesson: lesson, showEmployee: false)
-                    }
-                }
-                .listStyle(.plain)
-                .background(.clear)
-                .navigationTitle(employee.lastName!)
             }
         }
+        .listRowSeparator(.hidden)
+        .listStyle(.plain)
+        .background(.clear)
+        .navigationTitle(viewModel.name)
     }
 }

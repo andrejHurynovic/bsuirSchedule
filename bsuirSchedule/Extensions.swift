@@ -7,7 +7,7 @@
 
 import UIKit
 
-//MARK: UserDefaults
+//MARK: Array
 
 extension Array {
     mutating func forEach(body: (inout Element) throws -> Void) rethrows {
@@ -16,6 +16,43 @@ extension Array {
         }
     }
 }
+
+extension Array where Element == Lesson {
+    func forWeekNumber(_ weekNumber: Int) -> [Lesson] {
+        self.filter{$0.weekNumber!.contains(where: {$0 == weekNumber})}
+    }
+    func forWeekDay(_ weekDay: Int) -> [Lesson] {
+        self.filter{$0.weekDay == weekDay}.sorted(by: {$0.timeStart! < $1.timeStart!})
+    }
+}
+
+//MARK: Date
+
+extension Date {
+    mutating func addDay() {
+        var dayComponent = DateComponents()
+        dayComponent.day = 1 // For removing one day (yesterday): -1
+        let theCalendar = Calendar.current
+        self = theCalendar.date(byAdding: dayComponent, to: self)!
+        
+    }
+}
+
+extension Date: Strideable {
+    public func distance(to other: Date) -> TimeInterval {
+        return other.timeIntervalSinceReferenceDate - self.timeIntervalSinceReferenceDate
+    }
+
+    public func advanced(by n: TimeInterval) -> Date {
+        return self + n
+    }
+}
+
+func weeksBetween(start: Date, end: Date) -> Int {
+    return Calendar.current.dateComponents([.weekOfYear], from: start, to: end).weekOfYear!
+}
+
+//MARK: UserDefaults
 
 extension UserDefaults {
     func color(forKey key: String) -> UIColor? {
@@ -40,7 +77,5 @@ extension UserDefaults {
         } catch let error {
             print("error color key data not saved \(error.localizedDescription)")
         }
-
     }
-
 }

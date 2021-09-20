@@ -15,7 +15,7 @@ struct GroupsView: View {
         NavigationView {
             ZStack {
                 List (viewModel.foundGroups(searchText), id: \.id) { group in
-                    NavigationLink(destination: LessonsView(group: group)){
+                    NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group, nil))){
                         Text(group.id ?? "WFt")
                     }
                 }

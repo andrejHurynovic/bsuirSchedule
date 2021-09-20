@@ -73,19 +73,12 @@ struct EmployeeDetailedView: View {
             
             if let _ = employee.lessons?.allObjects as? [Lesson] {
                 NavigationLink {
-                    LessonsView(employee: employee)
+                    LessonsView(viewModel: LessonsViewModel(nil, employee))
                 } label: {
                     Label("Расписание преподавателя", systemImage: "calendar")
                 }
 
             }
-//            if (!employee.lessons!.allObjects.isEmpty) {
-//                NavigationLink {
-//                    LessonsView(group: <#T##Group#>, body: <#T##View#>)
-//                } label: {
-//                    Label("Расписание преподавателя", systemImage: "calendar")
-//                }
-//            }
         }.navigationTitle(employee.lastName!)
     }
 }
