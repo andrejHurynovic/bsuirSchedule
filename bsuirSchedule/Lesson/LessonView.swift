@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct LessonView: View {
+    @Environment(\.colorScheme) var colorScheme
+    
     var lesson: Lesson
     var showEmployee: Bool
     
@@ -74,8 +76,8 @@ struct LessonView: View {
                 } else {
                     HStack {
                         Image(systemName: "person.2.circle")
-                        if let groups = self.lesson.groups?.allObjects as! [Group] {
-                            if let groupsIDs = groups.map({$0.id}) as? [String] {
+                        if let groups = self.lesson.groups?.allObjects as? [Group] {
+                            if let groupsIDs = groups.map({$0.id}) as! [String] {
                                 Text(groupsIDs.joined(separator: ", "))
                             }
                         }
@@ -91,10 +93,10 @@ struct LessonView: View {
             }
         }
         .padding(.all)
-        .background(in: RoundedRectangle(cornerRadius: 16))
-        //.shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
         .listRowSeparator(.hidden)
-        .edgesIgnoringSafeArea(.all)
+        .background(in: RoundedRectangle(cornerRadius: 16))
+        .clipped()
+        .shadow(color: colorScheme == .dark ? Color(#colorLiteral(red: 255, green: 255, blue: 255, alpha: 0.2)) : Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.2)), radius: 5, x: 1, y: 5)
     }
 }
 
