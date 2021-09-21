@@ -49,7 +49,8 @@ extension Date: Strideable {
 }
 
 func weeksBetween(start: Date, end: Date) -> Int {
-    return Calendar.current.dateComponents([.weekOfYear], from: start, to: end).weekOfYear!
+    let calendar = Calendar(identifier: .iso8601)
+    return calendar.dateComponents([.weekOfYear], from: end).weekOfYear! - calendar.dateComponents([.weekOfYear], from: start).weekOfYear!
 }
 
 //MARK: UserDefaults
