@@ -18,6 +18,7 @@ public class Group: NSManagedObject {
         
         self.id = groupModel.id
         self.course = groupModel.course
+        self.favorite = false
         self.facultyID = groupModel.facultyID
         self.educationStart = groupModel.educationStart
         self.educationEnd = groupModel.educationEnd

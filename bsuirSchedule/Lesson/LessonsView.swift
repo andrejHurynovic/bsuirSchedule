@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LessonsView: View {
-    var viewModel = LessonsViewModel()
+    @StateObject var viewModel = LessonsViewModel()
     
     var body: some View {
         
@@ -16,6 +16,9 @@ struct LessonsView: View {
             if viewModel.lessons.isEmpty {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle())
+                    .onAppear {
+                        viewModel.update()
+                    }
             } else {
                 List {
                     ForEach(viewModel.dates, id: \.self) { date in
@@ -28,11 +31,23 @@ struct LessonsView: View {
                     }
                     
                 }
+                .listRowSeparator(.hidden)
+                .listStyle(.plain)
             }
         }
-        .listRowSeparator(.hidden)
-        .listStyle(.plain)
-        .background(.clear)
         .navigationTitle(viewModel.name)
+        .toolbar {
+//            Button {
+//
+//            } label: {
+//                Image(systemName: "magnifyingglass")
+//            }
+            Button {
+                viewModel.favorite.toggle()
+            } label: {
+                Image(systemName: viewModel.favorite ? "star.fill" : "star")
+                    .foregroundColor(.yellow)
+            }
+        }
     }
 }

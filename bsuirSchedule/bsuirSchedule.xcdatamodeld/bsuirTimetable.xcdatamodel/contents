@@ -26,6 +26,7 @@
         <attribute name="examsEnd" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="examsStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="facultyID" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="favorite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="id" attributeType="String"/>
         <relationship name="lessons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lesson" inverseName="groups" inverseEntity="Lesson"/>
         <uniquenessConstraints>
@@ -49,7 +50,7 @@
     </entity>
     <elements>
         <element name="Employee" positionX="-113.8995361328125" positionY="-16.78672790527344" width="128" height="209"/>
-        <element name="Group" positionX="-275.1432495117188" positionY="-20.14794921875" width="128" height="149"/>
+        <element name="Group" positionX="-275.1432495117188" positionY="-20.14794921875" width="128" height="164"/>
         <element name="Lesson" positionX="-261" positionY="45" width="128" height="194"/>
     </elements>
 </model>

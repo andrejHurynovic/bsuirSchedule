@@ -11,8 +11,22 @@ import Combine
 class LessonsViewModel: ObservableObject {
     var group: Group?
     var employee: Employee?
-    var dates: [Date] = []
+    
     var name: String!
+    @Published var favorite: Bool! {
+        willSet {
+            if let group = group {
+                group.favorite = newValue
+                GroupStorage.shared.save()
+            }
+            
+            if let employee = employee {
+                employee.favorite = newValue
+                EmployeeStorage.shared.save()
+            }
+        }
+    }
+    var dates: [Date] = []
     var lessons: [Lesson] = [] {
         willSet {
             
@@ -35,9 +49,9 @@ class LessonsViewModel: ObservableObject {
         
         if let group = group {
             self.name = group.id
-            if group.lessons!.count == 0 {
-//                GroupStorage.shared.update(group)
-            } else {
+            self.favorite = group.favorite
+            
+            if group.lessons!.count != 0 {
                 self.lessons = group.lessons?.allObjects as! [Lesson]
                 updateDates()
             }
@@ -45,6 +59,8 @@ class LessonsViewModel: ObservableObject {
         
         if let employee = employee {
             self.name = employee.lastName
+            self.favorite = employee.favorite
+            
             self.lessons = employee.lessons?.allObjects as! [Lesson]
         }
     }
@@ -62,6 +78,12 @@ class LessonsViewModel: ObservableObject {
     
         return lessons.forWeekNumber(week!).forWeekDay(day)
             
+    }
+    
+    func update() {
+        if let group = group {
+            GroupStorage.shared.update(group)
+        }
     }
     
     private func updateDates() {
