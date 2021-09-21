@@ -11,20 +11,24 @@ import CoreData
 struct ContentView: View {
     
     var body: some View {
-            TabView {
-                GroupsView()
-                    .tabItem {
-                        Label("Расписание", systemImage: "calendar")
-                    }
-                EmployeesView()
-                    .tabItem {
-                        Label("Преподаватели", systemImage: "person.3")
-                    }
-                SettingsView()
-                    .tabItem {
-                        Label("Настройки", systemImage: "gearshape")
-                    }
-            }
+        TabView {
+            FavoritesView()
+                .tabItem {
+                    Label("Избранные", systemImage: "star.fill")
+                }
+            GroupsView()
+                .tabItem {
+                    Label("Расписание", systemImage: "calendar")
+                }
+            EmployeesView()
+                .tabItem {
+                    Label("Преподаватели", systemImage: "person.3")
+                }
+            SettingsView()
+                .tabItem {
+                    Label("Настройки", systemImage: "gearshape")
+                }
+        }
     }
 }
 struct ContentView_Previews: PreviewProvider {
