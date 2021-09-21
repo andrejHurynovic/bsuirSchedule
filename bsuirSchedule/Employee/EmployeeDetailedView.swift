@@ -15,18 +15,18 @@ struct EmployeeDetailedView: View {
             Section {
                 HStack {
                     if let photo = employee.photo {
-                        Image(uiImage: photo)
+                        Image(uiImage: UIImage(data: photo)!)
                             .resizable()
                             .frame(width: 80.0, height: 80.0)
                             .clipShape(Circle())
                             .contextMenu {
                                 Button {
-                                    UIImageWriteToSavedPhotosAlbum(photo, nil, nil, nil)
+                                    UIImageWriteToSavedPhotosAlbum(UIImage(data: photo)!, nil, nil, nil)
                                 } label: {
                                     Label("Сохранить фото", systemImage: "square.and.arrow.down")
                                 }
                                 Button {
-                                    UIPasteboard.general.image = photo
+                                    UIPasteboard.general.image = UIImage(data: photo)!
                                 } label: {
                                     Label("Скопировать фото", systemImage: "doc.on.doc")
                                 }

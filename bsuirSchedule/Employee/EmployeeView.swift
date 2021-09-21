@@ -24,7 +24,7 @@ struct EmployeeView: View {
             }
             Spacer()
             if let photo = employee.photo {
-                Image(uiImage: photo)
+                Image(uiImage: UIImage(data: photo)!)
                     .resizable()
                     .frame(width: 80.0, height: 80.0)
                     .clipShape(Circle())
@@ -32,16 +32,6 @@ struct EmployeeView: View {
                 Image(systemName: "person.fill")
                     .resizable()
                     .frame(width: 80.0, height: 80.0)
-//                    .onAppear {
-//                        if let photoURL = employee.photoLink {
-//                            URLSession(configuration: .default).dataTask(with: URL(string: photoURL)!) { data, response, error in
-//                                employee.photo = UIImage(data: data!)
-//                                if employee.photo == nil {
-//                                    employee.photoLink = nil
-//                                }
-//                            }.resume()
-//                        }
-//                    }
             }
         }
     }

@@ -8,7 +8,7 @@
         <attribute name="id" optional="YES" attributeType="Integer 32" usesScalarValueType="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String"/>
         <attribute name="middleName" optional="YES" attributeType="String"/>
-        <attribute name="photo" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="UIImage"/>
+        <attribute name="photo" optional="YES" attributeType="Binary" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="UIImage"/>
         <attribute name="photoLink" optional="YES" attributeType="String"/>
         <attribute name="rank" optional="YES" attributeType="String"/>
         <attribute name="urlID" optional="YES" attributeType="String"/>

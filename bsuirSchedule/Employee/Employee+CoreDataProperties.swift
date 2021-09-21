@@ -31,7 +31,7 @@ extension Employee {
     @NSManaged public var favorite: Bool
     
     @NSManaged public var photoLink: String?
-    @NSManaged public var photo: UIImage?
+    @NSManaged public var photo: Data?
     
     @NSManaged public var lessons: NSSet?
 

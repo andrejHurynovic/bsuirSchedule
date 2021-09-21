@@ -21,7 +21,6 @@ struct EmployeeModel: Decodable {
     public var favorite: Bool
     
     public var photoLink: String?
-    public var photo: UIImage?
     
     
     

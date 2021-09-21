@@ -30,7 +30,7 @@ public class Employee: NSManagedObject {
         self.favorite = employee.favorite
         
         self.photoLink = employee.photoLink
-        self.photo = employee.photo
+//        self.photo = employee.photo
     }
     
     convenience init(id: Int32, urlID: String?, firstName: String?, middleName: String?, lastName: String?, rank: String?, degree: String?, departments: [String]?, favorite: Bool, photoLink: String?, photo: UIImage?) {
@@ -48,7 +48,7 @@ public class Employee: NSManagedObject {
         self.departments = departments
         self.favorite = favorite
         self.photoLink = photoLink
-        self.photo = photo
+//        self.photo = photo
     }
     
 }

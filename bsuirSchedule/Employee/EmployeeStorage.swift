@@ -8,12 +8,15 @@
 import Foundation
 import Combine
 import CoreData
+import UIKit
 
 class EmployeeStorage: NSObject, ObservableObject {
     var employees = CurrentValueSubject<[Employee], Never>([])
     private let employeeFetchController: NSFetchedResultsController<Employee>
     
     static let shared: EmployeeStorage = EmployeeStorage()
+    
+    private var cancellables = Set<AnyCancellable>()
     
     private override init() {
         employeeFetchController = NSFetchedResultsController(fetchRequest: Employee.fetchRequest(),
@@ -52,17 +55,53 @@ class EmployeeStorage: NSObject, ObservableObject {
     }
     
     func fetch() {
-        URLSession(configuration: .default).dataTask(with: URL(string: "https://journal.bsuir.by/api/v1/employees")!) { data, response, error in
-            if let data = data {
-                let decoder = JSONDecoder()
-                if let employees = try? decoder.decode([EmployeeModel].self, from: data) {
-                    employees.forEach { employee in
-                        _ = Employee(employee)
-                    }
-                    EmployeeStorage.shared.save()
+        let url = URL(string: "https://journal.bsuir.by/api/v1/employees")!
+        URLSession.shared.dataTaskPublisher(for: url)
+            .receive(on: DispatchQueue.main)
+            .tryMap { (data, response) -> Data in
+                guard let response = response as? HTTPURLResponse,
+                response.statusCode >= 200 && response.statusCode < 300 else {
+                    throw URLError(.badServerResponse)
                 }
+                return data
             }
-        }.resume()
+            .decode(type: [EmployeeModel].self, decoder: JSONDecoder())
+            .sink { completion in
+            } receiveValue: { (returnedEmployees) in
+                returnedEmployees.forEach { employee in
+                    _ = Employee(employee)
+                }
+                EmployeeStorage.shared.save()
+                EmployeeStorage.shared.fetchPhotos()
+            }
+            .store(in: &cancellables)
+    }
+    
+    func fetchPhotos() {
+        employees.value.forEach { employee in
+            fetchPhoto(of: employee)
+        }
+    }
+    
+    func fetchPhoto(of employee: Employee) {
+        let url = URL(string: employee.photoLink!)!
+        URLSession.shared.dataTaskPublisher(for: url)
+            .receive(on: DispatchQueue.main)
+            .tryMap { (data, response) -> Data in
+                guard let response = response as? HTTPURLResponse,
+                response.statusCode >= 200 && response.statusCode < 300 else {
+                    throw URLError(.badServerResponse)
+                }
+                return data
+            }
+//            .decode(type: Data.self, decoder: JSONDecoder())
+            .sink { completion in
+            } receiveValue: { (data) in
+                
+                employee.photo = data
+                EmployeeStorage.shared.save()
+            }
+            .store(in: &cancellables)
     }
 }
 

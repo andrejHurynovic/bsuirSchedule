@@ -35,42 +35,17 @@ struct FavoritesView: View {
                     .padding([.leading, .bottom, .trailing])
                 }
                 
-                VStack(alignment: .leading) {
-                    Text("Преподаватели")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .padding(.leading)
-                }.frame(maxWidth: .infinity, alignment: .leading)
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 169, maximum: 256), spacing: nil, alignment: nil)], alignment: .center, spacing: nil, pinnedViews: []) {
-//                    ForEach(viewModel.employees, id: \.self) {employee in
-                        ZStack {
-                            
-//                            NavigationLink {
-//                                EmployeeDetailedView(employee: employee)
-//                            } label: {
-//                                VStack(alignment: .leading) {
-//                                    Text("Луцик")
-//                                        .font(.title3)
-//                                        .fontWeight(.bold)
-//                                    Text("Юрий Александрович")
-//                                    Spacer()
-//                                    Text("ЭВМ")
-//                                        .font(.headline)
-//                                        .fontWeight(.regular)
-//                                        .foregroundColor(Color.gray)
-//
-//                                }
-//                                .padding()
-//                                .frame(width: 169, height: 112)
-//                                .clipped()
-//                                .background(in: RoundedRectangle(cornerRadius: 16))
-//                                .shadow(radius: 5)
-//                            }
-                        }
- 
-//                    }
+                if viewModel.employees.isEmpty == false {
+                    VStack(alignment: .leading) {
+                        Text("Преподаватели")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .padding(.leading)
+                    }.frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .padding(.horizontal)
+                List {
+                    
+                }
             }
             .navigationTitle("Избранные")
         }
@@ -81,6 +56,8 @@ struct FavoritesView: View {
 
 
 struct FavoriteGroupView: View {
+    @Environment(\.colorScheme) var colorScheme
+    
     var group: Group
     
     var body: some View {
@@ -100,7 +77,8 @@ struct FavoriteGroupView: View {
         .frame(width: 112, height: 112)
         .clipped()
         .background(in: RoundedRectangle(cornerRadius: 16))
-        .shadow(radius: 5)
+        .shadow(color: colorScheme == .dark ? Color(#colorLiteral(red: 255, green: 255, blue: 255, alpha: 0.2)) : Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.1)), radius: 5, x: 0, y: 0)
+
     }
 }
 
