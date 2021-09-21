@@ -13,17 +13,6 @@ import SwiftUI
 
 @objc(Lesson)
 public class Lesson: NSManagedObject, Decodable {
-    enum CodingKeys: String, CodingKey {
-        case auditory = "auditory"
-        case groups = "studentGroup"
-        case lessonTypeValue = "lessonType"
-        case subgroup = "numSubgroup"
-        case subject = "subject"
-        case timeEnd = "endLessonTime"
-        case timeStart = "startLessonTime"
-        case weekNumber = "weekNumber"
-        case employee = "employee"
-    }
     
     required convenience public init(from decoder: Decoder) throws {
         let context = PersistenceController.shared.container.viewContext
@@ -79,6 +68,18 @@ public class Lesson: NSManagedObject, Decodable {
         case .laboratory:
             return Color(UserDefaults.standard.color(forKey: "labWorkColor") ?? .red)
         }
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case auditory = "auditory"
+        case groups = "studentGroup"
+        case lessonTypeValue = "lessonType"
+        case subgroup = "numSubgroup"
+        case subject = "subject"
+        case timeEnd = "endLessonTime"
+        case timeStart = "startLessonTime"
+        case weekNumber = "weekNumber"
+        case employee = "employee"
     }
 }
 struct JSONCodingKeys: CodingKey {

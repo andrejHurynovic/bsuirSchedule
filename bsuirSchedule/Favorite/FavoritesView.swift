@@ -74,6 +74,7 @@ struct FavoritesView: View {
             }
             .navigationTitle("Избранные")
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
@@ -88,7 +89,7 @@ struct FavoriteGroupView: View {
                 .font(.title3)
                 .fontWeight(.bold)
             Spacer()
-            Text("ФКСС")
+            Text(group.faculty!.abbreviation!)
             Text(String(group.course) + "-й курс")
                 .font(.headline)
                 .fontWeight(.regular)

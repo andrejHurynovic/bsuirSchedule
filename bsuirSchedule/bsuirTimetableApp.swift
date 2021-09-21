@@ -9,7 +9,13 @@ import SwiftUI
 
 @main
 struct bsuirScheduleApp: App {
-    let persistenceController = PersistenceController.shared 
+    let persistenceController = PersistenceController.shared
+    
+    init() {
+        if FacultyStorage.shared.faculties.value.isEmpty {
+            FacultyStorage.shared.fetch()
+        }
+    }
 
     var body: some Scene {
         WindowGroup {
