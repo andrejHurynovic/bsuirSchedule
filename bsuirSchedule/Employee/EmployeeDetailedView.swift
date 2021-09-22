@@ -37,29 +37,26 @@ struct EmployeeDetailedView: View {
                             .frame(width: 80.0, height: 80.0)
                     }
                     Spacer()
-                    //                    VStack(alignment: .leading) {
-                    //                        Text(employee.lastName!)
-                    //                            .font(.title)
-                    //                            .fontWeight(.bold)
                     Text(employee.firstName! + " " + employee.middleName!)
                         .font(.title2)
                         .fontWeight(.bold)
                     //                    }
                 }
             }
-            
-            Section("Информация") {
-                if !employee.departments!.isEmpty {
-                    Text("Кафедры: " + (employee.departments?.joined(separator: ", "))!)
+            if !employee.departments!.isEmpty || !employee.degree!.isEmpty || employee.rank != nil {
+                Section("Информация") {
+                    if !employee.departments!.isEmpty {
+                        Text("Кафедры: " + (employee.departments?.joined(separator: ", "))!)
+                    }
+                    
+                    if !employee.degree!.isEmpty {
+                        Text("Научаная степень: " + employee.degree!)
+                    }
+                    if let rank = employee.rank {
+                        Text("Звание: " + rank)
+                    }
+                    
                 }
-                
-                if !employee.degree!.isEmpty {
-                    Text("Научаная степень: " + employee.degree!)
-                }
-                if let rank = employee.rank {
-                    Text("Звание: " + rank)
-                }
-                
             }
             
             Section("Ссылки") {
