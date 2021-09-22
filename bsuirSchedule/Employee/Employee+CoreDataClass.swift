@@ -57,7 +57,6 @@ public class Employee: NSManagedObject {
         
         
         
-        return groups.sorted{$0.id < $1.id}
+        return groups.sorted{$0.id! < $1.id!}
     }
-    
 }
