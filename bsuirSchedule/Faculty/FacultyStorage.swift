@@ -12,8 +12,11 @@ import CoreData
 class FacultyStorage: NSObject, ObservableObject {
     var faculties = CurrentValueSubject<[Faculty], Never>([])
     private let facultyFetchController: NSFetchedResultsController<Faculty>
-    
+    private var cancellables = Set<AnyCancellable>()
+
     static let shared: FacultyStorage = FacultyStorage()
+    
+    
     
     private override init() {
         facultyFetchController = NSFetchedResultsController(fetchRequest: Faculty.fetchRequest(),
@@ -30,6 +33,25 @@ class FacultyStorage: NSObject, ObservableObject {
         }
     }
     
+    func fetch() {
+        let url = URL(string: "https://journal.bsuir.by/api/v1/faculties")!
+        URLSession.shared.dataTaskPublisher(for: url)
+            .receive(on: DispatchQueue.main)
+            .tryMap { (data, response) -> Data in
+                guard let response = response as? HTTPURLResponse,
+                      response.statusCode >= 200 && response.statusCode < 300 else {
+                          throw URLError(.badServerResponse)
+                      }
+                return data
+            }
+            .decode(type: [Faculty].self, decoder: JSONDecoder())
+            .sink { completion in
+            } receiveValue: { (_) in
+                FacultyStorage.shared.save()
+            }
+            .store(in: &cancellables)
+    }
+    
     func save() {
         try! PersistenceController.shared.container.viewContext.save()
     }
@@ -44,20 +66,6 @@ class FacultyStorage: NSObject, ObservableObject {
             PersistenceController.shared.container.viewContext.delete(faculty)
         }
         save()
-    }
-    
-    func fetch() {
-        URLSession(configuration: .default).dataTask(with: URL(string: "https://journal.bsuir.by/api/v1/faculties")!) { data, response, error in
-            if let data = data {
-                let decoder = JSONDecoder()
-                do {
-                _ = try decoder.decode([Faculty].self, from: data)
-                } catch {
-                    
-                }
-                FacultyStorage.shared.save()
-            }
-        }.resume()
     }
 }
 

@@ -26,7 +26,7 @@ class GroupsViewModel: ObservableObject {
     }
     
     func fetchGroups() {
-        GroupStorage.shared.fetch()
+        GroupStorage.shared.fetchBasic()
     }
     
     func updateGroup() {

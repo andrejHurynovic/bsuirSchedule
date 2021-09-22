@@ -12,11 +12,13 @@ import UIKit
 
 class EmployeeStorage: NSObject, ObservableObject {
     var employees = CurrentValueSubject<[Employee], Never>([])
+    
     private let employeeFetchController: NSFetchedResultsController<Employee>
+    private var cancellables = Set<AnyCancellable>()
     
     static let shared: EmployeeStorage = EmployeeStorage()
     
-    private var cancellables = Set<AnyCancellable>()
+    
     
     private override init() {
         employeeFetchController = NSFetchedResultsController(fetchRequest: Employee.fetchRequest(),
@@ -39,7 +41,7 @@ class EmployeeStorage: NSObject, ObservableObject {
         } catch {
             print(error.localizedDescription)
         }
-       
+        
     }
     
     func delete(_ employee: Employee) {
@@ -60,9 +62,9 @@ class EmployeeStorage: NSObject, ObservableObject {
             .receive(on: DispatchQueue.main)
             .tryMap { (data, response) -> Data in
                 guard let response = response as? HTTPURLResponse,
-                response.statusCode >= 200 && response.statusCode < 300 else {
-                    throw URLError(.badServerResponse)
-                }
+                      response.statusCode >= 200 && response.statusCode < 300 else {
+                          throw URLError(.badServerResponse)
+                      }
                 return data
             }
             .decode(type: [EmployeeModel].self, decoder: JSONDecoder())
@@ -89,15 +91,13 @@ class EmployeeStorage: NSObject, ObservableObject {
             .receive(on: DispatchQueue.main)
             .tryMap { (data, response) -> Data in
                 guard let response = response as? HTTPURLResponse,
-                response.statusCode >= 200 && response.statusCode < 300 else {
-                    throw URLError(.badServerResponse)
-                }
+                      response.statusCode >= 200 && response.statusCode < 300 else {
+                          throw URLError(.badServerResponse)
+                      }
                 return data
             }
-//            .decode(type: Data.self, decoder: JSONDecoder())
             .sink { completion in
             } receiveValue: { (data) in
-                
                 employee.photo = data
                 EmployeeStorage.shared.save()
             }

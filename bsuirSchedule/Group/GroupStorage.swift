@@ -11,7 +11,9 @@ import CoreData
 
 class GroupStorage: NSObject, ObservableObject {
     var groups = CurrentValueSubject<[Group], Never>([])
+    
     private let groupFetchController: NSFetchedResultsController<Group>
+    private var cancellables = Set<AnyCancellable>()
     
     static let shared: GroupStorage = GroupStorage()
     
@@ -50,35 +52,60 @@ class GroupStorage: NSObject, ObservableObject {
         save()
     }
     
-    func fetch() {
-        URLSession(configuration: .default).dataTask(with: URL(string: "https://journal.bsuir.by/api/v1/groups")!) { data, response, error in
-            if let data = data {
-                let decoder = JSONDecoder()
-                if let groups = try? decoder.decode([GroupModel].self, from: data) {
-                    groups.forEach { group in
-                        _ = Group(group)
-                    }
-                    GroupStorage.shared.save()
-                }
+    func fetchBasic() {
+        let url = URL(string: "https://journal.bsuir.by/api/v1/groups")!
+        URLSession.shared.dataTaskPublisher(for: url)
+            .receive(on: DispatchQueue.main)
+            .tryMap { (data, response) -> Data in
+                guard let response = response as? HTTPURLResponse,
+                      response.statusCode >= 200 && response.statusCode < 300 else {
+                          throw URLError(.badServerResponse)
+                      }
+                return data
             }
-        }.resume()
+            .decode(type: [GroupModel].self, decoder: JSONDecoder())
+            .sink { completion in
+            } receiveValue: { (returnedGroups) in
+                returnedGroups.forEach { group in
+                    _ = Group(group)
+                }
+                GroupStorage.shared.save()
+                GroupStorage.shared.allGroups()
+            }
+            .store(in: &cancellables)
+    }
+    
+    func allGroups() {
+        groups.value.forEach { group in
+            update(group)
+        }
     }
     
     func update(_ group: Group) {
-        URLSession(configuration: .default).dataTask(with: URL(string: "https://journal.bsuir.by/api/v1/studentGroup/schedule?studentGroup=" + group.id!)!) { data, response, error in
-            if let data = data {
-                if !data.isEmpty {
-                    let decoder = JSONDecoder()
-                    if let updatedGroup = try? decoder.decode(GroupModel.self, from: data) {
-                        updatedGroup.lessons.forEach { lesson in
-                            lesson.employee = EmployeeStorage.shared.employees.value.first(where: {$0.id == lesson.employeeID})
-                        }
-                        group.update(updatedGroup)
-                        GroupStorage.shared.save()
-                    }
-                }
+        
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 100
+        let url = URL(string: "https://journal.bsuir.by/api/v1/studentGroup/schedule?studentGroup=" + group.id!)!
+        
+        URLSession(configuration: config).dataTaskPublisher(for: url).share()
+            .receive(on: DispatchQueue.main)
+            .tryMap { (data, response) -> Data in
+                guard let response = response as? HTTPURLResponse,
+                      response.statusCode >= 200 && response.statusCode < 300 else {
+                          throw URLError(.badServerResponse)
+                      }
+                return data
             }
-        }.resume()
+            .decode(type: GroupModel.self, decoder: JSONDecoder())
+            .sink { completion in
+            } receiveValue: { (updatedGroup) in
+                updatedGroup.lessons.forEach { lesson in
+                    lesson.employee = EmployeeStorage.shared.employees.value.first(where: {$0.id == lesson.employeeID})
+                }
+                group.update(updatedGroup)
+                GroupStorage.shared.save()
+            }
+            .store(in: &cancellables)
     }
 }
 
