@@ -13,7 +13,7 @@ struct LessonsView: View {
     var body: some View {
         
         ZStack {
-            if viewModel.lessons.isEmpty {
+            if viewModel.dates.isEmpty {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle())
                     .onAppear {
@@ -25,8 +25,8 @@ struct LessonsView: View {
                         Text(viewModel.dateFormatter.string(from: date))
                             .font(.title2)
                             .fontWeight(.bold)
-                        ForEach(viewModel.lessons(date), id: \.self) {lesson in
-                            LessonView(lesson: lesson, showEmployee: true)
+                        ForEach(viewModel.lessons(date), id: \.self) { lesson in
+                            LessonView(lesson: lesson, showEmployee: !viewModel.isEmployee)
                         }
                     }
                     

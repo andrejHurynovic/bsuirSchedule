@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19197" systemVersion="21A5506j" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19197" systemVersion="21A5522h" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Employee" representedClassName="Employee" syncable="YES">
         <attribute name="degree" optional="YES" attributeType="String"/>
         <attribute name="departments" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[String]"/>
+        <attribute name="educationEnd" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="educationStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="examsEnd" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="examsStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="favorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="firstName" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" usesScalarValueType="YES"/>
@@ -53,11 +57,19 @@
         <attribute name="weekNumber" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[Int]"/>
         <relationship name="employee" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Employee" inverseName="lessons" inverseEntity="Employee"/>
         <relationship name="groups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="lessons" inverseEntity="Group"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="employee"/>
+                <constraint value="weekDay"/>
+                <constraint value="weekNumber"/>
+                <constraint value="timeStart"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Employee" positionX="-113.8995361328125" positionY="-16.78672790527344" width="128" height="209"/>
-        <element name="Faculty" positionX="-198" positionY="99" width="128" height="89"/>
-        <element name="Group" positionX="-275.1432495117188" positionY="-20.14794921875" width="128" height="164"/>
-        <element name="Lesson" positionX="-261" positionY="45" width="128" height="194"/>
+        <element name="Employee" positionX="-231.9367065429688" positionY="-131.8106842041016" width="128" height="283"/>
+        <element name="Faculty" positionX="-536.472412109375" positionY="280.2841491699219" width="128" height="89"/>
+        <element name="Group" positionX="-339.1310424804688" positionY="212.7224731445312" width="120.3765258789062" height="164"/>
+        <element name="Lesson" positionX="-464.7166137695312" positionY="-101.2243957519531" width="128" height="194"/>
     </elements>
 </model>

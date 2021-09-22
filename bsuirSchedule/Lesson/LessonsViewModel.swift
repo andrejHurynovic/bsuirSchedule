@@ -9,8 +9,10 @@ import SwiftUI
 import Combine
 
 class LessonsViewModel: ObservableObject {
-    var group: Group?
-    var employee: Employee?
+    private var group: Group?
+    private var employee: Employee?
+    
+    var isEmployee = false
     
     var name: String!
     @Published var favorite: Bool! {
@@ -26,10 +28,13 @@ class LessonsViewModel: ObservableObject {
             }
         }
     }
+    
     var dates: [Date] = []
-    var lessons: [Lesson] = [] {
-        willSet {
-            
+    @Published var lessons: [Lesson] = [] {
+        didSet {
+            if group?.educationStart != nil || employee?.educationStart != nil {
+                updateDates()
+            }
         }
     }
     
@@ -41,7 +46,7 @@ class LessonsViewModel: ObservableObject {
         return dateFormatter
     }
     
-    
+    private var cancelable: AnyCancellable?
     
     init(_ group: Group? = nil, _ employee: Employee? = nil) {
         self.group = group
@@ -51,48 +56,65 @@ class LessonsViewModel: ObservableObject {
             self.name = group.id
             self.favorite = group.favorite
             
-            if group.lessons!.count != 0 {
-                self.lessons = group.lessons?.allObjects as! [Lesson]
-                updateDates()
-            }
+            let lessonPublisher: AnyPublisher<[Lesson], Never> = LessonStorage.shared.lessons.eraseToAnyPublisher()
+                cancelable = lessonPublisher.sink { lessons in
+                    self.lessons = lessons.filter({$0.groups?.contains(group) as! Bool})
+                }
         }
         
         if let employee = employee {
             self.name = employee.lastName
             self.favorite = employee.favorite
-            
-            self.lessons = employee.lessons?.allObjects as! [Lesson]
+            self.isEmployee = true
+
+            let lessonPublisher: AnyPublisher<[Lesson], Never> = LessonStorage.shared.lessons.eraseToAnyPublisher()
+                cancelable = lessonPublisher.sink { lessons in
+                    self.lessons = lessons.filter({$0.employee == employee})
+                }
         }
     }
     
     func lessons(_ date: Date) -> [Lesson] {
         var week: Int?
+        var day: Int?
+        
         if let group = group {
             week = (weeksBetween(start: group.educationStart!, end: date) % 4) + 1
+            day = Calendar(identifier: .iso8601).ordinality(of: .weekday, in: .weekOfYear, for: date)! - 1
         }
-//        if let employee = employee {
-//
-//        }
         
-        let day = Calendar(identifier: .iso8601).ordinality(of: .weekday, in: .weekOfYear, for: date)! - 1
-    
-        return lessons.forWeekNumber(week!).forWeekDay(day)
-            
+        if let employee = employee {
+            week = (weeksBetween(start: employee.educationStart!, end: date) % 4) + 1
+            day = Calendar(identifier: .iso8601).ordinality(of: .weekday, in: .weekOfYear, for: date)! - 1
+        }
+        return lessons.forWeekNumber(week!).forWeekDay(day!)
     }
     
     func update() {
         if let group = group {
             GroupStorage.shared.update(group)
         }
+        
+        if let employee = employee {
+            EmployeeStorage.shared.update(employee)
+        }
     }
     
     private func updateDates() {
+        let dayDurationInSeconds: TimeInterval = 60 * 60 * 24
+        
         if let group = group {
-            let dayDurationInSeconds: TimeInterval = 60 * 60 * 24
             for date in stride(from: group.educationStart!, to: group.educationEnd!, by: dayDurationInSeconds) {
                 dates.append(date)
             }
             dates.append(group.educationEnd!)
+        }
+        
+        if let employee = employee {
+            for date in stride(from: employee.educationStart!, to: employee.educationEnd!, by: dayDurationInSeconds) {
+                dates.append(date)
+            }
+            dates.append(employee.educationEnd!)
         }
     }
 }

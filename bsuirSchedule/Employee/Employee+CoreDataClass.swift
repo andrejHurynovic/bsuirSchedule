@@ -18,7 +18,7 @@ public class Employee: NSManagedObject {
         let entity = NSEntityDescription.entity(forEntityName: "Employee", in: context)
         self.init(entity: entity!, insertInto: context)
         
-        self.id = employee.id
+        self.id = employee.id!
         self.urlID = employee.urlID
         self.firstName = employee.firstName
         self.middleName = employee.middleName
@@ -31,6 +31,16 @@ public class Employee: NSManagedObject {
         
         self.photoLink = employee.photoLink
 //        self.photo = employee.photo
+    }
+    
+    func update(_ updatedEmployee: EmployeeModel) {
+        self.removeFromLessons(self.lessons!)
+        self.addToLessons(NSSet(array: updatedEmployee.lessons))
+        
+        self.educationStart = updatedEmployee.educationStart
+        self.educationEnd = updatedEmployee.educationEnd
+        self.examsStart = updatedEmployee.examsStart
+        self.examsEnd = updatedEmployee.examsEnd
     }
     
     convenience init(id: Int32, urlID: String?, firstName: String?, middleName: String?, lastName: String?, rank: String?, degree: String?, departments: [String]?, favorite: Bool, photoLink: String?, photo: UIImage?) {

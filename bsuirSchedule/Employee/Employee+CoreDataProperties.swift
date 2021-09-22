@@ -30,6 +30,11 @@ extension Employee {
     @NSManaged public var departments: [String]?
     @NSManaged public var favorite: Bool
     
+    @NSManaged public var educationStart: Date?
+    @NSManaged public var educationEnd: Date?
+    @NSManaged public var examsStart: Date?
+    @NSManaged public var examsEnd: Date?
+    
     @NSManaged public var photoLink: String?
     @NSManaged public var photo: Data?
     

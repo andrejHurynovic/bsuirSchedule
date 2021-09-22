@@ -46,7 +46,7 @@ struct LessonView: View {
                         .foregroundColor(lesson.getColor())
                 }
             }
-            HStack {
+            HStack(alignment: .bottom) {
                 if showEmployee {
                     if let employee = lesson.employee {
                         HStack {
@@ -74,11 +74,11 @@ struct LessonView: View {
                         
                     }
                 } else {
-                    HStack {
+                    HStack(alignment: .top) {
                         Image(systemName: "person.2.circle")
                         if let groups = self.lesson.groups?.allObjects as? [Group] {
                             if let groupsIDs = groups.map({$0.id}) as? [String] {
-                                Text(groupsIDs.joined(separator: ", "))
+                                Text(groupsIDs.sorted().joined(separator: ", "))
                             }
                         }
                     }
@@ -96,7 +96,7 @@ struct LessonView: View {
         .listRowSeparator(.hidden)
         .background(in: RoundedRectangle(cornerRadius: 16))
         .clipped()
-        .shadow(color: colorScheme == .dark ? Color(#colorLiteral(red: 255, green: 255, blue: 255, alpha: 0.2)) : Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.1)), radius: 3, x: 0, y: 0)
+        .shadow(color: colorScheme == .dark ? Color(#colorLiteral(red: 255, green: 255, blue: 255, alpha: 0.2)) : Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.1)), radius: 5, x: 0, y: 0)
     }
 }
 

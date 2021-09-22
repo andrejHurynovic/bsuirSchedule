@@ -79,6 +79,33 @@ class EmployeeStorage: NSObject, ObservableObject {
             .store(in: &cancellables)
     }
     
+    func update(_ employee: Employee) {
+        
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 100
+        let url = URL(string:  "https://journal.bsuir.by/api/v1/portal/employeeSchedule?employeeId=" + String(employee.id))!
+        
+        URLSession(configuration: config).dataTaskPublisher(for: url).share()
+            .receive(on: DispatchQueue.main)
+            .tryMap { (data, response) -> Data in
+                guard let response = response as? HTTPURLResponse,
+                      response.statusCode >= 200 && response.statusCode < 300 else {
+                          throw URLError(.badServerResponse)
+                      }
+                return data
+            }
+            .decode(type: EmployeeModel.self, decoder: JSONDecoder())
+            .sink { completion in
+            } receiveValue: { (updatedEmployee) in
+//                updatedEmployee.lessons.forEach { lesson in
+//                    lesson.employee = EmployeeStorage.shared.employees.value.first(where: {$0.id == lesson.employeeID})
+//                }
+                employee.update(updatedEmployee)
+                EmployeeStorage.shared.save()
+            }
+            .store(in: &cancellables)
+    }
+    
     func fetchPhotos() {
         employees.value.forEach { employee in
             fetchPhoto(of: employee)
