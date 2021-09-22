@@ -15,6 +15,8 @@ class FavoritesViewModel: ObservableObject {
     private var groupCancelable: AnyCancellable?
     private var employeeCancelable: AnyCancellable?
     
+    
+    
     init(groupPublisher: AnyPublisher<[Group], Never> = GroupStorage.shared.groups.eraseToAnyPublisher(),
          employeePublisher: AnyPublisher<[Employee], Never> = EmployeeStorage.shared.employees.eraseToAnyPublisher()) {
         groupCancelable = groupPublisher.sink { groups in
@@ -23,5 +25,10 @@ class FavoritesViewModel: ObservableObject {
         employeeCancelable = employeePublisher.sink { employees in
             self.employees = employees.filter({$0.favorite == true})
         }
+    }
+    
+    func removeFromFavorites(_ group: Group? = nil) {
+        group?.favorite = false
+        GroupStorage.shared.save()
     }
 }

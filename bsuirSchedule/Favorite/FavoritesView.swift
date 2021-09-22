@@ -23,13 +23,15 @@ struct FavoritesView: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 96, maximum: 256), spacing: nil, alignment: nil)], alignment: .center, spacing: nil, pinnedViews: []) {
                         ForEach(viewModel.groups, id: \.self) {group in
                             ZStack {
-                                NavigationLink {
-                                    LessonsView(viewModel: LessonsViewModel(group, nil))
-                                } label: {
                                     FavoriteGroupView(group: group)
+                                .contextMenu {
+                                    Button {
+                                        viewModel.removeFromFavorites(group)
+                                    } label: {
+                                        Label("Убрать из избранных", systemImage: "star.circle")
+                                    }
                                 }
                             }
-                            
                         }
                     }
                     .padding([.leading, .bottom, .trailing])
@@ -43,35 +45,34 @@ struct FavoritesView: View {
                             .padding(.leading)
                     }.frame(maxWidth: .infinity, alignment: .leading)
                 }
-                List {
-                    HStack {
-                        Image(systemName: "person.fill")
-                        
-//                        {
-//                            VStack(alignment: .leading) {
-//                                Text(employee.lastName!)
-//                                    .font(.title)
-//                                    .fontWeight(.bold)
-//                                Text(employee.firstName! + " " + employee.middleName!)
-//                                if !employee.departments!.isEmpty {
-//                                    Text(employee.departments!.joined(separator: ", "))
-//                                        .foregroundColor(Color.gray)
-//                                }
-//                            }
-//                            Spacer()
-//                            if let photo = employee.photo {
-//                                Image(uiImage: UIImage(data: photo)!)
-//                                    .resizable()
-//                                    .frame(width: 80.0, height: 80.0)
-//                                    .clipShape(Circle())
-//                            } else {
-//                                Image(systemName: "person.fill")
-//                                    .resizable()
-//                                    .frame(width: 80.0, height: 80.0)
-//                            }
-//                        }
-                    }
-                }
+                
+//                HStack {
+//                    Image(systemName: "person.fill")
+                    
+                    //                        {
+                    //                            VStack(alignment: .leading) {
+                    //                                Text(employee.lastName!)
+                    //                                    .font(.title)
+                    //                                    .fontWeight(.bold)
+                    //                                Text(employee.firstName! + " " + employee.middleName!)
+                    //                                if !employee.departments!.isEmpty {
+                    //                                    Text(employee.departments!.joined(separator: ", "))
+                    //                                        .foregroundColor(Color.gray)
+                    //                                }
+                    //                            }
+                    //                            Spacer()
+                    //                            if let photo = employee.photo {
+                    //                                Image(uiImage: UIImage(data: photo)!)
+                    //                                    .resizable()
+                    //                                    .frame(width: 80.0, height: 80.0)
+                    //                                    .clipShape(Circle())
+                    //                            } else {
+                    //                                Image(systemName: "person.fill")
+                    //                                    .resizable()
+                    //                                    .frame(width: 80.0, height: 80.0)
+                    //                            }
+                    //                        }
+//                }
             }
             .navigationTitle("Избранные")
         }
@@ -87,24 +88,27 @@ struct FavoriteGroupView: View {
     var group: Group
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(group.id!)
-                .font(.title3)
-                .fontWeight(.bold)
-            Spacer()
-            Text(group.faculty!.abbreviation!)
-            Text(String(group.course) + "-й курс")
-                .font(.headline)
-                .fontWeight(.regular)
-                .foregroundColor(Color.gray)
-            
+        NavigationLink {
+            LessonsView(viewModel: LessonsViewModel(group, nil))
+        } label: {
+            VStack(alignment: .leading) {
+                Text(group.id!)
+                    .font(.title3)
+                    .fontWeight(.bold)
+                Spacer()
+                Text(group.faculty!.abbreviation!)
+                Text(String(group.course) + "-й курс")
+                    .font(.headline)
+                    .fontWeight(.regular)
+                    .foregroundColor(Color.gray)
+                
+            }
         }
         .padding()
         .frame(width: 112, height: 112)
         .clipped()
         .background(in: RoundedRectangle(cornerRadius: 16))
         .shadow(color: colorScheme == .dark ? Color(#colorLiteral(red: 255, green: 255, blue: 255, alpha: 0.2)) : Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.1)), radius: 5, x: 0, y: 0)
-
     }
 }
 
