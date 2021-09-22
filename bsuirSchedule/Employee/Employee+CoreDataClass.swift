@@ -30,7 +30,6 @@ public class Employee: NSManagedObject {
         self.favorite = employee.favorite
         
         self.photoLink = employee.photoLink
-//        self.photo = employee.photo
     }
     
     func update(_ updatedEmployee: EmployeeModel) {
@@ -43,22 +42,22 @@ public class Employee: NSManagedObject {
         self.examsEnd = updatedEmployee.examsEnd
     }
     
-    convenience init(id: Int32, urlID: String?, firstName: String?, middleName: String?, lastName: String?, rank: String?, degree: String?, departments: [String]?, favorite: Bool, photoLink: String?, photo: UIImage?) {
-        let context = PersistenceController.shared.container.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "Employee", in: context)
-        self.init(entity: entity!, insertInto: context)
+    func groups() -> [Group] {
+        var groups = Set<Group>()
         
-        self.id = id
-        self.urlID = urlID
-        self.firstName = firstName
-        self.middleName = middleName
-        self.lastName = lastName
-        self.rank = rank
-        self.degree = degree
-        self.departments = departments
-        self.favorite = favorite
-        self.photoLink = photoLink
-//        self.photo = photo
+        if let lessons = self.lessons?.allObjects as? [Lesson] {
+            lessons.forEach { lesson in
+                if let lessonsGroups = lesson.groups?.allObjects as? [Group] {
+                    lessonsGroups.forEach { group in
+                        groups.insert(group)
+                    }
+                }
+            }
+        }
+        
+        
+        
+        return groups.sorted{$0.id < $1.id}
     }
     
 }

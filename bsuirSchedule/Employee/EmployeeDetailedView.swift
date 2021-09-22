@@ -79,12 +79,18 @@ struct EmployeeDetailedView: View {
                 }
 
             }
+            
+            if let groups = employee.groups(), groups.isEmpty == false {
+                Section("Группы") {
+                    ForEach(groups) { group in
+                        NavigationLink {
+                            LessonsView(viewModel: LessonsViewModel(group, nil))
+                        } label: {
+                            Text(group.id!)
+                        }
+                    }
+                }
+            }
         }.navigationTitle(employee.lastName!)
-    }
-}
-
-struct EmployeeDetailedView_Previews: PreviewProvider {
-    static var previews: some View {
-        EmployeeDetailedView(employee: Employee(id: 228339, urlID: "iu-lutsik", firstName: "Юрий", middleName: "Александрович", lastName: "Луцик", rank: "доцент", degree: "к.т.н.", departments: ["ЭВМ", "Физики"], favorite: true, photoLink: "http://risovach.ru/upload/2014/09/mem/paca_62524324_orig_.jpeg", photo: UIImage(systemName: "newspaper.fill")))
     }
 }
