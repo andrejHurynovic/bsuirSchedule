@@ -29,7 +29,7 @@ struct EmployeeView: View {
                     .frame(width: 80.0, height: 80.0)
                     .clipShape(Circle())
             } else {
-                Image(systemName: "person.fill")
+                Image(systemName: "person.circle.fill")
                     .resizable()
                     .frame(width: 80.0, height: 80.0)
             }

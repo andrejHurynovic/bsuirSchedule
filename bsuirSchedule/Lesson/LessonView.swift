@@ -56,9 +56,9 @@ struct LessonView: View {
                                     .frame(width: 35.0, height: 35.0)
                                     .clipShape(Circle())
                             } else {
-                                Image(systemName: "person.fill")
+                                Image(systemName: "person.circle.fill")
                                     .resizable()
-                                    .frame(width: 30.0, height: 30.0)
+                                    .frame(width: 35.0, height: 35.0)
                             }
                             VStack(alignment: .leading) {
                                 Text(employee.lastName!)
@@ -77,7 +77,7 @@ struct LessonView: View {
                     HStack {
                         Image(systemName: "person.2.circle")
                         if let groups = self.lesson.groups?.allObjects as? [Group] {
-                            if let groupsIDs = groups.map({$0.id}) as! [String] {
+                            if let groupsIDs = groups.map({$0.id}) as? [String] {
                                 Text(groupsIDs.joined(separator: ", "))
                             }
                         }

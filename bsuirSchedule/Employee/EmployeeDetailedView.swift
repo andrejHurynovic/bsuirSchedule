@@ -32,7 +32,7 @@ struct EmployeeDetailedView: View {
                                 }
                             }
                     } else {
-                        Image(systemName: "person")
+                        Image(systemName: "person.circle.fill")
                             .resizable()
                             .frame(width: 80.0, height: 80.0)
                     }
