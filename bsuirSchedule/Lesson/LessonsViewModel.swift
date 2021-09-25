@@ -42,7 +42,7 @@ class LessonsViewModel: ObservableObject {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_BY")
         dateFormatter.timeZone = TimeZone.autoupdatingCurrent
-        dateFormatter.dateFormat = "EEEE, d MMMM"
+        dateFormatter.dateFormat = "EEEEEE, d MMMM, "
         return dateFormatter
     }
     
@@ -74,7 +74,20 @@ class LessonsViewModel: ObservableObject {
         }
     }
     
-    func lessons(_ date: Date) -> [Lesson] {
+    func week(_ date: Date) -> String {
+        var week: Int?
+        
+        if let group = group {
+            week = (weeksBetween(start: group.educationStart!, end: date) % 4) + 1
+        }
+        
+        if let employee = employee {
+            week = (weeksBetween(start: employee.educationStart!, end: date) % 4) + 1
+        }
+        return String(week!) + "-ая неделя"
+    }
+    
+    func lessons(_ date: Date, searchText: String) -> [Lesson] {
         var week: Int?
         var day: Int?
         
@@ -87,7 +100,20 @@ class LessonsViewModel: ObservableObject {
             week = (weeksBetween(start: employee.educationStart!, end: date) % 4) + 1
             day = Calendar(identifier: .iso8601).ordinality(of: .weekday, in: .weekOfYear, for: date)! - 1
         }
-        return lessons.forWeekNumber(week!).forWeekDay(day!)
+        return lessons.forWeekNumber(week!).forWeekDay(day!).filter{searchText.isEmpty || $0.subject!.localizedStandardContains(searchText) }
+    }
+    
+    func dateRange() -> ClosedRange<Date> {
+        var range: ClosedRange<Date>?
+        if let group = group {
+            range = group.educationStart!...group.educationEnd!
+        }
+        
+        if let employee = employee {
+            range = employee.educationStart!...employee.educationEnd!
+        }
+        
+        return range!
     }
     
     func update() {
