@@ -27,8 +27,15 @@ class FavoritesViewModel: ObservableObject {
         }
     }
     
-    func removeFromFavorites(_ group: Group? = nil) {
-        group?.favorite = false
-        GroupStorage.shared.save()
+    func removeFromFavorites(_ group: Group? = nil, _ employee: Employee? = nil) {
+        if let group = group {
+            group.favorite = false
+            GroupStorage.shared.save()
+        }
+        
+        if let employee = employee {
+            employee.favorite = false
+            EmployeeStorage.shared.save()
+        }
     }
 }

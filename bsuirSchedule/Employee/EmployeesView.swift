@@ -15,22 +15,33 @@ struct EmployeesView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                List(viewModel.foundEmployees(searchText), id: \.id) { employee in
-                    EmployeeView(employee: employee)
-                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                            Button {
-                                employee.favorite.toggle()
-                            } label: {
-                                Image(systemName: employee.favorite ? "star.slash" : "star")
-                            }
-                            
-                        }.background(NavigationLink("", destination: {
-                            EmployeeDetailedView(employee: employee)
-                        }).opacity(0))
+                if let employees = viewModel.foundEmployees(searchText), employees.isEmpty == false {
+                    List {
+                        ForEach(employees, id: \.id) { employee in
+                            EmployeeView(employee: employee)
+                                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                    Button {
+                                        employee.favorite.toggle()
+                                    } label: {
+                                        Image(systemName: employee.favorite ? "star.slash" : "star")
+                                    }
+                                    
+                                }.background(NavigationLink("", destination: {
+                                    EmployeeDetailedView(employee: employee)
+                                }).opacity(0))
+                        }
+                        HStack {
+                            Text("Всего преподавателей: \(employees.count)")
+                        }
+                    }
+                    .refreshable {
+                        viewModel.fetchEmployees()
+                    }
+                } else {
+                    Text("Ничего не найдено")
+                        .foregroundColor(Color.gray)
                 }
-                .refreshable {
-                    viewModel.fetchEmployees()
-                }
+                
                 if viewModel.employees.isEmpty {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle())

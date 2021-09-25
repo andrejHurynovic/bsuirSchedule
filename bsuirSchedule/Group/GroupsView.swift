@@ -31,7 +31,7 @@ struct GroupsView: View {
                 }
             }
             .navigationBarTitle("Группы")
-            .searchable(text: $searchText, prompt: "Фамилия, кафедра")
+            .searchable(text: $searchText, prompt: "Номер группы")
 //            .toolbar {
 //                Button {
 //                    viewModel.groups.forEach { group in

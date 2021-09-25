@@ -22,30 +22,23 @@ struct LessonView: View {
                         .fontWeight(.bold)
                         .foregroundColor(lesson.getColor())
                     if (lesson.subgroup != 0) {
-                        Label("", systemImage: String(lesson.subgroup) + ".circle")
+                        Label("", systemImage: String(lesson.subgroup) + ".circle.fill")
                             .font(.title2.bold())
+                            .foregroundColor(lesson.getColor())
                     }
                 }
+                
                 Spacer()
                 if let auditory = lesson.auditory {
-                    Label(auditory, systemImage: "mappin.circle")
+                    Label(auditory, systemImage: "mappin")
+                        .foregroundColor(Color.primary)
                 }
                 
-                switch(lesson.lessonType) {
-                case .lecture:
-                    Text("ЛК")
-                        .fontWeight(.medium)
-                        .foregroundColor(lesson.getColor())
-                case .practice:
-                    Text("ПЗ")
-                        .fontWeight(.medium)
-                        .foregroundColor(lesson.getColor())
-                case .laboratory:
-                    Text("ЛР")
-                        .fontWeight(.medium)
-                        .foregroundColor(lesson.getColor())
-                }
+                Text(lesson.getLessonTypeAbbreviation())
+                    .fontWeight(.medium)
+                    .foregroundColor(lesson.getColor())
             }
+            
             HStack(alignment: .bottom) {
                 if showEmployee {
                     if let employee = lesson.employee {
@@ -76,13 +69,21 @@ struct LessonView: View {
                 } else {
                     HStack(alignment: .top) {
                         Image(systemName: "person.2.circle")
-                        if let groups = self.lesson.groups?.allObjects as? [Group] {
+                        if let groups = self.lesson.groups?.allObjects.sorted(by: {($0 as! Group).id! < ($1 as! Group).id!}) as? [Group] {
                             if let groupsIDs = groups.map({$0.id}) as? [String] {
                                 Text(groupsIDs.sorted().joined(separator: ", "))
+                                    .contextMenu {
+                                        ForEach(groups) { group in
+                                            NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group, nil))) {
+                                                Label(group.id!, systemImage: "person.2.circle")
+                                            }
+                                        }
+                                    }
                             }
                         }
                     }
                 }
+                
                 Spacer()
                 VStack(alignment: .trailing) {
                     Text(lesson.timeStart!)

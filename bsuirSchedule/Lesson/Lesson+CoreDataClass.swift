@@ -70,6 +70,17 @@ public class Lesson: NSManagedObject, Decodable {
         }
     }
     
+    func getLessonTypeAbbreviation() -> String {
+        switch self.lessonType {
+        case .lecture:
+            return "ЛК"
+        case .practice:
+            return "ПЗ"
+        case .laboratory:
+            return "ЛР"
+        }
+    }
+    
     private enum CodingKeys: String, CodingKey {
         case auditory = "auditory"
         case groups = "studentGroup"

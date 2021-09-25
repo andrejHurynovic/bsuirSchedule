@@ -43,9 +43,9 @@ struct SettingsView: View {
                             .foregroundColor(.red)
                     }.alert("Вы уверены?", isPresented: $showingAlert) {
                         Button ("Сбросить", role: .destructive) {
-                            lectureColor = .green
-                            practiceColor = .yellow
-                            labWorkColor = .red
+                            lectureColor = Color.init(red: -4.06846e-06, green: 0.631373, blue: 0.847059)
+                            practiceColor = Color.init(red: 1, green: 0.415686, blue: 9.62615e-08)
+                            labWorkColor = Color.init(red: 0.745098, green: 0.219608, blue: 0.952942)
                         }
                         Button ("Отмена", role: .cancel) {}
                     }
