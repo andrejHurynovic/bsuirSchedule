@@ -24,6 +24,10 @@ struct ContentView: View {
                 .tabItem {
                     Label("Преподаватели", systemImage: "person.3")
                 }
+            ClassroomsView()
+                .tabItem {
+                    Label("Кабинеты", systemImage: "mappin")
+                }
             SettingsView()
                 .tabItem {
                     Label("Настройки", systemImage: "gearshape")

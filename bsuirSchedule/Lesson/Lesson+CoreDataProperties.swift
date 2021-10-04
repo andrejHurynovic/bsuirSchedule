@@ -27,6 +27,7 @@ extension Lesson {
     @NSManaged public var subject: String?
     @NSManaged public var lessonTypeValue: Int16
     @NSManaged public var auditory: String?
+    @NSManaged public var classroom: Classroom?
     
     @NSManaged public var groups: NSSet?
     @NSManaged public var subgroup: Int16

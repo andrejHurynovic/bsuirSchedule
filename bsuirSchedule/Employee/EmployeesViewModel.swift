@@ -9,11 +9,7 @@ import SwiftUI
 import Combine
 
 class EmployeesViewModel: ObservableObject {
-    @Published var employees: [Employee] = [] {
-        willSet {
-            
-        }
-    }
+    @Published var employees: [Employee] = []
     
     private var cancelable: AnyCancellable?
     

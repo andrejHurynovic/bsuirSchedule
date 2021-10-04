@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19197" systemVersion="21A5522h" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Classroom" representedClassName="Classroom" syncable="YES">
+        <attribute name="building" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="departmentAbbreviation" optional="YES" attributeType="String"/>
+        <attribute name="departmentName" optional="YES" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="typeValue" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="lessons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lesson" inverseName="classroom" inverseEntity="Lesson"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="name"/>
+                <constraint value="building"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
     <entity name="Employee" representedClassName="Employee" syncable="YES">
         <attribute name="degree" optional="YES" attributeType="String"/>
         <attribute name="departments" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[String]"/>
@@ -55,6 +69,7 @@
         <attribute name="timeStart" attributeType="String"/>
         <attribute name="weekDay" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="weekNumber" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[Int]"/>
+        <relationship name="classroom" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Classroom" inverseName="lessons" inverseEntity="Classroom"/>
         <relationship name="employee" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Employee" inverseName="lessons" inverseEntity="Employee"/>
         <relationship name="groups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="lessons" inverseEntity="Group"/>
         <uniquenessConstraints>
@@ -67,9 +82,10 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Employee" positionX="-231.9367065429688" positionY="-131.8106842041016" width="128" height="283"/>
+        <element name="Employee" positionX="-231.9367065429688" positionY="-131.8106842041016" width="128" height="269"/>
         <element name="Faculty" positionX="-536.472412109375" positionY="280.2841491699219" width="128" height="89"/>
         <element name="Group" positionX="-339.1310424804688" positionY="212.7224731445312" width="120.3765258789062" height="164"/>
-        <element name="Lesson" positionX="-464.7166137695312" positionY="-101.2243957519531" width="128" height="194"/>
+        <element name="Lesson" positionX="-464.7166137695312" positionY="-101.2243957519531" width="128" height="209"/>
+        <element name="Classroom" positionX="-387" positionY="27" width="128" height="119"/>
     </elements>
 </model>

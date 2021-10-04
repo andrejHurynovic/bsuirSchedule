@@ -56,20 +56,20 @@ struct FavoritesView: View {
                     LazyVStack {
                         ForEach(viewModel.employees) { employee in
                             Section {
-                            EmployeeFavoriteView(employee: employee)
+                                EmployeeFavoriteView(employee: employee)
                             }
-                                .contextMenu {
-                                    Button {
-                                        withAnimation(.spring()) {
-                                            viewModel.removeFromFavorites(nil, employee)
-                                        }
-                                    } label: {
-                                        Label("Убрать из избранных", systemImage: "star.circle")
+                            .contextMenu {
+                                Button {
+                                    withAnimation(.spring()) {
+                                        viewModel.removeFromFavorites(nil, employee)
                                     }
-                                    NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(nil, employee))) {
-                                        Label("Расписание", systemImage: "calendar")
-                                    }
+                                } label: {
+                                    Label("Убрать из избранных", systemImage: "star.circle")
                                 }
+                                NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(nil, employee))) {
+                                    Label("Расписание", systemImage: "calendar")
+                                }
+                            }
                         }
                     }
                     .padding(.horizontal)

@@ -28,6 +28,12 @@
 		F68465FB26FA5321000F185E /* Faculty+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68465F926FA5321000F185E /* Faculty+CoreDataClass.swift */; };
 		F68465FC26FA5321000F185E /* Faculty+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68465FA26FA5321000F185E /* Faculty+CoreDataProperties.swift */; };
 		F69009D426F6958100379A74 /* LessonsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69009D326F6958000379A74 /* LessonsViewModel.swift */; };
+		F697BF7526FFA172008FA7A9 /* ClassroomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697BF7426FFA172008FA7A9 /* ClassroomModel.swift */; };
+		F697BF7C26FFA1BA008FA7A9 /* Classroom+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697BF7826FFA1BA008FA7A9 /* Classroom+CoreDataClass.swift */; };
+		F697BF7D26FFA1BA008FA7A9 /* Classroom+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697BF7926FFA1BA008FA7A9 /* Classroom+CoreDataProperties.swift */; };
+		F697BF7F26FFA506008FA7A9 /* ClassroomStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697BF7E26FFA506008FA7A9 /* ClassroomStorage.swift */; };
+		F697BF8526FFA960008FA7A9 /* ClassroomsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697BF8426FFA960008FA7A9 /* ClassroomsView.swift */; };
+		F697BF8726FFAA02008FA7A9 /* ClassroomsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697BF8626FFAA02008FA7A9 /* ClassroomsViewModel.swift */; };
 		F699F21A26EA24CE00747BE0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F699F21926EA24CE00747BE0 /* Extensions.swift */; };
 		F69C463726E91B430036D6A1 /* EmployeeDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69C463626E91B430036D6A1 /* EmployeeDetailedView.swift */; };
 		F6A42DA026E52F8A004B239C /* GroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A42D9F26E52F8A004B239C /* GroupsView.swift */; };
@@ -67,6 +73,12 @@
 		F68465F926FA5321000F185E /* Faculty+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Faculty+CoreDataClass.swift"; sourceTree = "<group>"; };
 		F68465FA26FA5321000F185E /* Faculty+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Faculty+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F69009D326F6958000379A74 /* LessonsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsViewModel.swift; sourceTree = "<group>"; };
+		F697BF7426FFA172008FA7A9 /* ClassroomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomModel.swift; sourceTree = "<group>"; };
+		F697BF7826FFA1BA008FA7A9 /* Classroom+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Classroom+CoreDataClass.swift"; sourceTree = "<group>"; };
+		F697BF7926FFA1BA008FA7A9 /* Classroom+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Classroom+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F697BF7E26FFA506008FA7A9 /* ClassroomStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomStorage.swift; sourceTree = "<group>"; };
+		F697BF8426FFA960008FA7A9 /* ClassroomsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomsView.swift; sourceTree = "<group>"; };
+		F697BF8626FFAA02008FA7A9 /* ClassroomsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomsViewModel.swift; sourceTree = "<group>"; };
 		F699F21926EA24CE00747BE0 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		F69C463626E91B430036D6A1 /* EmployeeDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeDetailedView.swift; sourceTree = "<group>"; };
 		F6A42D9F26E52F8A004B239C /* GroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsView.swift; sourceTree = "<group>"; };
@@ -123,6 +135,7 @@
 				F6BCE3A626EFCF0A0067B5DA /* Lesson */,
 				F65F831F26E8F35500B8CC4E /* Employee */,
 				F68465F826FA52E8000F185E /* Faculty */,
+				F697BF7326FFA129008FA7A9 /* Classroom */,
 				F632DEEF26696CD300E4C55F /* Assets.xcassets */,
 				F632DEF926696CD300E4C55F /* Info.plist */,
 				F632DEF126696CD300E4C55F /* Preview Content */,
@@ -161,6 +174,19 @@
 				F6F6B4F126FA55F200814354 /* FacultyStorage.swift */,
 			);
 			path = Faculty;
+			sourceTree = "<group>";
+		};
+		F697BF7326FFA129008FA7A9 /* Classroom */ = {
+			isa = PBXGroup;
+			children = (
+				F697BF7426FFA172008FA7A9 /* ClassroomModel.swift */,
+				F697BF7826FFA1BA008FA7A9 /* Classroom+CoreDataClass.swift */,
+				F697BF7926FFA1BA008FA7A9 /* Classroom+CoreDataProperties.swift */,
+				F697BF7E26FFA506008FA7A9 /* ClassroomStorage.swift */,
+				F697BF8626FFAA02008FA7A9 /* ClassroomsViewModel.swift */,
+				F697BF8426FFA960008FA7A9 /* ClassroomsView.swift */,
+			);
+			path = Classroom;
 			sourceTree = "<group>";
 		};
 		F699F21826EA249E00747BE0 /* Group */ = {
@@ -270,12 +296,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				F68465FB26FA5321000F185E /* Faculty+CoreDataClass.swift in Sources */,
+				F697BF7526FFA172008FA7A9 /* ClassroomModel.swift in Sources */,
 				F6B4805226F9ED070085D5FE /* FavoritesViewModel.swift in Sources */,
 				F68465FC26FA5321000F185E /* Faculty+CoreDataProperties.swift in Sources */,
+				F697BF8526FFA960008FA7A9 /* ClassroomsView.swift in Sources */,
 				F6DCD72526B30F86003761B0 /* LessonsView.swift in Sources */,
 				F632DEF526696CD300E4C55F /* Persistence.swift in Sources */,
 				F632DEEE26696CCB00E4C55F /* ContentView.swift in Sources */,
 				F61C524026E64619002CF234 /* Group+CoreDataClass.swift in Sources */,
+				F697BF7D26FFA1BA008FA7A9 /* Classroom+CoreDataProperties.swift in Sources */,
 				F6606FD826F93A89002E0B3E /* FavoritesView.swift in Sources */,
 				F6CB615726F000EE00D29807 /* LessonView.swift in Sources */,
 				F61C523F26E64619002CF234 /* Lesson+CoreDataProperties.swift in Sources */,
@@ -284,7 +313,9 @@
 				F699F21A26EA24CE00747BE0 /* Extensions.swift in Sources */,
 				F6CB615526EFF43900D29807 /* LessonStorage.swift in Sources */,
 				F67DF3B5266AA56000D96417 /* Employee+CoreDataClass.swift in Sources */,
+				F697BF7F26FFA506008FA7A9 /* ClassroomStorage.swift in Sources */,
 				F6A42DA026E52F8A004B239C /* GroupsView.swift in Sources */,
+				F697BF8726FFAA02008FA7A9 /* ClassroomsViewModel.swift in Sources */,
 				F61C524126E64619002CF234 /* Group+CoreDataProperties.swift in Sources */,
 				F65F832126E8F37800B8CC4E /* EmployeesViewModel.swift in Sources */,
 				F62CA25726ED4B49004474CE /* GroupModel.swift in Sources */,
@@ -297,6 +328,7 @@
 				F6AA210D26EBA59D006218F8 /* GroupStorage.swift in Sources */,
 				F6BCE3A826EFCFEE0067B5DA /* EmployeeModel.swift in Sources */,
 				F64AD7B0266A816D00115E6B /* EmployeesView.swift in Sources */,
+				F697BF7C26FFA1BA008FA7A9 /* Classroom+CoreDataClass.swift in Sources */,
 				F6F6B4F226FA55F200814354 /* FacultyStorage.swift in Sources */,
 				F632DEEC26696CCB00E4C55F /* bsuirTimetableApp.swift in Sources */,
 				F64BEDDA26E9072900C7AD09 /* EmployeeView.swift in Sources */,
