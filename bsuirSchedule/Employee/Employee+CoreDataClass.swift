@@ -33,7 +33,7 @@ public class Employee: NSManagedObject {
     }
     
     func update(_ updatedEmployee: EmployeeModel) {
-        self.removeFromLessons(self.lessons!)
+        LessonStorage.shared.delete(self.lessons?.allObjects as! [Lesson])
         self.addToLessons(NSSet(array: updatedEmployee.lessons))
         
         self.educationStart = updatedEmployee.educationStart

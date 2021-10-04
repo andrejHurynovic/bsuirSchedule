@@ -39,6 +39,13 @@ class LessonStorage: NSObject, ObservableObject {
         save()
     }
     
+    func delete(_ lessons: [Lesson]) {
+        lessons.forEach { lesson in
+            PersistenceController.shared.container.viewContext.delete(lesson)
+        }
+        save()
+    }
+    
     func deleteAll() {
         lessons.value.forEach { lesson in
             PersistenceController.shared.container.viewContext.delete(lesson)
