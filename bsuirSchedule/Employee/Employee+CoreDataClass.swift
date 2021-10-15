@@ -33,7 +33,25 @@ public class Employee: NSManagedObject {
     }
     
     func update(_ updatedEmployee: EmployeeModel) {
-        LessonStorage.shared.delete(self.lessons?.allObjects as! [Lesson])
+        
+        let existingLessons = (self.lessons?.allObjects as! [Lesson])
+        var lessonsToRemove: [Lesson] = []
+        
+        existingLessons.forEach { oldLesson in
+            if updatedEmployee.lessons.contains(where: { newLesson in
+                oldLesson.weekDay == newLesson.weekDay &&
+                oldLesson.weekNumber == newLesson.weekNumber &&
+                oldLesson.timeStart == newLesson.timeStart
+            }) == false {
+                lessonsToRemove.append(oldLesson)
+            }
+        }
+        
+        if lessonsToRemove.isEmpty == false {
+            removeFromLessons(NSSet(array: lessonsToRemove))
+            LessonStorage.shared.delete(lessonsToRemove)
+        }
+
         self.addToLessons(NSSet(array: updatedEmployee.lessons))
         
         self.educationStart = updatedEmployee.educationStart

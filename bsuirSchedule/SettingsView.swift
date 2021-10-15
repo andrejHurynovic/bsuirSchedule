@@ -13,6 +13,7 @@ struct SettingsView: View {
     @StateObject var lessonsStorage = LessonStorage.shared
     @StateObject var facultyStorage = FacultyStorage.shared
     @StateObject var classroomStorage = ClassroomStorage.shared
+    @StateObject var specialityStorage = SpecialityStorage.shared
 
     //@State var mainColor: Color = .accentColor
     @State var lectureColor: Color =  Color(UserDefaults.standard.color(forKey: "lectureColor") ?? .green)
@@ -86,6 +87,12 @@ struct SettingsView: View {
                         classroomStorage.deleteAll()
                     } label: {
                         Label("Удалить кабинеты (\(classroomStorage.classrooms.value.count))", systemImage: "house.circle")
+                            .foregroundColor(.red)
+                    }
+                    Button {
+                        specialityStorage.deleteAll()
+                    } label: {
+                        Label("Удалить специальности (\(specialityStorage.specialities.value.count))", systemImage: "folder.circle")
                             .foregroundColor(.red)
                     }
                     

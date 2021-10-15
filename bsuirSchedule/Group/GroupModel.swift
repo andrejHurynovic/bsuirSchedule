@@ -12,7 +12,7 @@ struct GroupModel: Decodable {
     public var id: String!
     public var course: Int16!
     
-    public var faculty : Faculty!
+    public var speciality : Speciality!
     
     public var educationStart: Date?
     public var educationEnd: Date?
@@ -29,8 +29,8 @@ struct GroupModel: Decodable {
         if let id = try? container.decode(String.self, forKey: .id) {
             self.id = id
             
-            let facultyID = try! container.decode(Int16.self, forKey: .facultyID)
-            self.faculty = FacultyStorage.shared.faculties.value.first(where: {$0.id == facultyID})
+            let specialityID = try! container.decode(Int16.self, forKey: .specialityID)
+            self.speciality = SpecialityStorage.shared.specialities.value.first(where: {$0.id == specialityID})
         }
         
         if let course = try? container.decode(Int16.self, forKey: .course) {
@@ -98,7 +98,7 @@ struct GroupModel: Decodable {
         case id = "name"
         case course
         
-        case facultyID = "facultyId"
+        case specialityID = "specialityDepartmentEducationFormId"
         
         case educationStart = "dateStart"
         case educationEnd = "dateEnd"

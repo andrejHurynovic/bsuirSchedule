@@ -12,9 +12,12 @@ struct bsuirScheduleApp: App {
     let persistenceController = PersistenceController.shared
     
     init() {
-//        if FacultyStorage.shared.faculties.value.isEmpty {
-//            FacultyStorage.shared.fetch()
-//        }
+        if FacultyStorage.shared.faculties.value.isEmpty {
+            FacultyStorage.shared.fetch()
+        }
+        if SpecialityStorage.shared.specialities.value.isEmpty {
+            SpecialityStorage.shared.fetch()
+        }
     }
 
     var body: some Scene {

@@ -98,13 +98,17 @@ struct FavoriteGroupView: View {
                     .fontWeight(.bold)
                     .foregroundColor(Color.primary)
                 Spacer()
-                Text(group.faculty!.abbreviation!)
+                Text(group.speciality!.abbreviation!)
                     .foregroundColor(Color.primary)
-                Text(String(group.course) + "-й курс")
-                    .font(.headline)
-                    .fontWeight(.regular)
-                    .foregroundColor(Color.gray)
-                
+                HStack {
+                    Text(String(group.speciality!.faculty!.abbreviation!))
+                        .font(.headline)
+                        .fontWeight(.regular)
+                        .foregroundColor(Color.gray)
+                    Spacer()
+                    Image(systemName: String(group.course) + ".circle.fill")
+                        .foregroundColor(Color.gray)
+                }
             }
         }
         .padding()

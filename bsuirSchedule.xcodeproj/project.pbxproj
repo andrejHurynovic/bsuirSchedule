@@ -47,6 +47,9 @@
 		F6DCD72326B30EF0003761B0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DCD72226B30EF0003761B0 /* SettingsView.swift */; };
 		F6DCD72526B30F86003761B0 /* LessonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DCD72426B30F86003761B0 /* LessonsView.swift */; };
 		F6F6B4F226FA55F200814354 /* FacultyStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F6B4F126FA55F200814354 /* FacultyStorage.swift */; };
+		F6F87816271A1ED7005E3C41 /* Speciality+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F87810271A1ED7005E3C41 /* Speciality+CoreDataClass.swift */; };
+		F6F87817271A1ED7005E3C41 /* Speciality+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F87811271A1ED7005E3C41 /* Speciality+CoreDataProperties.swift */; };
+		F6F8781A271A2111005E3C41 /* SpecialityStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F87819271A2111005E3C41 /* SpecialityStorage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +95,9 @@
 		F6DCD72226B30EF0003761B0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		F6DCD72426B30F86003761B0 /* LessonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsView.swift; sourceTree = "<group>"; };
 		F6F6B4F126FA55F200814354 /* FacultyStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacultyStorage.swift; sourceTree = "<group>"; };
+		F6F87810271A1ED7005E3C41 /* Speciality+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Speciality+CoreDataClass.swift"; sourceTree = "<group>"; };
+		F6F87811271A1ED7005E3C41 /* Speciality+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Speciality+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F6F87819271A2111005E3C41 /* SpecialityStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialityStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +140,7 @@
 				F699F21826EA249E00747BE0 /* Group */,
 				F6BCE3A626EFCF0A0067B5DA /* Lesson */,
 				F65F831F26E8F35500B8CC4E /* Employee */,
+				F6F87818271A1F36005E3C41 /* Speciality */,
 				F68465F826FA52E8000F185E /* Faculty */,
 				F697BF7326FFA129008FA7A9 /* Classroom */,
 				F632DEEF26696CD300E4C55F /* Assets.xcassets */,
@@ -225,6 +232,16 @@
 			path = Favorite;
 			sourceTree = "<group>";
 		};
+		F6F87818271A1F36005E3C41 /* Speciality */ = {
+			isa = PBXGroup;
+			children = (
+				F6F87810271A1ED7005E3C41 /* Speciality+CoreDataClass.swift */,
+				F6F87811271A1ED7005E3C41 /* Speciality+CoreDataProperties.swift */,
+				F6F87819271A2111005E3C41 /* SpecialityStorage.swift */,
+			);
+			path = Speciality;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -300,6 +317,7 @@
 				F6B4805226F9ED070085D5FE /* FavoritesViewModel.swift in Sources */,
 				F68465FC26FA5321000F185E /* Faculty+CoreDataProperties.swift in Sources */,
 				F697BF8526FFA960008FA7A9 /* ClassroomsView.swift in Sources */,
+				F6F87816271A1ED7005E3C41 /* Speciality+CoreDataClass.swift in Sources */,
 				F6DCD72526B30F86003761B0 /* LessonsView.swift in Sources */,
 				F632DEF526696CD300E4C55F /* Persistence.swift in Sources */,
 				F632DEEE26696CCB00E4C55F /* ContentView.swift in Sources */,
@@ -307,6 +325,7 @@
 				F697BF7D26FFA1BA008FA7A9 /* Classroom+CoreDataProperties.swift in Sources */,
 				F6606FD826F93A89002E0B3E /* FavoritesView.swift in Sources */,
 				F6CB615726F000EE00D29807 /* LessonView.swift in Sources */,
+				F6F8781A271A2111005E3C41 /* SpecialityStorage.swift in Sources */,
 				F61C523F26E64619002CF234 /* Lesson+CoreDataProperties.swift in Sources */,
 				F65F832326E8F5B900B8CC4E /* EmployeeStorage.swift in Sources */,
 				F6BCE3AA26EFD72C0067B5DA /* Schedule.swift in Sources */,
@@ -319,6 +338,7 @@
 				F61C524126E64619002CF234 /* Group+CoreDataProperties.swift in Sources */,
 				F65F832126E8F37800B8CC4E /* EmployeesViewModel.swift in Sources */,
 				F62CA25726ED4B49004474CE /* GroupModel.swift in Sources */,
+				F6F87817271A1ED7005E3C41 /* Speciality+CoreDataProperties.swift in Sources */,
 				F61C523E26E64619002CF234 /* Lesson+CoreDataClass.swift in Sources */,
 				F69009D426F6958100379A74 /* LessonsViewModel.swift in Sources */,
 				F67DF3B6266AA56000D96417 /* Employee+CoreDataProperties.swift in Sources */,

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19197" systemVersion="21A5522h" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19206" systemVersion="21A5552a" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Classroom" representedClassName="Classroom" syncable="YES">
         <attribute name="building" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="departmentAbbreviation" optional="YES" attributeType="String"/>
@@ -41,7 +41,7 @@
         <attribute name="abbreviation" attributeType="String"/>
         <attribute name="id" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
-        <relationship name="groups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="faculty" inverseEntity="Group"/>
+        <relationship name="specialities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Speciality" inverseName="faculty" inverseEntity="Speciality"/>
     </entity>
     <entity name="Group" representedClassName="Group" syncable="YES">
         <attribute name="course" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -51,8 +51,8 @@
         <attribute name="examsStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="favorite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="id" attributeType="String"/>
-        <relationship name="faculty" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Faculty" inverseName="groups" inverseEntity="Faculty"/>
         <relationship name="lessons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lesson" inverseName="groups" inverseEntity="Lesson"/>
+        <relationship name="speciality" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Speciality" inverseName="groups" inverseEntity="Speciality"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -81,11 +81,21 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
+    <entity name="Speciality" representedClassName="Speciality" syncable="YES">
+        <attribute name="abbreviation" attributeType="String"/>
+        <attribute name="code" attributeType="String"/>
+        <attribute name="educationTypeValue" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <relationship name="faculty" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Faculty" inverseName="specialities" inverseEntity="Faculty"/>
+        <relationship name="groups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="speciality" inverseEntity="Group"/>
+    </entity>
     <elements>
+        <element name="Classroom" positionX="-688.0670166015625" positionY="-34.90615844726562" width="128" height="119"/>
         <element name="Employee" positionX="-231.9367065429688" positionY="-131.8106842041016" width="128" height="269"/>
-        <element name="Faculty" positionX="-536.472412109375" positionY="280.2841491699219" width="128" height="89"/>
-        <element name="Group" positionX="-339.1310424804688" positionY="212.7224731445312" width="120.3765258789062" height="164"/>
+        <element name="Faculty" positionX="-536.472412109375" positionY="280.2841491699219" width="128" height="103"/>
+        <element name="Group" positionX="-339.1310424804688" positionY="212.7224731445312" width="120.3765258789062" height="178"/>
         <element name="Lesson" positionX="-464.7166137695312" positionY="-101.2243957519531" width="128" height="209"/>
-        <element name="Classroom" positionX="-387" positionY="27" width="128" height="119"/>
+        <element name="Speciality" positionX="-715.6961669921875" positionY="275.5036926269531" width="128" height="148"/>
     </elements>
 </model>

@@ -21,7 +21,9 @@ class GroupsViewModel: ObservableObject {
     
     func foundGroups(_ searchText: String) -> [Group] {
         groups.filter {group in
-            searchText.isEmpty || group.id?.localizedStandardContains(searchText) ?? true
+            searchText.isEmpty ||
+            (group.id?.localizedStandardContains(searchText) ?? true) ||
+            (group.speciality?.abbreviation?.localizedStandardContains(searchText) ?? true)
         }
     }
     

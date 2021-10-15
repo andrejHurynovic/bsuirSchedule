@@ -21,24 +21,25 @@ extension Faculty {
     @NSManaged public var id: Int16
     @NSManaged public var name: String?
     @NSManaged public var abbreviation: String?
-    @NSManaged public var groups: NSSet?
+    
+    @NSManaged public var specialities: NSSet?
 
 }
 
-// MARK: Generated accessors for groups
+// MARK: Generated accessors for specialities
 extension Faculty {
 
-    @objc(addGroupsObject:)
-    @NSManaged public func addToGroups(_ value: Group)
+    @objc(addSpecialitiesObject:)
+    @NSManaged public func addToSpecialities(_ value: Speciality)
 
-    @objc(removeGroupsObject:)
-    @NSManaged public func removeFromGroups(_ value: Group)
+    @objc(removeSpecialitiesObject:)
+    @NSManaged public func removeFromSpecialities(_ value: Speciality)
 
-    @objc(addGroups:)
-    @NSManaged public func addToGroups(_ values: NSSet)
+    @objc(addSpecialities:)
+    @NSManaged public func addToSpecialities(_ values: NSSet)
 
-    @objc(removeGroups:)
-    @NSManaged public func removeFromGroups(_ values: NSSet)
+    @objc(removeSpecialities:)
+    @NSManaged public func removeFromSpecialities(_ values: NSSet)
 
 }
 
