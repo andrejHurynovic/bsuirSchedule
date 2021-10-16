@@ -14,7 +14,8 @@ extension Speciality {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Speciality> {
         let request = NSFetchRequest<Speciality>(entityName: "Speciality")
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \Speciality.id, ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \Speciality.name, ascending: true),
+                                   NSSortDescriptor(keyPath: \Speciality.educationTypeValue, ascending: true)]
         return request
     }
 

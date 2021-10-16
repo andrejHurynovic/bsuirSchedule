@@ -14,33 +14,36 @@ struct GroupsView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                List (viewModel.foundGroups(searchText), id: \.id) { group in
-                    NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group, nil))){
-                        Text(group.id ?? "WFt")
+                List (viewModel.foundGroups(searchText), id: \.self) { section in
+                    Section(section.title) {
+                        ForEach(section.groups, id: \.id, content: { group in
+                            NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group, nil))){
+                                Text(group.id ?? "")
+                            }
+                        })
                     }
+                    
                 }
                 .refreshable {
                     viewModel.fetchGroups()
                 }
                 if viewModel.groups.isEmpty {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .onAppear {
+//                    ProgressView()
+//                        .progressViewStyle(CircularProgressViewStyle())
+//                        .onAppear {
 //                            viewModel.fetchGroups()
-                        }
+//                        }
                 }
             }
             .navigationBarTitle("Группы")
-            .searchable(text: $searchText, prompt: "Номер группы")
-//            .toolbar {
-//                Button {
-//                    viewModel.groups.forEach { group in
-//                        viewModel.fetchGroup(group.id!)
-//                    }
-//                } label: {
-//                    Text("SUs")
-//                }
-//            }
+            .searchable(text: $searchText, prompt: "Номер группы, специальность")
+            
+            .toolbar {
+                Picker("Color", selection: $viewModel.sortedBy) {
+                    Text("Номер").tag(GroupSortingType.number)
+                    Text("Специальность").tag(GroupSortingType.speciality)
+                }
+            }
         }.navigationViewStyle(StackNavigationViewStyle())
     }
 }
