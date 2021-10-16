@@ -29,41 +29,35 @@ class GroupsViewModel: ObservableObject {
     func foundGroups(_ searchText: String) -> [GroupSection] {
         var sections: [GroupSection] = []
         
+        let foundGroups = groups.filter { group in
+            searchText.isEmpty ||
+            group.id!.localizedStandardContains(searchText) ||
+            group.speciality!.abbreviation!.localizedStandardContains(searchText)
+        }
+        
         switch sortedBy {
         case .number:
             var groupPrefixes = Set<String.SubSequence>()
-            groups
-                .filter { group in
-                    searchText.isEmpty ||
-                    (group.id?.localizedStandardContains(searchText) ?? true) ||
-                    (group.speciality?.abbreviation?.localizedStandardContains(searchText) ?? true)
-                }
-                .map{ $0.id!.prefix(3)}.forEach { subSequence in
-                    groupPrefixes.insert(subSequence)
-                }
+            foundGroups.map{$0.id!.prefix(3)}.forEach { subSequence in
+                groupPrefixes.insert(subSequence)
+            }
             
             groupPrefixes.sorted().forEach { prefixSequence in
                 sections.append(GroupSection(title: String(prefixSequence),
-                                             groups: groups.filter{$0.id!.prefix(3) == prefixSequence}))
+                                             groups: foundGroups.filter{$0.id!.prefix(3) == prefixSequence}))
             }
-            break
         case .speciality:
             SpecialityStorage.shared.specialities.value.forEach { speciality in
-                let groups: [Group] = (speciality.groups?.allObjects as! [Group])
-                    .sorted(by: {$0.id < $1.id})
-                    .filter { group in
-                        searchText.isEmpty ||
-                        (group.id?.localizedStandardContains(searchText) ?? true) ||
-                        (group.speciality?.abbreviation?.localizedStandardContains(searchText) ?? true)
-                    }
-                
-                if groups.isEmpty == false {
+                let specialityGroups = foundGroups.filter{$0.speciality! == speciality}
+                if specialityGroups.isEmpty == false {
                     sections.append(GroupSection(
                         title: "\(speciality.name!) (\(speciality.getEducationTypeDescription()), \(speciality.faculty!.abbreviation!))" ,
-                        groups: groups))
+                        groups: specialityGroups))
                 }
             }
         }
+        
+        
         return sections
     }
     
