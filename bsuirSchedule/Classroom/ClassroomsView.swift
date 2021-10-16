@@ -12,35 +12,48 @@ struct ClassroomsView: View {
     @State var searchText = ""
     
     var body: some View {
-        ScrollView {
-            Button {
-                viewModel.fetchClassrooms()
-            } label: {
-                Text("SUS")
-            }
-            
-            ForEach(1..<9) { index in
-                if let classrooms = viewModel.classrooms.filter({$0.building == index}), classrooms.isEmpty == false {
-                    VStack(alignment: .leading) {
-                        Text(String(index) + "-ый корпус")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .padding(.leading)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 96, maximum: 256), spacing: nil, alignment: nil)],
-                              alignment: .center, spacing: nil,
-                              pinnedViews: []) {
-                        
-                        ForEach(classrooms, id: \.self) {classroom in
-                            ZStack {
-                                ClassroomView(classroom: classroom)
+        NavigationView {
+            ScrollView {
+                ForEach(1..<9) { index in
+                    Section {
+                        let sections = viewModel.classrooms(building: index, searchText)
+                        if sections.isEmpty == false {
+                            
+                            ForEach(sections, id: \.title) { section in
+                                LazyVGrid(columns: [GridItem(.adaptive(minimum: 96, maximum: 256), spacing: nil, alignment: nil)],
+                                          alignment: .center, spacing: nil,
+                                          pinnedViews: []) {
+                                    Section {
+                                        ForEach(section.classrooms, id: \.self) { classroom in
+                                            ZStack {
+                                                ClassroomView(classroom: classroom)
+                                            }
+                                        }
+                                    } header: {
+                                        VStack(alignment: .leading) {
+                                            Text(String(section.title))
+                                                .font(.title2)
+                                                .fontWeight(.bold)
+                                                .padding(.leading)
+                                        }
+                                    }
+                                }.padding(.horizontal)
                             }
                         }
-                    }.padding(.horizontal)
+                    } header: {
+                        VStack(alignment: .leading) {
+                            Text(String(index) + "-ый корпус")
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .padding(.leading)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
                 }
             }
-        }
+            .navigationTitle("Кабинеты")
+            .searchable(text: $searchText, prompt: "Номер, кафедра")
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
@@ -51,20 +64,21 @@ struct ClassroomView: View {
     
     var body: some View {
         NavigationLink {
-//            LessonsView(viewModel: LessonsViewModel(group, nil))
+            //            LessonsView(viewModel: LessonsViewModel(group, nil))
         } label: {
             VStack(alignment: .leading) {
-                Text(classroom.name! + "-" + String(classroom.building))
+                Text(classroom.name!)
                     .font(.title3)
                     .fontWeight(.bold)
                     .foregroundColor(Color.primary)
                 Spacer()
-                Text(classroom.departmentAbbreviation ?? "")
+                Text(classroom.getClassroomTypeDescription())
                     .foregroundColor(Color.primary)
-//                Text(String(group.course) + "-й курс")
-//                    .font(.headline)
-//                    .fontWeight(.regular)
-//                    .foregroundColor(Color.gray)
+                
+                Text(classroom.departmentAbbreviation ?? "")
+                    .font(.headline)
+                    .fontWeight(.regular)
+                    .foregroundColor(Color.gray)
                 
             }
         }
@@ -79,6 +93,6 @@ struct ClassroomView: View {
 struct ClassroomsView_Previews: PreviewProvider {
     static var previews: some View {
         ClassroomsView()
-.previewInterfaceOrientation(.portrait)
+            .previewInterfaceOrientation(.portrait)
     }
 }

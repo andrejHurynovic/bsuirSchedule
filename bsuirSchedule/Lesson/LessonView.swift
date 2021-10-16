@@ -29,8 +29,8 @@ struct LessonView: View {
                 }
                 
                 Spacer()
-                if let auditory = lesson.auditory {
-                    Label(auditory, systemImage: "mappin")
+                if let classroom = lesson.classroom {
+                    Label("\(classroom.name!)-\(String(classroom.building))", systemImage: "mappin")
                         .foregroundColor(Color.primary)
                 }
                 

@@ -70,7 +70,7 @@ class ClassroomStorage: NSObject, ObservableObject {
             .decode(type: [ClassroomModel].self, decoder: JSONDecoder())
             .sink { completion in
             } receiveValue: { (returnedClassrooms) in
-                returnedClassrooms.filter({(1...4).contains($0.typeValue) && (1...7).contains($0.building)}) .forEach { classroom in
+                returnedClassrooms.filter({(1...7).contains($0.building)}) .forEach { classroom in
                     let newClassroom = Classroom(classroom)
                     if (6...7).contains(classroom.building) {
                         newClassroom.building += 1
@@ -79,6 +79,18 @@ class ClassroomStorage: NSObject, ObservableObject {
                 ClassroomStorage.shared.save()
             }
             .store(in: &cancellables)
+    }
+    
+    func classroom(name: String) -> Classroom? {
+        var name = name
+        let range = name.range(of: "к.")!
+        name.removeSubrange(range)
+        name = name.trimmingCharacters(in: .whitespaces)
+        
+        let separator = name.lastIndex(of: "-")!
+        let classroom = classrooms.value.first { $0.name! == name.prefix(upTo: separator) && $0.building == Int(String(name.last!))! }
+        
+        return classroom
     }
 }
 

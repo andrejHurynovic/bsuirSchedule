@@ -24,4 +24,25 @@ public class Classroom: NSManagedObject {
         self.departmentName = classroom.departmentName
         self.departmentAbbreviation = classroom.departmentAbbreviation
     }
+    
+    func getClassroomTypeDescription() -> String {
+        switch self.typeValue {
+        case 1:
+            return "ЛК"
+        case 2:
+            return "ПЗ"
+        case 3:
+            return "ЛР"
+        case 4:
+            return "КК"
+        case 5:
+            return "ВП"
+        case 6:
+            return "РК"
+        case 7:
+            return "НЛ"
+        default:
+            return ""
+        }
+    }
 }

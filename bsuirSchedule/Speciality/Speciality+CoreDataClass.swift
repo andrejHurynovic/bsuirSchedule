@@ -31,6 +31,7 @@ public class Speciality: NSManagedObject, Decodable {
         self.educationTypeValue = try! nestedContainer.decode(Int16.self, forKey: .educationTypeValue)
         self.code = try! container.decode(String.self, forKey: .code)
     }
+    
     func getEducationTypeDescription() -> String {
         switch self.educationTypeValue {
         case 1:

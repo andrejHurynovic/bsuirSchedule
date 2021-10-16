@@ -43,12 +43,9 @@ public class Lesson: NSManagedObject, Decodable {
             
         }
         
-        if var audiences = try? container.decode([String].self, forKey: .auditory) {
-            if !audiences.isEmpty {
-                if let range = audiences[0].range(of: "к.") {
-                    audiences[0].removeSubrange(range)
-                }
-                self.auditory = audiences[0]
+        if let audiences = try? container.decode([String].self, forKey: .classroom) {
+            if audiences.isEmpty == false {
+                self.classroom = ClassroomStorage.shared.classroom(name: audiences.first!)
             }
         }
         
@@ -82,7 +79,7 @@ public class Lesson: NSManagedObject, Decodable {
     }
     
     private enum CodingKeys: String, CodingKey {
-        case auditory = "auditory"
+        case classroom = "auditory"
         case groups = "studentGroup"
         case lessonTypeValue = "lessonType"
         case subgroup = "numSubgroup"

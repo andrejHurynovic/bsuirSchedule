@@ -19,29 +19,55 @@ class ClassroomsViewModel: ObservableObject {
         }
     }
     
-    func addClassroom(array: inout [Classroom]?, element: Classroom) {
-        if array == nil {
-            array = []
-            array?.append(element)
-        } else {
-            array?.append(element)
-        }
-    }
-    
-    func classrooms(building: Int, _ searchText: String) -> [Character : [Classroom]] {
-        var dictionary: [Character: [Classroom]] = [:]
-        self.classrooms.filter {
-            searchText.isEmpty ||
-            $0.name!.localizedStandardContains(searchText) ||
-            $0.departmentAbbreviation!.localizedStandardContains(searchText)
-        }.forEach { classroom in
-            addClassroom(array: &dictionary[classroom.name!.first!], element: classroom)
+    func classrooms(building: Int, _ searchText: String) -> [ClassroomSection] {
+        var sections: [ClassroomSection] = []
+        
+        let foundClassrooms = classrooms.filter{$0.building == building}
+        var floors = Set<String.SubSequence>()
+        
+        foundClassrooms.map {$0.name!.prefix(1)}.forEach { subSequence in
+            floors.insert(subSequence)
         }
         
-        return dictionary
+        floors
+            .filter { Int($0) != nil }
+            .sorted()
+            .forEach { floor in
+                var title = String(floor)
+                if floor == "0" {
+                    title = title + "-ой этаж"
+                } else {
+                    title = title + "-ый этаж"
+                }
+                sections.append(ClassroomSection(title: title,
+                                                 classrooms: foundClassrooms.filter {$0.name!.prefix(1) == floor}))
+            }
+        
+        var otherClassrooms: [Classroom] = []
+        
+        floors
+            .filter { Int($0) == nil }
+            .sorted()
+            .forEach { subSequence in
+                otherClassrooms.append(contentsOf: foundClassrooms.filter{$0.name!.prefix(1) == subSequence})
+            }
+        
+        if otherClassrooms.isEmpty == false {
+            sections.append(ClassroomSection(title: "Другие", classrooms: otherClassrooms))
+        }
+        
+        return sections
+        
     }
 
     func fetchClassrooms() {
         ClassroomStorage.shared.fetch()
     }
+}
+
+
+
+struct ClassroomSection: Hashable {
+    var title: String
+    var classrooms: [Classroom]
 }
