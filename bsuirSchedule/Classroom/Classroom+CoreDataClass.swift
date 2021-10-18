@@ -45,4 +45,33 @@ public class Classroom: NSManagedObject {
             return ""
         }
     }
+    
+    func groups() -> [Group] {
+        var groups = Set<Group>()
+        
+        if let lessons = self.lessons?.allObjects as? [Lesson] {
+            lessons.forEach { lesson in
+                if let lessonsGroups = lesson.groups?.allObjects as? [Group] {
+                    lessonsGroups.forEach { group in
+                        groups.insert(group)
+                    }
+                }
+            }
+        }
+        return groups.sorted{$0.id! < $1.id!}
+    }
+    
+    func educationStart() -> Date {
+        var dates = Set<Date>()
+        groups().forEach{dates.insert($0.educationStart!)}
+        
+        return dates.sorted().first!
+    }
+    
+    func educationEnd() -> Date {
+        var dates = Set<Date>()
+        groups().forEach{dates.insert($0.educationEnd!)}
+        
+        return dates.sorted().last!
+    }
 }

@@ -40,7 +40,6 @@ struct EmployeeDetailedView: View {
                     Text(employee.firstName! + " " + employee.middleName!)
                         .font(.title2)
                         .fontWeight(.bold)
-                    //                    }
                 }
             }
             if !employee.departments!.isEmpty || !employee.degree!.isEmpty || employee.rank != nil {
@@ -70,7 +69,7 @@ struct EmployeeDetailedView: View {
             
             if let _ = employee.lessons?.allObjects as? [Lesson] {
                 NavigationLink {
-                    LessonsView(viewModel: LessonsViewModel(nil, employee))
+                    LessonsView(viewModel: LessonsViewModel(nil, employee, nil))
                 } label: {
                     Label("Расписание преподавателя", systemImage: "calendar")
                 }
@@ -81,7 +80,7 @@ struct EmployeeDetailedView: View {
                 Section("Группы") {
                     ForEach(groups) { group in
                         NavigationLink {
-                            LessonsView(viewModel: LessonsViewModel(group, nil))
+                            LessonsView(viewModel: LessonsViewModel(group, nil, nil))
                         } label: {
                             Text(group.id!)
                         }

@@ -40,7 +40,7 @@ struct LessonsView: View {
                                         .font(.title2)
                                         .fontWeight(.bold)
                                     ForEach(lessons, id: \.self) { lesson in
-                                        LessonView(lesson: lesson, showEmployee: !viewModel.isEmployee)
+                                        LessonView(lesson: lesson, showEmployee: !viewModel.isEmployee, showGroups: viewModel.isEmployee || viewModel.isClassroom)
                                     }.onDisappear {
                                         if Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date())! == date {
                                             withAnimation(.linear(duration: 0.2)) {

@@ -68,31 +68,31 @@ struct SettingsView: View {
                     Button {
                         EmployeeStorage.shared.deleteAll()
                     } label: {
-                        Label("Удалить преподов (\(EmployeeStorage.shared.employees.value.count))", systemImage: "person.circle")
+                        Label("Удалить преподов (\(EmployeeStorage.shared.values.value.count))", systemImage: "person.circle")
                             .foregroundColor(.red)
                     }
                     Button {
                         lessonsStorage.deleteAll()
                     } label: {
-                        Label("Удалить занятия (\(lessonsStorage.lessons.value.count))", systemImage: "book.circle")
+                        Label("Удалить занятия (\(lessonsStorage.values.value.count))", systemImage: "book.circle")
                             .foregroundColor(.red)
                     }
                     Button {
                         facultyStorage.deleteAll()
                     } label: {
-                        Label("Удалить факультеты (\(facultyStorage.faculties.value.count))", systemImage: "building.2.crop.circle")
+                        Label("Удалить факультеты (\(facultyStorage.values.value.count))", systemImage: "building.2.crop.circle")
                             .foregroundColor(.red)
                     }
                     Button {
                         classroomStorage.deleteAll()
                     } label: {
-                        Label("Удалить кабинеты (\(classroomStorage.classrooms.value.count))", systemImage: "house.circle")
+                        Label("Удалить кабинеты (\(classroomStorage.values.value.count))", systemImage: "house.circle")
                             .foregroundColor(.red)
                     }
                     Button {
                         specialityStorage.deleteAll()
                     } label: {
-                        Label("Удалить специальности (\(specialityStorage.specialities.value.count))", systemImage: "folder.circle")
+                        Label("Удалить специальности (\(specialityStorage.values.value.count))", systemImage: "folder.circle")
                             .foregroundColor(.red)
                     }
                     

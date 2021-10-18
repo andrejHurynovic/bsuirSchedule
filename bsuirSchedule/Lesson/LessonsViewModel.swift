@@ -11,8 +11,10 @@ import Combine
 class LessonsViewModel: ObservableObject {
     private var group: Group?
     private var employee: Employee?
+    private var classroom: Classroom?
     
     var isEmployee = false
+    var isClassroom = false
     
     var name: String!
     @Published var favorite: Bool! {
@@ -26,13 +28,18 @@ class LessonsViewModel: ObservableObject {
                 employee.favorite = newValue
                 EmployeeStorage.shared.save()
             }
+            
+            if let classroom = classroom {
+                classroom.favorite = newValue
+                ClassroomStorage.shared.save()
+            }
         }
     }
     
     var dates: [Date] = []
     @Published var lessons: [Lesson] = [] {
         didSet {
-            if group?.educationStart != nil || employee?.educationStart != nil {
+            if group?.educationStart != nil || employee?.educationStart != nil || classroom != nil {
                 updateDates()
             }
         }
@@ -48,29 +55,41 @@ class LessonsViewModel: ObservableObject {
     
     private var cancelable: AnyCancellable?
     
-    init(_ group: Group? = nil, _ employee: Employee? = nil) {
+    init(_ group: Group? = nil, _ employee: Employee? = nil, _ classroom: Classroom? = nil) {
         self.group = group
         self.employee = employee
+        self.classroom = classroom
         
         if let group = group {
             self.name = group.id
             self.favorite = group.favorite
             
-            let lessonPublisher: AnyPublisher<[Lesson], Never> = LessonStorage.shared.lessons.eraseToAnyPublisher()
-                cancelable = lessonPublisher.sink { lessons in
-                    self.lessons = lessons.filter({$0.groups?.contains(group) as! Bool})
-                }
+            let lessonPublisher: AnyPublisher<[Lesson], Never> = LessonStorage.shared.values.eraseToAnyPublisher()
+            cancelable = lessonPublisher.sink { lessons in
+                self.lessons = lessons.filter({$0.groups?.contains(group) as! Bool})
+            }
         }
         
         if let employee = employee {
             self.name = employee.lastName
             self.favorite = employee.favorite
             self.isEmployee = true
-
-            let lessonPublisher: AnyPublisher<[Lesson], Never> = LessonStorage.shared.lessons.eraseToAnyPublisher()
-                cancelable = lessonPublisher.sink { lessons in
-                    self.lessons = lessons.filter({$0.employee == employee})
-                }
+            
+            let lessonPublisher: AnyPublisher<[Lesson], Never> = LessonStorage.shared.values.eraseToAnyPublisher()
+            cancelable = lessonPublisher.sink { lessons in
+                self.lessons = lessons.filter({$0.employee == employee})
+            }
+        }
+        
+        if let classroom = classroom {
+            self.name = "\(classroom.name!)-\(String(classroom.building))"
+            self.favorite = classroom.favorite
+            self.isClassroom = true
+            
+            let lessonPublisher: AnyPublisher<[Lesson], Never> = LessonStorage.shared.values.eraseToAnyPublisher()
+            cancelable = lessonPublisher.sink { lessons in
+                self.lessons = lessons.filter({$0.classroom == classroom})
+            }
         }
     }
     
@@ -84,6 +103,11 @@ class LessonsViewModel: ObservableObject {
         if let employee = employee {
             week = (weeksBetween(start: employee.educationStart!, end: date) % 4) + 1
         }
+        
+        if let classroom = classroom {
+            week = (weeksBetween(start: classroom.educationStart(), end: date) % 4) + 1
+        }
+        
         return String(week!) + "-ая неделя"
     }
     
@@ -100,6 +124,12 @@ class LessonsViewModel: ObservableObject {
             week = (weeksBetween(start: employee.educationStart!, end: date) % 4) + 1
             day = Calendar(identifier: .iso8601).ordinality(of: .weekday, in: .weekOfYear, for: date)! - 1
         }
+        
+        if let classroom = classroom {
+            week = (weeksBetween(start: classroom.educationStart(), end: date) % 4) + 1
+            day = Calendar(identifier: .iso8601).ordinality(of: .weekday, in: .weekOfYear, for: date)! - 1
+        }
+        
         return lessons.forWeekNumber(week!).forWeekDay(day!).filter{searchText.isEmpty || $0.subject!.localizedStandardContains(searchText) }
     }
     
@@ -113,16 +143,24 @@ class LessonsViewModel: ObservableObject {
             range = employee.educationStart!...employee.educationEnd!
         }
         
+        if let classroom = classroom {
+            range = classroom.educationStart()...classroom.educationEnd()
+        }
+        
         return range!
     }
     
     func update() {
         if let group = group {
-            GroupStorage.shared.update(group)
+            GroupStorage.shared.fetchDetailed(group)
         }
         
         if let employee = employee {
-            EmployeeStorage.shared.update(employee)
+            EmployeeStorage.shared.fetchDetailed(employee)
+        }
+        
+        if let classroom = classroom {
+            //            ClassroomStorage.shared.fetchDetailed(classroom)
         }
     }
     
@@ -141,6 +179,13 @@ class LessonsViewModel: ObservableObject {
                 dates.append(date)
             }
             dates.append(employee.educationEnd!)
+        }
+        
+        if let classroom = classroom {
+            for date in stride(from: classroom.educationStart(), to: classroom.educationEnd(), by: dayDurationInSeconds) {
+                dates.append(date)
+            }
+            dates.append(classroom.educationEnd())
         }
     }
 }

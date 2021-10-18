@@ -28,7 +28,7 @@ public class Lesson: NSManagedObject, Decodable {
         self.weekNumber = try! container.decode([Int].self, forKey: .weekNumber)
         let groupsString = try! container.decode([String].self, forKey: .groups)
         groupsString.forEach { groupID in
-            self.addToGroups(GroupStorage.shared.groups.value.first(where: {$0.id == groupID})!)
+            self.addToGroups(GroupStorage.shared.values.value.first(where: {$0.id == groupID})!)
         }
         
         

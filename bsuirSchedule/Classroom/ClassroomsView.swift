@@ -14,6 +14,11 @@ struct ClassroomsView: View {
     var body: some View {
         NavigationView {
             ScrollView {
+                Button {
+                    viewModel.fetchClassrooms()
+                } label: {
+                    Text("I.I.T-B.")
+                }
                 ForEach(1..<9) { index in
                     Section {
                         let sections = viewModel.classrooms(building: index, searchText)
@@ -64,7 +69,7 @@ struct ClassroomView: View {
     
     var body: some View {
         NavigationLink {
-            //            LessonsView(viewModel: LessonsViewModel(group, nil))
+            ClassroomDetailedView(classroom: classroom)
         } label: {
             VStack(alignment: .leading) {
                 Text(classroom.name!)

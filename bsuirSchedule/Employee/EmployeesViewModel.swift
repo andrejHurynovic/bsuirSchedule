@@ -13,7 +13,7 @@ class EmployeesViewModel: ObservableObject {
     
     private var cancelable: AnyCancellable?
     
-    init(employeePublisher: AnyPublisher<[Employee], Never> = EmployeeStorage.shared.employees.eraseToAnyPublisher()) {
+    init(employeePublisher: AnyPublisher<[Employee], Never> = EmployeeStorage.shared.values.eraseToAnyPublisher()) {
         cancelable = employeePublisher.sink { employees in
             self.employees = employees
         }

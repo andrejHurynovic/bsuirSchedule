@@ -74,6 +74,36 @@ struct FavoritesView: View {
                     }
                     .padding(.horizontal)
                 }
+                
+                if viewModel.classrooms.isEmpty == false {
+                    VStack(alignment: .leading) {
+                        Text("Аудитории")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .padding(.leading)
+                    }.frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    LazyVStack {
+                        ForEach(viewModel.classrooms) { classroom in
+                            Section {
+                                ClassroomView(classroom: classroom)
+                            }
+                            .contextMenu {
+                                Button {
+                                    withAnimation(.spring()) {
+                                        viewModel.removeFromFavorites(nil, nil, classroom)
+                                    }
+                                } label: {
+                                    Label("Убрать из избранных", systemImage: "star.circle")
+                                }
+                                //                                NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(nil, employee))) {
+                                //                                    Label("Расписание", systemImage: "calendar")
+                                //                                }
+                            }
+                        }
+                    }
+                    .padding(.horizontal)
+                }
             }
             .navigationTitle("Избранные")
         }

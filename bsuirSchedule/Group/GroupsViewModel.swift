@@ -20,7 +20,7 @@ class GroupsViewModel: ObservableObject {
     
     private var cancelable: AnyCancellable?
     
-    init(groupPublisher: AnyPublisher<[Group], Never> = GroupStorage.shared.groups.eraseToAnyPublisher()) {
+    init(groupPublisher: AnyPublisher<[Group], Never> = GroupStorage.shared.values.eraseToAnyPublisher()) {
         cancelable = groupPublisher.sink { groups in
             self.groups = groups
         }
@@ -47,7 +47,7 @@ class GroupsViewModel: ObservableObject {
                                              groups: foundGroups.filter{$0.id!.prefix(3) == prefixSequence}))
             }
         case .speciality:
-            SpecialityStorage.shared.specialities.value.forEach { speciality in
+            SpecialityStorage.shared.values.value.forEach { speciality in
                 let specialityGroups = foundGroups.filter{$0.speciality! == speciality}
                 if specialityGroups.isEmpty == false {
                     sections.append(GroupSection(
@@ -62,7 +62,7 @@ class GroupsViewModel: ObservableObject {
     }
     
     func fetchGroups() {
-        GroupStorage.shared.fetchBasic()
+        GroupStorage.shared.fetch()
     }
 }
 

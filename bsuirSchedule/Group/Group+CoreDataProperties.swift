@@ -21,7 +21,7 @@ extension Group {
     @NSManaged public var id: String?
     @NSManaged public var course: Int16
     @NSManaged public var favorite: Bool
-
+    
     @NSManaged public var speciality: Speciality?
     
     @NSManaged public var educationStart: Date?

@@ -18,9 +18,10 @@ extension Classroom {
         return request
     }
 
-    @NSManaged public var name: String?
+    @NSManaged public var name: String!
     @NSManaged public var building: Int16
     @NSManaged public var typeValue: Int16
+    @NSManaged public var favorite: Bool
     
     @NSManaged public var departmentName: String?
     @NSManaged public var departmentAbbreviation: String?

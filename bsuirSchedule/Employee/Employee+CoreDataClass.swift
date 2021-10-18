@@ -49,7 +49,9 @@ public class Employee: NSManagedObject {
         
         if lessonsToRemove.isEmpty == false {
             removeFromLessons(NSSet(array: lessonsToRemove))
-            LessonStorage.shared.delete(lessonsToRemove)
+            lessonsToRemove.forEach { lesson in
+                LessonStorage.shared.delete(lesson)
+            }
         }
 
         self.addToLessons(NSSet(array: updatedEmployee.lessons))
@@ -72,9 +74,6 @@ public class Employee: NSManagedObject {
                 }
             }
         }
-        
-        
-        
         return groups.sorted{$0.id! < $1.id!}
     }
 }

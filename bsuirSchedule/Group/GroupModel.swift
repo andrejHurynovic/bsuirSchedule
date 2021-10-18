@@ -30,7 +30,7 @@ struct GroupModel: Decodable {
             self.id = id
             
             let specialityID = try! container.decode(Int16.self, forKey: .specialityID)
-            self.speciality = SpecialityStorage.shared.specialities.value.first(where: {$0.id == specialityID})
+            self.speciality = SpecialityStorage.shared.values.value.first(where: {$0.id == specialityID})
         }
         
         if let course = try? container.decode(Int16.self, forKey: .course) {

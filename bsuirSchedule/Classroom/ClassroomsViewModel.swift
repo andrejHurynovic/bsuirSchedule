@@ -13,7 +13,7 @@ class ClassroomsViewModel: ObservableObject {
     
     private var cancelable: AnyCancellable?
     
-    init(classroomPublisher: AnyPublisher<[Classroom], Never> = ClassroomStorage.shared.classrooms.eraseToAnyPublisher()) {
+    init(classroomPublisher: AnyPublisher<[Classroom], Never> = ClassroomStorage.shared.values.eraseToAnyPublisher()) {
         cancelable = classroomPublisher.sink { classrooms in
             self.classrooms = classrooms
         }

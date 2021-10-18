@@ -19,12 +19,12 @@ public class Speciality: NSManagedObject, Decodable {
         self.init(entity: entity!, insertInto: context)
         
         let container = try! decoder.container(keyedBy: CodingKeys.self)
-        self.id = try! container.decode(Int16.self, forKey: .id)
+        self.id = try! container.decode(Int32.self, forKey: .id)
         self.name = try! container.decode(String.self, forKey: .name)
         self.abbreviation = try! container.decode(String.self, forKey: .abbreviation)
         
         let facultyID = try! container.decode(Int.self, forKey: .facultyID)
-        self.faculty = FacultyStorage.shared.faculties.value.first(where: {$0.id == facultyID})
+        self.faculty = FacultyStorage.shared.values.value.first(where: {$0.id == facultyID})
         
         let nestedContainer = try! container.nestedContainer(keyedBy: EducationTypeCodingKeys.self, forKey: .educationTypeContainer)
         

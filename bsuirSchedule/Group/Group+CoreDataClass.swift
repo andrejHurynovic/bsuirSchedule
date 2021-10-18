@@ -29,7 +29,9 @@ public class Group: NSManagedObject {
     }
     
     func update(_ updatedGroup: GroupModel) {
-        self.removeFromLessons(self.lessons!)
+        if let lessons = self.lessons {
+            self.removeFromLessons(lessons)
+        }
         self.addToLessons(NSSet(array: updatedGroup.lessons))
         
         self.educationStart = updatedGroup.educationStart

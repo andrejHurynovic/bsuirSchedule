@@ -19,14 +19,14 @@ extension Speciality {
         return request
     }
 
-    @NSManaged public var id: Int16
-    @NSManaged public var name: String?
-    @NSManaged public var abbreviation: String?
+    @NSManaged public var id: Int32
+    @NSManaged public var name: String!
+    @NSManaged public var abbreviation: String!
     
     @NSManaged public var educationTypeValue: Int16
-    @NSManaged public var code: String?
+    @NSManaged public var code: String!
     
-    @NSManaged public var faculty: Faculty?
+    @NSManaged public var faculty: Faculty!
     @NSManaged public var groups: NSSet?
 
 }
