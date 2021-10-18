@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct GroupsView: View {
+    
     @StateObject private var viewModel = GroupsViewModel()
     @State var searchText = ""
     
     var body: some View {
         NavigationView {
             ZStack {
-                List (viewModel.foundGroups(searchText), id: \.self) { section in
+                List (viewModel.sections(searchText), id: \.self) { section in
                     Section(section.title) {
                         ForEach(section.groups, id: \.id, content: { group in
                             NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group, nil))){
@@ -26,13 +27,6 @@ struct GroupsView: View {
                 }
                 .refreshable {
                     viewModel.fetchGroups()
-                }
-                if viewModel.groups.isEmpty {
-//                    ProgressView()
-//                        .progressViewStyle(CircularProgressViewStyle())
-//                        .onAppear {
-//                            viewModel.fetchGroups()
-//                        }
                 }
             }
             .navigationBarTitle("Группы")
@@ -47,6 +41,8 @@ struct GroupsView: View {
         }.navigationViewStyle(StackNavigationViewStyle())
     }
 }
+
+
 
 struct GroupsListView_Previews: PreviewProvider {
     static var previews: some View {
