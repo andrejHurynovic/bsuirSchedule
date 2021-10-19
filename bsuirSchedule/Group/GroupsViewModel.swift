@@ -23,25 +23,34 @@ class GroupsViewModel: ObservableObject {
     @Published var groups: [Group] = []
     private var cancelable: AnyCancellable?
     
-    @Published var sortedBy: GroupSortingType = .speciality
-    
     init(groupPublisher: AnyPublisher<[Group], Never> = GroupStorage.shared.values.eraseToAnyPublisher()) {
         cancelable = groupPublisher.sink { groups in
             self.groups = groups
         }
     }
     
-    func sections(_ searchText: String) -> [GroupSection] {
-        let filitredGroups = groups.filter { group in
+    func sections(_ searchText: String,
+                  _ selectedFaculty: Faculty?,
+                  _ selectedEducationType: Int?,
+                  _ sortedBy: GroupSortingType = .speciality) -> [GroupSection] {
+        var filitredGroups = groups.filter { group in
             searchText.isEmpty ||
             group.id!.localizedStandardContains(searchText) ||
             group.speciality!.abbreviation!.localizedStandardContains(searchText)
         }
         
-        return sort(groups: filitredGroups)
+        if let selectedFaculty = selectedFaculty {
+            filitredGroups = filitredGroups.filter {$0.speciality?.faculty == selectedFaculty}
+        }
+        
+        if let selectedEducationType = selectedEducationType {
+            filitredGroups = filitredGroups.filter {$0.speciality!.educationTypeValue == selectedEducationType}
+        }
+        
+        return sort(groups: filitredGroups, sortedBy)
     }
     
-    private func sort(groups: [Group]) -> [GroupSection] {
+    private func sort(groups: [Group], _ sortedBy: GroupSortingType) -> [GroupSection] {
         var sections: [GroupSection] = []
         
         switch sortedBy {
