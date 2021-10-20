@@ -57,7 +57,7 @@ struct LessonView: View {
     }
     
     @ViewBuilder var classrooms: some View {
-        if let classrooms = lesson.classrooms?.allObjects as? [Classroom] {
+        if let classrooms = lesson.classrooms?.allObjects as? [Classroom], classrooms.isEmpty == false {
             HStack(alignment: .top) {
                 Image(systemName: "mappin")
                 VStack(alignment: .leading) {
