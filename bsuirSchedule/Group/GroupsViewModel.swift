@@ -66,7 +66,7 @@ class GroupsViewModel: ObservableObject {
             }
         case .speciality:
             SpecialityStorage.shared.values.value.forEach { speciality in
-                let specialityGroups = groups.filter{$0.speciality! == speciality}
+                let specialityGroups = groups.filter{$0.speciality == speciality}
                 if specialityGroups.isEmpty == false {
                     sections.append(GroupSection(
                         title: "\(speciality.name!) (\(speciality.getEducationTypeDescription()), \(speciality.faculty!.abbreviation!))" ,

@@ -53,6 +53,7 @@ public class Lesson: NSManagedObject, Decodable {
         
         if !items.isEmpty {
             self.employeeID = Int32(items.first!["id"] as! Int)
+            self.employee = EmployeeStorage.shared.values.value.first(where: {$0.id == employeeID})
         }
     }
     

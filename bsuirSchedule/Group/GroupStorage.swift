@@ -12,21 +12,31 @@ class GroupStorage: Storage<Group> {
     static let shared = GroupStorage(sortDescriptors: [NSSortDescriptor(keyPath: \Group.id, ascending: true)])
     
     func fetch() {
-        cancellables.insert(FetchManager.shared.fetch(dataType: .groups, completion: {(groups: [GroupModel]) -> () in
-            groups.forEach { group in
-                self.fetchDetailed(Group(group))
-            }
+        cancellables.insert(FetchManager.shared.fetch(dataType: .groups, completion: {(groups: [Group]) -> () in
             self.save()
+            self.fetchAllDetailed()
         }))
     }
     
-    func fetchDetailed(_ group: Group) {
-        cancellables.insert(FetchManager.shared.fetch(dataType: .group, argument: group.id!, completion: {(fetchedGroup: GroupModel) -> () in
-            fetchedGroup.lessons.forEach { lesson in
-                lesson.employee = EmployeeStorage.shared.values.value.first(where: {$0.id == lesson.employeeID})
+    func fetchAllDetailed() {
+        self.values.value.forEach { group in
+            fetchDetailed(group, multipleFetch: true)
+        }
+        self.save()
+    }
+    
+    func fetchDetailed(_ group: Group, multipleFetch: Bool = false) {
+        cancellables.insert(FetchManager.shared.fetch(dataType: .group, argument: group.id, completion: {(fetchedGroup: Group) -> () in
+            if let lessons = fetchedGroup.lessons {
+                group.addToLessons(lessons)
             }
-            group.update(fetchedGroup)
-            self.save()
+            group.educationStart = fetchedGroup.educationStart
+            group.educationEnd = fetchedGroup.educationEnd
+            
+            self.delete(fetchedGroup)
         }))
+        if multipleFetch == false {
+            self.save()
+        }
     }
 }

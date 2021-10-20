@@ -25,7 +25,7 @@ struct GroupsView: View {
                     Section(section.title) {
                         ForEach(section.groups, id: \.id, content: { group in
                             NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group, nil))){
-                                Text(group.id ?? "")
+                                Text(group.id)
                             }
                         })
                     }
@@ -37,6 +37,9 @@ struct GroupsView: View {
                     viewModel.fetchGroups()
                 }
             }
+            
+            
+            
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     
