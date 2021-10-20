@@ -11,27 +11,53 @@ import Foundation
 
 class Schedule: Decodable {
 
-    enum WeekDay: String, Decodable {
-        case Monday = "Понедельник"
-        case Tuesday = "Вторник"
-        case Wednesday = "Среда"
-        case Thursday = "Четверг"
-        case Friday = "Пятница"
-        case Saturday = "Суббота"
-        case Sunday = "Воскресенье"
-    }
-
-    var weekDay: WeekDay!
     var lessons: [Lesson]!
+    var dateString: String!
 
-    required init(form decoder: Decoder) throws {
+    required convenience public init(from decoder: Decoder) throws {
         let container = try! decoder.container(keyedBy: CodingKeys.self)
-        self.weekDay = WeekDay.init(rawValue: try! container.decode(String.self, forKey: .weekDay))
-        self.lessons = try! container.decode([Lesson].self, forKey: .lessons)
+        self.init()
+        
+        self.lessons = try? container.decode([Lesson].self, forKey: .lessons) 
+        
+        var weekDay: WeekDay?
+        var date: Date?
+        
+        dateString = try! container.decode(String.self, forKey: .dateString)
+        
+        switch(dateString) {
+        case "Понедельник":
+            weekDay = .Monday
+        case "Вторник":
+            weekDay = .Tuesday
+        case "Среда":
+            weekDay = .Wednesday
+        case "Четверг":
+            weekDay = .Thursday
+        case "Пятница":
+            weekDay = .Friday
+        case "Суббота":
+            weekDay = .Saturday
+        case "Воскресенье":
+            weekDay = .Sunday
+        default:
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd.MM.yyyy"
+            date = dateFormatter.date(from: dateString)
+            break
+        }
+        
+        if let weekDay = weekDay {
+            lessons.forEach{ $0.weekDay = weekDay }
+        }
+        if let date = date {
+            lessons.forEach{ $0.date = date }
+        }
+        
     }
 
     private enum CodingKeys: String, CodingKey {
-        case weekDay = "weekDay"
+        case dateString = "weekDay"
         case lessons = "schedule"
     }
 }

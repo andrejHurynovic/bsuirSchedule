@@ -19,10 +19,10 @@ extension Array {
 
 extension Array where Element == Lesson {
     func forWeekNumber(_ weekNumber: Int) -> [Lesson] {
-        self.filter{$0.weekNumber!.contains(where: {$0 == weekNumber})}
+        self.filter{$0.weeks!.contains(where: {$0 == weekNumber})}
     }
     func forWeekDay(_ weekDay: Int) -> [Lesson] {
-        self.filter{$0.weekDay == weekDay}.sorted(by: {$0.timeStart! < $1.timeStart!})
+        self.filter{$0.weekDay.rawValue == weekDay}.sorted(by: {$0.timeStart! < $1.timeStart!})
     }
 }
 

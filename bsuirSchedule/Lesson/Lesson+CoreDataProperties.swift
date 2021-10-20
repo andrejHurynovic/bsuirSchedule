@@ -10,10 +10,28 @@ import Foundation
 import CoreData
 
 enum LessonType: Int16 {
-    case lecture = 0
-    case practice = 1
-    case laboratory = 2
+    case none = 0
+    case lecture = 1
+    case remoteLecture = 2
+    case practice = 3
+    case remotePractice = 4
+    case laboratory = 5
+    case consultation = 6
+    case exam = 7
+    case candidateText = 8
+    
 }
+
+enum WeekDay: Int16, CaseIterable, Decodable {
+    case Monday = 0
+    case Tuesday = 1
+    case Wednesday = 2
+    case Thursday = 3
+    case Friday = 4
+    case Saturday = 5
+    case Sunday = 6
+}
+
 
 
 extension Lesson {
@@ -24,20 +42,22 @@ extension Lesson {
         return request
     }
     
-    @NSManaged public var subject: String?
+    @NSManaged public var subject: String!
     @NSManaged public var lessonTypeValue: Int16
-    @NSManaged public var classroom: Classroom?
+    @NSManaged public var classrooms:  NSSet?
+    @NSManaged public var note: String?
     
     @NSManaged public var groups: NSSet?
     @NSManaged public var subgroup: Int16
     
-    @NSManaged public var weekNumber: [Int]?
-    @NSManaged public var weekDay: Int16
-    @NSManaged public var timeStart: String?
-    @NSManaged public var timeEnd: String?
+    @NSManaged public var date: Date?
+    @NSManaged public var weeks: [Int]!
+    @NSManaged public var weekDayValue: Int16
+    @NSManaged public var timeStart: String!
+    @NSManaged public var timeEnd: String!
     
-    @NSManaged public var employee: Employee?
-    @NSManaged public var employeeID: Int32
+    @NSManaged public var employees: NSSet?
+    @NSManaged public var employeesIDs: [Int]?
     
 }
 
@@ -56,6 +76,33 @@ extension Lesson {
     @objc(removeGroups:)
     @NSManaged public func removeFromGroups(_ values: NSSet)
 
+    
+    
+    @objc(addEmployeesObject:)
+    @NSManaged public func addToEmployees(_ value: Employee)
+
+    @objc(removeEmployeesObject:)
+    @NSManaged public func removeFromEmployees(_ value: Employee)
+
+    @objc(addEmployees:)
+    @NSManaged public func addToEmployees(_ values: NSSet)
+
+    @objc(removeEmployees:)
+    @NSManaged public func removeFromEmployees(_ values: NSSet)
+    
+    
+    
+    @objc(addClassroomsObject:)
+    @NSManaged public func addToClassrooms(_ value: Classroom)
+
+    @objc(removeClassroomsObject:)
+    @NSManaged public func removeFromClassrooms(_ value: Classroom)
+
+    @objc(addClassrooms:)
+    @NSManaged public func addToClassrooms(_ values: NSSet)
+
+    @objc(removeClassrooms:)
+    @NSManaged public func removeFromClassrooms(_ values: NSSet)
 }
 
 extension Lesson : Identifiable {
@@ -65,6 +112,15 @@ extension Lesson : Identifiable {
         }
         set {
             self.lessonTypeValue = newValue.rawValue
+        }
+    }
+    
+    var weekDay: WeekDay {
+        get {
+            return WeekDay(rawValue: self.weekDayValue)!
+        }
+        set {
+            self.weekDayValue = newValue.rawValue
         }
     }
 }

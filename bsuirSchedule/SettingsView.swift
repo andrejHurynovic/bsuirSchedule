@@ -15,7 +15,6 @@ struct SettingsView: View {
     @StateObject var classroomStorage = ClassroomStorage.shared
     @StateObject var specialityStorage = SpecialityStorage.shared
 
-    //@State var mainColor: Color = .accentColor
     @State var lectureColor: Color =  Color(UserDefaults.standard.color(forKey: "lectureColor") ?? .green)
     @State var practiceColor: Color = Color(UserDefaults.standard.color(forKey: "practiceColor") ?? .yellow)
     @State var labWorkColor: Color = Color(UserDefaults.standard.color(forKey: "labWorkColor") ?? .red)
@@ -25,6 +24,18 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             List {
+                Button {
+                    FacultyStorage.shared.fetch()
+                } label: {
+                    Text("Факультеты")
+                }
+                Button {
+                    SpecialityStorage.shared.fetch()
+                } label: {
+                    Text("Специальности")
+                }
+
+                
                 Section(content: {
                     //ColorPicker("Основной", selection: $mainColor)
                     ColorPicker("Лекции", selection: $lectureColor)

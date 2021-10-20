@@ -40,7 +40,7 @@ public class Employee: NSManagedObject {
         existingLessons.forEach { oldLesson in
             if updatedEmployee.lessons.contains(where: { newLesson in
                 oldLesson.weekDay == newLesson.weekDay &&
-                oldLesson.weekNumber == newLesson.weekNumber &&
+                oldLesson.weeks == newLesson.weeks &&
                 oldLesson.timeStart == newLesson.timeStart
             }) == false {
                 lessonsToRemove.append(oldLesson)

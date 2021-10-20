@@ -68,44 +68,8 @@ struct EmployeeModel: Decodable {
         self.photoLink = try? container.decode(String.self, forKey: .photoLink)
         
         if let schedules = try? container.decode([Schedule].self, forKey: .lessons) {
-            schedules.forEach { schedule in
-                switch schedule.weekDay {
-                case .Monday:
-                    schedule.lessons.forEach { lesson in
-                        lesson.weekDay = 0
-                    }
-                case .Tuesday:
-                    schedule.lessons.forEach { lesson in
-                        lesson.weekDay = 1
-                    }
-                case .Wednesday:
-                    schedule.lessons.forEach { lesson in
-                        lesson.weekDay = 2
-                    }
-                case .Thursday:
-                    schedule.lessons.forEach { lesson in
-                        lesson.weekDay = 3
-                    }
-                case .Friday:
-                    schedule.lessons.forEach { lesson in
-                        lesson.weekDay = 4
-                    }
-                case .Saturday:
-                    schedule.lessons.forEach { lesson in
-                        lesson.weekDay = 5
-                    }
-                case .Sunday:
-                    schedule.lessons.forEach { lesson in
-                        lesson.weekDay = 6
-                    }
-                    
-                    
-                case .none:
-                    break
-                }
-                
-                lessons.append(contentsOf: schedule.lessons)
-                
+            schedules.map { $0.lessons }.forEach { lessons in
+                self.lessons.append(contentsOf: lessons)
             }
         }
     }

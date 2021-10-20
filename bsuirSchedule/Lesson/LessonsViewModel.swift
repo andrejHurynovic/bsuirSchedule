@@ -39,7 +39,7 @@ class LessonsViewModel: ObservableObject {
     var dates: [Date] = []
     @Published var lessons: [Lesson] = [] {
         didSet {
-            if group?.educationStart != nil || employee?.educationStart != nil || classroom != nil {
+            if group?.educationStart != nil || employee?.educationStart != nil || classroom != nil || group?.examsStart != nil{
                 updateDates()
             }
         }
@@ -77,7 +77,7 @@ class LessonsViewModel: ObservableObject {
             
             let lessonPublisher: AnyPublisher<[Lesson], Never> = LessonStorage.shared.values.eraseToAnyPublisher()
             cancelable = lessonPublisher.sink { lessons in
-                self.lessons = lessons.filter({$0.employee == employee})
+                self.lessons = lessons.filter({$0.employees?.contains(employee) as! Bool})
             }
         }
         
@@ -88,7 +88,7 @@ class LessonsViewModel: ObservableObject {
             
             let lessonPublisher: AnyPublisher<[Lesson], Never> = LessonStorage.shared.values.eraseToAnyPublisher()
             cancelable = lessonPublisher.sink { lessons in
-                self.lessons = lessons.filter({$0.classroom == classroom})
+                self.lessons = lessons.filter({$0.classrooms?.contains(classroom) as! Bool})
             }
         }
     }
@@ -172,6 +172,12 @@ class LessonsViewModel: ObservableObject {
                 dates.append(date)
             }
             dates.append(group.educationEnd!)
+            if let examsStart = group.examsStart {
+                for date in stride(from: examsStart, to: group.examsEnd!, by: dayDurationInSeconds) {
+                    dates.append(date)
+                }
+                dates.append(group.educationEnd!)
+            }
         }
         
         if let employee = employee {
