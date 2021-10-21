@@ -13,11 +13,11 @@ struct EmployeeView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(employee.lastName!)
+                Text(employee.lastName ?? "")
                     .font(.title)
                     .fontWeight(.bold)
-                Text(employee.firstName! + " " + employee.middleName!)
-                if !employee.departments!.isEmpty {
+                Text((employee.firstName ?? "") + " " + (employee.middleName ?? ""))
+                if !(employee.departments?.isEmpty ?? true) {
                     Text(employee.departments!.joined(separator: ", "))
                         .foregroundColor(Color.gray)
                 }

@@ -22,10 +22,11 @@
         <attribute name="educationStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="examsEnd" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="examsStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="favorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="favorite" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="firstName" optional="YES" attributeType="String"/>
-        <attribute name="id" optional="YES" attributeType="Integer 32" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="Integer 32" usesScalarValueType="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String"/>
+        <attribute name="lastUpdateDate" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="middleName" optional="YES" attributeType="String"/>
         <attribute name="photo" optional="YES" attributeType="Binary" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="UIImage"/>
         <attribute name="photoLink" optional="YES" attributeType="String"/>
@@ -82,6 +83,7 @@
                 <constraint value="weekDayValue"/>
                 <constraint value="weeks"/>
                 <constraint value="employeesIDs"/>
+                <constraint value="date"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
@@ -96,7 +98,7 @@
     </entity>
     <elements>
         <element name="Classroom" positionX="-688.0670166015625" positionY="-34.90615844726562" width="128" height="134"/>
-        <element name="Employee" positionX="-231.9367065429688" positionY="-131.8106842041016" width="128" height="269"/>
+        <element name="Employee" positionX="-231.9367065429688" positionY="-131.8106842041016" width="128" height="284"/>
         <element name="Faculty" positionX="-536.472412109375" positionY="280.2841491699219" width="128" height="103"/>
         <element name="Group" positionX="-339.1310424804688" positionY="212.7224731445312" width="120.3765258789062" height="179"/>
         <element name="Lesson" positionX="-464.7166137695312" positionY="-101.2243957519531" width="128" height="224"/>

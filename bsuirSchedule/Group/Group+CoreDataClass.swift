@@ -17,21 +17,19 @@ public class Group: NSManagedObject, Decodable {
         let entity = NSEntityDescription.entity(forEntityName: "Group", in: context)
         self.init(entity: entity!, insertInto: context)
         
-        let container = try decoder.container(keyedBy: CodingKeys.self)
+        var container = try decoder.container(keyedBy: CodingKeys.self)
         
-        if let id = try? container.decode(String.self, forKey: .id) {
-            self.id = id
-            
-            let specialityID = try! container.decode(Int16.self, forKey: .specialityID)
-            self.speciality = SpecialityStorage.shared.values.value.first(where: {$0.id == specialityID})
+        if let schedules = try? container.decode([Schedule].self, forKey: .lessons) {
+            schedules.map { $0.lessons }.forEach { lessons in
+                self.addToLessons(NSSet(array: lessons!))
+            }
         }
         
-        if let course = try? container.decode(Int16.self, forKey: .course) {
-            self.course = course
-        } else {
-            self.course = -1
+        if let examSchedules = try? container.decode([Schedule].self, forKey: .exams) {
+            examSchedules.map { $0.lessons }.forEach { lessons in
+                self.addToLessons(NSSet(array: lessons!))
+            }
         }
-        self.lastUpdateDate = Date()
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"
@@ -45,17 +43,23 @@ public class Group: NSManagedObject, Decodable {
             self.examsEnd = dateFormatter.date(from: try! container.decode(String.self, forKey: .examsEnd))
         }
         
-        if let schedules = try? container.decode([Schedule].self, forKey: .lessons) {
-            schedules.map { $0.lessons }.forEach { lessons in
-                self.addToLessons(NSSet(array: lessons!))
-            }
+        if let groupContainer = try? container.nestedContainer(keyedBy: CodingKeys.self, forKey: .groupContainer) {
+            container = groupContainer
         }
         
-        if let schedules = try? container.decode([Schedule].self, forKey: .exams) {
-            schedules.map { $0.lessons }.forEach { lessons in
-                self.addToLessons(NSSet(array: lessons!))
-            }
+        if let id = try? container.decode(String.self, forKey: .id) {
+            self.id = id
+            
+            let specialityID = try! container.decode(Int16.self, forKey: .specialityID)
+            self.speciality = SpecialityStorage.shared.values.value.first(where: {$0.id == specialityID})
         }
+        
+        if let course = try? container.decode(Int16.self, forKey: .course) {
+            self.course = course
+        } else {
+    
+        }
+        self.lastUpdateDate = Date()
     }
 }
 
@@ -75,5 +79,5 @@ private enum CodingKeys: String, CodingKey {
     case lessons = "schedules"
     case exams = "examSchedules"
     
-    case studentGroupContainer = "studentGroup"
+    case groupContainer = "studentGroup"
 }

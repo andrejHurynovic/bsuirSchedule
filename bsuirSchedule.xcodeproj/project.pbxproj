@@ -42,7 +42,6 @@
 		F6AA210D26EBA59D006218F8 /* GroupStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AA210C26EBA59D006218F8 /* GroupStorage.swift */; };
 		F6AA210F26EC83BB006218F8 /* GroupsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AA210E26EC83BB006218F8 /* GroupsViewModel.swift */; };
 		F6B4805226F9ED070085D5FE /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B4805126F9ED070085D5FE /* FavoritesViewModel.swift */; };
-		F6BCE3A826EFCFEE0067B5DA /* EmployeeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BCE3A726EFCFEE0067B5DA /* EmployeeModel.swift */; };
 		F6BCE3AA26EFD72C0067B5DA /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BCE3A926EFD72C0067B5DA /* Schedule.swift */; };
 		F6CB615526EFF43900D29807 /* LessonStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CB615426EFF43900D29807 /* LessonStorage.swift */; };
 		F6CB615726F000EE00D29807 /* LessonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CB615626F000EE00D29807 /* LessonView.swift */; };
@@ -92,7 +91,6 @@
 		F6AA210C26EBA59D006218F8 /* GroupStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupStorage.swift; sourceTree = "<group>"; };
 		F6AA210E26EC83BB006218F8 /* GroupsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsViewModel.swift; sourceTree = "<group>"; };
 		F6B4805126F9ED070085D5FE /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
-		F6BCE3A726EFCFEE0067B5DA /* EmployeeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeModel.swift; sourceTree = "<group>"; };
 		F6BCE3A926EFD72C0067B5DA /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		F6CB615426EFF43900D29807 /* LessonStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonStorage.swift; sourceTree = "<group>"; };
 		F6CB615626F000EE00D29807 /* LessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonView.swift; sourceTree = "<group>"; };
@@ -167,7 +165,6 @@
 		F65F831F26E8F35500B8CC4E /* Employee */ = {
 			isa = PBXGroup;
 			children = (
-				F6BCE3A726EFCFEE0067B5DA /* EmployeeModel.swift */,
 				F67DF3B3266AA56000D96417 /* Employee+CoreDataClass.swift */,
 				F67DF3B4266AA56000D96417 /* Employee+CoreDataProperties.swift */,
 				F65F832226E8F5B900B8CC4E /* EmployeeStorage.swift */,
@@ -353,7 +350,6 @@
 				F6DCD72326B30EF0003761B0 /* SettingsView.swift in Sources */,
 				F6AA210F26EC83BB006218F8 /* GroupsViewModel.swift in Sources */,
 				F6AA210D26EBA59D006218F8 /* GroupStorage.swift in Sources */,
-				F6BCE3A826EFCFEE0067B5DA /* EmployeeModel.swift in Sources */,
 				F64AD7B0266A816D00115E6B /* EmployeesView.swift in Sources */,
 				F614250C271B7EFF006C3CE1 /* ClassroomDetailedView.swift in Sources */,
 				F697BF7C26FFA1BA008FA7A9 /* Classroom+CoreDataClass.swift in Sources */,

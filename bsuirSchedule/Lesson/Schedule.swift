@@ -48,10 +48,17 @@ class Schedule: Decodable {
         }
         
         if let weekDay = weekDay {
-            lessons.forEach{ $0.weekDay = weekDay }
+            lessons.forEach{
+                $0.weekDay = weekDay
+                $0.date = Date(timeIntervalSince1970: 419420)
+            }
+            
         }
         if let date = date {
-            lessons.forEach{ $0.date = date }
+            lessons.forEach{
+                $0.date = date
+                $0.weekDayValue = -1
+            }
         }
         
     }

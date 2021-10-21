@@ -130,7 +130,12 @@ class LessonsViewModel: ObservableObject {
             day = Calendar(identifier: .iso8601).ordinality(of: .weekday, in: .weekOfYear, for: date)! - 1
         }
         
-        return lessons.forWeekNumber(week!).forWeekDay(day!).filter{searchText.isEmpty || $0.subject!.localizedStandardContains(searchText) }
+        var retlessons = lessons.forWeekNumber(week!).forWeekDay(day!)
+            .filter{ searchText.isEmpty || $0.subject!.localizedStandardContains(searchText) }
+        
+        retlessons.append(contentsOf: lessons.filter{$0.date == date})
+        
+        return retlessons
     }
     
     func dateRange() -> ClosedRange<Date> {

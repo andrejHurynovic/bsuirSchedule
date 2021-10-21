@@ -20,7 +20,6 @@ public class Lesson: NSManagedObject, Decodable {
         
         let container = try! decoder.container(keyedBy: CodingKeys.self)
         
-        
         self.subject = ((try? container.decode(String.self, forKey: .subject)) ?? "")
         switch (try? container.decode(String.self, forKey: .lessonTypeValue)) {
         case nil:
@@ -55,7 +54,9 @@ public class Lesson: NSManagedObject, Decodable {
         self.note = try? container.decode(String.self, forKey: .note)
         
         (try! container.decode([String].self, forKey: .groups)).forEach { groupID in
-            self.addToGroups(GroupStorage.shared.values.value.first(where: {$0.id == groupID})!)
+            if let group = GroupStorage.shared.values.value.first(where: {$0.id == groupID}) {
+                self.addToGroups(group)
+            }
         }
         self.subgroup = Int16(try! container.decode(Int.self, forKey: .subgroup))
         
@@ -83,7 +84,7 @@ public class Lesson: NSManagedObject, Decodable {
         case .laboratory:
             return Color(UserDefaults.standard.color(forKey: "labWorkColor") ?? .red)
         case .exam:
-            return Color.brown
+            return Color.red
         case .none:
             return Color.accentColor
         case .remoteLecture:
@@ -91,9 +92,9 @@ public class Lesson: NSManagedObject, Decodable {
         case .remotePractice:
             return Color(UserDefaults.standard.color(forKey: "practiceColor") ?? .yellow)
         case .consultation:
-            return Color.brown
+            return Color.yellow
         case .candidateText:
-            return Color.brown
+            return Color.pink
         }
     }
     

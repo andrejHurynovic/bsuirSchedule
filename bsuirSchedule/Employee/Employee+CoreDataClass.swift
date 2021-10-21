@@ -11,69 +11,93 @@ import CoreData
 import UIKit.UIImage
 
 @objc(Employee)
-public class Employee: NSManagedObject {
+public class Employee: NSManagedObject, Decodable {
     
-    required convenience init(_ employee: EmployeeModel) {
+    required public convenience init(from decoder: Decoder) throws {
         let context = PersistenceController.shared.container.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "Employee", in: context)
         self.init(entity: entity!, insertInto: context)
         
-        self.id = employee.id!
-        self.urlID = employee.urlID
-        self.firstName = employee.firstName
-        self.middleName = employee.middleName
-        self.lastName = employee.lastName
+        var container = try decoder.container(keyedBy: CodingKeys.self)
         
-        self.rank = employee.rank
-        self.degree = employee.degree
-        self.departments = employee.departments
-        self.favorite = employee.favorite
-        
-        self.photoLink = employee.photoLink
-    }
-    
-    func update(_ updatedEmployee: EmployeeModel) {
-        
-        let existingLessons = (self.lessons?.allObjects as! [Lesson])
-        var lessonsToRemove: [Lesson] = []
-        
-        existingLessons.forEach { oldLesson in
-            if updatedEmployee.lessons.contains(where: { newLesson in
-                oldLesson.weekDay == newLesson.weekDay &&
-                oldLesson.weeks == newLesson.weeks &&
-                oldLesson.timeStart == newLesson.timeStart
-            }) == false {
-                lessonsToRemove.append(oldLesson)
+        if let schedules = try? container.decode([Schedule].self, forKey: .lessons) {
+            schedules.map { $0.lessons }.forEach { lessons in
+                self.addToLessons(NSSet(array: lessons))
             }
         }
         
-        if lessonsToRemove.isEmpty == false {
-            removeFromLessons(NSSet(array: lessonsToRemove))
-            lessonsToRemove.forEach { lesson in
-                LessonStorage.shared.delete(lesson)
+        if let examSchedules = try? container.decode([Schedule].self, forKey: .exams) {
+            examSchedules.map { $0.lessons }.forEach { lessons in
+                self.addToLessons(NSSet(array: lessons!))
             }
         }
-
-        self.addToLessons(NSSet(array: updatedEmployee.lessons))
         
-        self.educationStart = updatedEmployee.educationStart
-        self.educationEnd = updatedEmployee.educationEnd
-        self.examsStart = updatedEmployee.examsStart
-        self.examsEnd = updatedEmployee.examsEnd
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+        if let educationStartString = try? container.decode(String.self, forKey: .educationStart) {
+            self.educationStart = dateFormatter.date(from: educationStartString)
+            self.educationEnd = dateFormatter.date(from: try! container.decode(String.self, forKey: .educationEnd))
+        }
+        if let examsStartString = try? container.decode(String.self, forKey: .examsStart) {
+            self.examsStart = dateFormatter.date(from: examsStartString)
+            self.examsEnd = dateFormatter.date(from: try! container.decode(String.self, forKey: .examsEnd))
+        }
+        
+        if let groupContainer = try? container.nestedContainer(keyedBy: CodingKeys.self, forKey: .employeeContainer) {
+            container = groupContainer
+        }
+        
+        self.id = (try! container.decode(Int32.self, forKey: .id))
+        self.urlID = try! container.decode(String.self, forKey: .urlID)
+        self.firstName = try! container.decode(String.self, forKey: .firstName)
+        self.middleName = try! container.decode(String.self, forKey: .middleName)
+        self.lastName = try! container.decode(String.self, forKey: .lastName)
+        self.lastUpdateDate = Date()
+        
+        self.rank = try? container.decode(String.self, forKey: .rank)
+        self.degree = try? container.decode(String.self, forKey: .degree)
+        if var departments = try? container.decode([String].self, forKey: .departments) {
+            departments.forEach { department in
+                if let range = department.range(of: "каф.") {
+                    department.removeSubrange(range)
+                }
+                department = department.trimmingCharacters(in: .whitespaces)
+            }
+            self.departments = departments
+        }
+        self.favorite = false
+        
+        self.photoLink = try? container.decode(String.self, forKey: .photoLink)
+        
     }
     
     func groups() -> [Group] {
-        var groups = Set<Group>()
-        
-        if let lessons = self.lessons?.allObjects as? [Lesson] {
-            lessons.forEach { lesson in
-                if let lessonsGroups = lesson.groups?.allObjects as? [Group] {
-                    lessonsGroups.forEach { group in
-                        groups.insert(group)
-                    }
-                }
-            }
-        }
-        return groups.sorted{$0.id! < $1.id!}
+        return (lessons?.allObjects as! [Lesson]).flatMap{ $0.groups?.allObjects as! [Group] }
     }
+}
+
+
+
+private enum CodingKeys: String, CodingKey {
+    case id
+    case urlID = "urlId"
+    case firstName
+    case middleName
+    case lastName
+    
+    case educationStart = "dateStart"
+    case educationEnd = "dateEnd"
+    case examsStart = "sessionStart"
+    case examsEnd = "sessionEnd"
+    
+    case departments = "academicDepartment"
+    case rank
+    case degree
+    
+    case photoLink
+    
+    case lessons = "schedules"
+    case exams = "examSchedules"
+    
+    case employeeContainer = "employee"
 }

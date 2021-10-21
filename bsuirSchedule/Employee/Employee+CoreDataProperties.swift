@@ -20,14 +20,15 @@ extension Employee {
     }
 
     @NSManaged public var id: Int32
-    @NSManaged public var urlID: String?
-    @NSManaged public var firstName: String?
-    @NSManaged public var middleName: String?
-    @NSManaged public var lastName: String?
+    @NSManaged public var urlID: String!
+    @NSManaged public var firstName: String!
+    @NSManaged public var middleName: String!
+    @NSManaged public var lastName: String!
+    @NSManaged public var lastUpdateDate: Date?
     
     @NSManaged public var rank: String?
     @NSManaged public var degree: String?
-    @NSManaged public var departments: [String]?
+    @NSManaged public var departments: [String]!
     @NSManaged public var favorite: Bool
     
     @NSManaged public var educationStart: Date?
@@ -35,7 +36,7 @@ extension Employee {
     @NSManaged public var examsStart: Date?
     @NSManaged public var examsEnd: Date?
     
-    @NSManaged public var photoLink: String?
+    @NSManaged public var photoLink: String!
     @NSManaged public var photo: Data?
     
     @NSManaged public var lessons: NSSet?

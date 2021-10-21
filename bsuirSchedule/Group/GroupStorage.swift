@@ -20,25 +20,23 @@ class GroupStorage: Storage<Group> {
     
     func fetchAllDetailed() {
         self.values.value.forEach { group in
-            fetchDetailed(group, multipleFetch: true)
-        }
-        self.save()
-    }
-    
-    func fetchDetailed(_ group: Group, multipleFetch: Bool = false) {
-        if group.lessons?.count == 0 {
-            cancellables.insert(FetchManager.shared.fetch(dataType: .group, argument: group.id, completion: {(fetchedGroup: Group) -> () in
-                if let lessons = fetchedGroup.lessons {
-                    group.addToLessons(lessons)
-                }
-                group.educationStart = fetchedGroup.educationStart
-                group.educationEnd = fetchedGroup.educationEnd
-                
-                self.delete(fetchedGroup)
-            }))
-            if multipleFetch == false {
-                self.save()
+            if group.lessons?.count == 0 {
+                fetchDetailed(group)
             }
         }
+    }
+    
+    func fetchDetailed(_ group: Group) {
+        cancellables.insert(FetchManager.shared.fetch(dataType: .group, argument: group.id, completion: {(fetchedGroup: Group) -> () in
+            if let lessons = fetchedGroup.lessons {
+                group.addToLessons(lessons)
+            }
+            group.educationStart = fetchedGroup.educationStart
+            group.educationEnd = fetchedGroup.educationEnd
+            group.examsStart = fetchedGroup.examsStart
+            group.examsEnd = fetchedGroup.examsEnd
+            self.save()
+
+        }))
     }
 }

@@ -177,7 +177,7 @@ struct EmployeeFavoriteView: View {
                 }
                 //                                Spacer()
                 VStack(alignment: .leading) {
-                    Text(employee.lastName!)
+                    Text(employee.lastName ?? "")
                         .font(.title)
                         .fontWeight(.bold)
                     Text(employee.firstName! + " " + employee.middleName!)
