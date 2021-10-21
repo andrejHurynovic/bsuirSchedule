@@ -5,6 +5,8 @@
 //  Created by Andrej Hurynovič on 9.09.21.
 //
 
+import Foundation
+import SwiftUI
 import UIKit
 
 //MARK: Array
@@ -79,4 +81,33 @@ extension UserDefaults {
             print("error color key data not saved \(error.localizedDescription)")
         }
     }
+}
+
+
+struct ViewDidLoadModifier: ViewModifier {
+
+    @State private var didLoad = false
+    private let action: (() -> Void)?
+
+    init(perform action: (() -> Void)? = nil) {
+        self.action = action
+    }
+
+    func body(content: Content) -> some View {
+        content.onAppear {
+            if didLoad == false {
+                didLoad = true
+                action?()
+            }
+        }
+    }
+
+}
+
+extension View {
+
+    func onLoad(perform action: (() -> Void)? = nil) -> some View {
+        modifier(ViewDidLoadModifier(perform: action))
+    }
+
 }

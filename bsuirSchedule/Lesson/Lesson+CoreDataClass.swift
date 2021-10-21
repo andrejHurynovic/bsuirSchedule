@@ -75,28 +75,6 @@ public class Lesson: NSManagedObject, Decodable {
         })
     }
     
-    func getColor() -> Color {
-        switch self.lessonType {
-        case .lecture:
-            return Color(UserDefaults.standard.color(forKey: "lectureColor") ?? .green)
-        case .practice:
-            return Color(UserDefaults.standard.color(forKey: "practiceColor") ?? .yellow)
-        case .laboratory:
-            return Color(UserDefaults.standard.color(forKey: "labWorkColor") ?? .red)
-        case .exam:
-            return Color.red
-        case .none:
-            return Color.accentColor
-        case .remoteLecture:
-            return Color(UserDefaults.standard.color(forKey: "lectureColor") ?? .green)
-        case .remotePractice:
-            return Color(UserDefaults.standard.color(forKey: "practiceColor") ?? .yellow)
-        case .consultation:
-            return Color.yellow
-        case .candidateText:
-            return Color.pink
-        }
-    }
     
     func getLessonTypeAbbreviation() -> String {
         switch self.lessonType {

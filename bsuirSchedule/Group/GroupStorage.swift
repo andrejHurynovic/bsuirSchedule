@@ -39,4 +39,8 @@ class GroupStorage: Storage<Group> {
 
         }))
     }
+    
+    func favorites() -> [Group] {
+        return self.values.value.filter{ $0.favorite }
+    }
 }

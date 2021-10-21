@@ -14,6 +14,8 @@ struct LessonView: View {
     var showEmployee: Bool
     var showGroups: Bool
     
+    var color: Color
+    
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
@@ -32,7 +34,6 @@ struct LessonView: View {
                 Spacer()
                 time
             }
-            
             note
         }
         .padding(.all)
@@ -47,11 +48,11 @@ struct LessonView: View {
             Text(lesson.subject!)
                 .font(.title2)
                 .fontWeight(.bold)
-                .foregroundColor(lesson.getColor())
+                .foregroundColor(color)
             if (lesson.subgroup != 0) {
                 Image(systemName: String(lesson.subgroup) + ".circle.fill")
                     .font(.title2.bold())
-                    .foregroundColor(lesson.getColor())
+                    .foregroundColor(color)
             }
         }
     }
@@ -77,7 +78,7 @@ struct LessonView: View {
     var lessonType: some View {
         Text(lesson.getLessonTypeAbbreviation())
             .fontWeight(.medium)
-            .foregroundColor(lesson.getColor())
+            .foregroundColor(color)
     }
     
     @ViewBuilder var groups: some View {

@@ -10,6 +10,10 @@ import SwiftUI
 struct FavoritesView: View {
     @StateObject var viewModel = FavoritesViewModel()
     
+    @AppStorage("primaryGroup") var primaryGroup: String?
+    
+    @State var primaryGroupPresented = false
+    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -22,11 +26,11 @@ struct FavoritesView: View {
                             .padding(.leading)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    
+
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 96, maximum: 256), spacing: nil, alignment: nil)],
                               alignment: .center, spacing: nil,
                               pinnedViews: []) {
-                        
+
                         ForEach(viewModel.groups, id: \.self) {group in
                             ZStack {
                                 FavoriteGroupView(group: group)
@@ -52,7 +56,7 @@ struct FavoritesView: View {
                             .fontWeight(.bold)
                             .padding(.leading)
                     }.frame(maxWidth: .infinity, alignment: .leading)
-                    
+
                     LazyVStack {
                         ForEach(viewModel.employees) { employee in
                             Section {
@@ -82,7 +86,7 @@ struct FavoritesView: View {
                             .fontWeight(.bold)
                             .padding(.leading)
                     }.frame(maxWidth: .infinity, alignment: .leading)
-                    
+
                     LazyVStack {
                         ForEach(viewModel.classrooms) { classroom in
                             Section {
@@ -104,6 +108,19 @@ struct FavoritesView: View {
                     }
                     .padding(.horizontal)
                 }
+                
+                
+                if let primaryGroup = primaryGroup {
+                    NavigationLink(destination: LessonsView(viewModel: LessonsViewModel( viewModel.groups.first{$0.id == primaryGroup}, nil)), isActive: $primaryGroupPresented) {
+                        EmptyView()
+                    }
+                    .hidden()
+                    .onLoad(perform: {
+                        primaryGroupPresented = true
+                    })
+                }
+                
+                
             }
             .navigationTitle("Избранные")
         }
