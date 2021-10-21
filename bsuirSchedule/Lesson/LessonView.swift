@@ -85,10 +85,10 @@ struct LessonView: View {
             HStack(alignment: .top) {
                 Image(systemName: "person.2.circle")
                 if let groups = self.lesson.groups?.allObjects as? [Group] {
-                    if let groupsIDs = groups.map({$0.id!}) {
-                        Text(groupsIDs.sorted().joined(separator: ", "))
+                    if let groupsIDs = groups.map({$0.id!}).sorted() {
+                        Text(groupsString(groupsIDs))
                             .contextMenu {
-                                ForEach(groups) { group in
+                                ForEach(groups.sorted(by: {String($0.id) < String($1.id)})) { group in
                                     NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group, nil))) {
                                         Label(group.id!, systemImage: "person.2.circle")
                                     }
@@ -152,5 +152,33 @@ struct LessonView: View {
     }
     
     
+    func groupsString(_ groups: [String]) -> String {
+        if groups.count == 1 {
+            return groups.first!
+        }
+        var groups = groups
+        var nearGroups: [String] = []
+        var finalGroups: [String] = []
+        
+        repeat {
+            nearGroups.removeAll()
+            nearGroups.append(groups.removeFirst())
+            if groups.isEmpty == false {
+                while groups.isEmpty == false, Int(groups.first!)! - Int(nearGroups.last!)! == 1 {
+                    nearGroups.append(groups.removeFirst())
+                }
+                if nearGroups.count > 1 {
+                    finalGroups.append("\(nearGroups.first!)-\((String(nearGroups.last!)).last!)")
+                } else {
+                    finalGroups.append(String(nearGroups.first!))
+                }
+                
+            } else {
+                finalGroups.append(String(nearGroups.first!))
+            }
+            
+        } while (groups.isEmpty == false)
+        return finalGroups.joined(separator: ", ")
+    }
 }
 
