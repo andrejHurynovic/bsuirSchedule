@@ -90,7 +90,7 @@ struct LessonView: View {
                             .contextMenu {
                                 ForEach(groups.sorted(by: {String($0.id) < String($1.id)})) { group in
                                     NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group, nil))) {
-                                        Label(group.id!, systemImage: "person.2.circle")
+                                        Label("\(group.id!), \(group.speciality.abbreviation), \(group.speciality.faculty.abbreviation)", systemImage: "person.2.circle")
                                     }
                                 }
                             }
@@ -150,6 +150,7 @@ struct LessonView: View {
                 .foregroundColor(.gray)
         }
     }
+    
     
     
     func groupsString(_ groups: [String]) -> String {
