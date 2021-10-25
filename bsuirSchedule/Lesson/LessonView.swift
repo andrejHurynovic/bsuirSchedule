@@ -10,7 +10,7 @@ import SwiftUI
 struct LessonView: View {
     @Environment(\.colorScheme) var colorScheme
     
-    var lesson: Lesson
+    var lesson: UniqueLesson
     var showEmployee: Bool
     var showGroups: Bool
     

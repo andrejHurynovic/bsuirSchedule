@@ -23,11 +23,10 @@ protocol Lessonable: NSManagedObject {
 struct LessonsSection: Hashable {
     var date: Date
     var title: String
-    var lessons: [Lesson]
+    var lessons: [UniqueLesson]
     
-    func lessons(_ searchText: String) -> [Lesson] {
+    func lessons(_ searchText: String) -> [UniqueLesson] {
         if searchText == "" {
-            print(lessons)
             return lessons
         } else {
             return lessons.filter({ $0.subject.localizedStandardContains(searchText) })
@@ -78,7 +77,11 @@ class LessonsViewModel: ObservableObject {
         
         dates.forEach { date in
             if let lessons = lessons(week: week(date: date), weekDay: weekDay(date: date)), lessons.isEmpty == false {
-                sections.append(LessonsSection(date: date, title: title(date, showWeek: true), lessons: lessons))
+                var fuckLessons: [UniqueLesson] = []
+                lessons.forEach { lesson in
+                    fuckLessons.append(UniqueLesson(lesson: lesson))
+                }
+                sections.append(LessonsSection(date: date, title: title(date, showWeek: true), lessons: fuckLessons))
             }
         }
         
@@ -94,7 +97,11 @@ class LessonsViewModel: ObservableObject {
         
         dates.sorted().forEach { date in
             if let lessons = lessons(date: date) {
-                sections.append(LessonsSection(date: date, title: title(date, showWeek: false), lessons: lessons))
+                var fuckLessons: [UniqueLesson] = []
+                lessons.forEach { lesson in
+                    fuckLessons.append(UniqueLesson(lesson: lesson))
+                }
+                sections.append(LessonsSection(date: date, title: title(date, showWeek: false), lessons: fuckLessons))
             }
         }
         
@@ -209,4 +216,85 @@ class LessonsViewModel: ObservableObject {
         try! PersistenceController.shared.container.viewContext.save()
     }
     
+}
+
+
+
+struct UniqueLesson: Identifiable, Hashable {
+    var id = UUID()
+    
+    var subject: String!
+    var lessonTypeValue: Int16
+    var classrooms:  NSSet?
+    var note: String?
+    
+    var groups: NSSet?
+    var subgroup: Int16
+    
+    var date: Date?
+    var weeks: [Int]!
+    var weekDayValue: Int16
+    var timeStart: String!
+    var timeEnd: String!
+    
+    var employees: NSSet?
+    
+    func getLessonTypeAbbreviation() -> String {
+        switch self.lessonType {
+        case .none:
+            return "Без типа"
+        case .lecture:
+            return "ЛК"
+        case .remoteLecture:
+            return "УЛК"
+        case .practice:
+            return "ПЗ"
+        case .remotePractice:
+            return "УПЗ"
+        case .laboratory:
+            return "ЛР"
+        case .consultation:
+            return "Конс"
+        case .exam:
+            return "Экз"
+        case .candidateText:
+            return "КЗ"
+        }
+    }
+    
+    init(lesson: Lesson) {
+        self.subject = lesson.subject
+        self.lessonTypeValue = lesson.lessonTypeValue
+        self.classrooms = lesson.classrooms
+        self.note = lesson.note
+        self.groups = lesson.groups
+        self.subgroup = lesson.subgroup
+        self.date = lesson.date
+        self.weeks = lesson.weeks
+        self.weekDayValue = lesson.weekDayValue
+        self.timeStart = lesson.timeStart
+        self.timeEnd = lesson.timeEnd
+        self.employees = lesson.employees
+    }
+}
+
+
+extension UniqueLesson {
+    var lessonType: LessonType {
+        get {
+            return LessonType(rawValue: self.lessonTypeValue)!
+        }
+        set {
+            self.lessonTypeValue = newValue.rawValue
+        }
+    }
+    
+    var weekDay: WeekDay {
+        get {
+            return WeekDay(rawValue: self.weekDayValue)!
+        }
+        set {
+            self.weekDayValue = newValue.rawValue
+        }
+    }
 }

@@ -26,7 +26,6 @@ struct LessonsView: View {
     
     
     var body: some View {
-        
         ZStack {
             ScrollView {
                 ScrollViewReader { proxy in
@@ -50,6 +49,9 @@ struct LessonsView: View {
                 Spacer()
                 bottomMenu
                 searchField
+                    .onChange(of: searchText) { newValue in
+                        sectionToScroll = viewModel.nearSection
+                    }
                 datePicker
             }
         }
@@ -84,53 +86,56 @@ struct LessonsView: View {
     
     
     
-    
     @ViewBuilder var lessons: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 240, maximum: 500))], alignment: .center, spacing: 8, pinnedViews: [.sectionHeaders]) {
             ForEach(viewModel.sections, id: \.self) { section in
-                Section {
-                    ForEach(section.lessons) { lesson in
-                        LessonView(lesson: lesson, showEmployee: viewModel.showEmployees, showGroups: viewModel.showGroups, color: ColorManager.shared.color(lesson.lessonType))
-                            .padding(.horizontal)
-                    }
-                } header: {
-                    Button {
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.9)) {
-                            showDatePicker.toggle()
+                let lessons: [UniqueLesson] = section.lessons(searchText)
+                if lessons.isEmpty == false {
+                    Section {
+                        ForEach(lessons, id: \.self) { lesson in
+                            LessonView(lesson: lesson, showEmployee: viewModel.showEmployees, showGroups: viewModel.showGroups, color: ColorManager.shared.color(lesson.lessonType))
+                                .padding(.horizontal)
                         }
-                    } label: {
-                        Text(section.title)
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .padding(.horizontal)
-                            .padding(.vertical, 4)
-                            .background(ColorManager.shared.mainColor)
-                            .clipShape(Capsule())
-                            .padding(.vertical, 4)
-                            .shadow(color: ColorManager.shared.mainColor, radius: 8)
-                            .foregroundColor(.white)
-                    }
-                    
-                    
-                }
-                .onAppear {
-                    if section == viewModel.nearSection {
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.9)) {
-                            showReturnButton = false
+                    } header: {
+                        Button {
+                            withAnimation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.9)) {
+                                showDatePicker.toggle()
+                            }
+                        } label: {
+                            Text(section.title)
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .padding(.horizontal)
+                                .padding(.vertical, 4)
+                                .background(ColorManager.shared.mainColor)
+                                .clipShape(Capsule())
+                                .padding(.vertical, 4)
+                                .shadow(color: ColorManager.shared.mainColor, radius: 8)
+                                .foregroundColor(.white)
                         }
                     }
-                }
-                .onDisappear {
-                    if section == viewModel.nearSection {
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.9)) {
-                            showReturnButton = true
+                    .onAppear {
+                        if section == viewModel.nearSection {
+                            withAnimation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.9)) {
+                                showReturnButton = false
+                            }
+                        }
+                    }
+                    .onDisappear {
+                        if section == viewModel.nearSection {
+                            withAnimation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.9)) {
+                                showReturnButton = true
+                            }
                         }
                     }
                 }
                 
+                
             }
         }
     }
+    
+    //MARK: Popup items
     
     @ViewBuilder var searchField: some View {
         if showSearchField {
@@ -151,7 +156,7 @@ struct LessonsView: View {
                 .cornerRadius(16)
                 .foregroundColor(Color.black)
                 .padding([.leading, .bottom, .trailing])
-//                .transition(.move(edge: .bottom))
+            //                .transition(.move(edge: .bottom))
                 .transition(.scale)
                 .onChange(of: date) { newValue in
                     sectionToScroll = viewModel.nearestSection(newValue)
@@ -159,11 +164,13 @@ struct LessonsView: View {
                         showDatePicker = false
                     }
                 }
-
-               
+            
+            
             
         }
     }
+    
+    //MARK: Bottom menu
     
     @ViewBuilder var bottomMenu: some View {
         HStack {
@@ -223,7 +230,7 @@ struct LessonsView: View {
         }
     }
     
-    
+    //MARK: Toolbar
     
     @ViewBuilder var sortingMenu: some View {
         Menu {
@@ -250,6 +257,8 @@ struct LessonsView: View {
     }
     
 }
+
+
 
 
 struct LessonsView_Previews: PreviewProvider {
