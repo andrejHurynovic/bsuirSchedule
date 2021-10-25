@@ -69,7 +69,7 @@ struct EmployeeDetailedView: View {
             
             if let _ = employee.lessons?.allObjects as? [Lesson] {
                 NavigationLink {
-                    LessonsView(viewModel: LessonsViewModel(nil, employee, nil))
+                    LessonsView(viewModel: LessonsViewModel(employee))
                 } label: {
                     Label("Расписание преподавателя", systemImage: "calendar")
                 }
@@ -80,7 +80,7 @@ struct EmployeeDetailedView: View {
                 Section("Группы") {
                     ForEach(groups) { group in
                         NavigationLink {
-                            LessonsView(viewModel: LessonsViewModel(group, nil, nil))
+                            LessonsView(viewModel: LessonsViewModel(group))
                         } label: {
                             Text(group.id!)
                         }

@@ -79,7 +79,7 @@ public class Lesson: NSManagedObject, Decodable {
     func getLessonTypeAbbreviation() -> String {
         switch self.lessonType {
         case .none:
-            return "Без названия"
+            return "Без типа"
         case .lecture:
             return "ЛК"
         case .remoteLecture:

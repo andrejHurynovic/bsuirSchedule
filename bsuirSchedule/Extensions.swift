@@ -19,15 +19,6 @@ extension Array {
     }
 }
 
-extension Array where Element == Lesson {
-    func forWeekNumber(_ weekNumber: Int) -> [Lesson] {
-        self.filter{$0.weeks!.contains(where: {$0 == weekNumber})}
-    }
-    func forWeekDay(_ weekDay: Int) -> [Lesson] {
-        self.filter{$0.weekDay.rawValue == weekDay}.sorted(by: {$0.timeStart! < $1.timeStart!})
-    }
-}
-
 //MARK: Date
 
 extension Date {
@@ -110,4 +101,11 @@ extension View {
         modifier(ViewDidLoadModifier(perform: action))
     }
 
+}
+
+
+extension UIApplication {
+    func endEditing() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
 }

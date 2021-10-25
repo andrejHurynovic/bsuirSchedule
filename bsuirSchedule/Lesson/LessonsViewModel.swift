@@ -7,196 +7,206 @@
 
 import SwiftUI
 import Combine
+import CoreData
+
+protocol Lessonable: NSManagedObject {
+    var favorite: Bool { get set }
+    var lessons: NSSet? { get set }
+    
+    var educationStart: Date? { get set }
+    var educationEnd: Date? { get set }
+    var examsStart: Date? { get set }
+    var examsEnd: Date? { get set }
+}
+
+
+struct LessonsSection: Hashable {
+    var date: Date
+    var title: String
+    var lessons: [Lesson]
+    
+    func lessons(_ searchText: String) -> [Lesson] {
+        if searchText == "" {
+            print(lessons)
+            return lessons
+        } else {
+            return lessons.filter({ $0.subject.localizedStandardContains(searchText) })
+        }
+    }
+    
+}
 
 class LessonsViewModel: ObservableObject {
-    private var group: Group?
-    private var employee: Employee?
-    private var classroom: Classroom?
     
-    var isEmployee = false
-    var isClassroom = false
+    var element: Lessonable!
     
-    var name: String!
-    @Published var favorite: Bool! {
-        willSet {
-            if let group = group {
-                group.favorite = newValue
-                GroupStorage.shared.save()
-            }
-            
-            if let employee = employee {
-                employee.favorite = newValue
-                EmployeeStorage.shared.save()
-            }
-            
-            if let classroom = classroom {
-                classroom.favorite = newValue
-                ClassroomStorage.shared.save()
-            }
+    var sections: [LessonsSection] = []
+    var nearSection: LessonsSection? = nil
+    
+    var title: String? = nil
+    
+    @Published var showGroups: Bool = false
+    @Published var showEmployees: Bool = false
+    
+    init(_ element: Lessonable) {
+        self.element = element
+        
+        sections.append(contentsOf: educationSections() ?? [])
+        sections.append(contentsOf: examsSections() ?? [])
+        
+        nearSection = nearestSection(Date())
+        
+        if let group = element as? Group {
+            title = group.id
+            showEmployees = true
+        }
+        
+        if let employee = element as? Employee {
+            title = employee.lastName
+            showGroups = true
         }
     }
     
-    var dates: [Date] = []
-    @Published var lessons: [Lesson] = [] {
-        didSet {
-            if group?.educationStart != nil || employee?.educationStart != nil || classroom != nil || group?.examsStart != nil{
-                updateDates()
+    // MARK: Sections
+    
+    func educationSections() -> [LessonsSection]? {
+        guard let dates = educationDates() else {
+            return nil
+        }
+        
+        var sections: [LessonsSection] = []
+        
+        dates.forEach { date in
+            if let lessons = lessons(week: week(date: date), weekDay: weekDay(date: date)), lessons.isEmpty == false {
+                sections.append(LessonsSection(date: date, title: title(date, showWeek: true), lessons: lessons))
             }
         }
+        
+        return sections
     }
     
-    var dateFormatter: DateFormatter {
+    func examsSections() -> [LessonsSection]? {
+        
+        var sections: [LessonsSection] = []
+        var dates = Set((element.lessons?.allObjects as! [Lesson]).compactMap({ $0.date }))
+        
+        dates.remove(Date(timeIntervalSince1970: 419420))
+        
+        dates.sorted().forEach { date in
+            if let lessons = lessons(date: date) {
+                sections.append(LessonsSection(date: date, title: title(date, showWeek: false), lessons: lessons))
+            }
+        }
+        
+        return sections
+    }
+    
+    
+    func nearestSection(_ toDate: Date) -> LessonsSection? {
+        let date = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: toDate)!
+        
+        return sections.filter{ $0.date >= date }.first
+    }
+    
+    //MARK: Lessons
+    
+    func lessons(week: Int, weekDay: WeekDay) -> [Lesson]? {
+        (element.lessons?.allObjects as! [Lesson]).sorted(by: { $0.timeStart < $1.timeStart}).filter{ $0.weeks.contains(where: {$0 == week || $0 == 0}) && $0.weekDay == weekDay }
+    }
+    
+    func lessons(date: Date) -> [Lesson]? {
+        (element.lessons?.allObjects as! [Lesson]).sorted(by: { $0.timeStart < $1.timeStart}).filter{ $0.date == date }
+    }
+    
+    //MARK: Dates
+    
+    func educationDates() -> [Date]? {
+        guard element.educationStart != nil else {
+            return nil
+        }
+        
+        return datesBetween(element.educationStart!, element.educationEnd!)
+    }
+    
+    func examsDates() -> [Date]? {
+        guard element.examsStart != nil else {
+            return nil
+        }
+        
+        return datesBetween(element.examsStart!, element.examsEnd!)
+    }
+    
+    func educationRange() -> ClosedRange<Date> {
+        var allDates: [Date] = []
+        allDates.append(contentsOf: educationDates() ?? [])
+        allDates.append(contentsOf: examsDates() ?? [])
+        
+        if allDates.isEmpty {
+            return ClosedRange<Date>.init(uncheckedBounds: (lower: Date(), upper: Date()))
+        } else {
+            return ClosedRange<Date>.init(uncheckedBounds: (lower: allDates.first!, upper: allDates.last!))
+        }
+        
+    }
+    
+    func datesBetween(_ dateA: Date, _ dateB: Date) -> [Date] {
+        let dayDurationInSeconds: TimeInterval = 60 * 60 * 24
+        var dates: [Date] = []
+        
+        for date in stride(from: dateA, to: dateB, by: dayDurationInSeconds) {
+            dates.append(date)
+        }
+        dates.append(dateB)
+        
+        return dates
+    }
+    
+    func week(date: Date) -> Int {
+        weeksBetween(start: element.educationStart!, end: date) % 4 + 1
+    }
+    
+    func weekDay(date: Date) -> WeekDay {
+        WeekDay(rawValue: Int16((Calendar(identifier: .iso8601).ordinality(of: .weekday, in: .weekOfYear, for: date)! - 1)))!
+    }
+    
+    //MARK: View helpers
+    
+    func title(_ date: Date, showWeek: Bool) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_BY")
         dateFormatter.timeZone = TimeZone.autoupdatingCurrent
-        dateFormatter.dateFormat = "EEEEEE, d MMMM, "
-        return dateFormatter
-    }
-    
-    private var cancelable: AnyCancellable?
-    
-    init(_ group: Group? = nil, _ employee: Employee? = nil, _ classroom: Classroom? = nil) {
-        self.group = group
-        self.employee = employee
-        self.classroom = classroom
+        dateFormatter.dateFormat = "EEEEEE, d MMMM"
         
-        if let group = group {
-            self.name = group.id
-            self.favorite = group.favorite
-            
-            let lessonPublisher: AnyPublisher<[Lesson], Never> = LessonStorage.shared.values.eraseToAnyPublisher()
-            cancelable = lessonPublisher.sink { lessons in
-                self.lessons = lessons.filter({$0.groups?.contains(group) as! Bool})
-            }
-        }
+        let dateString = dateFormatter.string(from: date)
         
-        if let employee = employee {
-            self.name = employee.lastName
-            self.favorite = employee.favorite
-            self.isEmployee = true
-            
-            let lessonPublisher: AnyPublisher<[Lesson], Never> = LessonStorage.shared.values.eraseToAnyPublisher()
-            cancelable = lessonPublisher.sink { lessons in
-                self.lessons = lessons.filter({$0.employees?.contains(employee) as! Bool})
-            }
-        }
-        
-        if let classroom = classroom {
-            self.name = "\(classroom.name!)-\(String(classroom.building))"
-            self.favorite = classroom.favorite
-            self.isClassroom = true
-            
-            let lessonPublisher: AnyPublisher<[Lesson], Never> = LessonStorage.shared.values.eraseToAnyPublisher()
-            cancelable = lessonPublisher.sink { lessons in
-                self.lessons = lessons.filter({$0.classrooms?.contains(classroom) as! Bool})
-            }
+        if showWeek {
+            return "\(dateString), \(week(date: date))-ая неделя"
+        } else {
+            return dateString
         }
     }
     
-    func week(_ date: Date) -> String {
-        var week: Int?
-        
-        if let group = group {
-            week = (weeksBetween(start: group.educationStart!, end: date) % 4) + 1
-        }
-        
-        if let employee = employee {
-            week = (weeksBetween(start: employee.educationStart!, end: date) % 4) + 1
-        }
-        
-        if let classroom = classroom {
-            week = (weeksBetween(start: classroom.educationStart(), end: date) % 4) + 1
-        }
-        
-        return String(week!) + "-ая неделя"
-    }
-    
-    func lessons(_ date: Date, searchText: String) -> [Lesson] {
-        var week: Int?
-        var day: Int?
-        
-        if let group = group {
-            week = (weeksBetween(start: group.educationStart!, end: date) % 4) + 1
-            day = Calendar(identifier: .iso8601).ordinality(of: .weekday, in: .weekOfYear, for: date)! - 1
-        }
-        
-        if let employee = employee {
-            week = (weeksBetween(start: employee.educationStart!, end: date) % 4) + 1
-            day = Calendar(identifier: .iso8601).ordinality(of: .weekday, in: .weekOfYear, for: date)! - 1
-        }
-        
-        if let classroom = classroom {
-            week = (weeksBetween(start: classroom.educationStart(), end: date) % 4) + 1
-            day = Calendar(identifier: .iso8601).ordinality(of: .weekday, in: .weekOfYear, for: date)! - 1
-        }
-        
-        var retlessons = lessons.forWeekNumber(week!).forWeekDay(day!)
-            .filter{ searchText.isEmpty || $0.subject!.localizedStandardContains(searchText) }
-        
-        retlessons.append(contentsOf: lessons.filter{$0.date == date})
-        
-        return retlessons
-    }
-    
-    func dateRange() -> ClosedRange<Date> {
-        var range: ClosedRange<Date>?
-        if let group = group {
-            range = group.educationStart!...group.educationEnd!
-        }
-        
-        if let employee = employee {
-            range = employee.educationStart!...employee.educationEnd!
-        }
-        
-        if let classroom = classroom {
-            range = classroom.educationStart()...classroom.educationEnd()
-        }
-        
-        return range!
-    }
-    
-    func update() {
-        if let group = group {
-            GroupStorage.shared.fetchDetailed(group)
-        }
-        
-        if let employee = employee {
-            EmployeeStorage.shared.fetchDetailed(employee)
-        }
-        
-        if let classroom = classroom {
-            //            ClassroomStorage.shared.fetchDetailed(classroom)
-        }
-    }
-    
-    private func updateDates() {
-        let dayDurationInSeconds: TimeInterval = 60 * 60 * 24
-        
-        if let group = group {
-            for date in stride(from: group.educationStart!, to: group.educationEnd!, by: dayDurationInSeconds) {
-                dates.append(date)
-            }
-            dates.append(group.educationEnd!)
-            if let examsStart = group.examsStart {
-                for date in stride(from: examsStart, to: group.examsEnd!, by: dayDurationInSeconds) {
-                    dates.append(date)
-                }
-                dates.append(group.educationEnd!)
+    func checkDefaults() -> Bool {
+        if let _ = element as? Group {
+            if showEmployees == true,
+               showGroups == false {
+                return true
             }
         }
         
-        if let employee = employee {
-            for date in stride(from: employee.educationStart!, to: employee.educationEnd!, by: dayDurationInSeconds) {
-                dates.append(date)
+        if let _ = element as? Employee {
+            if showEmployees == false,
+               showGroups == true {
+                return true
             }
-            dates.append(employee.educationEnd!)
         }
         
-        if let classroom = classroom {
-            for date in stride(from: classroom.educationStart(), to: classroom.educationEnd(), by: dayDurationInSeconds) {
-                dates.append(date)
-            }
-            dates.append(classroom.educationEnd())
-        }
+        return false
     }
+    
+    func toggleFavorite() {
+        element.favorite.toggle()
+        try! PersistenceController.shared.container.viewContext.save()
+    }
+    
 }

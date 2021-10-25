@@ -33,20 +33,8 @@ class FavoritesViewModel: ObservableObject {
         })
     }
     
-    func removeFromFavorites(_ group: Group? = nil, _ employee: Employee? = nil, _ classroom: Classroom? = nil) {
-        if let group = group {
-            group.favorite = false
-            GroupStorage.shared.save()
-        }
-        
-        if let employee = employee {
-            employee.favorite = false
-            EmployeeStorage.shared.save()
-        }
-        
-        if let classroom = classroom {
-            classroom.favorite = false
-            ClassroomStorage.shared.save()
-        }
+    func removeFromFavorites(_ element: Lessonable) {
+        element.favorite = false
+        try! PersistenceController.shared.container.viewContext.save()
     }
 }

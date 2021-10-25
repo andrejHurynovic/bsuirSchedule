@@ -23,7 +23,7 @@ class EmployeeStorage: Storage<Employee> {
     
     func fetchAllDetailed() {
         self.values.value.forEach { employee in
-            if employee.lessons?.count == 0 {
+            if employee.lessons?.count == 0 || employee.educationStart == nil {
                 fetchDetailed(employee)
             }
         }

@@ -18,157 +18,82 @@ struct FavoritesView: View {
         NavigationView {
             ScrollView {
                 
-                if viewModel.groups.isEmpty == false {
-                    VStack(alignment: .leading) {
-                        Text("Группы")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .padding(.leading)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 96, maximum: 256), spacing: nil, alignment: nil)],
-                              alignment: .center, spacing: nil,
-                              pinnedViews: []) {
-
-                        ForEach(viewModel.groups, id: \.self) {group in
-                            ZStack {
-                                FavoriteGroupView(group: group)
-                                    .contextMenu {
-                                        Button {
-                                            withAnimation(.spring()) {
-                                                viewModel.removeFromFavorites(group)
-                                            }
-                                        } label: {
-                                            Label("Убрать из избранных", systemImage: "star.circle")
-                                        }
-                                    }
-                            }
-                        }
-                    }
-                              .padding([.leading, .bottom, .trailing])
-                }
-                
-                if viewModel.employees.isEmpty == false {
-                    VStack(alignment: .leading) {
-                        Text("Преподаватели")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .padding(.leading)
-                    }.frame(maxWidth: .infinity, alignment: .leading)
-
-                    LazyVStack {
-                        ForEach(viewModel.employees) { employee in
-                            Section {
-                                EmployeeFavoriteView(employee: employee)
-                            }
-                            .contextMenu {
-                                Button {
-                                    withAnimation(.spring()) {
-                                        viewModel.removeFromFavorites(nil, employee)
-                                    }
-                                } label: {
-                                    Label("Убрать из избранных", systemImage: "star.circle")
-                                }
-                                NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(nil, employee))) {
-                                    Label("Расписание", systemImage: "calendar")
-                                }
-                            }
-                        }
-                    }
-                    .padding(.horizontal)
-                }
-                
-                if viewModel.classrooms.isEmpty == false {
-                    VStack(alignment: .leading) {
-                        Text("Аудитории")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .padding(.leading)
-                    }.frame(maxWidth: .infinity, alignment: .leading)
-
-                    LazyVStack {
-                        ForEach(viewModel.classrooms) { classroom in
-                            Section {
-                                ClassroomView(classroom: classroom)
-                            }
-                            .contextMenu {
-                                Button {
-                                    withAnimation(.spring()) {
-                                        viewModel.removeFromFavorites(nil, nil, classroom)
-                                    }
-                                } label: {
-                                    Label("Убрать из избранных", systemImage: "star.circle")
-                                }
-                                //                                NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(nil, employee))) {
-                                //                                    Label("Расписание", systemImage: "calendar")
-                                //                                }
-                            }
-                        }
-                    }
-                    .padding(.horizontal)
-                }
-                
-                
                 if let primaryGroup = primaryGroup {
-                    NavigationLink(destination: LessonsView(viewModel: LessonsViewModel( viewModel.groups.first{$0.id == primaryGroup}, nil)), isActive: $primaryGroupPresented) {
-                        EmptyView()
+                    if let group = viewModel.groups.first{$0.id == primaryGroup} {
+                        NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group)), isActive: $primaryGroupPresented) {
+                            EmptyView()
+                        }
+                        .hidden()
+                        .onLoad {
+                            primaryGroupPresented = true
+                        }
                     }
-                    .hidden()
-                    .onLoad(perform: {
-                        primaryGroupPresented = true
-                    })
+                }
+                
+                if viewModel.groups.isEmpty == false {
+                    groups
                 }
                 
                 
             }
             .navigationTitle("Избранные")
         }
-        .navigationViewStyle(StackNavigationViewStyle())
     }
-}
-
-
-
-struct FavoriteGroupView: View {
-    @Environment(\.colorScheme) var colorScheme
     
-    var group: Group
     
-    var body: some View {
-        NavigationLink {
-            LessonsView(viewModel: LessonsViewModel(group, nil))
-        } label: {
-            VStack(alignment: .leading) {
-                Text(group.id!)
-                    .font(.title3)
-                    .fontWeight(.bold)
-                    .foregroundColor(Color.primary)
-                Spacer()
-                Text(group.speciality!.abbreviation!)
-                    .foregroundColor(Color.primary)
-                HStack {
-                    Text(String(group.speciality!.faculty!.abbreviation!))
-                        .font(.headline)
-                        .fontWeight(.regular)
-                        .foregroundColor(Color.gray)
-                    Spacer()
-                    Image(systemName: String(group.course) + ".circle.fill")
-                        .foregroundColor(Color.gray)
+    @ViewBuilder var groups: some View {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 256))], alignment: .center, spacing: 8, pinnedViews: []) {
+            ForEach(viewModel.groups) { group in
+                NavigationLink {
+                    LessonsView(viewModel: LessonsViewModel(group))
+                } label: {
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(.background)
+                    .aspectRatio(contentMode: .fill)
+                    .shadow(color: .secondary, radius: 6, x: 0, y: 0)
+                    .overlay {
+                            VStack(alignment: .leading) {
+                                Text(group.id!)
+                                    .font(Font.system(size: 500, weight: .bold))
+                                    .minimumScaleFactor(0.01)
+                                    .foregroundColor(Color.primary)
+                                Spacer()
+                                Text(group.speciality!.abbreviation!)
+                                    .foregroundColor(Color.primary)
+                                HStack {
+                                    Text(String(group.speciality!.faculty!.abbreviation!))
+                                        .font(.headline)
+                                        .fontWeight(.regular)
+                                        .foregroundColor(Color.gray)
+                                    Spacer()
+                                    Image(systemName: String(group.course) + ".circle.fill")
+                                        .foregroundColor(Color.gray)
+                                }
+                            }
+                            .padding(14)
+                        
+                    }
+                    .contextMenu {
+                        Button {
+                            withAnimation {
+                                viewModel.removeFromFavorites(group)
+                            }
+                            
+                        } label: {
+                            Label("Убрать из избранных", systemImage: "star.slash")
+                        }
+                    }
                 }
             }
         }
         .padding()
-        .frame(width: 112, height: 112)
-        .clipped()
-        .background(in: RoundedRectangle(cornerRadius: 16))
-        .shadow(color: colorScheme == .dark ? Color(#colorLiteral(red: 255, green: 255, blue: 255, alpha: 0.2)) : Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.1)), radius: 5, x: 0, y: 0)
     }
 }
 
 struct FavoritesView_Previews: PreviewProvider {
     static var previews: some View {
         FavoritesView()
+            .preferredColorScheme(.dark)
     }
 }
 

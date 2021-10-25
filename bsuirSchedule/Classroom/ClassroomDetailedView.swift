@@ -19,7 +19,7 @@ struct ClassroomDetailedView: View {
                 }
             if classroom.lessons?.allObjects.isEmpty == false {
                 NavigationLink {
-                    LessonsView(viewModel: LessonsViewModel(nil, nil, classroom))
+//                    LessonsView(viewModel: LessonsViewModel(nil, nil, classroom))
                 } label: {
                     Label("Расписание кабинета", systemImage: "calendar")
                 }
@@ -29,7 +29,7 @@ struct ClassroomDetailedView: View {
                 Section("Группы") {
                     ForEach(groups) { group in
                         NavigationLink {
-                            LessonsView(viewModel: LessonsViewModel(group, nil, nil))
+//                            LessonsView(viewModel: LessonsViewModel(group, nil, nil))
                         } label: {
                             Text(group.id!)
                         }

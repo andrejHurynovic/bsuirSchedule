@@ -24,12 +24,12 @@ struct GroupsView: View {
                 List (viewModel.sections(searchText, selectedFaculty, selectedEducationType, sortedBy), id: \.self) { section in
                     Section(section.title) {
                         ForEach(section.groups, id: \.id, content: { group in
-                            NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group, nil))){
+                            NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group))){
                                 Text(group.id)
                             }
                         })
                     }
-                    
+
                 }
                 .navigationBarTitle("Группы")
                 .searchable(text: $searchText, prompt: "Номер группы, специальность")
@@ -45,8 +45,8 @@ struct GroupsView: View {
                     
                     Menu {
                         Picker("", selection: $sortedBy) {
-                            Text("Номер").tag(GroupSortingType.number)
-                            Text("Специальность").tag(GroupSortingType.speciality)
+                            Text("номер").tag(GroupSortingType.number)
+                            Text("специальность").tag(GroupSortingType.speciality)
                         }
                         Picker("", selection: $selectedFaculty) {
                             Text("все").tag(nil as Faculty?)

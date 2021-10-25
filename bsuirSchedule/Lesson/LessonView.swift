@@ -63,12 +63,13 @@ struct LessonView: View {
                 Image(systemName: "mappin")
                 VStack(alignment: .leading) {
                     ForEach(classrooms.sorted(by: {$0.name < $1.name}), id: \.self) { classroom in
-                        Text("\(classroom.name!)-\(String(classroom.building))")
-                            .foregroundColor(Color.primary)
-                            .background(NavigationLink(destination: {
-                                ClassroomDetailedView(classroom: classroom)
-                            }, label: {}) .opacity(0)
-                            )
+                        NavigationLink {
+                            ClassroomDetailedView(classroom: classroom)
+                        } label: {
+                            Text("\(classroom.name!)-\(String(classroom.building))")
+                                .foregroundColor(Color.primary)
+                        }
+                        
                     }
                 }
             }
@@ -90,7 +91,7 @@ struct LessonView: View {
                         Text(groupsString(groupsIDs))
                             .contextMenu {
                                 ForEach(groups.sorted(by: {String($0.id) < String($1.id)})) { group in
-                                    NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group, nil))) {
+                                    NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group))) {
                                         Label("\(group.id!), \(group.speciality.abbreviation), \(group.speciality.faculty.abbreviation)", systemImage: "person.2.circle")
                                     }
                                 }
@@ -106,28 +107,30 @@ struct LessonView: View {
             if let employees = lesson.employees?.allObjects as? [Employee] {
                 ForEach(employees.sorted(by: {$0.lastName! < $1.lastName!}), id: \.self) { employee in
                     
-                    HStack {
-                        if let photo = employee.photo {
-                            Image(uiImage: UIImage(data: photo)!)
-                                .resizable()
-                                .frame(width: 35.0, height: 35.0)
-                                .clipShape(Circle())
-                        } else {
-                            Image(systemName: "person.circle.fill")
-                                .resizable()
-                                .frame(width: 35.0, height: 35.0)
-                        }
-                        VStack(alignment: .leading) {
-                            Text(employee.lastName!)
-                                .font(.body)
-                                .fontWeight(.semibold)
-                            Text(employee.firstName! + " " + employee.middleName!)
-                        }
-                    }
-                    .background(NavigationLink(destination: {
+                    NavigationLink {
                         EmployeeDetailedView(employee: employee)
-                    }, label: {}) .opacity(0)
-                    )
+                    } label: {
+                        HStack {
+                            if let photo = employee.photo {
+                                Image(uiImage: UIImage(data: photo)!)
+                                    .resizable()
+                                    .frame(width: 35.0, height: 35.0)
+                                    .clipShape(Circle())
+                            } else {
+                                Image(systemName: "person.circle.fill")
+                                    .resizable()
+                                    .frame(width: 35.0, height: 35.0)
+                            }
+                            VStack(alignment: .leading) {
+                                Text(employee.lastName!)
+                                    .font(.body)
+                                    .fontWeight(.semibold)
+                                Text(employee.firstName! + " " + employee.middleName!)
+                                    .lineLimit(1)
+                            }
+                        }
+                        .foregroundColor(Color.primary)
+                    }
                     
                     
                 }
