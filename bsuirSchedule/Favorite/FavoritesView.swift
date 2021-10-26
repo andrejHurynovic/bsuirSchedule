@@ -73,10 +73,10 @@ struct FavoritesView: View {
                         .fontWeight(.bold)
                         .padding(.horizontal)
                         .padding(.vertical, 4)
-                        .background(ColorManager.shared.mainColor)
+                        .background(DesignManager.shared.mainColor)
                         .clipShape(Capsule())
                         .padding(.vertical, 4)
-                        .shadow(color: ColorManager.shared.mainColor, radius: 8)
+                        .shadow(color: DesignManager.shared.mainColor, radius: 8)
                         .foregroundColor(.white)
                 }
                 
@@ -107,10 +107,10 @@ struct FavoritesView: View {
                         .fontWeight(.bold)
                         .padding(.horizontal)
                         .padding(.vertical, 4)
-                        .background(ColorManager.shared.mainColor)
+                        .background(DesignManager.shared.mainColor)
                         .clipShape(Capsule())
                         .padding(.vertical, 4)
-                        .shadow(color: ColorManager.shared.mainColor, radius: 8)
+                        .shadow(color: DesignManager.shared.mainColor, radius: 8)
                         .foregroundColor(.white)
                 }
             }

@@ -15,7 +15,7 @@ struct SettingsView: View {
     @StateObject var classroomStorage = ClassroomStorage.shared
     @StateObject var specialityStorage = SpecialityStorage.shared
     
-    @StateObject var colorManager = ColorManager.shared
+    @StateObject var colorManager = DesignManager.shared
     
     @State private var showingAlert = false
     

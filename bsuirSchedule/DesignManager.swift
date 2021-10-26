@@ -1,5 +1,5 @@
 //
-//  ColorManager.swift
+//  DesignManager.swift
 //  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 21.10.21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class ColorManager: ObservableObject {
+class DesignManager: ObservableObject {
     
     @AppStorage("mainColor") var mainColor = Color.accentColor
     
@@ -18,7 +18,7 @@ class ColorManager: ObservableObject {
     @AppStorage("examColor") var examColor = Color(red: 0.280348, green: 0.14247, blue: 0.671006)
     
     
-    static var shared: ColorManager { .init() }
+    static var shared: DesignManager { .init() }
     
     func restoreDefaults() {
         mainColor = Color.accentColor

@@ -40,7 +40,7 @@
 		F6A42DA026E52F8A004B239C /* GroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A42D9F26E52F8A004B239C /* GroupsView.swift */; };
 		F6AA210D26EBA59D006218F8 /* GroupStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AA210C26EBA59D006218F8 /* GroupStorage.swift */; };
 		F6AA210F26EC83BB006218F8 /* GroupsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AA210E26EC83BB006218F8 /* GroupsViewModel.swift */; };
-		F6AFC4622721EC43008CC065 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AFC4612721EC43008CC065 /* ColorManager.swift */; };
+		F6AFC4622721EC43008CC065 /* DesignManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AFC4612721EC43008CC065 /* DesignManager.swift */; };
 		F6B4805226F9ED070085D5FE /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B4805126F9ED070085D5FE /* FavoritesViewModel.swift */; };
 		F6BCE3AA26EFD72C0067B5DA /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BCE3A926EFD72C0067B5DA /* Schedule.swift */; };
 		F6CB615526EFF43900D29807 /* LessonStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CB615426EFF43900D29807 /* LessonStorage.swift */; };
@@ -89,7 +89,7 @@
 		F6A42D9F26E52F8A004B239C /* GroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsView.swift; sourceTree = "<group>"; };
 		F6AA210C26EBA59D006218F8 /* GroupStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupStorage.swift; sourceTree = "<group>"; };
 		F6AA210E26EC83BB006218F8 /* GroupsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsViewModel.swift; sourceTree = "<group>"; };
-		F6AFC4612721EC43008CC065 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
+		F6AFC4612721EC43008CC065 /* DesignManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignManager.swift; sourceTree = "<group>"; };
 		F6B4805126F9ED070085D5FE /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		F6BCE3A926EFD72C0067B5DA /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		F6CB615426EFF43900D29807 /* LessonStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonStorage.swift; sourceTree = "<group>"; };
@@ -149,7 +149,7 @@
 				F632DEEF26696CD300E4C55F /* Assets.xcassets */,
 				F632DEF926696CD300E4C55F /* Info.plist */,
 				F697441B271CE90400A7AE30 /* FetchManager.swift */,
-				F6AFC4612721EC43008CC065 /* ColorManager.swift */,
+				F6AFC4612721EC43008CC065 /* DesignManager.swift */,
 				F69CAC32271DCA0B00D0403E /* StorageTemplate.swift */,
 			);
 			path = bsuirSchedule;
@@ -349,7 +349,7 @@
 				F6DCD72326B30EF0003761B0 /* SettingsView.swift in Sources */,
 				F6AA210F26EC83BB006218F8 /* GroupsViewModel.swift in Sources */,
 				F6AA210D26EBA59D006218F8 /* GroupStorage.swift in Sources */,
-				F6AFC4622721EC43008CC065 /* ColorManager.swift in Sources */,
+				F6AFC4622721EC43008CC065 /* DesignManager.swift in Sources */,
 				F64AD7B0266A816D00115E6B /* EmployeesView.swift in Sources */,
 				F614250C271B7EFF006C3CE1 /* ClassroomDetailedView.swift in Sources */,
 				F697BF7C26FFA1BA008FA7A9 /* Classroom+CoreDataClass.swift in Sources */,

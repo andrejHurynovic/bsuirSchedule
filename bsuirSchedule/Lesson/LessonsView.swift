@@ -93,7 +93,7 @@ struct LessonsView: View {
                 if lessons.isEmpty == false {
                     Section {
                         ForEach(lessons, id: \.self) { lesson in
-                            LessonView(lesson: lesson, showEmployee: viewModel.showEmployees, showGroups: viewModel.showGroups, color: ColorManager.shared.color(lesson.lessonType))
+                            LessonView(lesson: lesson, showEmployee: viewModel.showEmployees, showGroups: viewModel.showGroups, color: DesignManager.shared.color(lesson.lessonType))
                                 .padding(.horizontal)
                         }
                     } header: {
@@ -107,10 +107,10 @@ struct LessonsView: View {
                                 .fontWeight(.bold)
                                 .padding(.horizontal)
                                 .padding(.vertical, 4)
-                                .background(ColorManager.shared.mainColor)
+                                .background(DesignManager.shared.mainColor)
                                 .clipShape(Capsule())
                                 .padding(.vertical, 4)
-                                .shadow(color: ColorManager.shared.mainColor, radius: 8)
+                                .shadow(color: DesignManager.shared.mainColor, radius: 8)
                                 .foregroundColor(.white)
                         }
                     }
@@ -188,7 +188,7 @@ struct LessonsView: View {
             } label: {
                 Circle()
                     .frame(width: 48, height: 48)
-                    .shadow(color: ColorManager.shared.mainColor, radius: 8)
+                    .shadow(color: DesignManager.shared.mainColor, radius: 8)
                     .overlay(Image(systemName: "arrow.uturn.backward")
                                 .resizable()
                                 .font(Font.system(.title).bold())
@@ -218,7 +218,7 @@ struct LessonsView: View {
             } label: {
                 Circle()
                     .frame(width: 48, height: 48)
-                    .shadow(color: ColorManager.shared.mainColor, radius: 8)
+                    .shadow(color: DesignManager.shared.mainColor, radius: 8)
                     .overlay(Image(systemName: "multiply")
                                 .resizable()
                                 .font(Font.system(.title).bold())
