@@ -8,6 +8,24 @@
 import SwiftUI
 import Combine
 
+struct ClassroomSection: Hashable {
+    var title: String
+    var classrooms: [Classroom]
+    
+    func classrooms(_ searchText: String, _ classroomsTypes: [Bool]) -> [Classroom] {
+        if classroomsTypes.filter( {$0 == false} ).isEmpty, searchText == "" {
+            return classrooms
+        } else {
+            return classrooms.filter { ($0.formattedName(showBuilding: true).localizedStandardContains(searchText)
+                                        || ($0.departmentAbbreviation?.localizedStandardContains(searchText) ?? false)
+                                        || searchText == "")
+                                        && classroomsTypes[Int($0.typeValue) - 1] == true }
+        }
+    }
+}
+
+
+
 class ClassroomsViewModel: ObservableObject {
     @Published var classrooms: [Classroom] = []
     
@@ -19,55 +37,22 @@ class ClassroomsViewModel: ObservableObject {
         }
     }
     
-    func classrooms(building: Int, _ searchText: String) -> [ClassroomSection] {
+    func sections() -> [ClassroomSection] {
         var sections: [ClassroomSection] = []
-        
-        let foundClassrooms = classrooms.filter{$0.building == building}
-        var floors = Set<String.SubSequence>()
-        
-        foundClassrooms.map {$0.name!.prefix(1)}.forEach { subSequence in
-            floors.insert(subSequence)
-        }
-        
-        floors
-            .filter { Int($0) != nil }
-            .sorted()
-            .forEach { floor in
-                var title = String(floor)
-                if floor == "0" {
-                    title = title + "-ой этаж"
-                } else {
-                    title = title + "-ый этаж"
-                }
-                sections.append(ClassroomSection(title: title,
-                                                 classrooms: foundClassrooms.filter {$0.name!.prefix(1) == floor}))
+        ClassroomStorage.shared.buildings().forEach { building in
+            ClassroomStorage.shared.floors(building).forEach { floor in
+                sections.append(ClassroomSection(title: "\(building) корпус \(floor) этаж",
+                                                 classrooms: ClassroomStorage.shared.classrooms(building: building, floor: floor)))
             }
-        
-        var otherClassrooms: [Classroom] = []
-        
-        floors
-            .filter { Int($0) == nil }
-            .sorted()
-            .forEach { subSequence in
-                otherClassrooms.append(contentsOf: foundClassrooms.filter{$0.name!.prefix(1) == subSequence})
-            }
-        
-        if otherClassrooms.isEmpty == false {
-            sections.append(ClassroomSection(title: "Другие", classrooms: otherClassrooms))
         }
-        
         return sections
-        
+    }
+    
+    static func classroomsTypesDefaults() -> [Bool] {
+        return [true, true, true, false, false, false, false]
     }
 
     func fetchClassrooms() {
         ClassroomStorage.shared.fetch()
     }
-}
-
-
-
-struct ClassroomSection: Hashable {
-    var title: String
-    var classrooms: [Classroom]
 }

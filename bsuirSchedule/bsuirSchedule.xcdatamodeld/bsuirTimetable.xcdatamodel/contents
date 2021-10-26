@@ -5,13 +5,15 @@
         <attribute name="departmentAbbreviation" optional="YES" attributeType="String"/>
         <attribute name="departmentName" optional="YES" attributeType="String"/>
         <attribute name="favorite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="floor" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
+        <attribute name="originalName" optional="YES" attributeType="String"/>
         <attribute name="typeValue" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="lessons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lesson" inverseName="classrooms" inverseEntity="Lesson"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
-                <constraint value="name"/>
                 <constraint value="building"/>
+                <constraint value="originalName"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
@@ -97,7 +99,7 @@
         <relationship name="groups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="speciality" inverseEntity="Group"/>
     </entity>
     <elements>
-        <element name="Classroom" positionX="-688.0670166015625" positionY="-34.90615844726562" width="128" height="134"/>
+        <element name="Classroom" positionX="-688.0670166015625" positionY="-34.90615844726562" width="128" height="164"/>
         <element name="Employee" positionX="-231.9367065429688" positionY="-131.8106842041016" width="128" height="284"/>
         <element name="Faculty" positionX="-536.472412109375" positionY="280.2841491699219" width="128" height="103"/>
         <element name="Group" positionX="-339.1310424804688" positionY="212.7224731445312" width="120.3765258789062" height="179"/>

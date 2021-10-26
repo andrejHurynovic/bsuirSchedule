@@ -18,28 +18,32 @@ struct FavoritesView: View {
         NavigationView {
             ScrollView {
                 
-                if let primaryGroup = primaryGroup {
-                    if let group = viewModel.groups.first{$0.id == primaryGroup} {
-                        NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group)), isActive: $primaryGroupPresented) {
-                            EmptyView()
-                        }
-                        .hidden()
-                        .onLoad {
-                            primaryGroupPresented = true
-                        }
-                    }
-                }
+                primaryGroupOnLoad
                 
                 if viewModel.groups.isEmpty == false {
                     groups
                 }
-                
                 
             }
             .navigationTitle("Избранные")
         }
     }
     
+    @ViewBuilder var primaryGroupOnLoad: some View {
+        if let primaryGroup = primaryGroup {
+            if let group = viewModel.groups.first(where: {$0.id == primaryGroup}) {
+                NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group)), isActive: $primaryGroupPresented) {
+                    EmptyView()
+                }
+                .hidden()
+                .onLoad {
+                    primaryGroupPresented = true
+                }
+            }
+        }
+    }
+    
+    //MARK: Group
     
     @ViewBuilder var groups: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 256))], alignment: .center, spacing: 8, pinnedViews: []) {
@@ -47,46 +51,56 @@ struct FavoritesView: View {
                 NavigationLink {
                     LessonsView(viewModel: LessonsViewModel(group))
                 } label: {
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(.background)
-                    .aspectRatio(contentMode: .fill)
-                    .shadow(color: .secondary, radius: 6, x: 0, y: 0)
-                    .overlay {
-                            VStack(alignment: .leading) {
-                                Text(group.id!)
-                                    .font(Font.system(size: 500, weight: .bold))
-                                    .minimumScaleFactor(0.01)
-                                    .foregroundColor(Color.primary)
-                                Spacer()
-                                Text(group.speciality!.abbreviation!)
-                                    .foregroundColor(Color.primary)
-                                HStack {
-                                    Text(String(group.speciality!.faculty!.abbreviation!))
-                                        .font(.headline)
-                                        .fontWeight(.regular)
-                                        .foregroundColor(Color.gray)
-                                    Spacer()
-                                    Image(systemName: String(group.course) + ".circle.fill")
-                                        .foregroundColor(Color.gray)
-                                }
-                            }
-                            .padding(14)
-                        
-                    }
-                    .contextMenu {
-                        Button {
-                            withAnimation {
-                                viewModel.removeFromFavorites(group)
-                            }
-                            
-                        } label: {
-                            Label("Убрать из избранных", systemImage: "star.slash")
+                    FavoriteGroupView(group: group)
+                }
+                .contextMenu {
+                    Button {
+                        withAnimation {
+                            viewModel.removeFromFavorites(group)
                         }
+                        
+                    } label: {
+                        Label("Убрать из избранных", systemImage: "star.slash")
                     }
                 }
             }
         }
         .padding()
+    }
+}
+
+struct FavoriteGroupView: View {
+    
+    var group: Group
+    
+    var body: some View {
+        RoundedRectangle(cornerRadius: 16)
+            .fill(.background)
+            .aspectRatio(contentMode: .fill)
+            .shadow(color: .secondary, radius: 6, x: 0, y: 0)
+            .overlay {
+                VStack(alignment: .leading) {
+                    Text(group.id!)
+                        .font(Font.system(size: 500, weight: .bold))
+                        .minimumScaleFactor(0.01)
+                        .foregroundColor(Color.primary)
+                    Spacer()
+                    Text(group.speciality!.abbreviation!)
+                        .foregroundColor(Color.primary)
+                    HStack {
+                        Text(String(group.speciality!.faculty!.abbreviation!))
+                            .font(.headline)
+                            .fontWeight(.regular)
+                            .foregroundColor(Color.gray)
+                        Spacer()
+                        Image(systemName: String(group.course) + ".circle.fill")
+                            .foregroundColor(Color.gray)
+                    }
+                }
+                .padding(14)
+                
+            }
+        
     }
 }
 

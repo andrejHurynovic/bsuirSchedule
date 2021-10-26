@@ -18,13 +18,22 @@ extension Classroom {
         return request
     }
 
+    @NSManaged public var floor: Int16
     @NSManaged public var name: String!
-    @NSManaged public var building: Int16
-    @NSManaged public var typeValue: Int16
+    @NSManaged public var originalName: String!
     @NSManaged public var favorite: Bool
+    
+    @NSManaged public var building: Int16
+    
+    @NSManaged public var typeValue: Int16
     
     @NSManaged public var departmentName: String?
     @NSManaged public var departmentAbbreviation: String?
+    
+//    var educationStart: Date?
+//    var educationEnd: Date?
+//    var examsStart: Date?
+//    var examsEnd: Date?
     
     @NSManaged public var lessons: NSSet?
 }

@@ -29,7 +29,7 @@ struct GroupsView: View {
                             }
                         })
                     }
-
+                    
                 }
                 .navigationBarTitle("Группы")
                 .searchable(text: $searchText, prompt: "Номер группы, специальность")
@@ -38,22 +38,23 @@ struct GroupsView: View {
                 }
             }
             
-            
-            
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     
                     Menu {
+                        Text("Сортировка:")
                         Picker("", selection: $sortedBy) {
                             Text("номер").tag(GroupSortingType.number)
                             Text("специальность").tag(GroupSortingType.speciality)
                         }
+                        Text("Факультеты:")
                         Picker("", selection: $selectedFaculty) {
                             Text("все").tag(nil as Faculty?)
                             ForEach(FacultyStorage.shared.faculties() , id: \.self) {faculty in
                                 Text(faculty.abbreviation).tag(faculty.self as Faculty?)
                             }
                         }
+                        Text("Форма обучения:")
                         Picker("", selection: $selectedEducationType) {
                             Text("все").tag(nil as Int?)
                             Text("дневная").tag(1 as Int?)

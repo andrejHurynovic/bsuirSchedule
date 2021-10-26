@@ -66,7 +66,7 @@ struct LessonView: View {
                         NavigationLink {
                             ClassroomDetailedView(classroom: classroom)
                         } label: {
-                            Text("\(classroom.name!)-\(String(classroom.building))")
+                            Text(classroom.formattedName(showBuilding: true))
                                 .foregroundColor(Color.primary)
                         }
                         
@@ -158,6 +158,9 @@ struct LessonView: View {
     
     
     func groupsString(_ groups: [String]) -> String {
+        if groups.isEmpty {
+            return ""
+        }
         if groups.count == 1 {
             return groups.first!
         }

@@ -36,7 +36,7 @@ class GroupStorage: Storage<Group> {
             group.examsStart = fetchedGroup.examsStart
             group.examsEnd = fetchedGroup.examsEnd
             self.save()
-
+            
         }))
     }
     

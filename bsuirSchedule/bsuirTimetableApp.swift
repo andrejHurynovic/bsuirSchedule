@@ -10,9 +10,9 @@ import SwiftUI
 @main
 struct bsuirScheduleApp: App {
     let persistenceController = PersistenceController.shared
-        
+    
     @AppStorage("mainColor") var color = ColorManager.shared.mainColor
-
+    
     var body: some Scene {
         WindowGroup {
             ContentView()

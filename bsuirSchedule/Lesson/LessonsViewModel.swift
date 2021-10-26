@@ -77,11 +77,8 @@ class LessonsViewModel: ObservableObject {
         
         dates.forEach { date in
             if let lessons = lessons(week: week(date: date), weekDay: weekDay(date: date)), lessons.isEmpty == false {
-                var fuckLessons: [UniqueLesson] = []
-                lessons.forEach { lesson in
-                    fuckLessons.append(UniqueLesson(lesson: lesson))
-                }
-                sections.append(LessonsSection(date: date, title: title(date, showWeek: true), lessons: fuckLessons))
+                sections.append(LessonsSection(date: date, title: title(date, showWeek: true),
+                                               lessons: lessons.map { UniqueLesson($0) }))
             }
         }
         
@@ -97,11 +94,8 @@ class LessonsViewModel: ObservableObject {
         
         dates.sorted().forEach { date in
             if let lessons = lessons(date: date) {
-                var fuckLessons: [UniqueLesson] = []
-                lessons.forEach { lesson in
-                    fuckLessons.append(UniqueLesson(lesson: lesson))
-                }
-                sections.append(LessonsSection(date: date, title: title(date, showWeek: false), lessons: fuckLessons))
+                sections.append(LessonsSection(date: date, title: title(date, showWeek: false),
+                                               lessons: lessons.map { UniqueLesson($0) }))
             }
         }
         
@@ -262,7 +256,7 @@ struct UniqueLesson: Identifiable, Hashable {
         }
     }
     
-    init(lesson: Lesson) {
+    init(_ lesson: Lesson) {
         self.subject = lesson.subject
         self.lessonTypeValue = lesson.lessonTypeValue
         self.classrooms = lesson.classrooms

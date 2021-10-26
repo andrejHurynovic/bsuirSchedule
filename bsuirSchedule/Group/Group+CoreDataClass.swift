@@ -57,7 +57,7 @@ public class Group: NSManagedObject, Decodable, Lessonable {
         if let course = try? container.decode(Int16.self, forKey: .course) {
             self.course = course
         } else {
-    
+            
         }
         self.lastUpdateDate = Date()
     }

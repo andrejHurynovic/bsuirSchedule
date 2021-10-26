@@ -29,7 +29,6 @@
 		F68465FC26FA5321000F185E /* Faculty+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68465FA26FA5321000F185E /* Faculty+CoreDataProperties.swift */; };
 		F69009D426F6958100379A74 /* LessonsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69009D326F6958000379A74 /* LessonsViewModel.swift */; };
 		F697441C271CE90400A7AE30 /* FetchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697441B271CE90400A7AE30 /* FetchManager.swift */; };
-		F697BF7526FFA172008FA7A9 /* ClassroomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697BF7426FFA172008FA7A9 /* ClassroomModel.swift */; };
 		F697BF7C26FFA1BA008FA7A9 /* Classroom+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697BF7826FFA1BA008FA7A9 /* Classroom+CoreDataClass.swift */; };
 		F697BF7D26FFA1BA008FA7A9 /* Classroom+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697BF7926FFA1BA008FA7A9 /* Classroom+CoreDataProperties.swift */; };
 		F697BF7F26FFA506008FA7A9 /* ClassroomStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697BF7E26FFA506008FA7A9 /* ClassroomStorage.swift */; };
@@ -79,7 +78,6 @@
 		F68465FA26FA5321000F185E /* Faculty+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Faculty+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F69009D326F6958000379A74 /* LessonsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsViewModel.swift; sourceTree = "<group>"; };
 		F697441B271CE90400A7AE30 /* FetchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchManager.swift; sourceTree = "<group>"; };
-		F697BF7426FFA172008FA7A9 /* ClassroomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomModel.swift; sourceTree = "<group>"; };
 		F697BF7826FFA1BA008FA7A9 /* Classroom+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Classroom+CoreDataClass.swift"; sourceTree = "<group>"; };
 		F697BF7926FFA1BA008FA7A9 /* Classroom+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Classroom+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F697BF7E26FFA506008FA7A9 /* ClassroomStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomStorage.swift; sourceTree = "<group>"; };
@@ -192,7 +190,6 @@
 		F697BF7326FFA129008FA7A9 /* Classroom */ = {
 			isa = PBXGroup;
 			children = (
-				F697BF7426FFA172008FA7A9 /* ClassroomModel.swift */,
 				F697BF7826FFA1BA008FA7A9 /* Classroom+CoreDataClass.swift */,
 				F697BF7926FFA1BA008FA7A9 /* Classroom+CoreDataProperties.swift */,
 				F697BF7E26FFA506008FA7A9 /* ClassroomStorage.swift */,
@@ -319,7 +316,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F68465FB26FA5321000F185E /* Faculty+CoreDataClass.swift in Sources */,
-				F697BF7526FFA172008FA7A9 /* ClassroomModel.swift in Sources */,
 				F6B4805226F9ED070085D5FE /* FavoritesViewModel.swift in Sources */,
 				F68465FC26FA5321000F185E /* Faculty+CoreDataProperties.swift in Sources */,
 				F697BF8526FFA960008FA7A9 /* ClassroomsView.swift in Sources */,

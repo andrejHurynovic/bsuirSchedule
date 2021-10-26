@@ -14,12 +14,12 @@ struct ClassroomDetailedView: View {
         List {
                 Section("Информация") {
                     if let departmentName = classroom.departmentName {
-                        Text("Кафедра: \(departmentName)")
+                        Text(departmentName)
                     }
                 }
             if classroom.lessons?.allObjects.isEmpty == false {
                 NavigationLink {
-//                    LessonsView(viewModel: LessonsViewModel(nil, nil, classroom))
+//                    LessonsView(viewModel: LessonsViewModel(classroom))
                 } label: {
                     Label("Расписание кабинета", systemImage: "calendar")
                 }
@@ -29,13 +29,13 @@ struct ClassroomDetailedView: View {
                 Section("Группы") {
                     ForEach(groups) { group in
                         NavigationLink {
-//                            LessonsView(viewModel: LessonsViewModel(group, nil, nil))
+                            LessonsView(viewModel: LessonsViewModel(group))
                         } label: {
                             Text(group.id!)
                         }
                     }
                 }
             }
-        }.navigationTitle("\(classroom.name!)-\(String(classroom.building))")
+        }.navigationTitle(classroom.formattedName(showBuilding: true))
     }
 }
