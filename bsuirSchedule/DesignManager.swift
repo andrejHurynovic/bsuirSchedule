@@ -9,6 +9,8 @@ import SwiftUI
 
 class DesignManager: ObservableObject {
     
+    @Environment(\.colorScheme) var colorScheme
+    
     @AppStorage("mainColor") var mainColor = Color.accentColor
     
     @AppStorage("lectureColor") var lectureColor: Color = Color(red: -4.06846e-06, green: 0.631373, blue: 0.847059)
@@ -55,6 +57,11 @@ class DesignManager: ObservableObject {
     
 }
 
+extension View {
+    func standardizedShadow() -> some View {
+        shadow(color: Color(uiColor: UIColor(named: "shadowColor")!), radius: 8, x: 0, y: 0)
+    } 
+}
 
 
 extension Color: RawRepresentable {

@@ -75,7 +75,7 @@ struct ClassroomView: View {
         RoundedRectangle(cornerRadius: 16)
             .fill(.background)
             .aspectRatio(contentMode: .fill)
-            .shadow(color: .secondary, radius: 6, x: 0, y: 0)
+            .standardizedShadow()
             .overlay {
                 HStack {
                     VStack(alignment: .leading) {

@@ -46,7 +46,7 @@ struct FavoritesView: View {
     //MARK: Group
     
     @ViewBuilder var groups: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 256))], alignment: .leading, spacing: 8, pinnedViews: []) {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 256))], alignment: .leading, spacing: 8, pinnedViews: [.sectionHeaders]) {
             
             if viewModel.groups.isEmpty == false {
                 Section {
@@ -128,7 +128,7 @@ struct FavoriteGroupView: View {
         RoundedRectangle(cornerRadius: 16)
             .fill(.background)
             .aspectRatio(contentMode: .fill)
-            .shadow(color: .secondary, radius: 6, x: 0, y: 0)
+            .standardizedShadow()
             .overlay {
                 VStack(alignment: .leading) {
                     Text(group.id!)
@@ -202,7 +202,7 @@ struct EmployeeFavoriteView: View {
             .padding()
             .clipped()
             .background(in: RoundedRectangle(cornerRadius: 16))
-            .shadow(color: colorScheme == .dark ? Color(#colorLiteral(red: 255, green: 255, blue: 255, alpha: 0.2)) : Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.1)), radius: 5, x: 0, y: 0)
+            .standardizedShadow()
         }
     }
 }

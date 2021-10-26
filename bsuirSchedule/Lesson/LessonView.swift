@@ -40,7 +40,7 @@ struct LessonView: View {
         .listRowSeparator(.hidden)
         .background(in: RoundedRectangle(cornerRadius: 16))
         .clipped()
-        .shadow(color: colorScheme == .dark ? Color(#colorLiteral(red: 255, green: 255, blue: 255, alpha: 0.2)) : Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.1)), radius: 5, x: 0, y: 0)
+        .standardizedShadow()
     }
     
     var subject: some View {
