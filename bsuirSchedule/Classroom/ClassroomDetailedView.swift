@@ -12,14 +12,14 @@ struct ClassroomDetailedView: View {
     
     var body: some View {
         List {
+            if let departmentName = classroom.departmentName {
                 Section("Информация") {
-                    if let departmentName = classroom.departmentName {
-                        Text(departmentName)
+                    Text(departmentName.capitalizingFirstLetter())
                     }
                 }
             if classroom.lessons?.allObjects.isEmpty == false {
                 NavigationLink {
-//                    LessonsView(viewModel: LessonsViewModel(classroom))
+                    LessonsView(viewModel: LessonsViewModel(classroom))
                 } label: {
                     Label("Расписание кабинета", systemImage: "calendar")
                 }

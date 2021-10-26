@@ -30,11 +30,6 @@ extension Classroom {
     @NSManaged public var departmentName: String?
     @NSManaged public var departmentAbbreviation: String?
     
-//    var educationStart: Date?
-//    var educationEnd: Date?
-//    var examsStart: Date?
-//    var examsEnd: Date?
-    
     @NSManaged public var lessons: NSSet?
 }
 
@@ -55,6 +50,20 @@ extension Classroom {
 
 }
 
-extension Classroom : Identifiable {
-
+extension Classroom : Lessonable {
+    var educationStart: Date? {
+        groups().compactMap { $0.educationStart }.sorted().first
+    }
+    
+    var educationEnd: Date? {
+        groups().compactMap { $0.educationEnd }.sorted().last
+    }
+    
+    var examsStart: Date? {
+        groups().compactMap { $0.examsStart }.sorted().first
+    }
+    
+    var examsEnd: Date? {
+        groups().compactMap { $0.examsEnd }.sorted().last
+    }
 }

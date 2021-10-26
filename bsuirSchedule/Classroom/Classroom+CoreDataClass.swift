@@ -119,20 +119,6 @@ public class Classroom: NSManagedObject, Decodable {
         return groups.sorted{$0.id! < $1.id!}
     }
     
-    func educationStart() -> Date {
-        var dates = Set<Date>()
-        groups().forEach{dates.insert($0.educationStart!)}
-        
-        return dates.sorted().first!
-    }
-    
-    func educationEnd() -> Date {
-        var dates = Set<Date>()
-        groups().forEach{dates.insert($0.educationEnd!)}
-        
-        return dates.sorted().last!
-    }
-    
     private enum CodingKeys: String, CodingKey {
         case name
         case buildingContainer = "buildingNumber"

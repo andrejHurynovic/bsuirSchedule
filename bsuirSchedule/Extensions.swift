@@ -210,3 +210,13 @@ struct JSONCodingKeys: CodingKey {
         self.intValue = intValue
     }
 }
+
+extension String {
+    func capitalizingFirstLetter() -> String {
+        return prefix(1).capitalized + dropFirst()
+    }
+
+    mutating func capitalizeFirstLetter() {
+        self = self.capitalizingFirstLetter()
+    }
+}

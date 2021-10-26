@@ -11,12 +11,12 @@ import CoreData
 
 protocol Lessonable: NSManagedObject {
     var favorite: Bool { get set }
-    var lessons: NSSet? { get set }
+    var lessons: NSSet? { get }
     
-    var educationStart: Date? { get set }
-    var educationEnd: Date? { get set }
-    var examsStart: Date? { get set }
-    var examsEnd: Date? { get set }
+    var educationStart: Date? { get }
+    var educationEnd: Date? { get }
+    var examsStart: Date? { get }
+    var examsEnd: Date? { get }
 }
 
 
@@ -63,6 +63,12 @@ class LessonsViewModel: ObservableObject {
         if let employee = element as? Employee {
             title = employee.lastName
             showGroups = true
+        }
+        
+        if let classroom = element as? Classroom {
+            title = classroom.formattedName(showBuilding: true)
+            showGroups = true
+            showEmployees = true
         }
     }
     
@@ -197,6 +203,13 @@ class LessonsViewModel: ObservableObject {
         
         if let _ = element as? Employee {
             if showEmployees == false,
+               showGroups == true {
+                return true
+            }
+        }
+        
+        if let _ = element as? Classroom {
+            if showEmployees == true,
                showGroups == true {
                 return true
             }
