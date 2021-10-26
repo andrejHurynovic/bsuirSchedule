@@ -20,9 +20,9 @@ struct FavoritesView: View {
                 
                 primaryGroupOnLoad
                 
-                if viewModel.groups.isEmpty == false {
+
                     groups
-                }
+            
                 
             }
             .navigationTitle("Избранные")
@@ -46,24 +46,75 @@ struct FavoritesView: View {
     //MARK: Group
     
     @ViewBuilder var groups: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 256))], alignment: .center, spacing: 8, pinnedViews: []) {
-            ForEach(viewModel.groups) { group in
-                NavigationLink {
-                    LessonsView(viewModel: LessonsViewModel(group))
-                } label: {
-                    FavoriteGroupView(group: group)
-                }
-                .contextMenu {
-                    Button {
-                        withAnimation {
-                            viewModel.removeFromFavorites(group)
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 256))], alignment: .leading, spacing: 8, pinnedViews: []) {
+            
+            if viewModel.groups.isEmpty == false {
+                Section {
+                    ForEach(viewModel.groups) { group in
+                        NavigationLink {
+                            LessonsView(viewModel: LessonsViewModel(group))
+                        } label: {
+                            FavoriteGroupView(group: group)
                         }
-                        
+                        .contextMenu {
+                            Button {
+                                withAnimation {
+                                    viewModel.removeFromFavorites(group)
+                                }
+                                
+                            } label: {
+                                Label("Убрать из избранных", systemImage: "star.slash")
+                            }
+                        }
+                    }
+                } header: {
+                    Text("Группы")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .padding(.horizontal)
+                        .padding(.vertical, 4)
+                        .background(ColorManager.shared.mainColor)
+                        .clipShape(Capsule())
+                        .padding(.vertical, 4)
+                        .shadow(color: ColorManager.shared.mainColor, radius: 8)
+                        .foregroundColor(.white)
+                }
+                
+            }
+            
+            if viewModel.classrooms.isEmpty == false {
+                Section {
+                ForEach(viewModel.classrooms) { classroom in
+                    NavigationLink {
+                        ClassroomDetailedView(classroom: classroom)
                     } label: {
-                        Label("Убрать из избранных", systemImage: "star.slash")
+                        ClassroomView(classroom: classroom)
+                    }
+                    .contextMenu {
+                        Button {
+                            withAnimation {
+                                viewModel.removeFromFavorites(classroom)
+                            }
+                            
+                        } label: {
+                            Label("Убрать из избранных", systemImage: "star.slash")
+                        }
                     }
                 }
+                } header: {
+                    Text("Кабинеты")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .padding(.horizontal)
+                        .padding(.vertical, 4)
+                        .background(ColorManager.shared.mainColor)
+                        .clipShape(Capsule())
+                        .padding(.vertical, 4)
+                        .shadow(color: ColorManager.shared.mainColor, radius: 8)
+                        .foregroundColor(.white)
+                }
             }
+            
         }
         .padding()
     }

@@ -50,7 +50,7 @@ extension Classroom {
 
 }
 
-extension Classroom : Lessonable {
+extension Classroom : Lessonable, Identifiable {
     var educationStart: Date? {
         groups().compactMap { $0.educationStart }.sorted().first
     }
