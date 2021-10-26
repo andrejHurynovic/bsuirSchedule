@@ -41,11 +41,26 @@ class ClassroomsViewModel: ObservableObject {
         var sections: [ClassroomSection] = []
         ClassroomStorage.shared.buildings().forEach { building in
             ClassroomStorage.shared.floors(building).forEach { floor in
-                sections.append(ClassroomSection(title: "\(building) корпус \(floor) этаж",
+                sections.append(ClassroomSection(title: title(building: building, floor: floor),
                                                  classrooms: ClassroomStorage.shared.classrooms(building: building, floor: floor)))
             }
         }
         return sections
+    }
+    
+    func title(building: Int16, floor: Int16) -> String {
+        if building == 99 {
+            return "Другие"
+        }
+        
+        var title = "\(building)-ый корпус, "
+        
+        if floor == 0 {
+            title.append("0-ой этаж")
+        } else {
+            title.append("\(floor)-ый этаж")
+        }
+        return title
     }
     
     static func classroomsTypesDefaults() -> [Bool] {
