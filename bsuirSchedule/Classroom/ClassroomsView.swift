@@ -17,7 +17,7 @@ struct ClassroomsView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 256))], alignment: .center, spacing: 8, pinnedViews: [.sectionHeaders]) {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 256))], alignment: .leading, spacing: 8, pinnedViews: [.sectionHeaders]) {
                     ForEach(viewModel.sections(), id: \.self) { section in
                         let classrooms: [Classroom] = section.classrooms(searchText, classroomTypes)
                         if classrooms.isEmpty == false {
@@ -30,16 +30,7 @@ struct ClassroomsView: View {
                                     }
                                 }
                             } header: {
-                                Text(section.title)
-                                    .font(.title2)
-                                    .fontWeight(.bold)
-                                    .padding(.horizontal)
-                                    .padding(.vertical, 4)
-                                    .background(DesignManager.shared.mainColor)
-                                    .clipShape(Capsule())
-                                    .padding(.vertical, 4)
-                                    .shadow(color: DesignManager.shared.mainColor, radius: 8)
-                                    .foregroundColor(.white)
+                                standardizedHeader(title: section.title)
                             }
                         }
                     }

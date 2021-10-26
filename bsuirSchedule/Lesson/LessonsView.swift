@@ -102,16 +102,7 @@ struct LessonsView: View {
                                 showDatePicker.toggle()
                             }
                         } label: {
-                            Text(section.title)
-                                .font(.title2)
-                                .fontWeight(.bold)
-                                .padding(.horizontal)
-                                .padding(.vertical, 4)
-                                .background(DesignManager.shared.mainColor)
-                                .clipShape(Capsule())
-                                .padding(.vertical, 4)
-                                .shadow(color: DesignManager.shared.mainColor, radius: 8)
-                                .foregroundColor(.white)
+                            standardizedHeader(title: section.title)
                         }
                     }
                     .onAppear {

@@ -68,18 +68,8 @@ struct FavoritesView: View {
                         }
                     }
                 } header: {
-                    Text("Группы")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .padding(.horizontal)
-                        .padding(.vertical, 4)
-                        .background(DesignManager.shared.mainColor)
-                        .clipShape(Capsule())
-                        .padding(.vertical, 4)
-                        .shadow(color: DesignManager.shared.mainColor, radius: 8)
-                        .foregroundColor(.white)
+                    standardizedHeader(title: "Группы")
                 }
-                
             }
             
             if viewModel.classrooms.isEmpty == false {
@@ -102,16 +92,7 @@ struct FavoritesView: View {
                     }
                 }
                 } header: {
-                    Text("Кабинеты")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .padding(.horizontal)
-                        .padding(.vertical, 4)
-                        .background(DesignManager.shared.mainColor)
-                        .clipShape(Capsule())
-                        .padding(.vertical, 4)
-                        .shadow(color: DesignManager.shared.mainColor, radius: 8)
-                        .foregroundColor(.white)
+                    standardizedHeader(title: "Кабинеты")
                 }
             }
             

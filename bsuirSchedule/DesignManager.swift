@@ -57,6 +57,23 @@ class DesignManager: ObservableObject {
     
 }
 
+struct standardizedHeader: View {
+    var title: String
+    
+    var body: some View {
+        Text(title)
+            .font(.title2)
+            .fontWeight(.bold)
+            .padding(.horizontal)
+            .padding(.vertical, 4)
+            .background(DesignManager.shared.mainColor)
+            .clipShape(Capsule())
+            .padding(.vertical, 4)
+            .shadow(color: DesignManager.shared.mainColor, radius: 8)
+            .foregroundColor(.white)
+    }
+}
+
 extension View {
     func standardizedShadow() -> some View {
         shadow(color: Color(uiColor: UIColor(named: "shadowColor")!), radius: 8, x: 0, y: 0)
