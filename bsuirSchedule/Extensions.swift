@@ -220,3 +220,26 @@ extension String {
         self = self.capitalizingFirstLetter()
     }
 }
+
+
+extension Date {
+    func minutesFromMidnight() -> Int {
+        let dateComponents = Calendar.current.dateComponents([.minute, .hour], from: self)
+        
+        return dateComponents.hour! * 60 + dateComponents.minute!
+    }
+}
+
+
+extension ClosedRange where Bound == Date {
+    func compare(date: Date) -> ComparisonResult {
+        if self.lowerBound.minutesFromMidnight() > date.minutesFromMidnight() {
+            return ComparisonResult.orderedAscending
+        }
+        if self.upperBound.minutesFromMidnight() < date.minutesFromMidnight() {
+            return ComparisonResult.orderedDescending
+        }
+        return ComparisonResult.orderedSame
+    }
+
+}

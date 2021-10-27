@@ -15,6 +15,7 @@ struct LessonView: View {
     var showGroups: Bool
     
     var color: Color
+    var showToday: Bool
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -36,6 +37,7 @@ struct LessonView: View {
             }
             note
         }
+        .opacity((showToday && lesson.relativelyNow() == .orderedDescending) ? 0.5 : 1)
         .padding(.all)
         .listRowSeparator(.hidden)
         .background(in: RoundedRectangle(cornerRadius: 16))

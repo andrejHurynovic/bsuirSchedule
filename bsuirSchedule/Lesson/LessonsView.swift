@@ -89,11 +89,12 @@ struct LessonsView: View {
     @ViewBuilder var lessons: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 240, maximum: 500))], alignment: .center, spacing: 8, pinnedViews: [.sectionHeaders]) {
             ForEach(viewModel.sections, id: \.self) { section in
+                let today = (section.date == Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date())!)
                 let lessons: [UniqueLesson] = section.lessons(searchText)
                 if lessons.isEmpty == false {
                     Section {
                         ForEach(lessons, id: \.self) { lesson in
-                            LessonView(lesson: lesson, showEmployee: viewModel.showEmployees, showGroups: viewModel.showGroups, color: DesignManager.shared.color(lesson.lessonType))
+                            LessonView(lesson: lesson, showEmployee: viewModel.showEmployees, showGroups: viewModel.showGroups, color: DesignManager.shared.color(lesson.lessonType), showToday: today)
                                 .padding(.horizontal)
                         }
                     } header: {
