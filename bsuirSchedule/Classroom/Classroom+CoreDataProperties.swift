@@ -52,18 +52,18 @@ extension Classroom {
 
 extension Classroom : Lessonable, Identifiable {
     var educationStart: Date? {
-        groups().compactMap { $0.educationStart }.sorted().first
+        LessonStorage.groups(lessons: self.lessons).compactMap { $0.educationStart }.sorted().first
     }
     
     var educationEnd: Date? {
-        groups().compactMap { $0.educationEnd }.sorted().last
+        LessonStorage.groups(lessons: self.lessons).compactMap { $0.educationEnd }.sorted().last
     }
     
     var examsStart: Date? {
-        groups().compactMap { $0.examsStart }.sorted().first
+        LessonStorage.groups(lessons: self.lessons).compactMap { $0.examsStart }.sorted().first
     }
     
     var examsEnd: Date? {
-        groups().compactMap { $0.examsEnd }.sorted().last
+        LessonStorage.groups(lessons: self.lessons).compactMap { $0.examsEnd }.sorted().last
     }
 }

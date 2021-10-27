@@ -10,6 +10,10 @@ import SwiftUI
 struct EmployeeDetailedView: View {
     var employee: Employee
     
+    @State var selectedFaculty: Faculty? = nil
+    @State var selectedEducationType: Int? = nil
+    @State var sortedBy: GroupSortingType = .speciality
+    
     var body: some View {
         List {
             Section {
@@ -76,17 +80,17 @@ struct EmployeeDetailedView: View {
 
             }
             
-            if let groups = employee.groups(), groups.isEmpty == false {
-                Section("Группы") {
-                    ForEach(groups) { group in
-                        NavigationLink {
-                            LessonsView(viewModel: LessonsViewModel(group))
-                        } label: {
-                            Text(group.id!)
-                        }
-                    }
-                }
+            if let groups = LessonStorage.groups(lessons: employee.lessons), groups.isEmpty == false {
+                Section("Группы") {}
+                    GroupList(groups: groups, searchText: nil, selectedFaculty: $selectedFaculty, selectedEducationType:
+                                $selectedEducationType, sortedBy: $sortedBy)
             }
-        }.navigationTitle(employee.lastName!)
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                GroupToolbarMenu(selectedFaculty: $selectedFaculty, selectedEducationType: $selectedEducationType, sortedBy: $sortedBy)
+            }
+        }
+        .navigationTitle(employee.lastName!)
     }
 }

@@ -104,20 +104,6 @@ public class Classroom: NSManagedObject, Decodable {
         }
     }
     
-    func groups() -> [Group] {
-        var groups = Set<Group>()
-        
-        if let lessons = self.lessons?.allObjects as? [Lesson] {
-            lessons.forEach { lesson in
-                if let lessonsGroups = lesson.groups?.allObjects as? [Group] {
-                    lessonsGroups.forEach { group in
-                        groups.insert(group)
-                    }
-                }
-            }
-        }
-        return groups.sorted{$0.id! < $1.id!}
-    }
     
     private enum CodingKeys: String, CodingKey {
         case name

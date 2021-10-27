@@ -71,9 +71,6 @@ public class Employee: NSManagedObject, Decodable, Lessonable {
         
     }
     
-    func groups() -> [Group] {
-        return (lessons?.allObjects as! [Lesson]).flatMap{ $0.groups?.allObjects as! [Group] }
-    }
 }
 
 

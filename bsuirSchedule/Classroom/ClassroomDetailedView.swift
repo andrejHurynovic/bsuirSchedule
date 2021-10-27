@@ -10,6 +10,10 @@ import SwiftUI
 struct ClassroomDetailedView: View {
     var classroom: Classroom
     
+    @State var selectedFaculty: Faculty? = nil
+    @State var selectedEducationType: Int? = nil
+    @State var sortedBy: GroupSortingType = .speciality
+    
     var body: some View {
         List {
             if let departmentName = classroom.departmentName {
@@ -24,18 +28,18 @@ struct ClassroomDetailedView: View {
                     Label("Расписание кабинета", systemImage: "calendar")
                 }
             }
-
-            if let groups = classroom.groups(), groups.isEmpty == false {
-                Section("Группы") {
-                    ForEach(groups) { group in
-                        NavigationLink {
-                            LessonsView(viewModel: LessonsViewModel(group))
-                        } label: {
-                            Text(group.id!)
-                        }
-                    }
-                }
+            
+            if let groups = LessonStorage.groups(lessons: classroom.lessons), groups.isEmpty == false {
+                Section("Группы") {}
+                    GroupList(groups: groups, searchText: nil, selectedFaculty: $selectedFaculty, selectedEducationType:
+                                $selectedEducationType, sortedBy: $sortedBy)
             }
-        }.navigationTitle(classroom.formattedName(showBuilding: true))
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                GroupToolbarMenu(selectedFaculty: $selectedFaculty, selectedEducationType: $selectedEducationType, sortedBy: $sortedBy)
+            }
+        }
+        .navigationTitle(classroom.formattedName(showBuilding: true))
     }
 }
