@@ -37,7 +37,14 @@ struct ClassroomDetailedView: View {
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                GroupToolbarMenu(selectedFaculty: $selectedFaculty, selectedEducationType: $selectedEducationType, sortedBy: $sortedBy)
+                Menu {
+                    FavoriteButton(classroom.favorite, circle: true) {
+                        classroom.favorite.toggle()
+                    }
+                    GroupToolbarMenu(selectedFaculty: $selectedFaculty, selectedEducationType: $selectedEducationType, sortedBy: $sortedBy)
+                } label: {
+                    Image(systemName: (selectedFaculty == nil && selectedEducationType == nil) ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
+                }
             }
         }
         .navigationTitle(classroom.formattedName(showBuilding: true))

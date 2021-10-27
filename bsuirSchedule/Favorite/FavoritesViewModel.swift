@@ -32,9 +32,4 @@ class FavoritesViewModel: ObservableObject {
             self.classrooms = classrooms.filter {$0.favorite}
         })
     }
-    
-    func removeFromFavorites(_ element: Lessonable) {
-        element.favorite = false
-        try! PersistenceController.shared.container.viewContext.save()
-    }
 }

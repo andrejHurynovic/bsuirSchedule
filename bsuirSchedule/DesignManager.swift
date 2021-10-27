@@ -74,11 +74,26 @@ struct standardizedHeader: View {
     }
 }
 
+func FavoriteButton(_ favorite: Bool, circle: Bool = false, toggle: @escaping () -> Void) -> some View {
+    Button {
+        withAnimation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.9)) {
+            toggle()
+            try! PersistenceController.shared.container.viewContext.save()
+        }
+    } label: {
+        Label(favorite ? "Убрать из избранных" : "Добавить в избранные",
+              systemImage: favorite ? (circle ? "star.circle" : "star.slash") : (circle ? "star.circle.fill" : "star.fill"))
+    }
+    
+}
+
 extension View {
     func standardizedShadow() -> some View {
         shadow(color: Color(uiColor: UIColor(named: "shadowColor")!), radius: 8, x: 0, y: 0)
     } 
 }
+
+
 
 
 extension Color: RawRepresentable {

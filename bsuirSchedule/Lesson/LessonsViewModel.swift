@@ -218,11 +218,6 @@ class LessonsViewModel: ObservableObject {
         return false
     }
     
-    func toggleFavorite() {
-        element.favorite.toggle()
-        try! PersistenceController.shared.container.viewContext.save()
-    }
-    
 }
 
 

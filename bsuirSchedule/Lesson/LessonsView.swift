@@ -225,11 +225,8 @@ struct LessonsView: View {
     
     @ViewBuilder var sortingMenu: some View {
         Menu {
-            Button() {
-                viewModel.toggleFavorite()
-            } label: {
-                Label(viewModel.element.favorite ? "Не избранное" : "Избранное",
-                      systemImage: viewModel.element.favorite ? "star.circle" : "star.circle.fill")
+            FavoriteButton(viewModel.element.favorite, circle: true) {
+                viewModel.element.favorite.toggle()
             }
             
             Text("Отображать:")

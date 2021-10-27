@@ -69,6 +69,11 @@ struct LessonView: View {
                             Text(classroom.formattedName(showBuilding: true))
                                 .foregroundColor(Color.primary)
                         }
+                        .contextMenu {
+                            FavoriteButton(classroom.favorite) {
+                                classroom.favorite.toggle()
+                            }
+                        }
                         
                     }
                 }
@@ -131,8 +136,12 @@ struct LessonView: View {
                         }
                         .foregroundColor(Color.primary)
                     }
-                    
-                    
+                    .contextMenu {
+                        FavoriteButton(employee.favorite) {
+                            employee.favorite.toggle()
+                        }
+                    }
+  
                 }
             }
         }

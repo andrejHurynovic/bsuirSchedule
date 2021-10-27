@@ -44,7 +44,9 @@ class GroupStorage: Storage<Group> {
         return self.values.value.filter{ $0.favorite }
     }
     
-    
+    func isFavorite(id: String) -> Bool {
+        return (values.value.first { $0.id == id }?.favorite) ?? false
+    }
     
     //MARK: Group Section
     
