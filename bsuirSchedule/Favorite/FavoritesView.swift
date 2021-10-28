@@ -113,7 +113,7 @@ struct FavoritesView: View {
             }
             
         }
-        .padding()
+        .padding([.leading, .horizontal])
     }
 }
 

@@ -33,10 +33,10 @@ struct EmployeeFavoriteView: View {
                         .font(.title)
                         .fontWeight(.bold)
                     Text(employee.firstName! + " " + employee.middleName!)
-                        .font(Font.system(size: 16))
-                    
                         .multilineTextAlignment(.leading)
+                        .font(Font.system(size: 16))
                         .minimumScaleFactor(0.01)
+                        .lineLimit(1)
                         .foregroundColor(Color.primary)
                 }
                 .foregroundColor(Color.primary)
