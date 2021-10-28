@@ -60,7 +60,7 @@ public class Classroom: NSManagedObject, Decodable {
             }
         }
     }
-    
+
     
     func classroomTypeDescription() -> String {
         switch self.typeValue {

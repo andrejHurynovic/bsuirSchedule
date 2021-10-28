@@ -20,22 +20,38 @@ struct ClassroomView: View {
             .overlay {
                 HStack {
                     VStack(alignment: .leading) {
-                        Text(classroom.formattedName(showBuilding: favorite))
-                            .font(Font.system(size: 20, weight: .bold))
-                            .multilineTextAlignment(.leading)
-                            .minimumScaleFactor(0.01)
-                            .foregroundColor(Color.primary)
+                        HStack {
+                            Text(classroom.formattedName(showBuilding: favorite))
+                                .font(Font.system(size: 20, weight: .bold))
+                                .multilineTextAlignment(.leading)
+                                .minimumScaleFactor(0.01)
+                                .foregroundColor(Color.primary)
+                        }
                         Spacer()
-                        Text(classroom.classroomTypeDescription())
-                            .foregroundColor(Color.primary)
-                        if let department = classroom.departmentAbbreviation {
-                            Text(department)
-                                .font(.headline)
-                                .fontWeight(.regular)
-                                .foregroundColor(Color.gray)
+                        HStack(alignment: .bottom) {
+                            VStack(alignment: .leading) {
+                                Text(classroom.classroomTypeDescription())
+                                    .foregroundColor(Color.primary)
+                                if let department = classroom.departmentAbbreviation {
+                                    Text(department)
+                                        .font(.headline)
+                                        .fontWeight(.regular)
+                                        .foregroundColor(Color.gray)
+                                }
+                            }
+                            Spacer()
+                            if favorite {
+                                let lessonsViewModel = LessonsViewModel(classroom)
+                                if let section = lessonsViewModel.nearSection {
+                                    if section.lessons.filter( {$0.relativelyNow() == .orderedSame }).isEmpty == false {
+                                        Image(systemName: "circle.fill")
+                                            .foregroundColor(DesignManager.shared.mainColor)
+                                    }
+                                }
+                            }
                         }
                     }
-                    Spacer()
+                    
                 }
                 .padding()
             }

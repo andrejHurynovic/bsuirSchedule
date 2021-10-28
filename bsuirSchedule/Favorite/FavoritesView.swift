@@ -91,7 +91,7 @@ struct FavoritesView: View {
     @ViewBuilder var rectangleObjects: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 240, maximum: 500))], alignment: .leading, spacing: 8, pinnedViews: [.sectionHeaders]) {
             
-            if viewModel.groups.isEmpty == false {
+            if viewModel.employees.isEmpty == false {
                 Section {
                     ForEach(viewModel.employees) { employee in
                         NavigationLink {
