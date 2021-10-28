@@ -30,7 +30,7 @@ struct UniqueLesson: Identifiable, Hashable {
     
     func timeRange() -> ClosedRange<Date> {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "mm:ss"
+        dateFormatter.dateFormat = "HH:mm"
         
         let startTime = dateFormatter.date(from: timeStart)!
         let endTime = dateFormatter.date(from: timeEnd)!

@@ -233,6 +233,9 @@ extension Date {
 
 extension ClosedRange where Bound == Date {
     func compare(date: Date) -> ComparisonResult {
+        print(lowerBound.minutesFromMidnight())
+        print(upperBound.minutesFromMidnight())
+        print(date.minutesFromMidnight())
         if self.lowerBound.minutesFromMidnight() > date.minutesFromMidnight() {
             return ComparisonResult.orderedAscending
         }
