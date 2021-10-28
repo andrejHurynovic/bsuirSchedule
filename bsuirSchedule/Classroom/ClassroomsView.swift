@@ -28,6 +28,11 @@ struct ClassroomsView: View {
                                     } label: {
                                         ClassroomView(classroom: classroom)
                                     }
+                                    .contextMenu {
+                                        FavoriteButton(classroom.favorite) {
+                                            classroom.favorite.toggle()
+                                        }
+                                    }
                                 }
                             } header: {
                                 standardizedHeader(title: section.title)

@@ -36,11 +36,6 @@ struct FavoriteGroupView: View {
                 }
                 .padding(14)
             }
-            .contextMenu {
-                FavoriteButton(group.favorite) {
-                    group.favorite.toggle()
-                }
-            }
         
     }
 }

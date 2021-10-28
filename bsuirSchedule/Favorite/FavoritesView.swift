@@ -18,7 +18,7 @@ struct FavoritesView: View {
         NavigationView {
             ScrollView {
                 primaryGroupOnLoad
-                groups
+                squareObjects
             }
             .navigationTitle("Избранные")
         }
@@ -40,7 +40,7 @@ struct FavoritesView: View {
     
     //MARK: Group
     
-    @ViewBuilder var groups: some View {
+    @ViewBuilder var squareObjects: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 256))], alignment: .leading, spacing: 8, pinnedViews: [.sectionHeaders]) {
             
             if viewModel.groups.isEmpty == false {
@@ -51,6 +51,12 @@ struct FavoritesView: View {
                         } label: {
                             FavoriteGroupView(group: group)
                         }
+                        .contextMenu {
+                            FavoriteButton(group.favorite) {
+                                group.favorite.toggle()
+                            }
+                        }
+
                     }
                 } header: {
                     standardizedHeader(title: "Группы")
@@ -66,6 +72,12 @@ struct FavoritesView: View {
                     } label: {
                         ClassroomView(classroom: classroom, favorite: true)
                     }
+                    .contextMenu {
+                        FavoriteButton(classroom.favorite) {
+                            classroom.favorite.toggle()
+                        }
+                    }
+
                 }
                 } header: {
                     standardizedHeader(title: "Кабинеты")

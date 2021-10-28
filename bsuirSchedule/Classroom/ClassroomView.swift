@@ -39,10 +39,5 @@ struct ClassroomView: View {
                 }
                 .padding()
             }
-            .contextMenu {
-                FavoriteButton(classroom.favorite) {
-                    classroom.favorite.toggle()
-                }
-            }
     }
 }
