@@ -13,13 +13,14 @@ struct ClassroomsView: View {
     
     @State var searchText = ""
     @State var classroomTypes: [Bool] = ClassroomsViewModel.classroomsTypesDefaults()
+    @State var buildings: [Bool] = ClassroomsViewModel.buildingsDefaults()
     
     var body: some View {
         NavigationView {
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 256))], alignment: .leading, spacing: 8, pinnedViews: [.sectionHeaders]) {
                     ForEach(viewModel.sections(), id: \.self) { section in
-                        let classrooms: [Classroom] = section.classrooms(searchText, classroomTypes)
+                        let classrooms: [Classroom] = section.classrooms(searchText, classroomTypes, buildings)
                         if classrooms.isEmpty == false {
                             Section {
                                 ForEach(classrooms, id: \.self) { classroom in
@@ -51,6 +52,12 @@ struct ClassroomsView: View {
                         ForEach(1...7, id: \.self) {index in
                             Toggle(isOn: $classroomTypes[index - 1]) {
                                 Text(Classroom.classroomTypeDescription(index))
+                            }
+                        }
+                        Text("Корпуса")
+                        ForEach(1...8, id: \.self) {index in
+                            Toggle(isOn: $buildings[index - 1]) {
+                                Text(String(index))
                             }
                         }
                     } label: {

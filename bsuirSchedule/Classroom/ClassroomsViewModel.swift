@@ -12,14 +12,18 @@ struct ClassroomSection: Hashable {
     var title: String
     var classrooms: [Classroom]
     
-    func classrooms(_ searchText: String, _ classroomsTypes: [Bool]) -> [Classroom] {
-        if classroomsTypes.filter( {$0 == false} ).isEmpty, searchText == "" {
+    func classrooms(_ searchText: String, _ classroomsTypes: [Bool], _ buildings: [Bool]) -> [Classroom] {
+        if classroomsTypes.filter( {$0 == false} ).isEmpty,
+            buildings.filter( {$0 == false} ).isEmpty,
+            searchText == "" {
             return classrooms
         } else {
             return classrooms.filter { ($0.formattedName(showBuilding: true).localizedStandardContains(searchText)
                                         || ($0.departmentAbbreviation?.localizedStandardContains(searchText) ?? false)
                                         || searchText == "")
-                                        && classroomsTypes[Int($0.typeValue) - 1] == true }
+                                        && classroomsTypes[Int($0.typeValue) - 1] == true
+                                        && ($0.building == 99 || buildings[Int($0.building) - 1] == true)
+            }
         }
     }
 }
@@ -65,6 +69,10 @@ class ClassroomsViewModel: ObservableObject {
     
     static func classroomsTypesDefaults() -> [Bool] {
         return [true, true, true, false, false, false, false]
+    }
+    
+    static func buildingsDefaults() -> [Bool] {
+        return [true, true, true, true, true, true, true, true, true]
     }
 
     func fetchClassrooms() {
