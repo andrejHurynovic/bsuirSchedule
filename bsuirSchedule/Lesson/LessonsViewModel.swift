@@ -129,18 +129,18 @@ class LessonsViewModel: ObservableObject {
     
     func educationDates() -> [Date]? {
         guard element.educationStart != nil else {
-            return nil
+            return []
         }
         
         return datesBetween(element.educationStart!, element.educationEnd!)
     }
     
-    func examsDates() -> [Date]? {
-        guard element.examsStart != nil else {
-            return nil
-        }
+    func examsDates() -> [Date]? {    
+        var dates = Set((element.lessons?.allObjects as! [Lesson]).compactMap({ $0.date }))
         
-        return datesBetween(element.examsStart!, element.examsEnd!)
+        dates.remove(Date(timeIntervalSince1970: 419420))
+        
+        return dates.sorted()
     }
     
     func educationRange() -> ClosedRange<Date> {
