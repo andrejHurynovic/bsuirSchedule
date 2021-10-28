@@ -19,6 +19,7 @@ struct FavoritesView: View {
             ScrollView {
                 primaryGroupOnLoad
                 squareObjects
+                rectangleObjects
             }
             .navigationTitle("Избранные")
         }
@@ -38,10 +39,8 @@ struct FavoritesView: View {
         }
     }
     
-    //MARK: Group
-    
     @ViewBuilder var squareObjects: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 256))], alignment: .leading, spacing: 8, pinnedViews: [.sectionHeaders]) {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 500))], alignment: .leading, spacing: 8, pinnedViews: [.sectionHeaders]) {
             
             if viewModel.groups.isEmpty == false {
                 Section {
@@ -86,6 +85,34 @@ struct FavoritesView: View {
             }
             
         }
+        .padding([.leading, .horizontal, .top])
+    }
+    
+    @ViewBuilder var rectangleObjects: some View {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 240, maximum: 500))], alignment: .leading, spacing: 8, pinnedViews: [.sectionHeaders]) {
+            
+            if viewModel.groups.isEmpty == false {
+                Section {
+                    ForEach(viewModel.employees) { employee in
+                        NavigationLink {
+                            LessonsView(viewModel: LessonsViewModel(employee))
+                        } label: {
+                            EmployeeFavoriteView(employee: employee)
+                        }
+                        .contextMenu {
+                            FavoriteButton(employee.favorite) {
+                                employee.favorite.toggle()
+                            }
+                        }
+
+                    }
+                } header: {
+                    standardizedHeader(title: "Преподаватели")
+                        .transition(.scale)
+                }
+            }
+            
+        }
         .padding()
     }
 }
@@ -97,47 +124,4 @@ struct FavoritesView_Previews: PreviewProvider {
     }
 }
 
-struct EmployeeFavoriteView: View {
-    @Environment(\.colorScheme) var colorScheme
-    
-    var employee: Employee
-    
-    var body: some View {
-        NavigationLink {
-            EmployeeDetailedView(employee: employee)
-        } label: {
-            HStack {
-                if let photo = employee.photo {
-                    Image(uiImage: UIImage(data: photo)!)
-                        .resizable()
-                        .frame(width: 60, height: 60)
-                        .clipShape(Circle())
-                } else {
-                    Image(systemName: "person.circle.fill")
-                        .resizable()
-                        .frame(width: 60, height: 60)
-                }
-                //                                Spacer()
-                VStack(alignment: .leading) {
-                    Text(employee.lastName ?? "")
-                        .font(.title)
-                        .fontWeight(.bold)
-                    Text(employee.firstName! + " " + employee.middleName!)
-                }
-                .foregroundColor(Color.primary)
-                Spacer()
-                VStack() {
-                    if !employee.departments!.isEmpty {
-                        Text(employee.departments!.joined(separator: ", \n"))
-                            .foregroundColor(Color.gray)
-                            .multilineTextAlignment(.trailing)
-                    }
-                }
-            }
-            .padding()
-            .clipped()
-            .background(in: RoundedRectangle(cornerRadius: 16))
-            .standardizedShadow()
-        }
-    }
-}
+

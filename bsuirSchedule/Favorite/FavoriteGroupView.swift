@@ -18,7 +18,8 @@ struct FavoriteGroupView: View {
             .overlay {
                 VStack(alignment: .leading) {
                     Text(group.id!)
-                        .font(Font.system(size: 500, weight: .bold))
+                        .font(Font.system(size: 20, weight: .bold))
+                        .multilineTextAlignment(.leading)
                         .minimumScaleFactor(0.01)
                         .foregroundColor(Color.primary)
                     Spacer()
