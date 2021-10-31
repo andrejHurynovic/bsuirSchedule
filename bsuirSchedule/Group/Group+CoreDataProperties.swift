@@ -44,6 +44,6 @@ extension Group {
     
 }
 
-extension Group : Identifiable {
+extension Group : Identifiable, Lessonable {
     
 }

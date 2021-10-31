@@ -71,30 +71,28 @@ public class Employee: NSManagedObject, Decodable, Lessonable {
         
     }
     
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case urlID = "urlId"
+        case firstName
+        case middleName
+        case lastName
+        
+        case educationStart = "dateStart"
+        case educationEnd = "dateEnd"
+        case examsStart = "sessionStart"
+        case examsEnd = "sessionEnd"
+        
+        case departments = "academicDepartment"
+        case rank
+        case degree
+        
+        case photoLink
+        
+        case lessons = "schedules"
+        case exams = "examSchedules"
+        
+        case employeeContainer = "employee"
+    }
 }
 
-
-
-private enum CodingKeys: String, CodingKey {
-    case id
-    case urlID = "urlId"
-    case firstName
-    case middleName
-    case lastName
-    
-    case educationStart = "dateStart"
-    case educationEnd = "dateEnd"
-    case examsStart = "sessionStart"
-    case examsEnd = "sessionEnd"
-    
-    case departments = "academicDepartment"
-    case rank
-    case degree
-    
-    case photoLink
-    
-    case lessons = "schedules"
-    case exams = "examSchedules"
-    
-    case employeeContainer = "employee"
-}

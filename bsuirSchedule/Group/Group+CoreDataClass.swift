@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 @objc(Group)
-public class Group: NSManagedObject, Decodable, Lessonable {
+public class Group: NSManagedObject, Decodable {
     
     required public convenience init(from decoder: Decoder) throws {
         let context = PersistenceController.shared.container.viewContext

@@ -27,9 +27,8 @@ struct EmployeeFavoriteView: View {
                         .resizable()
                         .frame(width: 60, height: 60)
                 }
-                //                                Spacer()
                 VStack(alignment: .leading) {
-                    Text(employee.lastName ?? "")
+                    Text(employee.lastName)
                         .font(.title)
                         .fontWeight(.bold)
                     Text(employee.firstName! + " " + employee.middleName!)

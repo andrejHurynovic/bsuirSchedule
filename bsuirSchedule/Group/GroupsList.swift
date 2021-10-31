@@ -39,7 +39,6 @@ struct GroupToolbarMenu: View {
     var sortedBy: Binding<GroupSortingType> = .constant(.speciality)
     
     var body: some View {
-//            Text("Сортировка:")
             Picker("", selection: sortedBy) {
                 Text("номер").tag(GroupSortingType.number)
                 Text("специальность").tag(GroupSortingType.speciality)

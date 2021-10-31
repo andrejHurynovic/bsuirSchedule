@@ -247,9 +247,6 @@ struct LessonsView: View {
     
 }
 
-
-
-
 struct LessonsView_Previews: PreviewProvider {
     static var previews: some View {
         LessonsView(viewModel: LessonsViewModel(GroupStorage.shared.values.value.first!))

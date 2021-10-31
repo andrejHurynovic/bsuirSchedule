@@ -43,9 +43,11 @@ struct ClassroomView: View {
                             if favorite {
                                 let lessonsViewModel = LessonsViewModel(classroom)
                                 if let section = lessonsViewModel.nearSection {
-                                    if section.lessons.filter( {$0.relativelyNow() == .orderedSame }).isEmpty == false {
-                                        Image(systemName: "circle.fill")
-                                            .foregroundColor(DesignManager.shared.mainColor)
+                                    if Calendar.current.isDateInToday(section.date) {
+                                        if section.lessons.filter( {$0.relativelyNow() == .orderedSame }).isEmpty == false {
+                                            Image(systemName: "circle.fill")
+                                                .foregroundColor(DesignManager.shared.mainColor)
+                                        }
                                     }
                                 }
                             }

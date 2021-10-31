@@ -20,20 +20,6 @@ protocol Lessonable: NSManagedObject {
 }
 
 
-struct LessonsSection: Hashable {
-    var date: Date
-    var title: String
-    var lessons: [UniqueLesson]
-    
-    func lessons(_ searchText: String) -> [UniqueLesson] {
-        if searchText == "" {
-            return lessons
-        } else {
-            return lessons.filter({ $0.subject.localizedStandardContains(searchText) })
-        }
-    }
-    
-}
 
 class LessonsViewModel: ObservableObject {
     
@@ -220,3 +206,19 @@ class LessonsViewModel: ObservableObject {
     
 }
 
+//MARK: LessonsSection
+
+struct LessonsSection: Hashable {
+    var date: Date
+    var title: String
+    var lessons: [UniqueLesson]
+    
+    func lessons(_ searchText: String) -> [UniqueLesson] {
+        if searchText == "" {
+            return lessons
+        } else {
+            return lessons.filter({ $0.subject.localizedStandardContains(searchText) })
+        }
+    }
+    
+}

@@ -11,6 +11,8 @@ class GroupStorage: Storage<Group> {
     
     static let shared = GroupStorage(sortDescriptors: [NSSortDescriptor(keyPath: \Group.id, ascending: true)])
     
+    //MARK: Fetch
+    
     func fetch() {
         cancellables.insert(FetchManager.shared.fetch(dataType: .groups, completion: {(groups: [Group]) -> () in
             self.save()
@@ -40,12 +42,10 @@ class GroupStorage: Storage<Group> {
         }))
     }
     
-    func favorites() -> [Group] {
-        return self.values.value.filter{ $0.favorite }
-    }
+    //MARK: Accesors
     
-    func isFavorite(id: String) -> Bool {
-        return (values.value.first { $0.id == id }?.favorite) ?? false
+    func favorites() -> [Group] {
+        return self.values.value.filter { $0.favorite }
     }
     
     //MARK: Group Section
@@ -101,6 +101,8 @@ class GroupStorage: Storage<Group> {
         return sections
     }
 }
+
+//MARK: GroupSection
 
 struct GroupSection: Hashable {
     var title: String

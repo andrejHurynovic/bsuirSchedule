@@ -24,6 +24,98 @@ struct FavoritesView: View {
             .navigationTitle("Избранные")
         }
     }
+
+    //MARK: Grids
+    
+    @ViewBuilder var squareObjects: some View {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 500))], alignment: .leading, spacing: 8, pinnedViews: [.sectionHeaders]) {
+            groups
+            classrooms
+        }
+        .padding([.leading, .horizontal, .top])
+    }
+    
+    @ViewBuilder var rectangleObjects: some View {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 240, maximum: 500))], alignment: .leading, spacing: 8, pinnedViews: [.sectionHeaders]) {
+            employees
+        }
+        .padding(.horizontal)
+    }
+    
+    //MARK: Objects
+    
+    @ViewBuilder var groups: some View {
+        if viewModel.groups.isEmpty == false {
+            Section {
+                ForEach(viewModel.groups) { group in
+                    NavigationLink {
+                        LessonsView(viewModel: LessonsViewModel(group))
+                    } label: {
+                        FavoriteGroupView(group: group)
+                    }
+                    .contextMenu {
+                        FavoriteButton(group.favorite) {
+                            group.favorite.toggle()
+                        }
+                    }
+
+                }
+            } header: {
+                standardizedHeader(title: "Группы")
+                    .transition(.scale)
+            }
+        }
+        
+    }
+    
+    @ViewBuilder var classrooms: some View {
+        if viewModel.classrooms.isEmpty == false {
+            Section {
+                ForEach(viewModel.classrooms) { classroom in
+                    NavigationLink {
+                        ClassroomDetailedView(classroom: classroom)
+                    } label: {
+                        ClassroomView(classroom: classroom, favorite: true)
+                    }
+                    .contextMenu {
+                        FavoriteButton(classroom.favorite) {
+                            classroom.favorite.toggle()
+                        }
+                    }
+                    
+                }
+            } header: {
+                standardizedHeader(title: "Кабинеты")
+                    .transition(.scale)
+            }
+        }
+        
+    }
+    
+    @ViewBuilder var employees: some View {
+        if viewModel.employees.isEmpty == false {
+            Section {
+                ForEach(viewModel.employees) { employee in
+                    NavigationLink {
+                        LessonsView(viewModel: LessonsViewModel(employee))
+                    } label: {
+                        EmployeeFavoriteView(employee: employee)
+                    }
+                    .contextMenu {
+                        FavoriteButton(employee.favorite) {
+                            employee.favorite.toggle()
+                        }
+                    }
+                    
+                }
+            } header: {
+                standardizedHeader(title: "Преподаватели")
+                    .transition(.scale)
+            }
+        }
+    }
+    
+    
     
     @ViewBuilder var primaryGroupOnLoad: some View {
         if let primaryGroup = primaryGroup {
@@ -39,82 +131,6 @@ struct FavoritesView: View {
         }
     }
     
-    @ViewBuilder var squareObjects: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 500))], alignment: .leading, spacing: 8, pinnedViews: [.sectionHeaders]) {
-            
-            if viewModel.groups.isEmpty == false {
-                Section {
-                    ForEach(viewModel.groups) { group in
-                        NavigationLink {
-                            LessonsView(viewModel: LessonsViewModel(group))
-                        } label: {
-                            FavoriteGroupView(group: group)
-                        }
-                        .contextMenu {
-                            FavoriteButton(group.favorite) {
-                                group.favorite.toggle()
-                            }
-                        }
-
-                    }
-                } header: {
-                    standardizedHeader(title: "Группы")
-                        .transition(.scale)
-                }
-            }
-            
-            if viewModel.classrooms.isEmpty == false {
-                Section {
-                ForEach(viewModel.classrooms) { classroom in
-                    NavigationLink {
-                        ClassroomDetailedView(classroom: classroom)
-                    } label: {
-                        ClassroomView(classroom: classroom, favorite: true)
-                    }
-                    .contextMenu {
-                        FavoriteButton(classroom.favorite) {
-                            classroom.favorite.toggle()
-                        }
-                    }
-
-                }
-                } header: {
-                    standardizedHeader(title: "Кабинеты")
-                        .transition(.scale)
-                }
-            }
-            
-        }
-        .padding([.leading, .horizontal, .top])
-    }
-    
-    @ViewBuilder var rectangleObjects: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 240, maximum: 500))], alignment: .leading, spacing: 8, pinnedViews: [.sectionHeaders]) {
-            
-            if viewModel.employees.isEmpty == false {
-                Section {
-                    ForEach(viewModel.employees) { employee in
-                        NavigationLink {
-                            LessonsView(viewModel: LessonsViewModel(employee))
-                        } label: {
-                            EmployeeFavoriteView(employee: employee)
-                        }
-                        .contextMenu {
-                            FavoriteButton(employee.favorite) {
-                                employee.favorite.toggle()
-                            }
-                        }
-
-                    }
-                } header: {
-                    standardizedHeader(title: "Преподаватели")
-                        .transition(.scale)
-                }
-            }
-            
-        }
-        .padding([.leading, .horizontal])
-    }
 }
 
 struct FavoritesView_Previews: PreviewProvider {
@@ -123,5 +139,3 @@ struct FavoritesView_Previews: PreviewProvider {
             .preferredColorScheme(.dark)
     }
 }
-
-
