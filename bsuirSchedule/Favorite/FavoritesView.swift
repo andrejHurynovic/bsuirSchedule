@@ -24,11 +24,12 @@ struct FavoritesView: View {
             .navigationTitle("Избранные")
         }
     }
-
+    
     //MARK: Grids
     
     @ViewBuilder var squareObjects: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 500))], alignment: .leading, spacing: 8, pinnedViews: [.sectionHeaders]) {
+            tasks
             groups
             classrooms
         }
@@ -44,6 +45,36 @@ struct FavoritesView: View {
     
     //MARK: Objects
     
+    @ViewBuilder var tasks: some View {
+        if viewModel.tasks.isEmpty == false {
+            Section {
+                ForEach(viewModel.tasks) { task in
+                    NavigationLink {
+                        TaskDetailedView()
+                            .environmentObject(TaskViewModel(task: task))
+                    } label: {
+                        TaskView(task: task)
+                    }
+                    .contextMenu {
+                        Button(role: .destructive) {
+                            withAnimation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.9)) {
+                                TaskStorage.shared.delete(task)
+                            }
+                        } label: {
+                            Label("Удалить", systemImage: "trash")
+                        }
+                        
+                    }
+                    
+                }
+            } header: {
+                standardizedHeader(title: "Задания")
+                    .transition(.scale)
+            }
+        }
+        
+    }
+    
     @ViewBuilder var groups: some View {
         if viewModel.groups.isEmpty == false {
             Section {
@@ -58,7 +89,7 @@ struct FavoritesView: View {
                             group.favorite.toggle()
                         }
                     }
-
+                    
                 }
             } header: {
                 standardizedHeader(title: "Группы")

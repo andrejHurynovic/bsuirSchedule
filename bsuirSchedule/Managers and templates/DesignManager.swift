@@ -57,6 +57,63 @@ class DesignManager: ObservableObject {
     
 }
 
+//MARK: Buttons
+
+func FavoriteButton(_ favorite: Bool, circle: Bool = false, toggle: @escaping () -> Void) -> some View {
+    Button {
+        withAnimation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.9)) {
+            toggle()
+            try! PersistenceController.shared.container.viewContext.save()
+        }
+    } label: {
+        Label(favorite ? "Убрать из избранных" : "Добавить в избранные",
+              systemImage: favorite ? (circle ? "star.circle" : "star.slash") : (circle ? "star.circle.fill" : "star.fill"))
+    }
+    
+}
+
+//MARK: Context menu buttons
+
+struct PhotoActionButtons: View {
+    var image: UIImage
+    var body: some View {
+        pasteToCopyboard(image: image)
+        saveToPhotosLibrary(image: image)
+    }
+}
+
+private struct pasteToCopyboard: View {
+    var image: UIImage
+    var body: some View {
+        Button {
+            UIPasteboard.general.image = image
+        } label: {
+            Label("Скопировать фото", systemImage: "doc.on.doc")
+        }
+    }
+}
+
+private struct saveToPhotosLibrary: View {
+    var image: UIImage
+    var body: some View {
+        Button {
+            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        } label: {
+            Label("Сохранить фото", systemImage: "square.and.arrow.down")
+        }
+    }
+}
+
+//MARK: Shadow
+
+extension View {
+    func standardizedShadow() -> some View {
+        shadow(color: Color(uiColor: UIColor(named: "shadowColor")!), radius: 8, x: 0, y: 0)
+    }
+}
+
+//MARK: Headers
+
 struct standardizedHeader: View {
     var title: String
     
@@ -74,27 +131,21 @@ struct standardizedHeader: View {
     }
 }
 
-func FavoriteButton(_ favorite: Bool, circle: Bool = false, toggle: @escaping () -> Void) -> some View {
-    Button {
-        withAnimation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.9)) {
-            toggle()
-            try! PersistenceController.shared.container.viewContext.save()
-        }
-    } label: {
-        Label(favorite ? "Убрать из избранных" : "Добавить в избранные",
-              systemImage: favorite ? (circle ? "star.circle" : "star.slash") : (circle ? "star.circle.fill" : "star.fill"))
-    }
+struct NewHeader: View {
+    var title: String
+    var divider = true
     
+    var body: some View {
+        Text(title)
+            .font(.title2)
+            .fontWeight(.bold)
+            .padding(.top)
+        if divider {
+            Divider()
+                .padding(.bottom)
+        }
+    }
 }
-
-extension View {
-    func standardizedShadow() -> some View {
-        shadow(color: Color(uiColor: UIColor(named: "shadowColor")!), radius: 8, x: 0, y: 0)
-    } 
-}
-
-
-
 
 extension Color: RawRepresentable {
     

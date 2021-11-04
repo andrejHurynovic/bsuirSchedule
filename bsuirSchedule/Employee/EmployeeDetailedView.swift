@@ -10,6 +10,8 @@ import SwiftUI
 struct EmployeeDetailedView: View {
     var employee: Employee
     
+    @StateObject var imagesViewModel = ImagesViewModel()
+    
     @State var selectedFaculty: Faculty? = nil
     @State var selectedEducationType: Int? = nil
     @State var sortedBy: GroupSortingType = .speciality
@@ -18,23 +20,21 @@ struct EmployeeDetailedView: View {
         List {
             Section {
                 HStack {
-                    if let photo = employee.photo {
-                        Image(uiImage: UIImage(data: photo)!)
-                            .resizable()
-                            .frame(width: 80.0, height: 80.0)
-                            .clipShape(Circle())
-                            .contextMenu {
-                                Button {
-                                    UIImageWriteToSavedPhotosAlbum(UIImage(data: photo)!, nil, nil, nil)
-                                } label: {
-                                    Label("Сохранить фото", systemImage: "square.and.arrow.down")
-                                }
-                                Button {
-                                    UIPasteboard.general.image = UIImage(data: photo)!
-                                } label: {
-                                    Label("Скопировать фото", systemImage: "doc.on.doc")
-                                }
+                    if let data = employee.photo {
+                        if let photo = UIImage(data: data) {
+                            Button {
+                                imagesViewModel.images = [photo]
+                                imagesViewModel.present(selectedImage: photo)
+                            } label: {
+                                Image(uiImage: photo)
+                                    .resizable()
+                                    .frame(width: 80.0, height: 80.0)
+                                    .clipShape(Circle())
+                                    .contextMenu {
+                                        PhotoActionButtons(image: photo)
+                                    }
                             }
+                        }
                     } else {
                         Image(systemName: "person.circle.fill")
                             .resizable()
@@ -85,6 +85,10 @@ struct EmployeeDetailedView: View {
                     GroupList(groups: groups, searchText: nil, selectedFaculty: $selectedFaculty, selectedEducationType:
                                 $selectedEducationType, sortedBy: $sortedBy)
             }
+        }
+        .overlay {
+            ImagesView()
+                .environmentObject(imagesViewModel)
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {

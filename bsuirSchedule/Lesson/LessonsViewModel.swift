@@ -101,6 +101,19 @@ class LessonsViewModel: ObservableObject {
         return sections.filter{ $0.date >= date }.first
     }
     
+    func sectionsWithLessonsAfterToday(_ lesson: UniqueLesson) -> [LessonsSection] {
+        var today = Date()
+        today.addDay()
+        let date = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: today)!
+        
+        let sectionsAfterToday = sections.filter{ $0.date >= date }
+        return sectionsAfterToday.filter {
+            $0.lessons.contains {
+                $0.subject == lesson.subject && $0.lessonType == lesson.lessonType
+            }
+        }
+    }
+    
     //MARK: Lessons
     
     func lessons(week: Int, weekDay: WeekDay) -> [Lesson]? {
@@ -121,7 +134,7 @@ class LessonsViewModel: ObservableObject {
         return datesBetween(element.educationStart!, element.educationEnd!)
     }
     
-    func examsDates() -> [Date]? {    
+    func examsDates() -> [Date]? {
         var dates = Set((element.lessons?.allObjects as! [Lesson]).compactMap({ $0.date }))
         
         dates.remove(Date(timeIntervalSince1970: 419420))

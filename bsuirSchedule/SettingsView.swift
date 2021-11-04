@@ -95,6 +95,11 @@ struct SettingsView: View {
                 Text("Специальности")
             }
             Button {
+                ClassroomStorage.shared.fetch()
+            } label: {
+                Text("Кабинеты")
+            }
+            Button {
                 GroupStorage.shared.deleteAll()
             } label: {
                 Label("Удалить группы (\(groupsViewModel.groups.count))", systemImage: "person.2.circle")

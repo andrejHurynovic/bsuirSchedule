@@ -23,7 +23,8 @@ struct LessonsView: View {
     @FocusState var searchFieldFocused: Bool
     @State var searchText = ""
     
-    
+    @State var taskViewPresented = false
+    @StateObject var taskViewModel = TaskViewModel()
     
     var body: some View {
         ZStack {
@@ -56,6 +57,11 @@ struct LessonsView: View {
             }
         }
         .navigationBarTitle(viewModel.title ?? "")
+        
+        .sheet(isPresented: $taskViewPresented, onDismiss: { }, content: {
+            TaskDetailedView()
+                .environmentObject(taskViewModel)
+        })
         
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -96,6 +102,14 @@ struct LessonsView: View {
                         ForEach(lessons, id: \.self) { lesson in
                             LessonView(lesson: lesson, showEmployee: viewModel.showEmployees, showGroups: viewModel.showGroups, color: DesignManager.shared.color(lesson.lessonType), showToday: today)
                                 .padding(.horizontal)
+                                .contextMenu {
+                                    Button {
+                                        taskViewModel.likeInit(lesson: lesson, lessonsSections: viewModel.sectionsWithLessonsAfterToday(lesson))
+                                        taskViewPresented = true
+                                    } label: {
+                                        Label("Добавить задание", systemImage: "plus")
+                                    }
+                                }
                         }
                     } header: {
                         Button {

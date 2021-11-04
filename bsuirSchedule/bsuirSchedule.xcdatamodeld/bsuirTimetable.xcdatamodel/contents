@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19206" systemVersion="21A558" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="21A559" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Classroom" representedClassName="Classroom" syncable="YES">
         <attribute name="building" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="departmentAbbreviation" optional="YES" attributeType="String"/>
@@ -64,6 +64,14 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
+    <entity name="Hometask" representedClassName="Hometask" syncable="YES" codeGenerationType="class">
+        <attribute name="creation" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="deadline" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="lessonType" optional="YES" attributeType="String"/>
+        <attribute name="photosData" optional="YES" attributeType="Binary" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[UIImage]"/>
+        <attribute name="subject" attributeType="String"/>
+        <attribute name="taskDescription" attributeType="String"/>
+    </entity>
     <entity name="Lesson" representedClassName="Lesson" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="employeesIDs" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[Int]"/>
@@ -103,6 +111,7 @@
         <element name="Employee" positionX="-231.9367065429688" positionY="-131.8106842041016" width="128" height="284"/>
         <element name="Faculty" positionX="-536.472412109375" positionY="280.2841491699219" width="128" height="103"/>
         <element name="Group" positionX="-339.1310424804688" positionY="212.7224731445312" width="120.3765258789062" height="179"/>
+        <element name="Hometask" positionX="-513" positionY="27" width="128" height="119"/>
         <element name="Lesson" positionX="-464.7166137695312" positionY="-101.2243957519531" width="128" height="224"/>
         <element name="Speciality" positionX="-715.6961669921875" positionY="275.5036926269531" width="128" height="134"/>
     </elements>

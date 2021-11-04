@@ -12,16 +12,19 @@ class FavoritesViewModel: ObservableObject {
     @Published var groups: [Group] = []
     @Published var employees: [Employee] = []
     @Published var classrooms: [Classroom] = []
+    @Published var tasks: [Hometask] = []
     
     private var groupCancelable: AnyCancellable?
     private var employeeCancelable: AnyCancellable?
     private var classroomCancelable: AnyCancellable?
+    private var tasksCancelable: AnyCancellable?
     
     
     
     init(groupPublisher: AnyPublisher<[Group], Never> = GroupStorage.shared.values.eraseToAnyPublisher(),
          employeePublisher: AnyPublisher<[Employee], Never> = EmployeeStorage.shared.values.eraseToAnyPublisher(),
-         classroomPublisher: AnyPublisher<[Classroom], Never> = ClassroomStorage.shared.values.eraseToAnyPublisher()) {
+         classroomPublisher: AnyPublisher<[Classroom], Never> = ClassroomStorage.shared.values.eraseToAnyPublisher(),
+         tasksPublisher: AnyPublisher<[Hometask], Never> = TaskStorage.shared.values.eraseToAnyPublisher()) {
         groupCancelable = groupPublisher.sink { groups in
             self.groups = groups.filter({$0.favorite})
         }
@@ -31,5 +34,14 @@ class FavoritesViewModel: ObservableObject {
         classroomCancelable = classroomPublisher.sink(receiveValue: { classrooms in
             self.classrooms = classrooms.filter {$0.favorite}
         })
+        tasksCancelable = tasksPublisher.sink(receiveValue: { tasks in
+            self.tasks = tasks
+        })
     }
+}
+
+
+class TaskStorage: Storage<Hometask> {
+    static let shared: TaskStorage = TaskStorage(
+        sortDescriptors: [NSSortDescriptor(keyPath: \Hometask.deadline, ascending: true)])
 }

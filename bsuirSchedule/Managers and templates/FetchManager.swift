@@ -35,7 +35,7 @@ class FetchManager {
         } else {
             url = URL(string: dataType.rawValue)
         }
-
+        
         return URLSession(configuration: configuration)
             .dataTaskPublisher(for: url)
             .share()
