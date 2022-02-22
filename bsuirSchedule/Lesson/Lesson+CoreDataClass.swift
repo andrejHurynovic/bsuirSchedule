@@ -49,7 +49,7 @@ public class Lesson: NSManagedObject, Decodable {
                 if let classroom = ClassroomStorage.shared.classroom(name: classroomName) {
                     self.addToClassrooms(classroom)
                 } else { 
-                    print(classroomName)
+//                    print(classroomName)
                 }
             }
         }
@@ -71,9 +71,11 @@ public class Lesson: NSManagedObject, Decodable {
         self.employeesIDs = employees.map { $0["id"] as! Int }
         
         employeesIDs?.forEach(body: { employeeID in
-            self.addToEmployees(EmployeeStorage.shared.values.value.first(where: {
-                $0.id == employeeID
-            })!)
+            if let employee = EmployeeStorage.shared.values.value.first(where: { $0.id == employeeID }) {
+                self.addToEmployees(employee)
+            } else {
+                print(employeeID)
+            }
         })
     }
     

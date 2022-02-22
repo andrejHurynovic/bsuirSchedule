@@ -16,6 +16,7 @@ struct TaskDetailedView: View {
     @State var photoPickerPresented = false
     @State var capturePicturePresented = false
     
+    @FocusState var textEditorFocused: Bool
     
     
     var body: some View {
@@ -35,7 +36,7 @@ struct TaskDetailedView: View {
         }
         .overlay {
             ImagesView()
-                .padding(.top, 100)
+                .padding(.top, 80)
                 .ignoresSafeArea(.container, edges: .top)
                 .environmentObject(imagesViewModel)
         }
@@ -88,8 +89,39 @@ struct TaskDetailedView: View {
     //MARK: Description
     
     @ViewBuilder var textEditor: some View {
-        NewHeader(title: "Описание")
+        //        NewHeader(title: "Описание")
+        HStack {
+            VStack(alignment: .leading) {
+                Text("Описание")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .padding(.top)
+            }
+            Spacer()
+            if(textEditorFocused) {
+                Button {
+                    withAnimation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.9)) {
+                        textEditorFocused = false
+                    }
+                } label: {
+                    Circle()
+                        .frame(width: 40, height: 40)
+                        .shadow(color: DesignManager.shared.mainColor, radius: 8)
+                        .overlay(Image(systemName: "keyboard.chevron.compact.down")
+                                    .resizable()
+                                    .font(Font.system(.title).bold())
+                                    .foregroundColor(.white)
+                                    .frame(width: 24, height: 24)
+                        )
+                }
+                .transition(AnyTransition.scale.animation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.9)))
+            }
+        }
+        Divider()
+            .padding(.bottom)
+        
         TextEditor(text: $viewModel.text)
+            .focused($textEditorFocused)
             .frame(minHeight: 128)
             .cornerRadius(16)
             .standardizedShadow()

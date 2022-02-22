@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="21A559" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21D62" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Classroom" representedClassName="Classroom" syncable="YES">
         <attribute name="building" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="departmentAbbreviation" optional="YES" attributeType="String"/>
@@ -28,7 +28,7 @@
         <attribute name="firstName" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="Integer 32" usesScalarValueType="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String"/>
-        <attribute name="lastUpdateDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="lastUpdateDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="middleName" optional="YES" attributeType="String"/>
         <attribute name="photo" optional="YES" attributeType="Binary" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="UIImage"/>
         <attribute name="photoLink" optional="YES" attributeType="String"/>

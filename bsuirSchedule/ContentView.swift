@@ -16,6 +16,7 @@ struct ContentView: View {
 //                .tabItem {
 //                    Text("FUCK")
 //                }
+            Update()
             FavoritesView()
                 .tabItem {
                     Label("Избранные", systemImage: "star.fill")
@@ -28,10 +29,10 @@ struct ContentView: View {
                 .tabItem {
                     Label("Преподаватели", systemImage: "person.3")
                 }
-            ClassroomsView()
-                .tabItem {
-                    Label("Кабинеты", systemImage: "mappin")
-                }
+//            ClassroomsView()
+//                .tabItem {
+//                    Label("Кабинеты", systemImage: "mappin")
+//                }
             SettingsView()
                 .tabItem {
                     Label("Настройки", systemImage: "gearshape")

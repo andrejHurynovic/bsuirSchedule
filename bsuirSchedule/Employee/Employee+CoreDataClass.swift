@@ -48,11 +48,15 @@ public class Employee: NSManagedObject, Decodable, Lessonable {
         }
         
         self.id = (try! container.decode(Int32.self, forKey: .id))
-        self.urlID = try! container.decode(String.self, forKey: .urlID)
+        if let urlID = try? container.decode(String.self, forKey: .urlID) {
+            self.urlID = urlID
+        } else {
+            
+        }
         self.firstName = try! container.decode(String.self, forKey: .firstName)
-        self.middleName = try! container.decode(String.self, forKey: .middleName)
+        self.middleName = try? container.decode(String.self, forKey: .middleName)
         self.lastName = try! container.decode(String.self, forKey: .lastName)
-        self.lastUpdateDate = Date()
+        
         
         self.rank = try? container.decode(String.self, forKey: .rank)
         self.degree = try? container.decode(String.self, forKey: .degree)

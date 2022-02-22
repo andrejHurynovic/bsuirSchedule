@@ -16,11 +16,11 @@ struct ImagesView: View {
     var body: some View {
         ZStack {
             if viewModel.isPresented {
-                Color.black
+                Color(uiColor: UIColor(named: "backgroundColor")!)
                     .opacity(viewModel.backgroundOpacity)
                     .ignoresSafeArea(.all, edges: .top)
                     .transition(.opacity)
-                    .navigationBarHidden(true)
+//                    .navigationBarHidden(true)
             }
             
             if viewModel.isPresented {
@@ -60,7 +60,9 @@ struct ImagesView: View {
             HStack {
                 Spacer()
                 Button {
-                    
+//                    guard let urlShare = URL(string: "https://developer.apple.com/xcode/swiftui/") else { return }
+                    let activityVC = UIActivityViewController(activityItems: [viewModel.selection!], applicationActivities: nil)
+                           UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
                 } label: {
                     Circle()
                         .frame(width: 48, height: 48)
