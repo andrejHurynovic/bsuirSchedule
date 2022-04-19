@@ -168,7 +168,7 @@ class LessonsViewModel: ObservableObject {
     }
     
     func week(date: Date) -> Int {
-        weeksBetween(start: element.educationStart!, end: date) % 4 + 1
+        (weeksBetween(start: element.educationStart!, end: date) + 1) % 4 + 1
     }
     
     func weekDay(date: Date) -> WeekDay {

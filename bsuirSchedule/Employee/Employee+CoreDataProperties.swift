@@ -24,7 +24,7 @@ extension Employee {
     @NSManaged public var firstName: String!
     @NSManaged public var middleName: String!
     @NSManaged public var lastName: String!
-    @NSManaged public var lastUpdateDate: Date?
+    @NSManaged public var updateDate: Date?
     
     @NSManaged public var rank: String?
     @NSManaged public var degree: String?

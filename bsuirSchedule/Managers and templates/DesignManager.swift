@@ -120,14 +120,18 @@ struct standardizedHeader: View {
     var body: some View {
         Text(title)
             .font(.title2)
-            .fontWeight(.bold)
-            .padding(.horizontal)
-            .padding(.vertical, 4)
-            .background(DesignManager.shared.mainColor)
-            .clipShape(Capsule())
-            .padding(.vertical, 4)
-            .shadow(color: DesignManager.shared.mainColor, radius: 8)
-            .foregroundColor(.white)
+            .fontWeight(.heavy)
+            .foregroundColor(.primary)
+            .padding(.top)
+//            .font(.title2)
+//            .fontWeight(.bold)
+//            .padding(.horizontal)
+//            .padding(.vertical, 4)
+//            .background(DesignManager.shared.mainColor)
+//            .clipShape(Capsule())
+//            .padding(.vertical, 4)
+//            .shadow(color: DesignManager.shared.mainColor, radius: 8)
+//            .foregroundColor(.white)
     }
 }
 
@@ -180,3 +184,11 @@ extension Color: RawRepresentable {
     }
     
 }
+
+struct Design_Previews: PreviewProvider {
+    static var previews: some View {
+        standardizedHeader(title: "ПРИВЕт, мужики!")
+            .previewInterfaceOrientation(.portrait)
+    }
+}
+

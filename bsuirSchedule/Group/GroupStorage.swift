@@ -6,12 +6,57 @@
 //
 
 import Foundation
+import Combine
 
 class GroupStorage: Storage<Group> {
     
     static let shared = GroupStorage(sortDescriptors: [NSSortDescriptor(keyPath: \Group.id, ascending: true)])
     
     //MARK: Fetch
+    
+    func dataTask() -> URLSessionDataTask? {
+            guard let url = URL(string: "https://journal.bsuir.by/api/v1/groups") else {
+                return nil
+            }
+            let task = URLSession.shared.dataTask(with: url) { data, response, error in
+                _ = try? JSONDecoder().decode([Group].self, from: data!)
+                GroupStorage.shared.save()
+            }
+            return task
+        }
+    
+    func detailedDataTasks() -> [URLSessionDataTask] {
+        var dataTasks: [URLSessionDataTask] = []
+        self.values.value.forEach { group in
+            if let dataTask = detailedDataTask(group) {
+                dataTasks.append(dataTask)
+            }
+        }
+        
+        return dataTasks
+        
+    }
+    
+    private func detailedDataTask(_ group: Group) -> URLSessionDataTask? {
+        guard let url = URL(string: "https://journal.bsuir.by/api/v1/studentGroup/schedule?studentGroup=" + group.id ) else {
+            return nil
+        }
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            if let data = data {
+                if let fetchedGroup = try? JSONDecoder().decode(Group.self, from: data) {
+                    if let lessons = fetchedGroup.lessons {
+                        group.addToLessons(lessons)
+                    }
+                    group.educationStart = fetchedGroup.educationStart
+                    group.educationEnd = fetchedGroup.educationEnd
+                    group.examsStart = fetchedGroup.examsStart
+                    group.examsEnd = fetchedGroup.examsEnd
+//                    GroupStorage.shared.save()
+                }
+            }
+        }
+        return task
+    }
     
     func fetch() {
         cancellables.insert(FetchManager.shared.fetch(dataType: .groups, completion: {(groups: [Group]) -> () in
@@ -22,14 +67,15 @@ class GroupStorage: Storage<Group> {
     
     func fetchAllDetailed() {
         self.values.value.forEach { group in
-            if group.lessons?.count == 0 {
+            if group.lastUpdateDate == nil  {
                 fetchDetailed(group)
             }
         }
     }
     
     func fetchDetailed(_ group: Group) {
-        cancellables.insert(FetchManager.shared.fetch(dataType: .group, argument: group.id, completion: {(fetchedGroup: Group) -> () in
+        var cancellable: AnyCancellable? = nil
+        cancellable = FetchManager.shared.fetch(dataType: .group, argument: group.id, completion: {[weak self] (fetchedGroup: Group) -> () in
             if let lessons = fetchedGroup.lessons {
                 group.addToLessons(lessons)
             }
@@ -37,9 +83,11 @@ class GroupStorage: Storage<Group> {
             group.educationEnd = fetchedGroup.educationEnd
             group.examsStart = fetchedGroup.examsStart
             group.examsEnd = fetchedGroup.examsEnd
-            self.save()
-            
-        }))
+            group.lastUpdateDate = Date()
+            self?.save()
+//            self?.cancellables.remove(cancellable!)
+        })
+        cancellables.insert(cancellable!)
     }
     
     //MARK: Accesors
@@ -99,6 +147,14 @@ class GroupStorage: Storage<Group> {
         }
         
         return sections
+    }
+    
+    func delete(id: String) {
+        let group = values.value.first(where: {$0.id == id})
+        if let group = group {
+            #warning("//удаляет только если после будет ещё одно сохранение, нужно переделать")
+            PersistenceController.shared.container.viewContext.delete(group)
+        }
     }
 }
 

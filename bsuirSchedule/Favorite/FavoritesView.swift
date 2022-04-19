@@ -23,6 +23,7 @@ struct FavoritesView: View {
             }
             .navigationTitle("Избранные")
         }
+        .navigationViewStyle(.automatic)
     }
     
     //MARK: Grids

@@ -52,10 +52,11 @@
 		F697BF8726FFAA02008FA7A9 /* ClassroomsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697BF8626FFAA02008FA7A9 /* ClassroomsViewModel.swift */; };
 		F699F21A26EA24CE00747BE0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F699F21926EA24CE00747BE0 /* Extensions.swift */; };
 		F69C463726E91B430036D6A1 /* EmployeeDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69C463626E91B430036D6A1 /* EmployeeDetailedView.swift */; };
-		F69CAC33271DCA0B00D0403E /* StorageTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69CAC32271DCA0B00D0403E /* StorageTemplate.swift */; };
+		F69CAC33271DCA0B00D0403E /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69CAC32271DCA0B00D0403E /* Storage.swift */; };
 		F6A42DA026E52F8A004B239C /* GroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A42D9F26E52F8A004B239C /* GroupsView.swift */; };
 		F6AA210D26EBA59D006218F8 /* GroupStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AA210C26EBA59D006218F8 /* GroupStorage.swift */; };
 		F6AA210F26EC83BB006218F8 /* GroupsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AA210E26EC83BB006218F8 /* GroupsViewModel.swift */; };
+		F6AACFA627C6E61100667403 /* UpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AACFA527C6E61100667403 /* UpdateView.swift */; };
 		F6AFC4622721EC43008CC065 /* DesignManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AFC4612721EC43008CC065 /* DesignManager.swift */; };
 		F6B4805226F9ED070085D5FE /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B4805126F9ED070085D5FE /* FavoritesViewModel.swift */; };
 		F6BCE3AA26EFD72C0067B5DA /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BCE3A926EFD72C0067B5DA /* Schedule.swift */; };
@@ -144,10 +145,11 @@
 		F697BF8626FFAA02008FA7A9 /* ClassroomsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomsViewModel.swift; sourceTree = "<group>"; };
 		F699F21926EA24CE00747BE0 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		F69C463626E91B430036D6A1 /* EmployeeDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeDetailedView.swift; sourceTree = "<group>"; };
-		F69CAC32271DCA0B00D0403E /* StorageTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageTemplate.swift; sourceTree = "<group>"; };
+		F69CAC32271DCA0B00D0403E /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		F6A42D9F26E52F8A004B239C /* GroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsView.swift; sourceTree = "<group>"; };
 		F6AA210C26EBA59D006218F8 /* GroupStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupStorage.swift; sourceTree = "<group>"; };
 		F6AA210E26EC83BB006218F8 /* GroupsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsViewModel.swift; sourceTree = "<group>"; };
+		F6AACFA527C6E61100667403 /* UpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateView.swift; sourceTree = "<group>"; };
 		F6AFC4612721EC43008CC065 /* DesignManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignManager.swift; sourceTree = "<group>"; };
 		F6B4805126F9ED070085D5FE /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		F6BCE3A926EFD72C0067B5DA /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
@@ -200,7 +202,7 @@
 			children = (
 				F697441B271CE90400A7AE30 /* FetchManager.swift */,
 				F6AFC4612721EC43008CC065 /* DesignManager.swift */,
-				F69CAC32271DCA0B00D0403E /* StorageTemplate.swift */,
+				F69CAC32271DCA0B00D0403E /* Storage.swift */,
 			);
 			path = "Managers and templates";
 			sourceTree = "<group>";
@@ -236,6 +238,7 @@
 				F63FC6BC272F01E900C9F410 /* TaskDetailedView.swift */,
 				F601E5A82731AA3900773F02 /* TaskViewModel.swift */,
 				F632DEED26696CCB00E4C55F /* ContentView.swift */,
+				F6AACFA527C6E61100667403 /* UpdateView.swift */,
 				F6DCD72226B30EF0003761B0 /* SettingsView.swift */,
 				F6F6B4F726FA5D2700814354 /* Favorite */,
 				F699F21826EA249E00747BE0 /* Group */,
@@ -468,6 +471,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6AACFA627C6E61100667403 /* UpdateView.swift in Sources */,
 				F68465FB26FA5321000F185E /* Faculty+CoreDataClass.swift in Sources */,
 				F6B4805226F9ED070085D5FE /* FavoritesViewModel.swift in Sources */,
 				F68465FC26FA5321000F185E /* Faculty+CoreDataProperties.swift in Sources */,
@@ -482,7 +486,7 @@
 				F6606FD826F93A89002E0B3E /* FavoritesView.swift in Sources */,
 				F6CB615726F000EE00D29807 /* LessonView.swift in Sources */,
 				F68E9CDC2729B57400704EB0 /* ClassroomView.swift in Sources */,
-				F69CAC33271DCA0B00D0403E /* StorageTemplate.swift in Sources */,
+				F69CAC33271DCA0B00D0403E /* Storage.swift in Sources */,
 				F6F8781A271A2111005E3C41 /* SpecialityStorage.swift in Sources */,
 				F63FC6BD272F01EA00C9F410 /* TaskDetailedView.swift in Sources */,
 				F61C523F26E64619002CF234 /* Lesson+CoreDataProperties.swift in Sources */,

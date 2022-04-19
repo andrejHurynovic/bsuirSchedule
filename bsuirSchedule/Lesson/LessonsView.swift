@@ -71,7 +71,7 @@ struct LessonsView: View {
                         
                         if showSearchField {
                             Task.init(priority: .high) {
-                                await Task.sleep(UInt64(0.001 * Double(NSEC_PER_SEC)))
+                                try await Task.sleep(nanoseconds: UInt64(0.001 * Double(NSEC_PER_SEC)))
                                 searchFieldFocused = true
                             }
                         } else {
@@ -93,7 +93,7 @@ struct LessonsView: View {
     
     
     @ViewBuilder var lessons: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 240, maximum: 500))], alignment: .center, spacing: 8, pinnedViews: [.sectionHeaders]) {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 240, maximum: 500))], alignment: .leading, spacing: 8, pinnedViews: []) {
             ForEach(viewModel.sections, id: \.self) { section in
                 let today = (section.date == Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date())!)
                 let lessons: [UniqueLesson] = section.lessons(searchText)
@@ -101,7 +101,6 @@ struct LessonsView: View {
                     Section {
                         ForEach(lessons, id: \.self) { lesson in
                             LessonView(lesson: lesson, showEmployee: viewModel.showEmployees, showGroups: viewModel.showGroups, color: DesignManager.shared.color(lesson.lessonType), showToday: today)
-                                .padding(.horizontal)
                                 .contextMenu {
                                     Button {
                                         taskViewModel.likeInit(lesson: lesson, lessonsSections: viewModel.sectionsWithLessonsAfterToday(lesson))
@@ -117,7 +116,9 @@ struct LessonsView: View {
                                 showDatePicker.toggle()
                             }
                         } label: {
-                            standardizedHeader(title: section.title)
+                            VStack(alignment: .leading) {
+                                standardizedHeader(title: section.title)
+                            }
                         }
                     }
                     .onAppear {
@@ -139,6 +140,7 @@ struct LessonsView: View {
                 
             }
         }
+        .padding()
     }
     
     //MARK: Popup items

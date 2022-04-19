@@ -59,7 +59,6 @@ public class Group: NSManagedObject, Decodable {
         } else {
             
         }
-        self.lastUpdateDate = Date()
     }
 }
 

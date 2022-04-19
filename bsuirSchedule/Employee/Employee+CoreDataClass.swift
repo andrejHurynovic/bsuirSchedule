@@ -20,17 +20,17 @@ public class Employee: NSManagedObject, Decodable, Lessonable {
         
         var container = try decoder.container(keyedBy: CodingKeys.self)
         
-        if let schedules = try? container.decode([Schedule].self, forKey: .lessons) {
-            schedules.map { $0.lessons }.forEach { lessons in
-                self.addToLessons(NSSet(array: lessons))
-            }
-        }
-        
-        if let examSchedules = try? container.decode([Schedule].self, forKey: .exams) {
-            examSchedules.map { $0.lessons }.forEach { lessons in
-                self.addToLessons(NSSet(array: lessons!))
-            }
-        }
+//        if let schedules = try? container.decode([Schedule].self, forKey: .lessons) {
+//            schedules.map { $0.lessons }.forEach { lessons in
+//                self.addToLessons(NSSet(array: lessons))
+//            }
+//        }
+//        
+//        if let examSchedules = try? container.decode([Schedule].self, forKey: .exams) {
+//            examSchedules.map { $0.lessons }.forEach { lessons in
+//                self.addToLessons(NSSet(array: lessons!))
+//            }
+//        }
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"

@@ -40,6 +40,7 @@ class EmployeeStorage: Storage<Employee> {
                 employee.educationEnd = fetchedEmployee.educationEnd
                 employee.examsStart = fetchedEmployee.examsStart
                 employee.examsEnd = fetchedEmployee.examsEnd
+                employee.updateDate = Date()
                 self.save()
             }))
         }

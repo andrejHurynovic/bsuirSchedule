@@ -10,10 +10,19 @@ import Combine
 import CoreData
 
 class Storage<T: NSManagedObject>: NSObject, NSFetchedResultsControllerDelegate, ObservableObject {
-    var values = CurrentValueSubject<[T], Never>([])
+    
+    
+    //new for now
+    @Published var tempValues: [T] = []
+    @Published var observation: NSKeyValueObservation?
+    //end of new
+    
+    
+    @Published var values = CurrentValueSubject<[T], Never>([])
     
     let fetchController: NSFetchedResultsController<T>
     var cancellables = Set<AnyCancellable>()
+
     
     init(sortDescriptors: [NSSortDescriptor]) {
         let request = T.fetchRequest()
@@ -30,6 +39,10 @@ class Storage<T: NSManagedObject>: NSObject, NSFetchedResultsControllerDelegate,
         } catch {
             
         }
+        
+        cancellables.insert(self.values.eraseToAnyPublisher().sink { values in
+            self.tempValues = values
+        })
     }
     
     func save() {

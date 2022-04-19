@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @StateObject var groupsViewModel = GroupsViewModel()
-    @StateObject var employeesViewModel = EmployeesViewModel()
-    @StateObject var lessonsStorage = LessonStorage.shared
-    @StateObject var facultyStorage = FacultyStorage.shared
-    @StateObject var classroomStorage = ClassroomStorage.shared
-    @StateObject var specialityStorage = SpecialityStorage.shared
+    @ObservedObject var groupsViewModel = GroupsViewModel()
+    @ObservedObject var employeesViewModel = EmployeesViewModel()
+    @ObservedObject var lessonsStorage = LessonStorage.shared
+    @ObservedObject var facultyStorage = FacultyStorage.shared
+    @ObservedObject var classroomStorage = ClassroomStorage.shared
+    @ObservedObject var specialityStorage = SpecialityStorage.shared
     
     @StateObject var colorManager = DesignManager.shared
     
@@ -84,6 +84,10 @@ struct SettingsView: View {
     
     @ViewBuilder var developer: some View {
         Section("Разработчик") {
+            NavigationLink("UpdateView") {
+                UpdateView()
+            }
+            
             Button {
                 FacultyStorage.shared.fetch()
             } label: {
@@ -118,7 +122,7 @@ struct SettingsView: View {
                     .foregroundColor(.red)
             }
             Button {
-                facultyStorage.deleteAll()
+                FacultyStorage.shared.deleteAll()
             } label: {
                 Label("Удалить факультеты (\(facultyStorage.values.value.count))", systemImage: "building.2.crop.circle")
                     .foregroundColor(.red)
