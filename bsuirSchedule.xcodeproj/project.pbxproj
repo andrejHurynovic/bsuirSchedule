@@ -235,8 +235,6 @@
 				F699F21926EA24CE00747BE0 /* Extensions.swift */,
 				F632DEF426696CD300E4C55F /* Persistence.swift */,
 				F632DEF626696CD300E4C55F /* bsuirSchedule.xcdatamodeld */,
-				F63FC6BC272F01E900C9F410 /* TaskDetailedView.swift */,
-				F601E5A82731AA3900773F02 /* TaskViewModel.swift */,
 				F632DEED26696CCB00E4C55F /* ContentView.swift */,
 				F6AACFA527C6E61100667403 /* UpdateView.swift */,
 				F6DCD72226B30EF0003761B0 /* SettingsView.swift */,
@@ -244,9 +242,10 @@
 				F699F21826EA249E00747BE0 /* Group */,
 				F6BCE3A626EFCF0A0067B5DA /* Lesson */,
 				F65F831F26E8F35500B8CC4E /* Employee */,
-				F6F87818271A1F36005E3C41 /* Speciality */,
-				F68465F826FA52E8000F185E /* Faculty */,
+				F667332B280F762C00194EAC /* Task */,
 				F697BF7326FFA129008FA7A9 /* Classroom */,
+				F68465F826FA52E8000F185E /* Faculty */,
+				F6F87818271A1F36005E3C41 /* Speciality */,
 				F632DEF126696CD300E4C55F /* Preview Content */,
 				F632DEEF26696CD300E4C55F /* Assets.xcassets */,
 				F632DEF926696CD300E4C55F /* Info.plist */,
@@ -274,6 +273,15 @@
 				F69C463626E91B430036D6A1 /* EmployeeDetailedView.swift */,
 			);
 			path = Employee;
+			sourceTree = "<group>";
+		};
+		F667332B280F762C00194EAC /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				F63FC6BC272F01E900C9F410 /* TaskDetailedView.swift */,
+				F601E5A82731AA3900773F02 /* TaskViewModel.swift */,
+			);
+			path = Task;
 			sourceTree = "<group>";
 		};
 		F68465F826FA52E8000F185E /* Faculty */ = {
