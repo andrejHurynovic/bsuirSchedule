@@ -31,6 +31,14 @@ extension Group {
     var examsDates: [Date] {
         datesBetween(examsStart, examsEnd)
     }
+    
+    var educationRange: ClosedRange<Date>? {
+        let dates = (educationDates + examsDates)
+        guard dates.isEmpty == false else {
+            return nil
+        }
+        return dates.first!...dates.last!
+    }
 }
 
 // MARK: Generated accessors for lessons

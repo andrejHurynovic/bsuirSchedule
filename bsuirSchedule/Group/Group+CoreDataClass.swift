@@ -6,32 +6,6 @@
 //
 //
 
-//Потом вынести это в WEEK
-
-extension Date {
-    var educationWeek: Int {
-        let weekLastUpdate = Date()
-        let currentWeek = 3
-        let weeksBetween = (weeksBetween(start: weekLastUpdate, end: self))
-        return (4 - ((currentWeek - weeksBetween) % 4) + 2) % 4
-    }
-}
-
-extension Array where Element == Date {
-    func educationDates(weeks: [Int], weekDay: WeekDay, time: Date) -> [Date] {
-        var dates = self.filter {$0.weekDay() == weekDay}
-        //Если занятия нет на каждой неделе, то нужно найти только дни с соответствующими неделями
-        if weeks.count < 4  {
-            dates = dates.filter { date in
-                weeks.contains { week in
-                    return date.educationWeek == week
-                }
-            }
-        }
-        return dates.map {$0.withTime(time)}
-    }
-}
-
 import Foundation
 import CoreData
 

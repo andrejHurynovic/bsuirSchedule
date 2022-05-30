@@ -163,7 +163,7 @@ struct LessonsView: View {
     
     @ViewBuilder var datePicker: some View {
         if showDatePicker {
-            DatePicker("", selection: $date, in: viewModel.educationRange(), displayedComponents: .date)
+            DatePicker("", selection: $date, in: viewModel.element.educationRange ?? Date()...Date(), displayedComponents: .date)
                 .datePickerStyle(.graphical)
                 .background(.thinMaterial)
                 .cornerRadius(16)

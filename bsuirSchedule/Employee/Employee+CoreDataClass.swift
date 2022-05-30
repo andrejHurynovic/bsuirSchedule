@@ -11,7 +11,7 @@ import CoreData
 import UIKit.UIImage
 
 @objc(Employee)
-public class Employee: NSManagedObject, Decodable, Lessonable {
+public class Employee: NSManagedObject, Decodable {
     
     required public convenience init(from decoder: Decoder) throws {
         let context = PersistenceController.shared.container.viewContext

@@ -16,7 +16,7 @@ class FetchManager {
     
     //Взято из https://iis.bsuir.by/api
     enum FetchDataType: String {
-        case week = "http://iis.bsuir.by/api/v1/schedule/current-week"
+        case week = "https://iis.bsuir.by/api/v1/schedule/current-week"
         //Неделю в промежутке [1...4]
         case groups = "https://journal.bsuir.by/api/v1/groups"
         //

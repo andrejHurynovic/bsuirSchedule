@@ -112,9 +112,9 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="Week" representedClassName="Week" syncable="YES" codeGenerationType="class">
-        <attribute name="updateDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="week" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    <entity name="Week" representedClassName="Week" syncable="YES">
+        <attribute name="updateDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="updatedWeek" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
     <elements>
         <element name="Classroom" positionX="-688.0670166015625" positionY="-34.90615844726562" width="128" height="164"/>

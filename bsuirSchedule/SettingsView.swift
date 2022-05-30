@@ -83,11 +83,17 @@ struct SettingsView: View {
     }
     
     @ViewBuilder var developer: some View {
+        Button {
+            WeekStorage.shared.fetch()
+        } label: {
+            Text("Неделя")
+        }
         Section("Разработчик") {
             NavigationLink("UpdateView") {
                 UpdateView()
             }
             
+ 
             Button {
                 FacultyStorage.shared.fetch()
             } label: {

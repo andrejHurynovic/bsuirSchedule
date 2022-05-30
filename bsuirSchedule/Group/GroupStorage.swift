@@ -37,6 +37,7 @@ class GroupStorage: Storage<Group> {
         var cancellable: AnyCancellable? = nil
         cancellable = FetchManager.shared.fetch(dataType: .group, argument: group.id, completion: {[weak self] (fetchedGroup: Group) -> () in
             if let lessons = fetchedGroup.lessons {
+                group.removeFromLessons(group.lessons!)
                 group.addToLessons(lessons)
             }
             group.educationStart = fetchedGroup.educationStart
