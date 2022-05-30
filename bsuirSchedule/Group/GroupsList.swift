@@ -19,7 +19,10 @@ struct GroupList: View {
         ForEach (GroupStorage.sections(groups, searchText?.wrappedValue ?? "", selectedFaculty.wrappedValue, selectedEducationType.wrappedValue, sortedBy.wrappedValue), id: \.self) { section in
             Section(section.title) {
                 ForEach(section.groups, id: \.id, content: { group in
-                    NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group))){
+//                    NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group))){
+//                        Text(group.id)
+//                    }
+                    NavigationLink(destination: GroupDetailedView(group: group)){
                         Text(group.id)
                     }
                     .contextMenu {

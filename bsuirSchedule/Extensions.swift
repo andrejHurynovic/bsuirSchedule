@@ -280,5 +280,13 @@ extension ClosedRange where Bound == Date {
         }
         return ComparisonResult.orderedSame
     }
-
+    func numberOfDaysBetween() -> Int {
+        let calendar = Calendar.current
+        
+        let fromDate = calendar.startOfDay(for: self.lowerBound) // <1>
+        let toDate = calendar.startOfDay(for: self.upperBound) // <2>
+        let numberOfDays = calendar.dateComponents([.day], from: fromDate, to: toDate) // <3>
+        
+        return numberOfDays.day! + 1
+    }
 }

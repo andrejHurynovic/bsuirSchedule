@@ -87,7 +87,7 @@ extension Lesson : Identifiable {
     }
 }
 
-enum LessonType: Int16 {
+enum LessonType: Int16, CaseIterable {
     case none = 0
     case lecture = 1
     case remoteLecture = 2
@@ -98,6 +98,28 @@ enum LessonType: Int16 {
     case exam = 7
     case candidateText = 8
     
+    func description() -> String {
+        switch self {
+        case .none:
+            return "Без типа"
+        case .lecture:
+            return "ЛК"
+        case .remoteLecture:
+            return "УЛК"
+        case .practice:
+            return "ПЗ"
+        case .remotePractice:
+            return "УПЗ"
+        case .laboratory:
+            return "ЛР"
+        case .consultation:
+            return "Конс"
+        case .exam:
+            return "Экз"
+        case .candidateText:
+            return "КЗ"
+        }
+    }
 }
 
 enum WeekDay: Int16, CaseIterable, Decodable {
