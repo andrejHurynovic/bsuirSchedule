@@ -20,4 +20,6 @@ protocol Lessonable: NSManagedObject {
     var educationDates: [Date] {get}
     var examsDates: [Date] {get}
     var educationRange: ClosedRange<Date>? {get}
+    
+    func lessonsSections() -> [LessonsSection]
 }

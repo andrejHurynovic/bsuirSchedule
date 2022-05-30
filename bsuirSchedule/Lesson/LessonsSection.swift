@@ -15,6 +15,8 @@ struct LessonsSection: Hashable {
     init (date: Date, showWeek: Bool, lessons: [Lesson]) {
         self.date = date
         self.lessons = lessons
+            .sorted(by: {$0.subgroup < $1.subgroup})
+            .sorted(by: {($0.dates.first?.time())! < ($1.dates.first?.time())!})
         
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_BY")
@@ -24,7 +26,8 @@ struct LessonsSection: Hashable {
         let dateString = dateFormatter.string(from: date)
         
         if showWeek {
-            title = "\(dateString), \(date.educationWeek)-ая неделя"
+            //+1 для приведения от формата [0,3] к [1,4]
+            title = "\(dateString), \(date.educationWeek + 1)-ая неделя"
         } else {
             title = dateString
         }

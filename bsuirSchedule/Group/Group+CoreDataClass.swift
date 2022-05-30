@@ -70,6 +70,49 @@ public class Group: NSManagedObject, Decodable {
             self.course = course
         }
     }
+    
+    func educationSections() -> [LessonsSection]? {
+        var sections: [LessonsSection] = []
+        
+        let educationDates = educationDates
+        educationDates.forEach({ date in
+            var lessons = lessons?.allObjects as! [Lesson]
+            lessons = lessons.filter { lesson in
+                lesson.dates.contains { lessonDate in
+                    Calendar.current.isDate(lessonDate, inSameDayAs: date)
+                }
+            }
+            if lessons.isEmpty == false {
+                sections.append(LessonsSection(date: date, showWeek: true, lessons: lessons))
+            }
+        })
+        return sections
+    }
+    
+    func examsSections() -> [LessonsSection]? {
+        var sections: [LessonsSection] = []
+        
+        let examsDates = examsDates
+        examsDates.forEach({ date in
+            var lessons = lessons?.allObjects as! [Lesson]
+            lessons = lessons.filter { lesson in
+                lesson.dates.contains { lessonDate in
+                    Calendar.current.isDate(lessonDate, inSameDayAs: date)
+                }
+            }
+            if lessons.isEmpty == false {
+                sections.append(LessonsSection(date: date, showWeek: false, lessons: lessons))
+            }
+        })
+        return sections
+    }
+    
+    func lessonsSections() -> [LessonsSection] {
+        var lessonsSection: [LessonsSection] = []
+        lessonsSection.append(contentsOf: educationSections() ?? [])
+        lessonsSection.append(contentsOf: examsSections() ?? [])
+        return lessonsSection
+    }
 }
 
 

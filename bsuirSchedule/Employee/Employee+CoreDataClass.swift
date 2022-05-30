@@ -25,25 +25,26 @@ public class Employee: NSManagedObject, Decodable {
             self.educationStart = DateFormatters.shared.dateFormatterddMMyyyy.date(from: educationStartString)
             self.educationEnd = DateFormatters.shared.dateFormatterddMMyyyy.date(from: try! container.decode(String.self, forKey: .educationEnd))
         }
+
         if let examsStartString = try? container.decode(String.self, forKey: .examsStart) {
             self.examsStart = DateFormatters.shared.dateFormatterddMMyyyy.date(from: examsStartString)
             self.examsEnd = DateFormatters.shared.dateFormatterddMMyyyy.date(from: try! container.decode(String.self, forKey: .examsEnd))
         }
         
-        if let schedules = try? container.decode([Schedule].self, forKey: .lessons) {
-            schedules.forEach { schedule in
-                //Назначение корректных дат всем занятиям.
-                schedule.lessons.forEachInout { lesson in
-                    lesson.dates = educationDates.educationDates(weeks: lesson.weeks, weekDay: schedule.weekDay!, time: lesson.dates.first!)
-                }
-                self.addToLessons(NSSet(array: schedule.lessons))
-            }
-        }
-        if let examSchedules = try? container.decode([Schedule].self, forKey: .exams) {
-            examSchedules.forEach { schedule in
-                self.addToLessons(NSSet(array: schedule.lessons))
-            }
-        }
+//        if let schedules = try? container.decode([Schedule].self, forKey: .lessons) {
+//            schedules.forEach { schedule in
+//                //Назначение корректных дат всем занятиям.
+//                schedule.lessons.forEachInout { lesson in
+//                    lesson.dates = educationDates.educationDates(weeks: lesson.weeks, weekDay: schedule.weekDay!, time: lesson.dates.first!)
+//                }
+//                self.addToLessons(NSSet(array: schedule.lessons))
+//            }
+//        }
+//        if let examSchedules = try? container.decode([Schedule].self, forKey: .exams) {
+//            examSchedules.forEach { schedule in
+//                self.addToLessons(NSSet(array: schedule.lessons))
+//            }
+//        }
         
         
         //Структура employee существует при получении ответа на запрос Schedule. Нужна для автоматического слияния при обновлении группы таким образом. Причём это может быть как обновление группы с уже загруженным расписанием, так и без него.

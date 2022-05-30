@@ -25,20 +25,6 @@ extension Group {
     
     @NSManaged public var lessons: NSSet?
     
-    var educationDates: [Date] {
-        datesBetween(educationStart, educationEnd)
-    }
-    var examsDates: [Date] {
-        datesBetween(examsStart, examsEnd)
-    }
-    
-    var educationRange: ClosedRange<Date>? {
-        let dates = (educationDates + examsDates)
-        guard dates.isEmpty == false else {
-            return nil
-        }
-        return dates.first!...dates.last!
-    }
 }
 
 // MARK: Generated accessors for lessons
@@ -58,6 +44,20 @@ extension Group {
     
 }
 
-extension Group : Identifiable, Lessonable {
+extension Group: Identifiable, Lessonable {
     
+    //Lessonable
+    var educationDates: [Date] {
+        datesBetween(educationStart, educationEnd)
+    }
+    var examsDates: [Date] {
+        datesBetween(examsStart, examsEnd)
+    }
+    var educationRange: ClosedRange<Date>? {
+        let dates = [educationStart, educationEnd, examsStart, examsEnd].compactMap {$0}
+        guard dates.isEmpty == false else {
+            return nil
+        }
+        return dates.first!...dates.last!
+    }
 }

@@ -51,6 +51,9 @@ extension Date {
         return Calendar.current.date(byAdding: .minute, value: minutes, to: self)!
     }
 
+    func time() -> Date {
+        return DateFormatters.shared.dateFormatterddMMyyyy.date(from: "01.01.2000")!.withTime(self)
+    }
     
 }
 

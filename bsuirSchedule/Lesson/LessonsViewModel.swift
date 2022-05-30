@@ -24,8 +24,7 @@ class LessonsViewModel: ObservableObject {
     init(_ element: Lessonable) {
         self.element = element
         
-        sections.append(contentsOf: educationSections() ?? [])
-        sections.append(contentsOf: examsSections() ?? [])
+        sections = element.lessonsSections()
         nearSection = nearestSection(Date())
         
         if let group = element as? Group {
@@ -43,44 +42,6 @@ class LessonsViewModel: ObservableObject {
             showGroups = true
             showEmployees = true
         }
-    }
-    
-    // MARK: Sections
-    
-    func educationSections() -> [LessonsSection]? {
-        var sections: [LessonsSection] = []
-        
-        let educationDates = element.educationDates
-        educationDates.forEach({ date in
-            var lessons = element.lessons?.allObjects as! [Lesson]
-            lessons = lessons.filter { lesson in
-                lesson.dates.contains { lessonDate in
-                    Calendar.current.isDate(lessonDate, inSameDayAs: date)
-                }
-            }
-            if lessons.isEmpty == false {
-                sections.append(LessonsSection(date: date, showWeek: true, lessons: lessons))
-            }
-        })
-        return sections
-    }
-    
-    func examsSections() -> [LessonsSection]? {
-        var sections: [LessonsSection] = []
-        
-        let examsDates = element.examsDates
-        examsDates.forEach({ date in
-            var lessons = element.lessons?.allObjects as! [Lesson]
-            lessons = lessons.filter { lesson in
-                lesson.dates.contains { lessonDate in
-                    Calendar.current.isDate(lessonDate, inSameDayAs: date)
-                }
-            }
-            if lessons.isEmpty == false {
-                sections.append(LessonsSection(date: date, showWeek: false, lessons: lessons))
-            }
-        })
-        return sections
     }
     
     
