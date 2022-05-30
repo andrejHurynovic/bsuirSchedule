@@ -89,6 +89,11 @@ struct FavoritesView: View {
                         FavoriteButton(group.favorite) {
                             group.favorite.toggle()
                         }
+                        Button {
+                            GroupStorage.shared.fetchDetailed(group)
+                        } label: {
+                            Text("UPD")
+                        }
                     }
                     
                 }
@@ -129,7 +134,7 @@ struct FavoritesView: View {
             Section {
                 ForEach(viewModel.employees) { employee in
                     NavigationLink {
-                        LessonsView(viewModel: LessonsViewModel(employee))
+//                        LessonsView(viewModel: LessonsViewModel(employee))
                     } label: {
                         EmployeeFavoriteView(employee: employee)
                     }
@@ -152,13 +157,13 @@ struct FavoritesView: View {
     @ViewBuilder var primaryGroupOnLoad: some View {
         if let primaryGroup = primaryGroup {
             if let group = viewModel.groups.first(where: {$0.id == primaryGroup}) {
-                NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group)), isActive: $primaryGroupPresented) {
-                    EmptyView()
-                }
-                .hidden()
-                .onLoad {
-                    primaryGroupPresented = true
-                }
+//                NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group)), isActive: $primaryGroupPresented) {
+//                    EmptyView()
+//                }
+//                .hidden()
+//                .onLoad {
+//                    primaryGroupPresented = true
+//                }
             }
         }
     }

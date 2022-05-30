@@ -64,7 +64,7 @@ struct TaskDetailedView: View {
     //MARK: Deadline
     
     @ViewBuilder var deadline: some View {
-        
+
         DisclosureGroup(isExpanded: $viewModel.showDeadline) {
             if viewModel.task == nil {
                 DisclosureGroup("Количество пар", isExpanded: $viewModel.showLessonsPicker) {
@@ -72,10 +72,10 @@ struct TaskDetailedView: View {
                         Text(viewModel.lessonsDescription())
                     }
                 }
-                .onChange(of: viewModel.lessonsPickerValue, perform: { newValue in viewModel.onLessonsChange(newValue)})
+//                .onChange(of: viewModel.lessonsPickerValue, perform: { newValue in viewModel.onLessonsChange(newValue)})
                 .onChange(of: viewModel.showLessonsPicker) { newValue in viewModel.onShowLessonsChange(newValue) }
             }
-            
+
             DisclosureGroup("Дата", isExpanded: $viewModel.showDatePicker) {
                 DatePicker(selection: $viewModel.date, label: { })
                     .datePickerStyle(.graphical)

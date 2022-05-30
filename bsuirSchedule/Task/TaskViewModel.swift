@@ -10,8 +10,8 @@ import SwiftUI
 class TaskViewModel: ObservableObject {
     
     
-    var lesson: UniqueLesson?
-    var nextSections: [LessonsSection] = []
+    var lesson: Lesson?
+//    var nextSections: [LessonsSection] = []
     
     var task: Hometask?
     
@@ -26,17 +26,17 @@ class TaskViewModel: ObservableObject {
     
     @Published var images: [UIImage] = []
     
-    func likeInit(lesson: UniqueLesson, lessonsSections: [LessonsSection]) {
-        self.nextSections = lessonsSections
-        self.lesson = lesson
-        
-        showDeadline = false
-        showLessonsPicker = true
-        showDatePicker = false
-        lessonsPickerValue = 0
-        onLessonsChange(0)
-        text = ""
-    }
+//    func likeInit(lesson: Lesson, lessonsSections: [LessonsSection]) {
+////        self.nextSections = lessonsSections
+//        self.lesson = lesson
+//        
+//        showDeadline = false
+//        showLessonsPicker = true
+//        showDatePicker = false
+//        lessonsPickerValue = 0
+//        onLessonsChange(0)
+//        text = ""
+//    }
     
     convenience init(task: Hometask) {
         self.init()
@@ -66,7 +66,8 @@ class TaskViewModel: ObservableObject {
     //MARK: Deadline
     
     func lessonsPickerRange() -> ClosedRange<Int> {
-        return 0...(nextSections.count - 1)
+        return 0...0
+//        return 0...(nextSections.count - 1)
     }
     
     func deadlineDescription() -> String {
@@ -103,14 +104,14 @@ class TaskViewModel: ObservableObject {
         return dateFormatter.string(from: date)
     }
     
-    func onLessonsChange(_ value: Int) {
-        date = nextSections[value].date
-        let time = nextSections[value].lessons.first(where: {lesson?.lessonType == $0.lessonType && lesson?.subject == $0.subject})?.timeRange().lowerBound
-        let dateComponents = Calendar.current.dateComponents([.hour, .minute], from: time!)
-        date = Calendar.current.date(byAdding: .minute, value: dateComponents.minute!, to: date)!
-        date = Calendar.current.date(byAdding: .hour, value: dateComponents.hour!, to: date)!
-//        date.add
-    }
+//    func onLessonsChange(_ value: Int) {
+//        date = nextSections[value].date
+//        let time = nextSections[value].lessons.first(where: {lesson?.lessonType == $0.lessonType && lesson?.subject == $0.subject})?.timeRange().lowerBound
+//        let dateComponents = Calendar.current.dateComponents([.hour, .minute], from: time!)
+//        date = Calendar.current.date(byAdding: .minute, value: dateComponents.minute!, to: date)!
+//        date = Calendar.current.date(byAdding: .hour, value: dateComponents.hour!, to: date)!
+////        date.add
+//    }
     
     func onShowLessonsChange(_ value: Bool) {
         if value {

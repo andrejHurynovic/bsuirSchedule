@@ -12,7 +12,7 @@ import UIKit
 //MARK: Array
 
 extension Array {
-    mutating func forEach(body: (inout Element) throws -> Void) rethrows {
+    mutating func forEachInout(body: (inout Element) throws -> Void) rethrows {
         for index in self.indices {
             try body(&self[index])
         }
@@ -28,6 +28,45 @@ extension Date {
         let theCalendar = Calendar.current
         self = theCalendar.date(byAdding: dayComponent, to: self)!
         
+    }
+    
+    mutating func setTime(_ time: Date) {
+        let dateComponents = Calendar.current.dateComponents([.hour, .minute, .second], from: time)
+        self = Calendar.current.date(bySettingHour: dateComponents.hour!, minute: dateComponents.minute!, second: dateComponents.second!, of: self)!
+    }
+    
+    func withTime(_ time: Date) -> Date {
+        let dateComponents = Calendar.current.dateComponents([.hour, .minute, .second], from: time)
+        return Calendar.current.date(bySettingHour: dateComponents.hour!, minute: dateComponents.minute!, second: dateComponents.second!, of: self)!
+    }
+    
+    func minutesTo(_ endTime: Date) -> Int {        
+        return Int(Calendar.current.dateComponents([.minute], from: self, to: endTime).minute!)
+    }
+    
+    func relativelyNow() -> ComparisonResult {
+        return self.compare(Date())
+    }
+    func plus(minutes: Int) -> Date {
+        return Calendar.current.date(byAdding: .minute, value: minutes, to: self)!
+    }
+
+    
+}
+
+//Возвращает все дни из промежутка с одним и тем же временем.
+func datesBetween(_ dateA: Date?, _ dateB: Date?) -> [Date] {
+    if let dateA = dateA, let dateB = dateB {
+        let dayDurationInSeconds: TimeInterval = 60 * 60 * 24
+        var dates: [Date] = []
+        
+        for date in stride(from: dateA, to: dateB, by: dayDurationInSeconds) {
+            dates.append(date)
+        }
+        dates.append(dateB)
+        return dates
+    } else {
+        return []
     }
 }
 

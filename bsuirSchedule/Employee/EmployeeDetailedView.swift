@@ -109,11 +109,11 @@ struct EmployeeDetailedView: View {
     
     @ViewBuilder var lessons: some View {
         if let _ = employee.lessons?.allObjects as? [Lesson] {
-            NavigationLink {
-                LessonsView(viewModel: LessonsViewModel(employee))
-            } label: {
-                Label("Расписание преподавателя", systemImage: "calendar")
-            }
+//            NavigationLink {
+//                LessonsView(viewModel: LessonsViewModel(employee))
+//            } label: {
+//                Label("Расписание преподавателя", systemImage: "calendar")
+//            }
 
         }
     }

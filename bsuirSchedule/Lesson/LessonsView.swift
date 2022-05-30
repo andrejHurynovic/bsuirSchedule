@@ -96,14 +96,19 @@ struct LessonsView: View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 240, maximum: 500))], alignment: .leading, spacing: 8, pinnedViews: []) {
             ForEach(viewModel.sections, id: \.self) { section in
                 let today = (section.date == Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date())!)
-                let lessons: [UniqueLesson] = section.lessons(searchText)
+                let lessons: [Lesson] = section.lessons(searchText)
                 if lessons.isEmpty == false {
                     Section {
                         ForEach(lessons, id: \.self) { lesson in
                             LessonView(lesson: lesson, showEmployee: viewModel.showEmployees, showGroups: viewModel.showGroups, color: DesignManager.shared.color(lesson.lessonType), showToday: today)
                                 .contextMenu {
                                     Button {
-                                        taskViewModel.likeInit(lesson: lesson, lessonsSections: viewModel.sectionsWithLessonsAfterToday(lesson))
+                                        print(lesson)
+                                    } label: {
+                                        Text("print")
+                                    }
+                                    Button {
+                                        //                                        taskViewModel.likeInit(lesson: lesson, lessonsSections: viewModel.sectionsWithLessonsAfterToday(lesson))
                                         taskViewPresented = true
                                     } label: {
                                         Label("Добавить задание", systemImage: "plus")
@@ -198,10 +203,10 @@ struct LessonsView: View {
                     .frame(width: 48, height: 48)
                     .shadow(color: DesignManager.shared.mainColor, radius: 8)
                     .overlay(Image(systemName: "arrow.uturn.backward")
-                                .resizable()
-                                .font(Font.system(.title).bold())
-                                .foregroundColor(.white)
-                                .frame(width: 24, height: 24)
+                        .resizable()
+                        .font(Font.system(.title).bold())
+                        .foregroundColor(.white)
+                        .frame(width: 24, height: 24)
                     )
             }
             .transition(.scale)
@@ -228,10 +233,10 @@ struct LessonsView: View {
                     .frame(width: 48, height: 48)
                     .shadow(color: DesignManager.shared.mainColor, radius: 8)
                     .overlay(Image(systemName: "multiply")
-                                .resizable()
-                                .font(Font.system(.title).bold())
-                                .foregroundColor(.white)
-                                .frame(width: 24, height: 24)
+                        .resizable()
+                        .font(Font.system(.title).bold())
+                        .foregroundColor(.white)
+                        .frame(width: 24, height: 24)
                     )
             }
             .transition(.scale)
@@ -248,13 +253,13 @@ struct LessonsView: View {
             
             Text("Отображать:")
             Toggle(isOn: $viewModel.showGroups
-                    .animation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.9))) {
-                Text("группы")
-            }
+                .animation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.9))) {
+                    Text("группы")
+                }
             Toggle(isOn: $viewModel.showEmployees
-                    .animation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.9))) {
-                Text("преподавателей")
-            }
+                .animation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.9))) {
+                    Text("преподавателей")
+                }
         } label: {
             Image(systemName: (viewModel.checkDefaults()) ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
         }

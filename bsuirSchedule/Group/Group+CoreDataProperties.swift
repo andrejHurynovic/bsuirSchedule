@@ -25,6 +25,12 @@ extension Group {
     
     @NSManaged public var lessons: NSSet?
     
+    var educationDates: [Date] {
+        datesBetween(educationStart, educationEnd)
+    }
+    var examsDates: [Date] {
+        datesBetween(examsStart, examsEnd)
+    }
 }
 
 // MARK: Generated accessors for lessons

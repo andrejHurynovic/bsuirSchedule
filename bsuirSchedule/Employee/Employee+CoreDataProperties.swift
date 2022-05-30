@@ -40,6 +40,13 @@ extension Employee {
     @NSManaged public var photo: Data?
     
     @NSManaged public var lessons: NSSet?
+    
+    var educationDates: [Date] {
+        datesBetween(educationStart, educationEnd)
+    }
+    var examsDates: [Date] {
+        datesBetween(examsStart, examsEnd)
+    }
 
 }
 

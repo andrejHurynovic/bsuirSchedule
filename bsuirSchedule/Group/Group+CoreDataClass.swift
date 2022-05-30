@@ -6,6 +6,32 @@
 //
 //
 
+//Потом вынести это в WEEK
+
+extension Date {
+    var educationWeek: Int {
+        let weekLastUpdate = Date()
+        let currentWeek = 3
+        let weeksBetween = (weeksBetween(start: weekLastUpdate, end: self))
+        return (4 - ((currentWeek - weeksBetween) % 4) + 2) % 4
+    }
+}
+
+extension Array where Element == Date {
+    func educationDates(weeks: [Int], weekDay: WeekDay, time: Date) -> [Date] {
+        var dates = self.filter {$0.weekDay() == weekDay}
+        //Если занятия нет на каждой неделе, то нужно найти только дни с соответствующими неделями
+        if weeks.count < 4  {
+            dates = dates.filter { date in
+                weeks.contains { week in
+                    return date.educationWeek == week
+                }
+            }
+        }
+        return dates.map {$0.withTime(time)}
+    }
+}
+
 import Foundation
 import CoreData
 
@@ -14,39 +40,51 @@ public class Group: NSManagedObject, Decodable {
     
     required public convenience init(from decoder: Decoder) throws {
         let context = PersistenceController.shared.container.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "Group", in: context)
-        self.init(entity: entity!, insertInto: context)
+        let entity = NSEntityDescription.entity(forEntityName: "Group", in: context)!
+        self.init(entity: entity, insertInto: context)
         
         var container = try decoder.container(keyedBy: CodingKeys.self)
         
-        if let schedules = try? container.decode([Schedule].self, forKey: .lessons) {
-            schedules.map { $0.lessons }.forEach { lessons in
-                self.addToLessons(NSSet(array: lessons!))
-            }
-        }
-        
-        if let examSchedules = try? container.decode([Schedule].self, forKey: .exams) {
-            examSchedules.map { $0.lessons }.forEach { lessons in
-                self.addToLessons(NSSet(array: lessons!))
-            }
-        }
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy"
-        
+        //Если существует educationStart или examsStart, всегда существуют соответствующие educationEnd и examsEnd.
         if let educationStartString = try? container.decode(String.self, forKey: .educationStart) {
-            self.educationStart = dateFormatter.date(from: educationStartString)
-            self.educationEnd = dateFormatter.date(from: try! container.decode(String.self, forKey: .educationEnd))
+            self.educationStart = DateFormatters.shared.dateFormatterddMMyyyy.date(from: educationStartString)
+            self.educationEnd = DateFormatters.shared.dateFormatterddMMyyyy.date(from: try! container.decode(String.self, forKey: .educationEnd))
         }
-        if let examsStartString = try? container.decode(String.self, forKey: .examsStart) {
-            self.examsStart = dateFormatter.date(from: examsStartString)
-            self.examsEnd = dateFormatter.date(from: try! container.decode(String.self, forKey: .examsEnd))
+        //Более не используется, так как API больше не предоставляет даты начала и окончания сессии
+//        if let examsStartString = try? container.decode(String.self, forKey: .examsStart) {
+//            self.examsStart = DateFormatters.shared.dateFormatterddMMyyyy.date(from: examsStartString)
+//            self.examsEnd = DateFormatters.shared.dateFormatterddMMyyyy.date(from: try! container.decode(String.self, forKey: .examsEnd))
+//        }
+        
+        if let schedules = try? container.decode([Schedule].self, forKey: .lessons) {
+            schedules.forEach { schedule in
+                //Назначение корректных дат и времени всем занятиям.
+                schedule.lessons.forEachInout { lesson in
+                    lesson.dates = educationDates.educationDates(weeks: lesson.weeks, weekDay: schedule.weekDay!, time: lesson.dates.first!)
+                }
+                self.addToLessons(NSSet(array: schedule.lessons))
+            }
+        }
+        if let examSchedules = try? container.decode([Schedule].self, forKey: .exams) {
+            var lessons: [Lesson] = []
+            examSchedules.forEach { schedule in
+                lessons.append(contentsOf: schedule.lessons)
+            }
+            //Так как в API больше нет дат начала и конца сессии, приходится получать их вручную 
+            let examsDates = Array(lessons.map {$0.dates}.joined()).sorted()
+            if let examsStart = examsDates.first {
+                self.examsStart = examsStart.withTime(DateFormatters.shared.dateFormatterHHmm.date(from: "00:00")!)
+            }
+            if let examsEnd = examsDates.last {
+                self.examsEnd = examsEnd.withTime(DateFormatters.shared.dateFormatterHHmm.date(from: "00:00")!)
+            }
+            self.addToLessons(NSSet(array: lessons))
         }
         
-        if let groupContainer = try? container.nestedContainer(keyedBy: CodingKeys.self, forKey: .groupContainer) {
-            container = groupContainer
+        //Структура studentGroup существует при получении ответа на запрос Schedule. Нужна для автоматического слияния при обновлении группы таким образом. Причём это может быть как обновление группы с уже загруженным расписанием, так и без него.
+        if let groupInformation = try? container.nestedContainer(keyedBy: CodingKeys.self, forKey: .groupContainer) {
+            container = groupInformation
         }
-        
         if let id = try? container.decode(String.self, forKey: .id) {
             self.id = id
             
@@ -56,8 +94,6 @@ public class Group: NSManagedObject, Decodable {
         
         if let course = try? container.decode(Int16.self, forKey: .course) {
             self.course = course
-        } else {
-            
         }
     }
 }

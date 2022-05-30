@@ -10,7 +10,7 @@ import SwiftUI
 struct LessonView: View {
     @Environment(\.colorScheme) var colorScheme
     
-    var lesson: UniqueLesson
+    var lesson: Lesson
     var showEmployee: Bool
     var showGroups: Bool
     
@@ -37,7 +37,8 @@ struct LessonView: View {
             }
             note
         }
-        .opacity((showToday && lesson.relativelyNow() == .orderedDescending) ? 0.5 : 1)
+        //не работает, так как у нас новая система дат теперь
+//        .opacity((showToday && lesson.date == .orderedDescending) ? 0.5 : 1)
         .padding(.all)
         .listRowSeparator(.hidden)
         .background(in: RoundedRectangle(cornerRadius: 16))
@@ -98,9 +99,10 @@ struct LessonView: View {
                         Text(groupsString(groupsIDs))
                             .contextMenu {
                                 ForEach(groups.sorted(by: {String($0.id) < String($1.id)})) { group in
-                                    NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group))) {
-                                        Label("\(group.id!), \(group.speciality.abbreviation), \(group.speciality.faculty.abbreviation)", systemImage: "person.2.circle")
-                                    }
+//                                        пока не работает
+//                                    NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group))) {
+//                                        Label("\(group.id!), \(group.speciality.abbreviation), \(group.speciality.faculty.abbreviation)", systemImage: "person.2.circle")
+//                                    }
                                 }
                             }
                     }
@@ -151,9 +153,11 @@ struct LessonView: View {
     
     var time: some View {
         VStack(alignment: .trailing) {
-            Text(lesson.timeStart!)
-                .fontWeight(.semibold)
-            Text(lesson.timeEnd!)
+            if let date = lesson.dates.first {
+                Text(DateFormatters.shared.dateFormatterHHmm.string(from: date))
+                    .fontWeight(.semibold)
+                Text(DateFormatters.shared.dateFormatterHHmm.string(from: date.plus(minutes: Int(lesson.duration))))
+            }
         }
     }
     

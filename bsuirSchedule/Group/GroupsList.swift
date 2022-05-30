@@ -26,6 +26,9 @@ struct GroupList: View {
                         FavoriteButton(group.favorite) {
                             group.favorite.toggle()
                         }
+                        Button("Update") {
+                            GroupStorage.shared.fetchDetailed(group)
+                        }
                     }
                 })
             }

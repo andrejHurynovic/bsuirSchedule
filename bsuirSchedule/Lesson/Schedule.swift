@@ -12,7 +12,9 @@ import Foundation
 class Schedule: Decodable {
 
     var lessons: [Lesson]!
-    var dateString: String!
+    
+    var weekDay: WeekDay?
+    var date: Date?
 
     required convenience public init(from decoder: Decoder) throws {
         let container = try! decoder.container(keyedBy: CodingKeys.self)
@@ -20,10 +22,7 @@ class Schedule: Decodable {
         
         self.lessons = try? container.decode([Lesson].self, forKey: .lessons) 
         
-        var weekDay: WeekDay?
-        var date: Date?
-        
-        dateString = try! container.decode(String.self, forKey: .dateString)
+        let dateString = try! container.decode(String.self, forKey: .dateString)
         
         switch(dateString) {
         case "Понедельник":
@@ -46,18 +45,14 @@ class Schedule: Decodable {
             date = dateFormatter.date(from: dateString)
             break
         }
-        
-        if let weekDay = weekDay {
-            lessons.forEach{
-                $0.weekDay = weekDay
-                $0.date = Date(timeIntervalSince1970: 419420)
-            }
-            
-        }
+    
+        //Если структура имеет дату, то она рассматривается как расписание экзаменов, следовательно нужно назначить каждому занятию соответствующую дату, а время оставить прежним.
         if let date = date {
-            lessons.forEach{
-                $0.date = date
-                $0.weekDayValue = -1
+            //Цикл сделан на случай, если в один день сессии будет несколько занятий, такое может быть у заочников.
+            lessons.forEachInout { lesson in
+                if let lessonDate = lesson.dates.first {
+                    lesson.dates[0] = date.withTime(lessonDate)
+                }
             }
         }
         

@@ -14,7 +14,6 @@ class Storage<T: NSManagedObject>: NSObject, NSFetchedResultsControllerDelegate,
     
     //new for now
     @Published var tempValues: [T] = []
-    @Published var observation: NSKeyValueObservation?
     //end of new
     
     
@@ -59,7 +58,7 @@ class Storage<T: NSManagedObject>: NSObject, NSFetchedResultsControllerDelegate,
     }
     
     func deleteAll() {
-        values.value.forEach { value in
+        values.value.forEachInout { value in
             PersistenceController.shared.container.viewContext.delete(value)
         }
         save()

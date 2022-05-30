@@ -20,31 +20,35 @@ public class Employee: NSManagedObject, Decodable, Lessonable {
         
         var container = try decoder.container(keyedBy: CodingKeys.self)
         
-//        if let schedules = try? container.decode([Schedule].self, forKey: .lessons) {
-//            schedules.map { $0.lessons }.forEach { lessons in
-//                self.addToLessons(NSSet(array: lessons))
-//            }
-//        }
-//        
-//        if let examSchedules = try? container.decode([Schedule].self, forKey: .exams) {
-//            examSchedules.map { $0.lessons }.forEach { lessons in
-//                self.addToLessons(NSSet(array: lessons!))
-//            }
-//        }
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy"
+        //Если существует educationStart или examsStart, всегда существуют соответствующие educationEnd и examsEnd.
         if let educationStartString = try? container.decode(String.self, forKey: .educationStart) {
-            self.educationStart = dateFormatter.date(from: educationStartString)
-            self.educationEnd = dateFormatter.date(from: try! container.decode(String.self, forKey: .educationEnd))
+            self.educationStart = DateFormatters.shared.dateFormatterddMMyyyy.date(from: educationStartString)
+            self.educationEnd = DateFormatters.shared.dateFormatterddMMyyyy.date(from: try! container.decode(String.self, forKey: .educationEnd))
         }
         if let examsStartString = try? container.decode(String.self, forKey: .examsStart) {
-            self.examsStart = dateFormatter.date(from: examsStartString)
-            self.examsEnd = dateFormatter.date(from: try! container.decode(String.self, forKey: .examsEnd))
+            self.examsStart = DateFormatters.shared.dateFormatterddMMyyyy.date(from: examsStartString)
+            self.examsEnd = DateFormatters.shared.dateFormatterddMMyyyy.date(from: try! container.decode(String.self, forKey: .examsEnd))
         }
         
-        if let groupContainer = try? container.nestedContainer(keyedBy: CodingKeys.self, forKey: .employeeContainer) {
-            container = groupContainer
+        if let schedules = try? container.decode([Schedule].self, forKey: .lessons) {
+            schedules.forEach { schedule in
+                //Назначение корректных дат всем занятиям.
+                schedule.lessons.forEachInout { lesson in
+                    lesson.dates = educationDates.educationDates(weeks: lesson.weeks, weekDay: schedule.weekDay!, time: lesson.dates.first!)
+                }
+                self.addToLessons(NSSet(array: schedule.lessons))
+            }
+        }
+        if let examSchedules = try? container.decode([Schedule].self, forKey: .exams) {
+            examSchedules.forEach { schedule in
+                self.addToLessons(NSSet(array: schedule.lessons))
+            }
+        }
+        
+        
+        //Структура employee существует при получении ответа на запрос Schedule. Нужна для автоматического слияния при обновлении группы таким образом. Причём это может быть как обновление группы с уже загруженным расписанием, так и без него.
+        if let employeeContainer = try? container.nestedContainer(keyedBy: CodingKeys.self, forKey: .employeeContainer) {
+            container = employeeContainer
         }
         
         self.id = (try! container.decode(Int32.self, forKey: .id))
@@ -61,7 +65,7 @@ public class Employee: NSManagedObject, Decodable, Lessonable {
         self.rank = try? container.decode(String.self, forKey: .rank)
         self.degree = try? container.decode(String.self, forKey: .degree)
         if var departments = try? container.decode([String].self, forKey: .departments) {
-            departments.forEach { department in
+            departments.forEachInout { department in
                 if let range = department.range(of: "каф.") {
                     department.removeSubrange(range)
                 }

@@ -9,29 +9,6 @@
 import Foundation
 import CoreData
 
-enum LessonType: Int16 {
-    case none = 0
-    case lecture = 1
-    case remoteLecture = 2
-    case practice = 3
-    case remotePractice = 4
-    case laboratory = 5
-    case consultation = 6
-    case exam = 7
-    case candidateText = 8
-    
-}
-
-enum WeekDay: Int16, CaseIterable, Decodable {
-    case Monday = 0
-    case Tuesday = 1
-    case Wednesday = 2
-    case Thursday = 3
-    case Friday = 4
-    case Saturday = 5
-    case Sunday = 6
-}
-
 
 
 extension Lesson {
@@ -50,11 +27,9 @@ extension Lesson {
     @NSManaged public var groups: NSSet?
     @NSManaged public var subgroup: Int16
     
-    @NSManaged public var date: Date?
+    @NSManaged public var dates: [Date]
+    @NSManaged public var duration: Int16
     @NSManaged public var weeks: [Int]!
-    @NSManaged public var weekDayValue: Int16
-    @NSManaged public var timeStart: String!
-    @NSManaged public var timeEnd: String!
     
     @NSManaged public var employees: NSSet?
     @NSManaged public var employeesIDs: [Int]?
@@ -75,8 +50,6 @@ extension Lesson {
 
     @objc(removeGroups:)
     @NSManaged public func removeFromGroups(_ values: NSSet)
-
-    
     
     @objc(addEmployeesObject:)
     @NSManaged public func addToEmployees(_ value: Employee)
@@ -89,8 +62,6 @@ extension Lesson {
 
     @objc(removeEmployees:)
     @NSManaged public func removeFromEmployees(_ values: NSSet)
-    
-    
     
     @objc(addClassroomsObject:)
     @NSManaged public func addToClassrooms(_ value: Classroom)
@@ -114,13 +85,33 @@ extension Lesson : Identifiable {
             self.lessonTypeValue = newValue.rawValue
         }
     }
+}
+
+enum LessonType: Int16 {
+    case none = 0
+    case lecture = 1
+    case remoteLecture = 2
+    case practice = 3
+    case remotePractice = 4
+    case laboratory = 5
+    case consultation = 6
+    case exam = 7
+    case candidateText = 8
     
-    var weekDay: WeekDay {
-        get {
-            return WeekDay(rawValue: self.weekDayValue)!
-        }
-        set {
-            self.weekDayValue = newValue.rawValue
-        }
+}
+
+enum WeekDay: Int16, CaseIterable, Decodable {
+    case Monday = 0
+    case Tuesday = 1
+    case Wednesday = 2
+    case Thursday = 3
+    case Friday = 4
+    case Saturday = 5
+    case Sunday = 6
+}
+
+extension Date {
+    func weekDay() -> WeekDay {
+        WeekDay(rawValue: Int16((Calendar(identifier: .iso8601).ordinality(of: .weekday, in: .weekOfYear, for: self)! - 1)))!
     }
 }

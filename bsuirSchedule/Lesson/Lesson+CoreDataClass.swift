@@ -22,6 +22,7 @@ public class Lesson: NSManagedObject, Decodable {
         
         self.subject = ((try? container.decode(String.self, forKey: .subject)) ?? "")
         switch (try? container.decode(String.self, forKey: .lessonTypeValue)) {
+            //Бывают занятия без типа. Возможно следует убрать enum для типа занятий, хотя без этого не будет возможности локализовать приложение
         case nil:
             self.lessonType = .none
         case "ЛК":
@@ -48,29 +49,34 @@ public class Lesson: NSManagedObject, Decodable {
             classrooms.forEach { classroomName in
                 if let classroom = ClassroomStorage.shared.classroom(name: classroomName) {
                     self.addToClassrooms(classroom)
-                } else { 
-//                    print(classroomName)
+                } else {
+#warning("Добавить какой-то иной вывод ошибки")
+                    print(classroomName)
                 }
             }
         }
         self.note = try? container.decode(String.self, forKey: .note)
         
-        (try! container.decode([String].self, forKey: .groups)).forEach { groupID in
-            if let group = GroupStorage.shared.values.value.first(where: {$0.id == groupID}) {
-                self.addToGroups(group)
-            }
-        }
+        self.addToGroups(NSSet(array: GroupStorage.shared.groups(ids: try! container.decode([String].self, forKey: .groups))))
         self.subgroup = Int16(try! container.decode(Int.self, forKey: .subgroup))
         
-        self.weeks = try! container.decode([Int].self, forKey: .weeks)
-        self.timeStart = try! container.decode(String.self, forKey: .timeStart)
-        self.timeEnd = try! container.decode(String.self, forKey: .timeEnd)
+        let timeStart = try! container.decode(String.self, forKey: .timeStart)
+        let startTime = DateFormatters.shared.dateFormatterHHmm.date(from: timeStart)!
+        let timeEnd = try! container.decode(String.self, forKey: .timeEnd)
+        
+        self.dates.append(startTime)
+        self.duration = Int16(startTime.minutesTo(DateFormatters.shared.dateFormatterHHmm.date(from: timeEnd)!))
+        //Массив недель может быть [0, 1, 2, 3 ,4], но нам удобнее считать с нуля, так как 0 тут значит, что занятие есть на всех неделях, поэтому отнимаем единицу у всех значений массива.
+        self.weeks = try! container.decode([Int].self, forKey: .weeks).map{ $0 - 1 }
+        if weeks.contains(-1) {
+            weeks.removeFirst()
+        }
         
         let employees: [[String: Any]] = try container.decode(Array<Any>.self, forKey: .employee) as! [[String: Any]]
         
         self.employeesIDs = employees.map { $0["id"] as! Int }
         
-        employeesIDs?.forEach(body: { employeeID in
+        employeesIDs?.forEachInout(body: { employeeID in
             if let employee = EmployeeStorage.shared.values.value.first(where: { $0.id == employeeID }) {
                 self.addToEmployees(employee)
             } else {
@@ -79,7 +85,26 @@ public class Lesson: NSManagedObject, Decodable {
         })
     }
     
-    
+    private enum CodingKeys: String, CodingKey {
+        case subject = "subject"
+        case lessonTypeValue = "lessonType"
+        case classroom = "auditory"
+        case note = "note"
+        
+        case groups = "studentGroup"
+        case subgroup = "numSubgroup"
+        
+        case weeks = "weekNumber"
+        case timeStart = "startLessonTime"
+        case timeEnd = "endLessonTime"
+        
+        case employee = "employee"
+    }
+}
+
+
+
+extension Lesson {
     func getLessonTypeAbbreviation() -> String {
         switch self.lessonType {
         case .none:
@@ -101,21 +126,5 @@ public class Lesson: NSManagedObject, Decodable {
         case .candidateText:
             return "КЗ"
         }
-    }
-    
-    private enum CodingKeys: String, CodingKey {
-        case subject = "subject"
-        case lessonTypeValue = "lessonType"
-        case classroom = "auditory"
-        case note = "note"
-        
-        case groups = "studentGroup"
-        case subgroup = "numSubgroup"
-        
-        case weeks = "weekNumber"
-        case timeStart = "startLessonTime"
-        case timeEnd = "endLessonTime"
-        
-        case employee = "employee"
     }
 }
