@@ -27,9 +27,12 @@ extension Lesson {
     @NSManaged public var groups: NSSet?
     @NSManaged public var subgroup: Int16
     
-    @NSManaged public var dates: [Date]
-    @NSManaged public var duration: Int16
+    @NSManaged public var weekday: Int16
     @NSManaged public var weeks: [Int]!
+    @NSManaged public var dateString: String!
+    
+    @NSManaged public var timeStart: String!
+    @NSManaged public var timeEnd: String!
     
     @NSManaged public var employees: NSSet?
     @NSManaged public var employeesIDs: [Int]?
@@ -84,6 +87,13 @@ extension Lesson : Identifiable {
         set {
             self.lessonTypeValue = newValue.rawValue
         }
+    }
+    
+    var date: Date? {
+        guard dateString.isEmpty == false else {
+            return nil
+        }
+        return DateFormatters.shared.dateFormatterddMMyyyy.date(from: self.dateString)!
     }
 }
 

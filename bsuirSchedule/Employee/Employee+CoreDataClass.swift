@@ -33,10 +33,6 @@ public class Employee: NSManagedObject, Decodable {
         
 //        if let schedules = try? container.decode([Schedule].self, forKey: .lessons) {
 //            schedules.forEach { schedule in
-//                //Назначение корректных дат всем занятиям.
-//                schedule.lessons.forEachInout { lesson in
-//                    lesson.dates = educationDates.educationDates(weeks: lesson.weeks, weekDay: schedule.weekDay!, time: lesson.dates.first!)
-//                }
 //                self.addToLessons(NSSet(array: schedule.lessons))
 //            }
 //        }

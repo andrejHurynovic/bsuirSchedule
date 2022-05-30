@@ -69,12 +69,14 @@ extension Employee : Identifiable, Lessonable {
         datesBetween(examsStart, examsEnd)
     }
     var educationRange: ClosedRange<Date>? {
-        let dates = [educationStart, educationEnd, examsStart, examsEnd].compactMap {$0}
+        let dates = [educationStart, educationEnd, examsStart, examsEnd].compactMap {$0}.sorted()
         guard dates.isEmpty == false else {
             return nil
         }
         return dates.first!...dates.last!
     }
+    
+    
     
     func lessonsSections() -> [LessonsSection] {
         var sections: [LessonsSection] = []
@@ -83,14 +85,16 @@ extension Employee : Identifiable, Lessonable {
         educationDates.forEach({ date in
             var lessons = lessons?.allObjects as! [Lesson]
             lessons = lessons.filter { lesson in
-                lesson.dates.contains { lessonDate in
-                    Calendar.current.isDate(lessonDate, inSameDayAs: date)
+                if let lessonDate = lesson.date  {
+                    return date == lessonDate
+                } else {
+                    return lesson.weekday == date.weekDay().rawValue && lesson.weeks.contains(date.educationWeek) && Array((lesson.groups?.allObjects as! [Group]).map {$0.educationDates}.joined()).contains(date) == true
                 }
             }
             if lessons.isEmpty == false {
                 sections.append(LessonsSection(date: date, showWeek: true, lessons: lessons))
             }
         })
-            return sections
+        return sections
     }
 }

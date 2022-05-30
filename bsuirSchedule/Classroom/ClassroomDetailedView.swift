@@ -23,7 +23,7 @@ struct ClassroomDetailedView: View {
                 }
             if classroom.lessons?.allObjects.isEmpty == false {
                 NavigationLink {
-//                    LessonsView(viewModel: LessonsViewModel(classroom))
+                    LessonsView(viewModel: LessonsViewModel(classroom))
                 } label: {
                     Label("Расписание кабинета", systemImage: "calendar")
                 }

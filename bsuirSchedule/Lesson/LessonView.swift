@@ -153,11 +153,9 @@ struct LessonView: View {
     
     var time: some View {
         VStack(alignment: .trailing) {
-            if let date = lesson.dates.first {
-                Text(DateFormatters.shared.dateFormatterHHmm.string(from: date))
-                    .fontWeight(.semibold)
-                Text(DateFormatters.shared.dateFormatterHHmm.string(from: date.plus(minutes: Int(lesson.duration))))
-            }
+            Text(lesson.timeStart)
+                .fontWeight(.semibold)
+            Text(lesson.timeEnd)
         }
     }
     

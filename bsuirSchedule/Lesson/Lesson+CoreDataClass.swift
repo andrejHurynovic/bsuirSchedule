@@ -60,17 +60,15 @@ public class Lesson: NSManagedObject, Decodable {
         self.addToGroups(NSSet(array: GroupStorage.shared.groups(ids: try! container.decode([String].self, forKey: .groups))))
         self.subgroup = Int16(try! container.decode(Int.self, forKey: .subgroup))
         
-        let timeStart = try! container.decode(String.self, forKey: .timeStart)
-        let startTime = DateFormatters.shared.dateFormatterHHmm.date(from: timeStart)!
-        let timeEnd = try! container.decode(String.self, forKey: .timeEnd)
+        self.timeStart = try! container.decode(String.self, forKey: .timeStart)
+        self.timeEnd = try! container.decode(String.self, forKey: .timeEnd)
         
-        self.dates.append(startTime)
-        self.duration = Int16(startTime.minutesTo(DateFormatters.shared.dateFormatterHHmm.date(from: timeEnd)!))
         //Массив недель может быть [0, 1, 2, 3 ,4], но нам удобнее считать с нуля, так как 0 тут значит, что занятие есть на всех неделях, поэтому отнимаем единицу у всех значений массива.
         self.weeks = try! container.decode([Int].self, forKey: .weeks).map{ $0 - 1 }
         if weeks.contains(-1) {
             weeks.removeFirst()
         }
+        self.dateString = ""
         
         let employees: [[String: Any]] = try container.decode(Array<Any>.self, forKey: .employee) as! [[String: Any]]
         

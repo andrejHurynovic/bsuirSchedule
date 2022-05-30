@@ -21,7 +21,6 @@ class GroupStorage: Storage<Group> {
     func fetch() {
         cancellables.insert(FetchManager.shared.fetch(dataType: .groups, completion: {(groups: [Group]) -> () in
             self.save()
-            self.fetchAllDetailed()
         }))
     }
     

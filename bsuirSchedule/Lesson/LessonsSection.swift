@@ -16,7 +16,7 @@ struct LessonsSection: Hashable {
         self.date = date
         self.lessons = lessons
             .sorted(by: {$0.subgroup < $1.subgroup})
-            .sorted(by: {($0.dates.first?.time())! < ($1.dates.first?.time())!})
+            .sorted(by: {$0.timeStart < $1.timeStart})
         
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_BY")
@@ -31,6 +31,13 @@ struct LessonsSection: Hashable {
         } else {
             title = dateString
         }
+    }
+    
+    mutating func addLessons(lessons: [Lesson]) {
+        self.lessons.append(contentsOf: lessons)
+        self.lessons = lessons
+            .sorted(by: {$0.subgroup < $1.subgroup})
+            .sorted(by: {$0.timeStart < $1.timeStart})
     }
     
     func lessons(_ searchText: String) -> [Lesson] {

@@ -28,27 +28,27 @@ struct GroupDetailedView: View {
                         }
                         
                     }
-            DisclosureGroup {
-                let lessons = group.lessons?.allObjects as! [Lesson]
-                let subjects = Set(lessons.compactMap {$0.subject})
-                ForEach(subjects.sorted(), id: \.self) { subject in
-                    let subjectLessons = lessons.filter {$0.subject == subject}
-                    let dates = Array((subjectLessons.map {$0.dates}).joined())
-                    DisclosureGroup {
-                        ForEach(LessonType.allCases, id: \.self) { lessonType in
-                            if let lessons = subjectLessons.filter {$0.lessonType == lessonType}, lessons.isEmpty == false {
-                                let dates = Array((lessons.map {$0.dates}).joined())
-                                CoolField(lessonType.description(), "\(dates.count) пары")
-                            }
-                            
-                        }
-                    } label: {
-                        CoolField(subject, "\(dates.count) пары")
-                    }
-                }
-            } label: {
-                Text("Статистика")
-            }
+//            DisclosureGroup {
+//                let lessons = group.lessons?.allObjects as! [Lesson]
+//                let subjects = Set(lessons.compactMap {$0.subject})
+//                ForEach(subjects.sorted(), id: \.self) { subject in
+//                    let subjectLessons = lessons.filter {$0.subject == subject}
+//                    let dates = Array((subjectLessons.map {$0.dates}).joined())
+//                    DisclosureGroup {
+//                        ForEach(LessonType.allCases, id: \.self) { lessonType in
+//                            if let lessons = subjectLessons.filter {$0.lessonType == lessonType}, lessons.isEmpty == false {
+//                                let dates = Array((lessons.map {$0.dates}).joined())
+//                                CoolField(lessonType.description(), "\(dates.count) пары")
+//                            }
+//
+//                        }
+//                    } label: {
+//                        CoolField(subject, "\(dates.count) пары")
+//                    }
+//                }
+//            } label: {
+//                Text("Статистика")
+//            }
 
         }
         .navigationTitle(group.id)

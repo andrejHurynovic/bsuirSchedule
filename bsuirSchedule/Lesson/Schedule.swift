@@ -14,7 +14,7 @@ class Schedule: Decodable {
     var lessons: [Lesson]!
     
     var weekDay: WeekDay?
-    var date: Date?
+    var dateString: String?
 
     required convenience public init(from decoder: Decoder) throws {
         let container = try! decoder.container(keyedBy: CodingKeys.self)
@@ -40,19 +40,21 @@ class Schedule: Decodable {
         case "Воскресенье":
             weekDay = .Sunday
         default:
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd.MM.yyyy"
-            date = dateFormatter.date(from: dateString)
+            self.dateString = dateString
             break
+        }
+        
+        if let weekDay = weekDay {
+            lessons.forEachInout { lesson in
+                lesson.weekday = weekDay.rawValue
+            }
         }
     
         //Если структура имеет дату, то она рассматривается как расписание экзаменов, следовательно нужно назначить каждому занятию соответствующую дату, а время оставить прежним.
-        if let date = date {
+        if let dateString = self.dateString, dateString.isEmpty == false {
             //Цикл сделан на случай, если в один день сессии будет несколько занятий, такое может быть у заочников.
             lessons.forEachInout { lesson in
-                if let lessonDate = lesson.dates.first {
-                    lesson.dates[0] = date.withTime(lessonDate)
-                }
+                lesson.dateString = dateString
             }
         }
         

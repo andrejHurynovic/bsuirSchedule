@@ -32,10 +32,10 @@ public class Group: NSManagedObject, Decodable {
         
         if let schedules = try? container.decode([Schedule].self, forKey: .lessons) {
             schedules.forEach { schedule in
-                //Назначение корректных дат и времени всем занятиям.
-                schedule.lessons.forEachInout { lesson in
-                    lesson.dates = educationDates.educationDates(weeks: lesson.weeks, weekDay: schedule.weekDay!, time: lesson.dates.first!)
-                }
+//                //Назначение корректных дат и времени всем занятиям.
+//                schedule.lessons.forEachInout { lesson in
+//                    lesson.dates = educationDates.educationDates(weeks: lesson.weeks, weekDay: schedule.weekDay!, time: lesson.dates.first!)
+//                }
                 self.addToLessons(NSSet(array: schedule.lessons))
             }
         }
@@ -44,8 +44,8 @@ public class Group: NSManagedObject, Decodable {
             examSchedules.forEach { schedule in
                 lessons.append(contentsOf: schedule.lessons)
             }
-            //Так как в API больше нет дат начала и конца сессии, приходится получать их вручную 
-            let examsDates = Array(lessons.map {$0.dates}.joined()).sorted()
+            //Так как в API больше нет дат начала и конца сессии для сутдентов, приходится получать их вручную
+            let examsDates = Array(lessons.map {$0.date!}).sorted()
             if let examsStart = examsDates.first {
                 self.examsStart = examsStart.withTime(DateFormatters.shared.dateFormatterHHmm.date(from: "00:00")!)
             }
@@ -69,49 +69,6 @@ public class Group: NSManagedObject, Decodable {
         if let course = try? container.decode(Int16.self, forKey: .course) {
             self.course = course
         }
-    }
-    
-    func educationSections() -> [LessonsSection]? {
-        var sections: [LessonsSection] = []
-        
-        let educationDates = educationDates
-        educationDates.forEach({ date in
-            var lessons = lessons?.allObjects as! [Lesson]
-            lessons = lessons.filter { lesson in
-                lesson.dates.contains { lessonDate in
-                    Calendar.current.isDate(lessonDate, inSameDayAs: date)
-                }
-            }
-            if lessons.isEmpty == false {
-                sections.append(LessonsSection(date: date, showWeek: true, lessons: lessons))
-            }
-        })
-        return sections
-    }
-    
-    func examsSections() -> [LessonsSection]? {
-        var sections: [LessonsSection] = []
-        
-        let examsDates = examsDates
-        examsDates.forEach({ date in
-            var lessons = lessons?.allObjects as! [Lesson]
-            lessons = lessons.filter { lesson in
-                lesson.dates.contains { lessonDate in
-                    Calendar.current.isDate(lessonDate, inSameDayAs: date)
-                }
-            }
-            if lessons.isEmpty == false {
-                sections.append(LessonsSection(date: date, showWeek: false, lessons: lessons))
-            }
-        })
-        return sections
-    }
-    
-    func lessonsSections() -> [LessonsSection] {
-        var lessonsSection: [LessonsSection] = []
-        lessonsSection.append(contentsOf: educationSections() ?? [])
-        lessonsSection.append(contentsOf: examsSections() ?? [])
-        return lessonsSection
     }
 }
 

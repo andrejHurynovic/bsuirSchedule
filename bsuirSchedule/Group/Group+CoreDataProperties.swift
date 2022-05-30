@@ -54,10 +54,57 @@ extension Group: Identifiable, Lessonable {
         datesBetween(examsStart, examsEnd)
     }
     var educationRange: ClosedRange<Date>? {
-        let dates = [educationStart, educationEnd, examsStart, examsEnd].compactMap {$0}
+        let dates = [educationStart, educationEnd, examsStart, examsEnd].compactMap {$0}.sorted()
         guard dates.isEmpty == false else {
             return nil
         }
         return dates.first!...dates.last!
+    }
+    
+    func educationSections() -> [LessonsSection]? {
+        var sections: [LessonsSection] = []
+        
+        let educationDates = educationDates
+        educationDates.forEach({ date in
+            var lessons = lessons?.allObjects as! [Lesson]
+            lessons = lessons.filter { lesson in
+                lesson.weekday == date.weekDay().rawValue && lesson.weeks.contains(date.educationWeek)
+            }
+//            lessons = lessons.filter { lesson in
+//                lesson.dates.contains { lessonDate in
+//                    Calendar.current.isDate(lessonDate, inSameDayAs: date)
+//                }
+//            }
+            if lessons.isEmpty == false {
+                sections.append(LessonsSection(date: date, showWeek: true, lessons: lessons))
+            }
+        })
+        return sections
+    }
+    
+    func examsSections() -> [LessonsSection]? {
+        var sections: [LessonsSection] = []
+        
+        let examsDates = examsDates
+        examsDates.forEach({ date in
+            var lessons = lessons?.allObjects as! [Lesson]
+            lessons = lessons.filter { lesson in
+                guard let lessonDate = lesson.date else {
+                    return false
+                }
+                return date == lessonDate
+            }
+            if lessons.isEmpty == false {
+                sections.append(LessonsSection(date: date, showWeek: false, lessons: lessons))
+            }
+        })
+        return sections
+    }
+    
+    func lessonsSections() -> [LessonsSection] {
+        var lessonsSection: [LessonsSection] = []
+        lessonsSection.append(contentsOf: educationSections() ?? [])
+        lessonsSection.append(contentsOf: examsSections() ?? [])
+        return lessonsSection
     }
 }

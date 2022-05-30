@@ -16,7 +16,7 @@ class EmployeeStorage: Storage<Employee> {
     func fetch() {
         cancellables.insert(FetchManager.shared.fetch(dataType: .employees, completion: {(employees: [Employee]) -> () in
             self.save()
-            self.fetchAllPhotos()
+//            self.fetchAllPhotos()
             self.fetchAllDetailed()
         }))
     }

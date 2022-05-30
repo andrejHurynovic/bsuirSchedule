@@ -67,6 +67,7 @@ struct UpdateView: View {
                 }
             }
             .onChange(of: classroomStorage.tempValues.count) { newValue in
+                groupStorage.fetch()
                 employeeStorage.fetch()
             }
             HStack(alignment: .center) {
@@ -82,7 +83,7 @@ struct UpdateView: View {
             }
             .onChange(of: employeeStorage.tempValues.filter({$0.updateDate != nil}).count) { newValue in
                 if newValue == employeeStorage.tempValues.count, newValue != 0 {
-                    groupStorage.fetch()
+                    groupStorage.fetchAllDetailed()
                 }
             }
             HStack(alignment: .center) {
