@@ -6,15 +6,46 @@
 //
 
 import SwiftUI
+import Combine
+
+class EmployeeViewModel: ObservableObject {
+    
+    @Published var employee: Employee
+    
+    @Published var lastUpdateDate: Date? = nil
+    var cancellable: AnyCancellable? = nil
+    
+    @Published var imagesViewModel = ImagesViewModel()
+    
+    @Published var selectedFaculty: Faculty? = nil
+    @Published var selectedEducationType: Int? = nil
+    @Published var sortedBy: GroupSortingType = .speciality
+    
+    init(_ employee: Employee) {
+        self.employee = employee
+        
+        getUpdateDate()
+    }
+    
+    func getUpdateDate() {
+        cancellable = FetchManager.shared.fetch(dataType: .employeeUpdateDate, argument: String(employee.id)) { [weak self] (date: LastUpdateDate) -> () in
+            self?.lastUpdateDate = date.lastUpdateDate
+            
+            if let employeeUpdateDate = self?.employee.updateDate, employeeUpdateDate < date.lastUpdateDate{
+                self?.update()
+            }
+        }
+    }
+    
+    func update() {
+        EmployeeStorage.shared.update(employee)
+    }
+    
+}
 
 struct EmployeeDetailedView: View {
-    var employee: Employee
     
-    @StateObject var imagesViewModel = ImagesViewModel()
-    
-    @State var selectedFaculty: Faculty? = nil
-    @State var selectedEducationType: Int? = nil
-    @State var sortedBy: GroupSortingType = .speciality
+    @ObservedObject var viewModel: EmployeeViewModel
     
     var body: some View {
         List {
@@ -27,34 +58,37 @@ struct EmployeeDetailedView: View {
             }
             information
             links
-            lessons
+            Section {
+                lessons
+                lastUpdate
+            }
             groups
         }
         .overlay {
             ImagesView()
-                .environmentObject(imagesViewModel)
+                .environmentObject(viewModel.imagesViewModel)
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
-                    FavoriteButton(employee.favorite, circle: true) {
-                        employee.favorite.toggle()
+                    FavoriteButton(viewModel.employee.favorite, circle: true) {
+                        viewModel.employee.favorite.toggle()
                     }
-                    GroupToolbarMenu(selectedFaculty: $selectedFaculty, selectedEducationType: $selectedEducationType, sortedBy: $sortedBy)
+                    GroupToolbarMenu(selectedFaculty: $viewModel.selectedFaculty, selectedEducationType: $viewModel.selectedEducationType, sortedBy: $viewModel.sortedBy)
                 } label: {
-                    Image(systemName: (selectedFaculty == nil && selectedEducationType == nil) ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
+                    Image(systemName: (viewModel.selectedFaculty == nil && viewModel.selectedEducationType == nil) ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
                 }
             }
         }
-        .navigationTitle(employee.lastName!)
+        .navigationTitle(viewModel.employee.lastName!)
     }
     
     @ViewBuilder var photo: some View {
-        if let data = employee.photo {
+        if let data = viewModel.employee.photo {
             if let photo = UIImage(data: data) {
                 Button {
-                    imagesViewModel.images = [photo]
-                    imagesViewModel.present(selectedImage: photo)
+                    viewModel.imagesViewModel.images = [photo]
+                    viewModel.imagesViewModel.present(selectedImage: photo)
                 } label: {
                     Image(uiImage: photo)
                         .resizable()
@@ -73,22 +107,22 @@ struct EmployeeDetailedView: View {
     }
     
     var name: some View {
-        Text(employee.firstName! + " " + employee.middleName!)
+        Text(viewModel.employee.firstName! + " " + viewModel.employee.middleName!)
             .font(.title2)
             .fontWeight(.bold)
     }
     
     @ViewBuilder var information: some View {
-        if !employee.departments!.isEmpty || !employee.degree!.isEmpty || employee.rank != nil {
+        if !viewModel.employee.departments!.isEmpty || !viewModel.employee.degree!.isEmpty || viewModel.employee.rank != nil {
             Section("Информация") {
-                if !employee.departments!.isEmpty {
-                    Text("Кафедры: " + (employee.departments?.joined(separator: ", "))!)
+                if !viewModel.employee.departments!.isEmpty {
+                    Text("Кафедры: " + (viewModel.employee.departments?.joined(separator: ", "))!)
                 }
                 
-                if !employee.degree!.isEmpty {
-                    Text("Научаная степень: " + employee.degree!)
+                if !viewModel.employee.degree!.isEmpty {
+                    Text("Научаная степень: " + viewModel.employee.degree!)
                 }
-                if let rank = employee.rank {
+                if let rank = viewModel.employee.rank {
                     Text("Звание: " + rank)
                 }
                 
@@ -98,31 +132,44 @@ struct EmployeeDetailedView: View {
     
     var links: some View {
         Section("Ссылки") {
-            Link(destination: URL(string: "https://iis.bsuir.by/departments/employees/" + employee.urlID!)!) {
+            Link(destination: URL(string: "https://iis.bsuir.by/departments/employees/" + viewModel.employee.urlID!)!) {
                 Label("Контакты", systemImage: "teletype")
             }
-            Link(destination: URL(string: "https://iis.bsuir.by/scheduleEmployee/" + employee.urlID!)!) {
+            Link(destination: URL(string: "https://iis.bsuir.by/scheduleEmployee/" + viewModel.employee.urlID!)!) {
                 Label("Расписание в ИИС", systemImage: "calendar")
             }
         }
     }
     
     @ViewBuilder var lessons: some View {
-        if let _ = employee.lessons?.allObjects as? [Lesson] {
+        if let _ = viewModel.employee.lessons?.allObjects as? [Lesson] {
             NavigationLink {
-                LessonsView(viewModel: LessonsViewModel(employee))
+                LessonsView(viewModel: LessonsViewModel(viewModel.employee))
             } label: {
                 Label("Расписание преподавателя", systemImage: "calendar")
             }
         }
     }
     
+    @ViewBuilder var lastUpdate: some View {
+        HStack {
+            Text("Последнее обновление")
+            Spacer()
+            if let date = viewModel.lastUpdateDate {
+                Text("\(DateFormatters.shared.longDate.string(from: date))")
+                    .foregroundColor(.secondary)
+            } else {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle(tint: .gray))
+            }
+        }
+    }
+    
     @ViewBuilder var groups: some View {
-        let groups = LessonStorage.groups(lessons: employee.lessons)
+        let groups = LessonStorage.groups(lessons: viewModel.employee.lessons)
         if groups.isEmpty == false {
-            Section("Группы") {}
-                GroupList(groups: groups, searchText: nil, selectedFaculty: $selectedFaculty, selectedEducationType:
-                            $selectedEducationType, sortedBy: $sortedBy)
+            GroupList(groups: groups, searchText: nil, selectedFaculty: $viewModel.selectedFaculty, selectedEducationType:
+                        $viewModel.selectedEducationType, sortedBy: $viewModel.sortedBy)
         }
     }
 }

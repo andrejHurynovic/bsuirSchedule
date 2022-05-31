@@ -22,7 +22,7 @@ struct GroupList: View {
 //                    NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group))){
 //                        Text(group.id)
 //                    }
-                    NavigationLink(destination: GroupDetailedView(group: group)){
+                    NavigationLink(destination: GroupDetailedView(viewModel: GroupViewModel(group))){
                         Text(group.id)
                     }
                     .contextMenu {
@@ -30,7 +30,7 @@ struct GroupList: View {
                             group.favorite.toggle()
                         }
                         Button("Update") {
-                            GroupStorage.shared.fetchDetailed(group)
+                            GroupStorage.shared.update(group)
                         }
                     }
                 })

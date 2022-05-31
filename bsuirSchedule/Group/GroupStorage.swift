@@ -26,13 +26,13 @@ class GroupStorage: Storage<Group> {
     
     func fetchAllDetailed() {
         self.values.value.forEachInout { group in
-            if group.lastUpdateDate == nil  {
-                fetchDetailed(group)
+            if group.updateDate == nil  {
+                update(group)
             }
         }
     }
     
-    func fetchDetailed(_ group: Group) {
+    func update(_ group: Group) {
         var cancellable: AnyCancellable? = nil
         cancellable = FetchManager.shared.fetch(dataType: .group, argument: group.id, completion: {[weak self] (fetchedGroup: Group) -> () in
             if let lessons = fetchedGroup.lessons {
@@ -43,9 +43,8 @@ class GroupStorage: Storage<Group> {
             group.educationEnd = fetchedGroup.educationEnd
             group.examsStart = fetchedGroup.examsStart
             group.examsEnd = fetchedGroup.examsEnd
-            group.lastUpdateDate = Date()
+            group.updateDate = Date()
             self?.save()
-//            self?.cancellables.remove(cancellable!)
         })
         cancellables.insert(cancellable!)
     }

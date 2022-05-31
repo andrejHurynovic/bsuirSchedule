@@ -6,79 +6,76 @@
 //
 
 import SwiftUI
+import Combine
 
 struct GroupDetailedView: View {
     
-    @ObservedObject var group: Group
+    @ObservedObject var viewModel: GroupViewModel
     
     var body: some View {
         List {
-                    Section(group.speciality.name) {
-                        CoolField("Аббревиатура", group.speciality.abbreviation)
-                        CoolField("Факультет", group.speciality.faculty.abbreviation)
-                        CoolField("Шифр", group.speciality.code)
-                        CoolField("Форма обучения", group.speciality.getEducationTypeDescription())
-                        if let educationStart = group.educationStart, let educationEnd = group.educationEnd {
-                            CoolField("Семестр",
-                                      "\(DateFormatters.shared.dateFormatterddMMyyyy.string(from: educationStart)) – \(DateFormatters.shared.dateFormatterddMMyyyy.string(from: educationEnd)) (\((educationStart...educationEnd).numberOfDaysBetween()))")
-                        }
-                        if let examsStart = group.examsStart, let examsEnd = group.examsEnd {
-                            CoolField("Сессия",
-                                      "\(DateFormatters.shared.dateFormatterddMMyyyy.string(from: examsStart)) – \(DateFormatters.shared.dateFormatterddMMyyyy.string(from: examsEnd)) (\((examsStart...examsEnd).numberOfDaysBetween()))")
-                        }
-                        
-                    }
-//            DisclosureGroup {
-//                let lessons = group.lessons?.allObjects as! [Lesson]
-//                let subjects = Set(lessons.compactMap {$0.subject})
-//                ForEach(subjects.sorted(), id: \.self) { subject in
-//                    let subjectLessons = lessons.filter {$0.subject == subject}
-//                    let dates = Array((subjectLessons.map {$0.dates}).joined())
-//                    DisclosureGroup {
-//                        ForEach(LessonType.allCases, id: \.self) { lessonType in
-//                            if let lessons = subjectLessons.filter {$0.lessonType == lessonType}, lessons.isEmpty == false {
-//                                let dates = Array((lessons.map {$0.dates}).joined())
-//                                CoolField(lessonType.description(), "\(dates.count) пары")
-//                            }
-//
-//                        }
-//                    } label: {
-//                        CoolField(subject, "\(dates.count) пары")
-//                    }
-//                }
-//            } label: {
-//                Text("Статистика")
-//            }
-
+            information
+            Section {
+                educationDates
+                lastUpdate
+            }
         }
-        .navigationTitle(group.id)
+        .navigationTitle(viewModel.navigationTitle)
         .refreshable {
-            GroupStorage.shared.fetchDetailed(group)
+            viewModel.update()
         }
-    }
-}
-
-struct CoolField: View  {
-    var name: String
-    var parameter: String
-
-    init(_ name: String, _ parameter: String) {
-        self.name = name
-        self.parameter = parameter
     }
     
-    var body: some View {
-        HStack {
-            Text(name)
-            Spacer()
-            Text(parameter)
-                .foregroundColor(.gray)
+    @ViewBuilder var information: some View {
+        Section(viewModel.group.speciality.name) {
+            Form("Аббревиатура", viewModel.group.speciality.abbreviation)
+            Form("Факультет", viewModel.group.speciality.faculty.abbreviation)
+            Form("Шифр", viewModel.group.speciality.code)
+            Form("Форма обучения", viewModel.group.speciality.getEducationTypeDescription())
         }
     }
+    
+    @ViewBuilder var educationDates: some View {
+        if viewModel.group.educationStart != nil || viewModel.group.examsStart != nil {
+            if let educationStart = viewModel.group.educationStart, let educationEnd = viewModel.group.educationEnd {
+                Button {
+                    withAnimation {
+                        viewModel.showEducationDuration.toggle()
+                    }
+                } label: {
+                    Form("Семестр", viewModel.showEducationDuration ? "\((educationStart...educationEnd).numberOfDaysBetween()) дней" : "\(DateFormatters.shared.get(.longDate).string(from: educationStart)) – \(DateFormatters.shared.get(.longDate).string(from: educationEnd))")
+                }
+            }
+            if let examsStart = viewModel.group.examsStart, let examsEnd = viewModel.group.examsEnd {
+                Button {
+                    withAnimation {
+                        viewModel.showExamsDuration.toggle()
+                    }
+                } label: {
+                    Form("Сессия", viewModel.showExamsDuration ? "\((examsStart...examsEnd).numberOfDaysBetween()) дней" : "\(DateFormatters.shared.get(.longDate).string(from: examsStart)) – \(DateFormatters.shared.get(.longDate).string(from: examsEnd))")
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder var lastUpdate: some View {
+        HStack {
+            Text("Последнее обновление")
+            Spacer()
+            if let date = viewModel.lastUpdateDate {
+                Text("\(DateFormatters.shared.longDate.string(from: date))")
+                    .foregroundColor(.secondary)
+            } else {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle(tint: .gray))
+            }
+        }
+    }
+    
 }
 
 struct GroupDetaildView_Previews: PreviewProvider {
     static var previews: some View {
-        GroupDetailedView(group: GroupStorage.shared.groups(ids: ["950503"]).first!)
+        GroupDetailedView(viewModel: GroupViewModel(GroupStorage.shared.groups(ids: ["950503"]).first!))
     }
 }

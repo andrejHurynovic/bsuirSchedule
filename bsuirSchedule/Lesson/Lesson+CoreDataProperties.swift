@@ -93,7 +93,7 @@ extension Lesson : Identifiable {
         guard dateString.isEmpty == false else {
             return nil
         }
-        return DateFormatters.shared.dateFormatterddMMyyyy.date(from: self.dateString)!
+        return DateFormatters.shared.get(.shortDate).date(from: self.dateString)!
     }
 }
 

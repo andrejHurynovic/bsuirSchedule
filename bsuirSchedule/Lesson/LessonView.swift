@@ -117,7 +117,7 @@ struct LessonView: View {
                 ForEach(employees.sorted(by: {$0.lastName! < $1.lastName!}), id: \.self) { employee in
                     
                     NavigationLink {
-                        EmployeeDetailedView(employee: employee)
+                        EmployeeDetailedView(viewModel: EmployeeViewModel(employee))
                     } label: {
                         HStack {
                             if let photo = employee.photo {

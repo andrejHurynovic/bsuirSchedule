@@ -9,20 +9,56 @@ import Foundation
 
 class DateFormatters {
     
-    var dateFormatterHHmm: DateFormatter {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
-        return dateFormatter
+    enum DateFormattersType {
+        case shortDate
+        case shortDateWithTime
+        case longDate
+        case longDateWithTime
+        case time
     }
     
-    var dateFormatterddMMyyyy: DateFormatter {
+    static let shared = DateFormatters()
+    
+    var shortDate: DateFormatter {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"
         return dateFormatter
     }
     
+    var shortDateWithTime: DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy HH:mm"
+        return dateFormatter
+    }
+    var longDate: DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMM yyyy"
+        return dateFormatter
+    }
+    var longDateWithTime: DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMM yyyy HH:mm"
+        return dateFormatter
+    }
+    var time: DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        return dateFormatter
+    }
     
-    
-    static let shared = DateFormatters()
+    func get(_ type: DateFormattersType) -> DateFormatter {
+        switch type {
+        case .shortDate:
+            return shortDate
+        case .shortDateWithTime:
+            return shortDateWithTime
+        case .longDate:
+            return longDate
+        case .longDateWithTime:
+            return longDateWithTime
+        case .time:
+            return time
+        }
+    }
     
 }

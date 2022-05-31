@@ -16,7 +16,7 @@ class EmployeeStorage: Storage<Employee> {
     func fetch() {
         cancellables.insert(FetchManager.shared.fetch(dataType: .employees, completion: {(employees: [Employee]) -> () in
             self.save()
-//            self.fetchAllPhotos()
+            self.fetchAllPhotos()
             self.fetchAllDetailed()
         }))
     }
@@ -24,13 +24,13 @@ class EmployeeStorage: Storage<Employee> {
     func fetchAllDetailed() {
         self.values.value.forEachInout { employee in
             if employee.lessons?.count == 0 || employee.educationStart == nil {
-                fetchDetailed(employee)
+                update(employee)
             }
         }
         self.save()
     }
     
-    func fetchDetailed(_ employee: Employee) {
+    func update(_ employee: Employee) {
         if employee.educationStart == nil, employee.examsStart == nil {
             cancellables.insert(FetchManager.shared.fetch(dataType: .employee, argument: String(employee.id), completion: {(fetchedEmployee: Employee) -> () in
                 if let lessons = fetchedEmployee.lessons {

@@ -22,13 +22,13 @@ public class Employee: NSManagedObject, Decodable {
         
         //Если существует educationStart или examsStart, всегда существуют соответствующие educationEnd и examsEnd.
         if let educationStartString = try? container.decode(String.self, forKey: .educationStart) {
-            self.educationStart = DateFormatters.shared.dateFormatterddMMyyyy.date(from: educationStartString)
-            self.educationEnd = DateFormatters.shared.dateFormatterddMMyyyy.date(from: try! container.decode(String.self, forKey: .educationEnd))
+            self.educationStart = DateFormatters.shared.get(.shortDate).date(from: educationStartString)
+            self.educationEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .educationEnd))
         }
 
         if let examsStartString = try? container.decode(String.self, forKey: .examsStart) {
-            self.examsStart = DateFormatters.shared.dateFormatterddMMyyyy.date(from: examsStartString)
-            self.examsEnd = DateFormatters.shared.dateFormatterddMMyyyy.date(from: try! container.decode(String.self, forKey: .examsEnd))
+            self.examsStart = DateFormatters.shared.get(.shortDate).date(from: examsStartString)
+            self.examsEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .examsEnd))
         }
         
 //        if let schedules = try? container.decode([Schedule].self, forKey: .lessons) {

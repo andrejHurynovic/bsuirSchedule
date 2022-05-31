@@ -52,7 +52,7 @@ extension Date {
     }
 
     func time() -> Date {
-        return DateFormatters.shared.dateFormatterddMMyyyy.date(from: "01.01.2000")!.withTime(self)
+        return DateFormatters.shared.get(.shortDate).date(from: "01.01.2000")!.withTime(self)
     }
     
 }

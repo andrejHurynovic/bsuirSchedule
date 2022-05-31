@@ -93,7 +93,7 @@ struct UpdateView: View {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: .gray))
                 } else {
-                    Text("\(groupStorage.tempValues.filter({$0.lastUpdateDate != nil}).count) из \(groupStorage.tempValues.count)")
+                    Text("\(groupStorage.tempValues.filter({$0.updateDate != nil}).count) из \(groupStorage.tempValues.count)")
                         .foregroundColor(.gray)
                 }
             }

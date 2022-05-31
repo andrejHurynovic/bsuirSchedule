@@ -24,12 +24,12 @@ extension Employee {
     @NSManaged public var firstName: String!
     @NSManaged public var middleName: String!
     @NSManaged public var lastName: String!
-    @NSManaged public var updateDate: Date?
     
     @NSManaged public var rank: String?
     @NSManaged public var degree: String?
     @NSManaged public var departments: [String]!
     @NSManaged public var favorite: Bool
+    @NSManaged public var updateDate: Date?
     
     @NSManaged public var educationStart: Date?
     @NSManaged public var educationEnd: Date?

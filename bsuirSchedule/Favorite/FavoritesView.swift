@@ -90,7 +90,7 @@ struct FavoritesView: View {
                             group.favorite.toggle()
                         }
                         Button {
-                            GroupStorage.shared.fetchDetailed(group)
+                            GroupStorage.shared.update(group)
                         } label: {
                             Text("UPD")
                         }

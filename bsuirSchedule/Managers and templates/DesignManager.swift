@@ -57,6 +57,28 @@ class DesignManager: ObservableObject {
     
 }
 
+//MARK: FORMS
+
+struct Form: View  {
+    var name: String
+    var parameter: String
+    
+    init(_ name: String, _ parameter: String) {
+        self.name = name
+        self.parameter = parameter
+    }
+    
+    var body: some View {
+        HStack {
+            Text(name)
+                .foregroundColor(.primary)
+            Spacer()
+            Text(parameter)
+                .foregroundColor(.secondary)
+        }
+    }
+}
+
 //MARK: Buttons
 
 func FavoriteButton(_ favorite: Bool, circle: Bool = false, toggle: @escaping () -> Void) -> some View {
@@ -123,15 +145,6 @@ struct standardizedHeader: View {
             .fontWeight(.heavy)
             .foregroundColor(.primary)
             .padding(.top)
-//            .font(.title2)
-//            .fontWeight(.bold)
-//            .padding(.horizontal)
-//            .padding(.vertical, 4)
-//            .background(DesignManager.shared.mainColor)
-//            .clipShape(Capsule())
-//            .padding(.vertical, 4)
-//            .shadow(color: DesignManager.shared.mainColor, radius: 8)
-//            .foregroundColor(.white)
     }
 }
 
@@ -150,6 +163,9 @@ struct NewHeader: View {
         }
     }
 }
+
+
+
 
 extension Color: RawRepresentable {
     

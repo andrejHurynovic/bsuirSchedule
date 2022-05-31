@@ -16,17 +16,19 @@ class FetchManager {
     
     //Взято из https://iis.bsuir.by/api
     enum FetchDataType: String {
-        case week = "https://iis.bsuir.by/api/v1/schedule/current-week"
         //Неделю в промежутке [1...4]
-        case groups = "https://journal.bsuir.by/api/v1/groups"
-        //
-        case groupUpdateDate = "https://journal.bsuir.by/api/v1/studentGroup/lastUpdateDate?studentGroup="
-        case employees = "https://journal.bsuir.by/api/v1/employees"
-        case group = "https://journal.bsuir.by/api/v1/studentGroup/schedule?studentGroup="
-        case employee = "https://journal.bsuir.by/api/v1/portal/employeeSchedule?employeeId="
-        case specialities = "https://journal.bsuir.by/api/v1/specialities"
+        case week = "https://iis.bsuir.by/api/v1/schedule/current-week"
+        
         case faculties = "https://journal.bsuir.by/api/v1/faculties"
+        case specialities = "https://journal.bsuir.by/api/v1/specialities"
         case classrooms = "https://journal.bsuir.by/api/v1/auditory"
+        
+        case groups = "https://journal.bsuir.by/api/v1/groups"
+        case group = "https://journal.bsuir.by/api/v1/studentGroup/schedule?studentGroup="
+        case groupUpdateDate = "https://iis.bsuir.by/api/v1/last-update-date/student-group?groupNumber="
+        case employees = "https://journal.bsuir.by/api/v1/employees"
+        case employee = "https://journal.bsuir.by/api/v1/portal/employeeSchedule?employeeId="
+        case employeeUpdateDate = "https://iis.bsuir.by/api/v1/last-update-date/employee?id="
         
     }
     
@@ -34,15 +36,11 @@ class FetchManager {
     
     func fetch<T: Decodable>(dataType: FetchDataType, argument: String? = nil, completion: @escaping (T) -> ()) -> AnyCancellable {
         
+        #warning("Создать ошибку и хендлить её, если нет аргумента в нужных случаях")
         let url: URL!
-        //Аргументы нужны только в трёх случаях
-        switch dataType {
-            #warning("Создать ошибку и хендлить её, если нет аргумента в нужных случаях")
-        case .groupUpdateDate:
-            url = URL(string: dataType.rawValue + argument!)
-        case .employee, .group:
-            url = URL(string: dataType.rawValue + argument!)
-        default:
+        if let argument = argument, [.group, .groupUpdateDate,FetchDataType.employee, FetchDataType.employeeUpdateDate].contains(dataType) {
+            url = URL(string: dataType.rawValue + argument)
+        } else {
             url = URL(string: dataType.rawValue)
         }
         

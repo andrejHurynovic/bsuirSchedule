@@ -25,6 +25,7 @@ struct LessonsSection: Hashable {
         
         let dateString = dateFormatter.string(from: date)
         
+        //Ранее использовалось, чтобы не отображать недели на сессии
         if showWeek {
             //+1 для приведения от формата [0,3] к [1,4]
             title = "\(dateString), \(date.educationWeek + 1)-ая неделя"

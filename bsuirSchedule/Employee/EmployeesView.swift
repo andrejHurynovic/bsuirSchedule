@@ -27,7 +27,7 @@ struct EmployeesView: View {
                                     }
                                     
                                 }.background(NavigationLink("", destination: {
-                                    EmployeeDetailedView(employee: employee)
+                                    EmployeeDetailedView(viewModel: EmployeeViewModel(employee))
                                 }).opacity(0))
                         }
                         HStack {
