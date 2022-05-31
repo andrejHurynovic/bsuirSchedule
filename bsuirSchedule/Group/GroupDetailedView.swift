@@ -31,7 +31,7 @@ struct GroupDetailedView: View {
             Form("Аббревиатура", viewModel.group.speciality.abbreviation)
             Form("Факультет", viewModel.group.speciality.faculty.abbreviation)
             Form("Шифр", viewModel.group.speciality.code)
-            Form("Форма обучения", viewModel.group.speciality.getEducationTypeDescription())
+            Form("Форма обучения", viewModel.group.speciality.educationType.description)
         }
     }
     

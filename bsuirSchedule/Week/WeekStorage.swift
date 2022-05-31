@@ -10,16 +10,18 @@ import Foundation
 class WeekStorage: Storage<Week> {
     
     static let shared = WeekStorage(sortDescriptors: [])
-        
+    
+    var currentValue: Week {
+        return WeekStorage.shared.values.value.last!
+    }
+    
+    //MARK: Fetch
+    
     func fetch() {
         deleteAll()
         cancellables.insert(FetchManager.shared.fetch(dataType: .week, completion: {(week: Week) -> () in
         }))
         self.save()
-    }
-    
-    func currentValue() -> Week {
-        return WeekStorage.shared.values.value.last!
     }
 }
 
@@ -28,7 +30,7 @@ class WeekStorage: Storage<Week> {
 extension Date {
     //Возвращает номер этой недели
     var educationWeek: Int {
-        let weekObject = WeekStorage.shared.currentValue()
+        let weekObject = WeekStorage.shared.currentValue
         
         let weekLastUpdate = weekObject.updateDate
         let currentWeek = Int(weekObject.updatedWeek)

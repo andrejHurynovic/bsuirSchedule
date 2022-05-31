@@ -11,7 +11,7 @@ struct ClassroomDetailedView: View {
     var classroom: Classroom
     
     @State var selectedFaculty: Faculty? = nil
-    @State var selectedEducationType: Int? = nil
+    @State var selectedEducationType: EducationType? = nil
     @State var sortedBy: GroupSortingType = .speciality
     
     var body: some View {
@@ -31,7 +31,7 @@ struct ClassroomDetailedView: View {
             
             if let groups = LessonStorage.groups(lessons: classroom.lessons), groups.isEmpty == false {
                 Section("Группы") {}
-                    GroupList(groups: groups, searchText: nil, selectedFaculty: $selectedFaculty, selectedEducationType:
+                    GroupsList(groups: groups, searchText: nil, selectedFaculty: $selectedFaculty, selectedEducationType:
                                 $selectedEducationType, sortedBy: $sortedBy)
             }
         }

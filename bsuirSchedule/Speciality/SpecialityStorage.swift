@@ -12,6 +12,8 @@ class SpecialityStorage: Storage<Speciality> {
     static let shared = SpecialityStorage(sortDescriptors: [NSSortDescriptor(keyPath: \Speciality.name, ascending: true),
                                                             NSSortDescriptor(keyPath: \Speciality.educationTypeValue, ascending: true)])
     
+    //MARK: Fetch
+    
     func fetch() {
         cancellables.insert(FetchManager.shared.fetch(dataType: .specialities, completion: {(specialities: [Speciality]) -> () in }))
         self.save()

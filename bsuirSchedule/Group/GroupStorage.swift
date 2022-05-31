@@ -60,7 +60,7 @@ class GroupStorage: Storage<Group> {
     static func sections(_ groups: [Group],
                   _ searchText: String,
                   _ selectedFaculty: Faculty?,
-                  _ selectedEducationType: Int?,
+                  _ selectedEducationType: EducationType?,
                   _ sortedBy: GroupSortingType = .speciality) -> [GroupSection] {
         
         var filitredGroups = groups.filter { group in
@@ -74,7 +74,7 @@ class GroupStorage: Storage<Group> {
         }
         
         if let selectedEducationType = selectedEducationType {
-            filitredGroups = filitredGroups.filter {$0.speciality!.educationTypeValue == selectedEducationType}
+            filitredGroups = filitredGroups.filter {$0.speciality!.educationType == selectedEducationType}
         }
         
         return sort(groups: filitredGroups, sortedBy)
@@ -99,7 +99,7 @@ class GroupStorage: Storage<Group> {
                 let specialityGroups = groups.filter{$0.speciality == speciality}
                 if specialityGroups.isEmpty == false {
                     sections.append(GroupSection(
-                        title: "\(speciality.name!) (\(speciality.getEducationTypeDescription()), \(speciality.faculty!.abbreviation!))" ,
+                        title: "\(speciality.name!) (\(speciality.educationType.description), \(speciality.faculty!.abbreviation!))" ,
                         groups: specialityGroups))
                 }
             }

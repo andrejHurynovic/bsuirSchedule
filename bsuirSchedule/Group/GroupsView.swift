@@ -12,14 +12,14 @@ struct GroupsView: View {
     
     @State var searchText = ""
     @State var selectedFaculty: Faculty? = nil
-    @State var selectedEducationType: Int? = nil
+    @State var selectedEducationType: EducationType? = nil
     @State var sortedBy: GroupSortingType = .speciality
     
     var body: some View {
         NavigationView {
             ZStack {
                 List {
-                    GroupList(groups: viewModel.groups, searchText: $searchText, selectedFaculty: $selectedFaculty, selectedEducationType: $selectedEducationType, sortedBy: $sortedBy)
+                    GroupsList(groups: viewModel.groups, searchText: $searchText, selectedFaculty: $selectedFaculty, selectedEducationType: $selectedEducationType, sortedBy: $sortedBy)
                 }
                 .navigationBarTitle("Группы")
                 .searchable(text: $searchText, prompt: "Номер группы, специальность")

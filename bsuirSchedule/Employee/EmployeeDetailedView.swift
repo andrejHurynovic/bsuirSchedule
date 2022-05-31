@@ -18,7 +18,7 @@ class EmployeeViewModel: ObservableObject {
     @Published var imagesViewModel = ImagesViewModel()
     
     @Published var selectedFaculty: Faculty? = nil
-    @Published var selectedEducationType: Int? = nil
+    @Published var selectedEducationType: EducationType? = nil
     @Published var sortedBy: GroupSortingType = .speciality
     
     init(_ employee: Employee) {
@@ -168,7 +168,7 @@ struct EmployeeDetailedView: View {
     @ViewBuilder var groups: some View {
         let groups = LessonStorage.groups(lessons: viewModel.employee.lessons)
         if groups.isEmpty == false {
-            GroupList(groups: groups, searchText: nil, selectedFaculty: $viewModel.selectedFaculty, selectedEducationType:
+            GroupsList(groups: groups, searchText: nil, selectedFaculty: $viewModel.selectedFaculty, selectedEducationType:
                         $viewModel.selectedEducationType, sortedBy: $viewModel.sortedBy)
         }
     }

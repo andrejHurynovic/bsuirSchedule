@@ -122,13 +122,13 @@
         <attribute name="updatedWeek" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
     <elements>
-        <element name="Classroom" positionX="-688.0670166015625" positionY="-34.90615844726562" width="128" height="164"/>
-        <element name="Employee" positionX="-231.9367065429688" positionY="-131.8106842041016" width="128" height="284"/>
-        <element name="Faculty" positionX="-536.472412109375" positionY="280.2841491699219" width="128" height="89"/>
-        <element name="Group" positionX="-339.1310424804688" positionY="212.7224731445312" width="120.3765258789062" height="179"/>
-        <element name="Hometask" positionX="-513" positionY="27" width="128" height="119"/>
-        <element name="Lesson" positionX="-464.7166137695312" positionY="-101.2243957519531" width="128" height="224"/>
-        <element name="Speciality" positionX="-715.6961669921875" positionY="275.5036926269531" width="128" height="134"/>
-        <element name="Week" positionX="-513" positionY="27" width="128" height="59"/>
+        <element name="Classroom" positionX="-709.6875610351562" positionY="-83.55865478515625" width="128" height="164"/>
+        <element name="Employee" positionX="-231.9367065429688" positionY="-131.8106842041016" width="128" height="298"/>
+        <element name="Faculty" positionX="-799.9773559570312" positionY="307.6494445800781" width="128" height="89"/>
+        <element name="Group" positionX="-290.4933471679688" positionY="204.6224060058593" width="120.3765258789062" height="179"/>
+        <element name="Hometask" positionX="-856.2542114257812" positionY="-84.0120849609375" width="128" height="119"/>
+        <element name="Lesson" positionX="-464.7166137695312" positionY="-101.2243957519531" width="128" height="238"/>
+        <element name="Speciality" positionX="-632.944091796875" positionY="276.6219177246094" width="128" height="134"/>
+        <element name="Week" positionX="-853.3682250976562" positionY="76.27545166015625" width="128" height="59"/>
     </elements>
 </model>

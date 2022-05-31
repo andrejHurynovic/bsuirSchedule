@@ -33,13 +33,13 @@ struct LessonsView: View {
                     lessons
                         .onLoad(perform: {
                             if let nearSection = viewModel.nearSection {
-                                proxy.scrollTo(nearSection, anchor: .top)
+                                proxy.scrollTo(nearSection.date, anchor: .top)
                             }
                         })
                         .onChange(of: sectionToScroll) { newValue in
                             if let sectionToScroll = newValue {
                                 withAnimation {
-                                    proxy.scrollTo(sectionToScroll, anchor: .top)
+                                    proxy.scrollTo(sectionToScroll.date, anchor: .top)
                                 }
                             }
                             sectionToScroll = nil
@@ -94,19 +94,15 @@ struct LessonsView: View {
     
     @ViewBuilder var lessons: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 240, maximum: 500))], alignment: .leading, spacing: 8, pinnedViews: []) {
-            ForEach(viewModel.sections, id: \.self) { section in
+            ForEach(viewModel.sections, id: \.date) { section in
                 let today = (section.date == Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date())!)
                 let lessons: [Lesson] = section.lessons(searchText)
                 if lessons.isEmpty == false {
                     Section {
                         ForEach(lessons, id: \.self) { lesson in
                             LessonView(lesson: lesson, showEmployee: viewModel.showEmployees, showGroups: viewModel.showGroups, color: DesignManager.shared.color(lesson.lessonType), showToday: today)
+//                                .id(DateFormatters.shared.get(.shortDate).string(from: section.date) + "\(arc4random())")
                                 .contextMenu {
-                                    Button {
-                                        print(lesson)
-                                    } label: {
-                                        Text("print")
-                                    }
                                     Button {
                                         //                                        taskViewModel.likeInit(lesson: lesson, lessonsSections: viewModel.sectionsWithLessonsAfterToday(lesson))
                                         taskViewPresented = true
@@ -266,6 +262,11 @@ struct LessonsView: View {
         
     }
     
+}
+
+func randomString(length: Int) -> String {
+  let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+  return String((0..<length).map{ _ in letters.randomElement()! })
 }
 
 struct LessonsView_Previews: PreviewProvider {

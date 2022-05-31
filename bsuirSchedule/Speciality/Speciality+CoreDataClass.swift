@@ -23,28 +23,14 @@ public class Speciality: NSManagedObject, Decodable {
         self.name = try! container.decode(String.self, forKey: .name)
         self.abbreviation = try! container.decode(String.self, forKey: .abbreviation)
         
-        let facultyID = try! container.decode(Int.self, forKey: .facultyID)
-        self.faculty = FacultyStorage.shared.values.value.first(where: {$0.id == facultyID})
+#warning("Что делать в случае отсутствия факультета? А? А?А?А?А?А? Сделать обработку ошибок короче")
+        let facultyID = try! container.decode(Int16.self, forKey: .facultyID)
+        self.faculty = FacultyStorage.shared.faculty(id: facultyID)
         
         let nestedContainer = try! container.nestedContainer(keyedBy: EducationTypeCodingKeys.self, forKey: .educationTypeContainer)
         
-        self.educationTypeValue = try! nestedContainer.decode(Int16.self, forKey: .educationTypeValue)
+        self.educationTypeValue = try! nestedContainer.decode(Int16.self, forKey: .educationTypeId)
         self.code = try! container.decode(String.self, forKey: .code)
-    }
-    
-    func getEducationTypeDescription() -> String {
-        switch self.educationTypeValue {
-        case 1:
-            return "дневная"
-        case 2:
-            return "заочная"
-        case 3:
-            return "дистанционная"
-        case 4:
-            return "вечерняя"
-        default:
-            return ""
-        }
     }
 }
 
@@ -62,5 +48,5 @@ private enum CodingKeys: String, CodingKey {
 }
 
 private enum EducationTypeCodingKeys: String, CodingKey {
-    case educationTypeValue = "id"
+    case educationTypeId = "id"
 }
