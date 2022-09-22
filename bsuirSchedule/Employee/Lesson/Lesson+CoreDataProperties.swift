@@ -20,6 +20,7 @@ extension Lesson {
     }
     
     @NSManaged public var subject: String!
+    @NSManaged public var abbreviation: String!
     @NSManaged public var lessonTypeValue: Int16
     @NSManaged public var classrooms:  NSSet?
     @NSManaged public var note: String?
@@ -30,6 +31,8 @@ extension Lesson {
     @NSManaged public var weekday: Int16
     @NSManaged public var weeks: [Int]!
     @NSManaged public var dateString: String!
+    @NSManaged public var startLessonDate: Date!
+    @NSManaged public var endLessonDate: Date!
     
     @NSManaged public var timeStart: String!
     @NSManaged public var timeEnd: String!

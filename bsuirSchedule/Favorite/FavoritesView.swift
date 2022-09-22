@@ -156,17 +156,17 @@ struct FavoritesView: View {
     
     @ViewBuilder var primaryGroupOnLoad: some View {
         EmptyView()
-//        if let primaryGroup = primaryGroup {
-//            if let group = viewModel.groups.first(where: {$0.id == primaryGroup}) {
-//                NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group)), isActive: $primaryGroupPresented) {
-//                    EmptyView()
-//                }
-//                .hidden()
-//                .onLoad {
-//                    primaryGroupPresented = true
-//                }
-//            }
-//        }
+        if let primaryGroup = primaryGroup {
+            if let group = viewModel.groups.first(where: {$0.id == primaryGroup}) {
+                NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group)), isActive: $primaryGroupPresented) {
+                    EmptyView()
+                }
+                .hidden()
+                .onLoad {
+                    primaryGroupPresented = true
+                }
+            }
+        }
     }
     
 }

@@ -12,7 +12,7 @@ struct ClassroomsView: View {
     @StateObject private var viewModel = ClassroomsViewModel()
     
     @State var searchText = ""
-    @State var classroomTypes: [Bool] = ClassroomsViewModel.classroomsTypesDefaults()
+    @State var classroomTypes: [ClassroomType: Binding<Bool>] = ClassroomsViewModel.classroomsTypesDefaults()
     @State var buildings: [Bool] = ClassroomsViewModel.buildingsDefaults()
     
     var body: some View {
@@ -49,9 +49,10 @@ struct ClassroomsView: View {
                     
                     Menu {
                         Text("Тип кабинета:")
-                        ForEach(1...7, id: \.self) {index in
-                            Toggle(isOn: $classroomTypes[index - 1]) {
-                                Text(Classroom.classroomTypeDescription(index))
+                        ForEach(ClassroomType.allCases, id: \.rawValue) {classroomType in
+                            Toggle(isOn: classroomTypes[classroomType]!) {
+                                let _ = print(classroomTypes[classroomType])
+                                Text(classroomType.description)
                             }
                         }
                         Text("Корпуса")
@@ -61,7 +62,8 @@ struct ClassroomsView: View {
                             }
                         }
                     } label: {
-                        Image(systemName: classroomTypes == ClassroomsViewModel.classroomsTypesDefaults() ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
+//                        Image(systemName: classroomTypes == ClassroomsViewModel.classroomsTypesDefaults() ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
+                        Image(systemName: true == true ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
                     }
                 }
             }

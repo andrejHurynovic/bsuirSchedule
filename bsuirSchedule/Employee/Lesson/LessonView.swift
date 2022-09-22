@@ -48,7 +48,7 @@ struct LessonView: View {
     
     var subject: some View {
         HStack {
-            Text(lesson.subject!)
+            Text(lesson.abbreviation!)
                 .font(.title2)
                 .fontWeight(.bold)
                 .foregroundColor(color)
@@ -99,10 +99,9 @@ struct LessonView: View {
                         Text(groupsString(groupsIDs))
                             .contextMenu {
                                 ForEach(groups.sorted(by: {String($0.id) < String($1.id)})) { group in
-//                                        пока не работает
-//                                    NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group))) {
-//                                        Label("\(group.id!), \(group.speciality.abbreviation), \(group.speciality.faculty.abbreviation)", systemImage: "person.2.circle")
-//                                    }
+                                    NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group))) {
+                                        Label("\(group.id!), \(group.speciality.abbreviation), \(group.speciality.faculty.abbreviation)", systemImage: "person.2.circle")
+                                    }
                                 }
                             }
                     }

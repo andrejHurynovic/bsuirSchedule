@@ -10,30 +10,16 @@ import SwiftUI
 struct ClassroomDetailedView: View {
     var classroom: Classroom
     
+    //GroupList
     @State var selectedFaculty: Faculty? = nil
     @State var selectedEducationType: EducationType? = nil
     @State var sortedBy: GroupSortingType = .speciality
     
     var body: some View {
         List {
-            if let departmentName = classroom.departmentName {
-                Section("Информация") {
-                    Text(departmentName.capitalizingFirstLetter())
-                    }
-                }
-            if classroom.lessons?.allObjects.isEmpty == false {
-                NavigationLink {
-                    LessonsView(viewModel: LessonsViewModel(classroom))
-                } label: {
-                    Label("Расписание кабинета", systemImage: "calendar")
-                }
-            }
-            
-            if let groups = LessonStorage.groups(lessons: classroom.lessons), groups.isEmpty == false {
-                Section("Группы") {}
-                    GroupsList(groups: groups, searchText: nil, selectedFaculty: $selectedFaculty, selectedEducationType:
-                                $selectedEducationType, sortedBy: $sortedBy)
-            }
+            department
+            scheduleButton
+            groups
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -49,4 +35,32 @@ struct ClassroomDetailedView: View {
         }
         .navigationTitle(classroom.formattedName(showBuilding: true))
     }
+    
+    @ViewBuilder var department: some View {
+        if let departmentName = classroom.departmentName {
+            Section("Информация") {
+                Text(departmentName.capitalizingFirstLetter())
+                }
+            }
+    }
+    
+    @ViewBuilder var scheduleButton: some View {
+        if classroom.haveLessons {
+            NavigationLink {
+                LessonsView(viewModel: LessonsViewModel(classroom))
+            } label: {
+                Label("Расписание кабинета", systemImage: "calendar")
+            }
+        }
+    }
+    
+    @ViewBuilder var groups: some View {
+        let groups = classroom.groups
+        if  groups.isEmpty == false {
+            Section("Группы") {}
+                GroupsList(groups: groups, searchText: nil, selectedFaculty: $selectedFaculty, selectedEducationType:
+                            $selectedEducationType, sortedBy: $sortedBy)
+        }
+    }
+    
 }

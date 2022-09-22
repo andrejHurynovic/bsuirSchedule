@@ -83,10 +83,10 @@ public class Employee: NSManagedObject, Decodable {
         case middleName
         case lastName
         
-        case educationStart = "dateStart"
-        case educationEnd = "dateEnd"
-        case examsStart = "sessionStart"
-        case examsEnd = "sessionEnd"
+        case educationStart = "startDate"
+        case educationEnd = "endDate"
+        case examsStart = "startExamsDate"
+        case examsEnd = "endExamsDate"
         
         case departments = "academicDepartment"
         case rank
@@ -97,7 +97,7 @@ public class Employee: NSManagedObject, Decodable {
         case lessons = "schedules"
         case exams = "examSchedules"
         
-        case employeeContainer = "employee"
+        case employeeContainer = "employeeDto"
     }
 }
 

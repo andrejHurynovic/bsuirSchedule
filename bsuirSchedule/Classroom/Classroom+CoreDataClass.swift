@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 @objc(Classroom)
-public class Classroom: NSManagedObject, Decodable {
+public class Classroom: NSManagedObject {
     
     required convenience public init(from decoder: Decoder) throws {
         let context = PersistenceController.shared.container.viewContext
@@ -19,16 +19,56 @@ public class Classroom: NSManagedObject, Decodable {
         
         let container = try! decoder.container(keyedBy: CodingKeys.self)
         
-        self.originalName = try! container.decode(String.self, forKey: .name)
         
-        let name = try! container.decode(String.self, forKey: .name)
+        
+        //Building
         let buildingContainer = try! container.nestedContainer(keyedBy: BuildingCodingKeys.self, forKey: .buildingContainer)
         let buildingString = try! buildingContainer.decode(String.self, forKey: .name)
+        //Убеждаемся что это именно учебный корпус
+        guard let building = Int16(buildingString.trimmingCharacters(in: CharacterSet.init([" ", "к", "."]))) else {
+            #warning("Придумать другое решение")
+            self.originalName = "error"
+            return
+        }
+        self.building = building
         
-        let result = ClassroomStorage.nameAndBuildingProbably(name: name, buildingString: buildingString)
-        self.floor = result.floor
-        self.name = result.name
-        self.building = result.building
+        //Name and floor
+        var name = try! container.decode(String.self, forKey: .name)
+        
+        //Нужен для быстрого нахождения кабинета или для constraints
+        self.originalName = "\(name)-\(buildingString)"
+
+        //"Транзистор", "epam-104", "Столовая"
+        if name.first!.isNumber == false {
+            self.name = name
+            self.outsideUniversity = true
+        } else {
+            
+            var numberString = name.trimmingCharacters(in: .letters)
+            if numberString.count > 3 {
+                numberString.removeLast(numberString.count - 3)
+                print(name)
+            }
+            guard let number = Int(numberString.trimmingCharacters(in: .letters)) else {
+                self.originalName = "error"
+                return
+                //                throw ClassroomError.incorrectName
+            }
+            if number < 100 {
+                //Ground floor
+                //"04", "04а" -> "4а"
+                if name.first == "0" {
+                    name.removeFirst()
+                }
+                self.floor = 0
+                self.name = name
+            } else {
+                //"314", "314a"
+                self.floor = Int16(name.removeFirst().wholeNumberValue!)
+                self.name = name
+            }
+        }
+        
         
         let classroomContainer = try? container.nestedContainer(keyedBy: ClassroomCodingKeys.self, forKey: .typeContainer)
         self.typeValue = try! classroomContainer!.decode(Int16.self, forKey: .id)
@@ -46,65 +86,30 @@ public class Classroom: NSManagedObject, Decodable {
     }
     
     func formattedName(showBuilding: Bool) -> String {
-        if showBuilding {
-            if building == 99 {
-                return self.name
-            } else {
-                return String(self.floor) + self.name + "-" + String(self.building)
-            }
+        if outsideUniversity == true {
+            //outside university buildings
+            //"Транзистор", "epam-104", "Столовая"
+            return self.name
         } else {
-            if building == 99 {
-                return self.name
+            if showBuilding {
+                //321-4
+                return String(self.floor) + self.name + "-" + String(self.building)
             } else {
+                //321
                 return String(self.floor) + self.name
             }
         }
     }
+    
+    var groups: [Group] {
+        let lessons = lessons?.allObjects as! [Lesson]
+        let groups = Array(lessons.compactMap {($0.groups?.allObjects as! [Group])}.joined())
+        return Set(groups).sorted { $0.id < $1.id }
+    }
+ 
+}
 
-    
-    func classroomTypeDescription() -> String {
-        switch self.typeValue {
-        case 1:
-            return "ЛК"
-        case 2:
-            return "ПЗ"
-        case 3:
-            return "ЛР"
-        case 4:
-            return "КК"
-        case 5:
-            return "ВП"
-        case 6:
-            return "РК"
-        case 7:
-            return "НЛ"
-        default:
-            return ""
-        }
-    }
-    
-    static func classroomTypeDescription(_ value: Int) -> String {
-        switch value {
-        case 1:
-            return "ЛК"
-        case 2:
-            return "ПЗ"
-        case 3:
-            return "ЛР"
-        case 4:
-            return "КК"
-        case 5:
-            return "ВП"
-        case 6:
-            return "РК"
-        case 7:
-            return "НЛ"
-        default:
-            return ""
-        }
-    }
-    
-    
+extension Classroom: Decodable {
     private enum CodingKeys: String, CodingKey {
         case name
         case buildingContainer = "buildingNumber"
@@ -122,5 +127,4 @@ public class Classroom: NSManagedObject, Decodable {
         case departmentName = "name"
         case departmentAbbreviation = "abbrev"
     }
-    
 }

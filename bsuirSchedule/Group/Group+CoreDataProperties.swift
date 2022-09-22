@@ -68,7 +68,7 @@ extension Group: Identifiable, Lessonable {
         educationDates.forEach({ date in
             var lessons = lessons?.allObjects as! [Lesson]
             lessons = lessons.filter { lesson in
-                lesson.weekday == date.weekDay().rawValue && lesson.weeks.contains(date.educationWeek)
+                (lesson.weekday == date.weekDay().rawValue && lesson.weeks.contains(date.educationWeek)) || lesson.date == date
             }
 //            lessons = lessons.filter { lesson in
 //                lesson.dates.contains { lessonDate in

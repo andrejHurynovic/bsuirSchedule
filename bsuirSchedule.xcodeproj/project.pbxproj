@@ -48,7 +48,7 @@
 		F68E9CF22729FFE900704EB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F68E9CF12729FFE900704EB0 /* Assets.xcassets */; };
 		F68E9CF42729FFE900704EB0 /* Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = F68E9CF02729FFE600704EB0 /* Widget.intentdefinition */; };
 		F68E9CF52729FFE900704EB0 /* Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = F68E9CF02729FFE600704EB0 /* Widget.intentdefinition */; };
-		F68E9CF82729FFE900704EB0 /* WidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F68E9CE72729FFE600704EB0 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F68E9CF82729FFE900704EB0 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F68E9CE72729FFE600704EB0 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F69009D426F6958100379A74 /* LessonsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69009D326F6958000379A74 /* LessonsViewModel.swift */; };
 		F697441C271CE90400A7AE30 /* FetchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697441B271CE90400A7AE30 /* FetchManager.swift */; };
 		F697BF7C26FFA1BA008FA7A9 /* Classroom+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697BF7826FFA1BA008FA7A9 /* Classroom+CoreDataClass.swift */; };
@@ -56,6 +56,7 @@
 		F697BF7F26FFA506008FA7A9 /* ClassroomStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697BF7E26FFA506008FA7A9 /* ClassroomStorage.swift */; };
 		F697BF8526FFA960008FA7A9 /* ClassroomsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697BF8426FFA960008FA7A9 /* ClassroomsView.swift */; };
 		F697BF8726FFAA02008FA7A9 /* ClassroomsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697BF8626FFAA02008FA7A9 /* ClassroomsViewModel.swift */; };
+		F698C25928D4995000C24EFB /* EmployeeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F698C25828D4995000C24EFB /* EmployeeViewModel.swift */; };
 		F699F21A26EA24CE00747BE0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F699F21926EA24CE00747BE0 /* Extensions.swift */; };
 		F69C463726E91B430036D6A1 /* EmployeeDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69C463626E91B430036D6A1 /* EmployeeDetailedView.swift */; };
 		F69CAC33271DCA0B00D0403E /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69CAC32271DCA0B00D0403E /* Storage.swift */; };
@@ -73,6 +74,7 @@
 		F6C1A33C272AE2E700AD38E1 /* FavoriteEmployeeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C1A33B272AE2E600AD38E1 /* FavoriteEmployeeView.swift */; };
 		F6CB615526EFF43900D29807 /* LessonStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CB615426EFF43900D29807 /* LessonStorage.swift */; };
 		F6CB615726F000EE00D29807 /* LessonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CB615626F000EE00D29807 /* LessonView.swift */; };
+		F6DB7B14286CAF70009BE5FB /* ClassroomType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DB7B13286CAF70009BE5FB /* ClassroomType.swift */; };
 		F6DCD72326B30EF0003761B0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DCD72226B30EF0003761B0 /* SettingsView.swift */; };
 		F6DCD72526B30F86003761B0 /* LessonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DCD72426B30F86003761B0 /* LessonsView.swift */; };
 		F6F6B4F226FA55F200814354 /* FacultyStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F6B4F126FA55F200814354 /* FacultyStorage.swift */; };
@@ -92,15 +94,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		F68E9CFC2729FFEA00704EB0 /* Embed App Extensions */ = {
+		F68E9CFC2729FFEA00704EB0 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				F68E9CF82729FFE900704EB0 /* WidgetExtension.appex in Embed App Extensions */,
+				F68E9CF82729FFE900704EB0 /* WidgetExtension.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -157,6 +159,7 @@
 		F697BF7E26FFA506008FA7A9 /* ClassroomStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomStorage.swift; sourceTree = "<group>"; };
 		F697BF8426FFA960008FA7A9 /* ClassroomsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomsView.swift; sourceTree = "<group>"; };
 		F697BF8626FFAA02008FA7A9 /* ClassroomsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomsViewModel.swift; sourceTree = "<group>"; };
+		F698C25828D4995000C24EFB /* EmployeeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeViewModel.swift; sourceTree = "<group>"; };
 		F699F21926EA24CE00747BE0 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		F69C463626E91B430036D6A1 /* EmployeeDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeDetailedView.swift; sourceTree = "<group>"; };
 		F69CAC32271DCA0B00D0403E /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
@@ -174,6 +177,7 @@
 		F6C1A33B272AE2E600AD38E1 /* FavoriteEmployeeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteEmployeeView.swift; sourceTree = "<group>"; };
 		F6CB615426EFF43900D29807 /* LessonStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonStorage.swift; sourceTree = "<group>"; };
 		F6CB615626F000EE00D29807 /* LessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonView.swift; sourceTree = "<group>"; };
+		F6DB7B13286CAF70009BE5FB /* ClassroomType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomType.swift; sourceTree = "<group>"; };
 		F6DCD72226B30EF0003761B0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		F6DCD72426B30F86003761B0 /* LessonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsView.swift; sourceTree = "<group>"; };
 		F6F6B4F126FA55F200814354 /* FacultyStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacultyStorage.swift; sourceTree = "<group>"; };
@@ -258,12 +262,11 @@
 				F6F6B4F726FA5D2700814354 /* Favorite */,
 				F699F21826EA249E00747BE0 /* Group */,
 				F65F831F26E8F35500B8CC4E /* Employee */,
-				F6BCE3A626EFCF0A0067B5DA /* Lesson */,
 				F697BF7326FFA129008FA7A9 /* Classroom */,
-				F667332B280F762C00194EAC /* Task */,
 				F68465F826FA52E8000F185E /* Faculty */,
 				F6F87818271A1F36005E3C41 /* Speciality */,
 				F68B4CF62845393B00C8DBF6 /* Week */,
+				F667332B280F762C00194EAC /* Task */,
 				F632DEF126696CD300E4C55F /* Preview Content */,
 				F632DEEF26696CD300E4C55F /* Assets.xcassets */,
 				F632DEF926696CD300E4C55F /* Info.plist */,
@@ -288,7 +291,9 @@
 				F65F832026E8F37800B8CC4E /* EmployeesViewModel.swift */,
 				F64AD7AF266A816D00115E6B /* EmployeesView.swift */,
 				F64BEDD926E9072900C7AD09 /* EmployeeView.swift */,
+				F6BCE3A626EFCF0A0067B5DA /* Lesson */,
 				F69C463626E91B430036D6A1 /* EmployeeDetailedView.swift */,
+				F698C25828D4995000C24EFB /* EmployeeViewModel.swift */,
 			);
 			path = Employee;
 			sourceTree = "<group>";
@@ -348,6 +353,7 @@
 			children = (
 				F697BF7826FFA1BA008FA7A9 /* Classroom+CoreDataClass.swift */,
 				F697BF7926FFA1BA008FA7A9 /* Classroom+CoreDataProperties.swift */,
+				F6DB7B13286CAF70009BE5FB /* ClassroomType.swift */,
 				F697BF7E26FFA506008FA7A9 /* ClassroomStorage.swift */,
 				F697BF8626FFAA02008FA7A9 /* ClassroomsViewModel.swift */,
 				F697BF8426FFA960008FA7A9 /* ClassroomsView.swift */,
@@ -420,7 +426,7 @@
 				F632DEE426696CCB00E4C55F /* Sources */,
 				F632DEE526696CCB00E4C55F /* Frameworks */,
 				F632DEE626696CCB00E4C55F /* Resources */,
-				F68E9CFC2729FFEA00704EB0 /* Embed App Extensions */,
+				F68E9CFC2729FFEA00704EB0 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -456,7 +462,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1310;
+				LastUpgradeCheck = 1400;
 				TargetAttributes = {
 					F632DEE726696CCB00E4C55F = {
 						CreatedOnToolsVersion = 12.5;
@@ -563,6 +569,7 @@
 				F6AFC4622721EC43008CC065 /* DesignManager.swift in Sources */,
 				F64AD7B0266A816D00115E6B /* EmployeesView.swift in Sources */,
 				F68B4CF02845363800C8DBF6 /* Lessonable.swift in Sources */,
+				F698C25928D4995000C24EFB /* EmployeeViewModel.swift in Sources */,
 				F68E9CE02729BB7C00704EB0 /* GroupsList.swift in Sources */,
 				F601E5A92731AA3900773F02 /* TaskViewModel.swift in Sources */,
 				F601E5A32730760100773F02 /* ImagesViewModel.swift in Sources */,
@@ -575,6 +582,7 @@
 				F68E9CDE2729BB4100704EB0 /* FavoriteGroupView.swift in Sources */,
 				F601E5AB2731E29600773F02 /* TaskView.swift in Sources */,
 				F632DEF826696CD300E4C55F /* bsuirSchedule.xcdatamodeld in Sources */,
+				F6DB7B14286CAF70009BE5FB /* ClassroomType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -650,7 +658,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -706,7 +714,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 extension Classroom {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Classroom> {
@@ -23,6 +22,7 @@ extension Classroom {
     @NSManaged public var originalName: String!
     @NSManaged public var favorite: Bool
     
+    @NSManaged public var outsideUniversity: Bool
     @NSManaged public var building: Int16
     
     @NSManaged public var typeValue: Int16
@@ -31,6 +31,7 @@ extension Classroom {
     @NSManaged public var departmentAbbreviation: String?
     
     @NSManaged public var lessons: NSSet?
+    
 }
 
 // MARK: Generated accessors for lessons
@@ -50,7 +51,7 @@ extension Classroom {
 
 }
 
-extension Classroom : Identifiable, Lessonable {
+extension Classroom : Lessonable {
     var educationStart: Date? {
         LessonStorage.groups(lessons: self.lessons).compactMap { $0.educationStart }.sorted().first
     }
@@ -78,8 +79,6 @@ extension Classroom : Identifiable, Lessonable {
         return dates.first!...dates.last!
     }
     
-    
-    
     func lessonsSections() -> [LessonsSection] {
         var sections: [LessonsSection] = []
         
@@ -98,5 +97,16 @@ extension Classroom : Identifiable, Lessonable {
             }
         })
         return sections
+    }
+    
+    var haveLessons: Bool {
+        self.lessons?.allObjects.isEmpty == false
+    }
+    
+}
+
+extension Classroom : Identifiable {
+    var type: ClassroomType {
+        ClassroomType(rawValue: typeValue)!
     }
 }

@@ -12,19 +12,19 @@ struct ClassroomSection: Hashable {
     var title: String
     var classrooms: [Classroom]
     
-    func classrooms(_ searchText: String, _ classroomsTypes: [Bool], _ buildings: [Bool]) -> [Classroom] {
-        if classroomsTypes.filter( {$0 == false} ).isEmpty,
-            buildings.filter( {$0 == false} ).isEmpty,
-            searchText == "" {
-            return classrooms
-        } else {
+    func classrooms(_ searchText: String, _ classroomsTypes: [ClassroomType: Binding<Bool>], _ buildings: [Bool]) -> [Classroom] {
+//        if classroomsTypes.filter( {$0 == false} ).isEmpty,
+//            buildings.filter( {$0 == false} ).isEmpty,
+//            searchText == "" {
+//            return classrooms
+//        } else {
             return classrooms.filter { ($0.formattedName(showBuilding: true).localizedStandardContains(searchText)
                                         || ($0.departmentAbbreviation?.localizedStandardContains(searchText) ?? false)
                                         || searchText == "")
-                                        && classroomsTypes[Int($0.typeValue) - 1] == true
-                                        && ($0.building == 99 || buildings[Int($0.building) - 1] == true)
+                && classroomsTypes[$0.type]!.wrappedValue == true
+                && ($0.building == 99 || buildings[Int($0.building) - 1] == true)
             }
-        }
+//        }
     }
 }
 
@@ -67,8 +67,15 @@ class ClassroomsViewModel: ObservableObject {
         return title
     }
     
-    static func classroomsTypesDefaults() -> [Bool] {
-        return [true, true, true, false, false, false, false]
+    static func classroomsTypesDefaults() -> [ClassroomType: Binding<Bool>] {
+        [.lecture: .constant(true),
+         .practice: .constant(true),
+         .laboratory: .constant(true),
+         .computerClass: .constant(false),
+         .maintenance: .constant(false),
+         .office: .constant(false),
+         .scienceLaboratory: .constant(false)
+        ]
     }
     
     static func buildingsDefaults() -> [Bool] {

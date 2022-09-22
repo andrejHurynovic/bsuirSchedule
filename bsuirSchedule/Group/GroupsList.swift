@@ -49,7 +49,7 @@ struct GroupToolbarMenu: View {
             Text("Факультеты:")
             Picker("", selection: selectedFaculty) {
                 Text("все").tag(nil as Faculty?)
-                ForEach(FacultyStorage.shared.faculties, id: \.self) {faculty in
+                ForEach(FacultyStorage.shared.activeFaculties, id: \.self) {faculty in
                     Text(faculty.abbreviation).tag(faculty.self as Faculty?)
                 }
             }

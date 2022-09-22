@@ -15,6 +15,7 @@ struct GroupDetailedView: View {
     var body: some View {
         List {
             information
+            lessons
             Section {
                 educationDates
                 lastUpdate
@@ -32,6 +33,10 @@ struct GroupDetailedView: View {
             Form("Факультет", viewModel.group.speciality.faculty.abbreviation)
             Form("Шифр", viewModel.group.speciality.code)
             Form("Форма обучения", viewModel.group.speciality.educationType.description)
+            if let date = viewModel.group.updateDate {
+                Form("Последние обновление", DateFormatters.shared.shortDate.string(from: date))
+            }
+            
         }
     }
     
@@ -57,10 +62,13 @@ struct GroupDetailedView: View {
             }
         }
     }
-    
     @ViewBuilder var lastUpdate: some View {
+        
         HStack {
-            Text("Последнее обновление")
+            Text("Последнее обновление в ИИС")
+                .onAppear {
+                    viewModel.getUpdateDate()
+                }
             Spacer()
             if let date = viewModel.lastUpdateDate {
                 Text("\(DateFormatters.shared.longDate.string(from: date))")
@@ -68,6 +76,16 @@ struct GroupDetailedView: View {
             } else {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle(tint: .gray))
+            }
+        }
+    }
+    
+    @ViewBuilder var lessons: some View {
+        if let lessons = viewModel.group.lessons?.allObjects as? [Lesson], lessons.isEmpty == false {
+            NavigationLink {
+                LessonsView(viewModel: LessonsViewModel(viewModel.group))
+            } label: {
+                Label("Расписание группы", systemImage: "calendar")
             }
         }
     }

@@ -19,16 +19,16 @@ class FetchManager {
         //Неделю в промежутке [1...4]
         case week = "https://iis.bsuir.by/api/v1/schedule/current-week"
         
-        case faculties = "https://journal.bsuir.by/api/v1/faculties"
-        case specialities = "https://journal.bsuir.by/api/v1/specialities"
-        case classrooms = "https://journal.bsuir.by/api/v1/auditory"
+        case faculties = "https://iis.bsuir.by/api/v1/faculties"
+        case specialities = "https://iis.bsuir.by/api/v1/specialities"
+        case classrooms = "https://iis.bsuir.by/api/v1/auditories"
         
-        case groups = "https://journal.bsuir.by/api/v1/groups"
-        case group = "https://journal.bsuir.by/api/v1/studentGroup/schedule?studentGroup="
+        case groups = "https://iis.bsuir.by/api/v1/student-groups"
+        case group = "https://iis.bsuir.by/api/v1/schedule?studentGroup="
         case groupUpdateDate = "https://iis.bsuir.by/api/v1/last-update-date/student-group?groupNumber="
-        case employees = "https://journal.bsuir.by/api/v1/employees"
-        case employee = "https://journal.bsuir.by/api/v1/portal/employeeSchedule?employeeId="
-        case employeeUpdateDate = "https://iis.bsuir.by/api/v1/last-update-date/employee?id="
+        case employees = "https://iis.bsuir.by/api/v1/employees/all"
+        case employee = "https://iis.bsuir.by/api/v1/employees/schedule/"
+        case employeeUpdateDate = "https://iis.bsuir.by/api/v1/last-update-date/employee?url-id="
         
     }
     
@@ -38,7 +38,7 @@ class FetchManager {
         
         #warning("Создать ошибку и хендлить её, если нет аргумента в нужных случаях")
         let url: URL!
-        if let argument = argument, [.group, .groupUpdateDate,FetchDataType.employee, FetchDataType.employeeUpdateDate].contains(dataType) {
+        if let argument = argument, [.group, .groupUpdateDate, .employee, .employeeUpdateDate].contains(dataType) {
             url = URL(string: dataType.rawValue + argument)
         } else {
             url = URL(string: dataType.rawValue)
@@ -75,9 +75,11 @@ class FetchManager {
                         .delay(for: 3, scheduler: DispatchQueue.main)
                         .eraseToAnyPublisher()
                 case DataTaskError.emptyAnswer:
-                    Task.init(priority: .high, operation: {
-                        GroupStorage.shared.delete(id: argument ?? "")
-                    })
+                    if dataType == .group {
+                        Task.init(priority: .high, operation: {
+                            GroupStorage.shared.delete(id: argument ?? "")
+                        })
+                    }
                     return Just(.failure(error))
                         .receive(on: DispatchQueue.main)
                         .setFailureType(to: Error.self)

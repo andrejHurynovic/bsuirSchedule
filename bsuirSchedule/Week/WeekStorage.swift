@@ -35,7 +35,7 @@ extension Date {
         let weekLastUpdate = weekObject.updateDate
         let currentWeek = Int(weekObject.updatedWeek)
         let weeksBetween = (weeksBetween(start: weekLastUpdate!, end: self))
-        return Int((4 - ((currentWeek - weeksBetween) % 4) + 2) % 4)
+        return Int((4 - ((currentWeek - weeksBetween) % 4)) % 4)
     }
 }
 

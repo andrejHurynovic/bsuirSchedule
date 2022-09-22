@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 class Schedule: Decodable {
 
     var lessons: [Lesson]!
@@ -62,7 +60,7 @@ class Schedule: Decodable {
     }
 
     private enum CodingKeys: String, CodingKey {
-        case dateString = "weekDay"
+        case dateString = ""
         case lessons = "schedule"
     }
 }
