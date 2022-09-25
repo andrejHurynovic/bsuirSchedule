@@ -244,8 +244,8 @@ struct LessonsView: View {
     
     @ViewBuilder var sortingMenu: some View {
         Menu {
-            FavoriteButton(viewModel.element.favorite, circle: true) {
-                viewModel.element.favorite.toggle()
+            FavoriteButton(viewModel.element.favourite, circle: true) {
+                viewModel.element.favourite.toggle()
             }
             
             Text("Отображать:")

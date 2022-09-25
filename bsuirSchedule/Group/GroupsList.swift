@@ -26,8 +26,8 @@ struct GroupsList: View {
                         Text(group.id)
                     }
                     .contextMenu {
-                        FavoriteButton(group.favorite) {
-                            group.favorite.toggle()
+                        FavoriteButton(group.favourite) {
+                            group.favourite.toggle()
                         }
                     }
                 })

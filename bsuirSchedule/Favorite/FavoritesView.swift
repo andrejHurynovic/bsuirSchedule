@@ -86,8 +86,8 @@ struct FavoritesView: View {
                         FavoriteGroupView(group: group)
                     }
                     .contextMenu {
-                        FavoriteButton(group.favorite) {
-                            group.favorite.toggle()
+                        FavoriteButton(group.favourite) {
+                            group.favourite.toggle()
                         }
                         Button {
                             GroupStorage.shared.update(group)
@@ -115,8 +115,8 @@ struct FavoritesView: View {
                         ClassroomView(classroom: classroom, favorite: true)
                     }
                     .contextMenu {
-                        FavoriteButton(classroom.favorite) {
-                            classroom.favorite.toggle()
+                        FavoriteButton(classroom.favourite) {
+                            classroom.favourite.toggle()
                         }
                     }
                     
@@ -139,8 +139,8 @@ struct FavoritesView: View {
                         EmployeeFavoriteView(employee: employee)
                     }
                     .contextMenu {
-                        FavoriteButton(employee.favorite) {
-                            employee.favorite.toggle()
+                        FavoriteButton(employee.favourite) {
+                            employee.favourite.toggle()
                         }
                     }
                     

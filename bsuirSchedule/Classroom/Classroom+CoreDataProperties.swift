@@ -20,7 +20,7 @@ extension Classroom {
     @NSManaged public var floor: Int16
     @NSManaged public var name: String!
     @NSManaged public var originalName: String!
-    @NSManaged public var favorite: Bool
+    @NSManaged public var favourite: Bool
     
     @NSManaged public var outsideUniversity: Bool
     @NSManaged public var building: Int16
@@ -51,7 +51,7 @@ extension Classroom {
 
 }
 
-extension Classroom : Lessonable {
+extension Classroom : LessonsSectioned {
     var educationStart: Date? {
         LessonStorage.groups(lessons: self.lessons).compactMap { $0.educationStart }.sorted().first
     }
@@ -65,7 +65,7 @@ extension Classroom : Lessonable {
         LessonStorage.groups(lessons: self.lessons).compactMap { $0.examsEnd }.sorted().last
     }
     
-    var educationDates: [Date] {
+    var lessonsDates: [Date] {
         datesBetween(educationStart, educationEnd)
     }
     var examsDates: [Date] {
@@ -89,7 +89,7 @@ extension Classroom : Lessonable {
                 if let lessonDate = lesson.date  {
                     return date == lessonDate
                 } else {
-                    return lesson.weekday == date.weekDay().rawValue && lesson.weeks.contains(date.educationWeek) && Array((lesson.groups?.allObjects as! [Group]).map {$0.educationDates}.joined()).contains(date) == true
+                    return lesson.weekday == date.weekDay().rawValue && lesson.weeks.contains(date.educationWeek) && Array((lesson.groups?.allObjects as! [Group]).map {$0.lessonsDates}.joined()).contains(date) == true
                 }
             }
             if lessons.isEmpty == false {

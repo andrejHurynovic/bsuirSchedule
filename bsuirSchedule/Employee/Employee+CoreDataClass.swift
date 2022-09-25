@@ -19,6 +19,8 @@ public class Employee: NSManagedObject, Decodable {
         self.init(entity: entity!, insertInto: context)
         
         var container = try decoder.container(keyedBy: CodingKeys.self)
+    
+        print(decoder.userInfo.)
         
         //Если существует educationStart или examsStart, всегда существуют соответствующие educationEnd и examsEnd.
         if let educationStartString = try? container.decode(String.self, forKey: .educationStart) {
@@ -31,16 +33,20 @@ public class Employee: NSManagedObject, Decodable {
             self.examsEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .examsEnd))
         }
         
-//        if let schedules = try? container.decode([Schedule].self, forKey: .lessons) {
-//            schedules.forEach { schedule in
-//                self.addToLessons(NSSet(array: schedule.lessons))
-//            }
-//        }
-//        if let examSchedules = try? container.decode([Schedule].self, forKey: .exams) {
-//            examSchedules.forEach { schedule in
-//                self.addToLessons(NSSet(array: schedule.lessons))
-//            }
-//        }
+        if var schedules = try? container.decode([String:[Lesson]].self, forKey: .lessons) {
+            schedules.keys.forEach { key in
+                let weekDay = WeekDay(string: key)
+                schedules[key]!.forEachInout { lesson in
+                    lesson.weekday = weekDay.rawValue
+                }
+            }
+            self.addToLessons(NSSet(array: Array(schedules.values.joined()) as! [Lesson]))
+        }
+        
+        if let exams = try? container.decode([Lesson].self, forKey: .exams) {
+            print(exams.count)
+            self.addToLessons(NSSet(array: exams))
+        }
         
         
         //Структура employee существует при получении ответа на запрос Schedule. Нужна для автоматического слияния при обновлении группы таким образом. Причём это может быть как обновление группы с уже загруженным расписанием, так и без него.
@@ -70,7 +76,7 @@ public class Employee: NSManagedObject, Decodable {
             }
             self.departments = departments
         }
-        self.favorite = false
+        self.favourite = false
         
         self.photoLink = try? container.decode(String.self, forKey: .photoLink)
         
@@ -95,7 +101,7 @@ public class Employee: NSManagedObject, Decodable {
         case photoLink
         
         case lessons = "schedules"
-        case exams = "examSchedules"
+        case exams = "exams"
         
         case employeeContainer = "employeeDto"
     }

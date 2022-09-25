@@ -31,19 +31,17 @@ class EmployeeStorage: Storage<Employee> {
     }
     
     func update(_ employee: Employee) {
-        if employee.educationStart == nil, employee.examsStart == nil {
-            cancellables.insert(FetchManager.shared.fetch(dataType: .employee, argument: String(employee.urlID), completion: {(fetchedEmployee: Employee) -> () in
-                if let lessons = fetchedEmployee.lessons {
-                    employee.addToLessons(lessons)
-                }
-                employee.educationStart = fetchedEmployee.educationStart
-                employee.educationEnd = fetchedEmployee.educationEnd
-                employee.examsStart = fetchedEmployee.examsStart
-                employee.examsEnd = fetchedEmployee.examsEnd
-                employee.updateDate = Date()
-                self.save()
-            }))
-        }
+        cancellables.insert(FetchManager.shared.fetch(dataType: .employee, argument: String(employee.urlID), completion: { [weak self] (fetchedEmployee: Employee) -> () in
+            if let lessons = fetchedEmployee.lessons {
+                employee.addToLessons(lessons)
+            }
+            employee.educationStart = fetchedEmployee.educationStart
+            employee.educationEnd = fetchedEmployee.educationEnd
+            employee.examsStart = fetchedEmployee.examsStart
+            employee.examsEnd = fetchedEmployee.examsEnd
+            employee.updateDate = Date()
+            self?.save()
+        }))
     }
     
     func fetchAllPhotos() {

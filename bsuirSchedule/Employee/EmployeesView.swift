@@ -21,9 +21,9 @@ struct EmployeesView: View {
                             EmployeeView(employee: employee)
                                 .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                                     Button {
-                                        employee.favorite.toggle()
+                                        employee.favourite.toggle()
                                     } label: {
-                                        Image(systemName: employee.favorite ? "star.slash" : "star")
+                                        Image(systemName: employee.favourite ? "star.slash" : "star")
                                     }
                                     
                                 }.background(NavigationLink("", destination: {

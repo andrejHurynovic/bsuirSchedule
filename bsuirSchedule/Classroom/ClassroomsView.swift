@@ -30,8 +30,8 @@ struct ClassroomsView: View {
                                         ClassroomView(classroom: classroom)
                                     }
                                     .contextMenu {
-                                        FavoriteButton(classroom.favorite) {
-                                            classroom.favorite.toggle()
+                                        FavoriteButton(classroom.favourite) {
+                                            classroom.favourite.toggle()
                                         }
                                     }
                                 }

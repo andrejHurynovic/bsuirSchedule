@@ -33,11 +33,14 @@ struct EmployeeDetailedView: View {
             ImagesView()
                 .environmentObject(viewModel.imagesViewModel)
         }
+        .refreshable {
+            viewModel.update()
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
-                    FavoriteButton(viewModel.employee.favorite, circle: true) {
-                        viewModel.employee.favorite.toggle()
+                    FavoriteButton(viewModel.employee.favourite, circle: true) {
+                        viewModel.employee.favourite.toggle()
                     }
                     GroupToolbarMenu(selectedFaculty: $viewModel.selectedFaculty, selectedEducationType: $viewModel.selectedEducationType, sortedBy: $viewModel.sortedBy)
                 } label: {

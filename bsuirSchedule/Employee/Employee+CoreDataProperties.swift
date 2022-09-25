@@ -28,7 +28,7 @@ extension Employee {
     @NSManaged public var rank: String?
     @NSManaged public var degree: String?
     @NSManaged public var departments: [String]!
-    @NSManaged public var favorite: Bool
+    @NSManaged public var favourite: Bool
     @NSManaged public var updateDate: Date?
     
     @NSManaged public var educationStart: Date?
@@ -60,41 +60,6 @@ extension Employee {
 
 }
 
-extension Employee : Identifiable, Lessonable {
-    
-    var educationDates: [Date] {
-        datesBetween(educationStart, educationEnd)
-    }
-    var examsDates: [Date] {
-        datesBetween(examsStart, examsEnd)
-    }
-    var educationRange: ClosedRange<Date>? {
-        let dates = [educationStart, educationEnd, examsStart, examsEnd].compactMap {$0}.sorted()
-        guard dates.isEmpty == false else {
-            return nil
-        }
-        return dates.first!...dates.last!
-    }
-    
-    
-    
-    func lessonsSections() -> [LessonsSection] {
-        var sections: [LessonsSection] = []
-        
-        let educationDates = datesBetween(educationRange?.lowerBound, educationRange?.upperBound)
-        educationDates.forEach({ date in
-            var lessons = lessons?.allObjects as! [Lesson]
-            lessons = lessons.filter { lesson in
-                if let lessonDate = lesson.date  {
-                    return date == lessonDate
-                } else {
-                    return lesson.weekday == date.weekDay().rawValue && lesson.weeks.contains(date.educationWeek) && Array((lesson.groups?.allObjects as! [Group]).map {$0.educationDates}.joined()).contains(date) == true
-                }
-            }
-            if lessons.isEmpty == false {
-                sections.append(LessonsSection(date: date, showWeek: true, lessons: lessons))
-            }
-        })
-        return sections
-    }
-}
+extension Employee : Identifiable { }
+extension Employee: EducationDated { }
+extension Employee : LessonsSectioned { }

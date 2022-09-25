@@ -31,48 +31,16 @@ public class Group: NSManagedObject, Decodable {
         }
         
         if var schedules = try? container.decode([String:[Lesson]].self, forKey: .lessons) {
-            //КРИНЖ
-            var weekDay: WeekDay!
             schedules.keys.forEach { key in
-                switch(key) {
-                case "Понедельник":
-                    weekDay = .Monday
-                case "Вторник":
-                    weekDay = .Tuesday
-                case "Среда":
-                    weekDay = .Wednesday
-                case "Четверг":
-                    weekDay = .Thursday
-                case "Пятница":
-                    weekDay = .Friday
-                case "Суббота":
-                    weekDay = .Saturday
-                case "Воскресенье":
-                    weekDay = .Sunday
-                default:
-                    weekDay = .none
-                }
-                
+                let weekDay = WeekDay(string: key)
                 schedules[key]!.forEachInout { lesson in
-                    lesson.weekday = weekDay!.rawValue
+                    lesson.weekday = weekDay.rawValue
                 }
             }
-            let sus = Array(schedules.values.joined()) as! [Lesson]
-            self.addToLessons(NSSet(array: sus))
+            self.addToLessons(NSSet(array: Array(schedules.values.joined()) as! [Lesson]))
         }
+        
         if let exams = try? container.decode([Lesson].self, forKey: .exams) {
-//            var lessons: [Lesson] = []
-//            examSchedules.forEach { schedule in
-//                lessons.append(contentsOf: schedule.lessons)
-//            }
-//            //Так как в API больше нет дат начала и конца сессии для студентов, приходится получать их вручную
-//            let examsDates = Array(lessons.map {$0.date!}).sorted()
-//            if let examsStart = examsDates.first {
-//                self.examsStart = examsStart.withTime(DateFormatters.shared.get(.time).date(from: "00:00")!)
-//            }
-//            if let examsEnd = examsDates.last {
-//                self.examsEnd = examsEnd.withTime(DateFormatters.shared.get(.time).date(from: "00:00")!)
-//            }
             self.addToLessons(NSSet(array: exams))
         }
         

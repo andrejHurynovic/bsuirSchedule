@@ -73,8 +73,8 @@ struct LessonView: View {
                                 .foregroundColor(Color.primary)
                         }
                         .contextMenu {
-                            FavoriteButton(classroom.favorite) {
-                                classroom.favorite.toggle()
+                            FavoriteButton(classroom.favourite) {
+                                classroom.favourite.toggle()
                             }
                         }
                         
@@ -140,8 +140,8 @@ struct LessonView: View {
                         .foregroundColor(Color.primary)
                     }
                     .contextMenu {
-                        FavoriteButton(employee.favorite) {
-                            employee.favorite.toggle()
+                        FavoriteButton(employee.favourite) {
+                            employee.favourite.toggle()
                         }
                     }
   

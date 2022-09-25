@@ -6,12 +6,12 @@
 //
 
 import SwiftUI
-import Combine
 import CoreData
+import Combine
 
 class LessonsViewModel: ObservableObject {
     
-    @Published var element: Lessonable!
+    @Published var element: LessonsSectioned!
     
     @Published  var sections: [LessonsSection] = []
     @Published  var nearSection: LessonsSection? = nil
@@ -21,7 +21,7 @@ class LessonsViewModel: ObservableObject {
     @Published var showGroups: Bool = false
     @Published var showEmployees: Bool = false
     
-    init(_ element: Lessonable) {
+    init(_ element: LessonsSectioned) {
         self.element = element
         
         sections = element.lessonsSections()

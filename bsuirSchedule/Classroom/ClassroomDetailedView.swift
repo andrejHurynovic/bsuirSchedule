@@ -24,8 +24,8 @@ struct ClassroomDetailedView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
-                    FavoriteButton(classroom.favorite, circle: true) {
-                        classroom.favorite.toggle()
+                    FavoriteButton(classroom.favourite, circle: true) {
+                        classroom.favourite.toggle()
                     }
                     GroupToolbarMenu(selectedFaculty: $selectedFaculty, selectedEducationType: $selectedEducationType, sortedBy: $sortedBy)
                 } label: {

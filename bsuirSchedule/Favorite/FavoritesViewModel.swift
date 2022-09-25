@@ -26,13 +26,13 @@ class FavoritesViewModel: ObservableObject {
          classroomPublisher: AnyPublisher<[Classroom], Never> = ClassroomStorage.shared.values.eraseToAnyPublisher(),
          tasksPublisher: AnyPublisher<[Hometask], Never> = TaskStorage.shared.values.eraseToAnyPublisher()) {
         groupCancelable = groupPublisher.sink { groups in
-            self.groups = groups.filter({$0.favorite})
+            self.groups = groups.filter({$0.favourite})
         }
         employeeCancelable = employeePublisher.sink { employees in
-            self.employees = employees.filter({$0.favorite})
+            self.employees = employees.filter({$0.favourite})
         }
         classroomCancelable = classroomPublisher.sink(receiveValue: { classrooms in
-            self.classrooms = classrooms.filter {$0.favorite}
+            self.classrooms = classrooms.filter {$0.favourite}
         })
         tasksCancelable = tasksPublisher.sink(receiveValue: { tasks in
             self.tasks = tasks

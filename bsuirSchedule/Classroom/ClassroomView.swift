@@ -40,7 +40,7 @@ struct ClassroomView: View {
                                 }
                             }
                             Spacer()
-//                            if favorite {
+//                            if favourite {
 //                                let lessonsViewModel = LessonsViewModel(classroom)
 //                                if let section = lessonsViewModel.nearSection {
 //                                    if Calendar.current.isDateInToday(section.date) {

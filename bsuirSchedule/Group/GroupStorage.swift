@@ -53,7 +53,7 @@ class GroupStorage: Storage<Group> {
     //MARK: Accesors
     
     func favorites() -> [Group] {
-        return self.values.value.filter { $0.favorite }
+        return self.values.value.filter { $0.favourite }
     }
     
     //MARK: Group Section

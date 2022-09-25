@@ -82,7 +82,10 @@ extension Lesson {
     @NSManaged public func removeFromClassrooms(_ values: NSSet)
 }
 
-extension Lesson : Identifiable {
+extension Lesson : Identifiable { }
+
+//MARK: LessonType
+extension Lesson {
     var lessonType: LessonType {
         get {
             return LessonType(rawValue: self.lessonTypeValue)!
@@ -91,12 +94,20 @@ extension Lesson : Identifiable {
             self.lessonTypeValue = newValue.rawValue
         }
     }
-    
+}
+
+//MARK: Dates
+extension Lesson {
+    ///Converts dateString to Date type
     var date: Date? {
         guard dateString.isEmpty == false else {
             return nil
         }
         return DateFormatters.shared.get(.shortDate).date(from: self.dateString)!
+    }
+    ///Range between start and end date
+    var dateRange: ClosedRange<Date> {
+        return startLessonDate...endLessonDate
     }
 }
 
@@ -136,6 +147,26 @@ enum LessonType: Int16, CaseIterable {
 }
 
 enum WeekDay: Int16, CaseIterable, Decodable {
+    init(string: String) {
+        switch(string) {
+        case "Понедельник":
+            self = .Monday
+        case "Вторник":
+            self = .Tuesday
+        case "Среда":
+            self = .Wednesday
+        case "Четверг":
+            self = .Thursday
+        case "Пятница":
+            self = .Friday
+        case "Суббота":
+            self = .Saturday
+        case "Воскресенье":
+            self = .Sunday
+        default:
+            self = .none
+        }
+    }
     case Monday = 0
     case Tuesday = 1
     case Wednesday = 2
@@ -143,6 +174,7 @@ enum WeekDay: Int16, CaseIterable, Decodable {
     case Friday = 4
     case Saturday = 5
     case Sunday = 6
+    case none = 7
 }
 
 extension Date {
