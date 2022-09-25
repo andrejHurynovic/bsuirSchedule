@@ -19,9 +19,7 @@ public class Employee: NSManagedObject, Decodable {
         self.init(entity: entity!, insertInto: context)
         
         var container = try decoder.container(keyedBy: CodingKeys.self)
-    
-        print(decoder.userInfo.)
-        
+            
         //Если существует educationStart или examsStart, всегда существуют соответствующие educationEnd и examsEnd.
         if let educationStartString = try? container.decode(String.self, forKey: .educationStart) {
             self.educationStart = DateFormatters.shared.get(.shortDate).date(from: educationStartString)

@@ -19,7 +19,7 @@ extension Faculty {
     }
 
     @NSManaged public var id: Int16
-    @NSManaged public var name: String!
+    @NSManaged public var name: String?
     @NSManaged public var abbreviation: String!
     
     @NSManaged public var specialities: NSSet?

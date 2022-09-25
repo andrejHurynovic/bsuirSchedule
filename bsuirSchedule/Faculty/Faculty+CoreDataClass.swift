@@ -24,6 +24,15 @@ public class Faculty: NSManagedObject, Decodable {
         self.abbreviation = try! container.decode(String.self, forKey: .abbreviation)
     }
     
+    convenience public init(id: Int16, abbreviation: String) {
+        let context = PersistenceController.shared.container.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "Faculty", in: context)
+        self.init(entity: entity!, insertInto: context)
+        
+        self.id = id
+        self.abbreviation = abbreviation
+    }
+    
     private enum CodingKeys: String, CodingKey {
         case id
         case name

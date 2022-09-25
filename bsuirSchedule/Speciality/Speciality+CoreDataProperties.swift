@@ -24,7 +24,7 @@ extension Speciality {
     @NSManaged public var abbreviation: String!
     
     @NSManaged public var educationTypeValue: Int16
-    @NSManaged public var code: String!
+    @NSManaged public var code: String?
     
     @NSManaged public var faculty: Faculty!
     @NSManaged public var groups: NSSet?
@@ -51,6 +51,7 @@ extension Speciality {
 //MARK: EducationType
 
 enum EducationType: Int16, CaseIterable {
+    case unknown = 0
     case fullTime = 1
     case distant = 2
     case remote = 3
@@ -58,6 +59,8 @@ enum EducationType: Int16, CaseIterable {
     
     var description: String {
         switch self {
+        case .unknown:
+            return "неизвестно"
         case .fullTime:
             return "дневная"
         case .distant:

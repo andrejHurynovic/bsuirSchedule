@@ -31,7 +31,9 @@ struct GroupDetailedView: View {
         Section(viewModel.group.speciality.name) {
             Form("Аббревиатура", viewModel.group.speciality.abbreviation)
             Form("Факультет", viewModel.group.speciality.faculty.abbreviation)
-            Form("Шифр", viewModel.group.speciality.code)
+            if let code = viewModel.group.speciality.code {
+                Form("Шифр", code)
+            }
             Form("Форма обучения", viewModel.group.speciality.educationType.description)
             if let date = viewModel.group.updateDate {
                 Form("Последние обновление", DateFormatters.shared.shortDate.string(from: date))
