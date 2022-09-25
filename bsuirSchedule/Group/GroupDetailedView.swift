@@ -35,6 +35,9 @@ struct GroupDetailedView: View {
                 Form("Шифр", code)
             }
             Form("Форма обучения", viewModel.group.speciality.educationType.description)
+            if let numberOfStudents = viewModel.group.numberOfStudents, numberOfStudents != 0 {
+                Form("Количество студентов", String(numberOfStudents))
+            }
             if let date = viewModel.group.updateDate {
                 Form("Последние обновление", DateFormatters.shared.shortDate.string(from: date))
             }

@@ -27,9 +27,9 @@ class GroupStorage: Storage<Group> {
     
     func fetchAllDetailed() {
         self.values.value.forEachInout { group in
-            if group.updateDate == nil  {
+//            if group.updateDate == nil  {
                 update(group)
-            }
+//            }
         }
     }
     

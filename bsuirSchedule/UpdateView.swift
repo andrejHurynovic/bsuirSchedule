@@ -16,6 +16,11 @@ struct UpdateView: View {
     @ObservedObject var groupStorage = GroupStorage.shared
     @ObservedObject var employeeStorage = EmployeeStorage.shared
     
+    @State var facultyFetched = false
+    @State var specialityFetched = false
+    @State var classroomsFetched = false
+
+    
     var body: some View {
         List {
             Button("Обновить всё") {
@@ -39,7 +44,10 @@ struct UpdateView: View {
                 }
             }
             .onChange(of: facultyStorage.tempValues.count) { newValue in
-                specialityStorage.fetch()
+                if facultyFetched == false {
+                    facultyFetched = false
+                    specialityStorage.fetch()
+                }
             }
             HStack(alignment: .center) {
                 Text("Специальности: ")
@@ -53,7 +61,10 @@ struct UpdateView: View {
                 }
             }
             .onChange(of: specialityStorage.tempValues.count) { newValue in
-                classroomStorage.fetch()
+                if specialityFetched == false {
+                    specialityFetched = true
+                    classroomStorage.fetch()
+                }
             }
             HStack(alignment: .center) {
                 Text("Кабинеты: ")
@@ -67,8 +78,11 @@ struct UpdateView: View {
                 }
             }
             .onChange(of: classroomStorage.tempValues.count) { newValue in
-                groupStorage.fetch()
-                employeeStorage.fetch()
+                if classroomsFetched == false {
+                    self.classroomsFetched = true
+                    groupStorage.fetch()
+                    employeeStorage.fetch()
+                }
             }
             HStack(alignment: .center) {
                 Text("Преподаватели: ")

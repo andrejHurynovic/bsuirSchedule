@@ -12,6 +12,7 @@ import CoreData
 extension Group {
     
     @NSManaged public var id: String!
+    @NSManaged public var numberOfStudents: Int16
     @NSManaged public var course: Int16
     @NSManaged public var favourite: Bool
     @NSManaged public var updateDate: Date?

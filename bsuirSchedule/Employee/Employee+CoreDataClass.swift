@@ -18,34 +18,8 @@ public class Employee: NSManagedObject, Decodable {
         let entity = NSEntityDescription.entity(forEntityName: "Employee", in: context)
         self.init(entity: entity!, insertInto: context)
         
-        var container = try decoder.container(keyedBy: CodingKeys.self)
-            
-        //Если существует educationStart или examsStart, всегда существуют соответствующие educationEnd и examsEnd.
-        if let educationStartString = try? container.decode(String.self, forKey: .educationStart) {
-            self.educationStart = DateFormatters.shared.get(.shortDate).date(from: educationStartString)
-            self.educationEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .educationEnd))
-        }
-
-        if let examsStartString = try? container.decode(String.self, forKey: .examsStart) {
-            self.examsStart = DateFormatters.shared.get(.shortDate).date(from: examsStartString)
-            self.examsEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .examsEnd))
-        }
-        
-        if var schedules = try? container.decode([String:[Lesson]].self, forKey: .lessons) {
-            schedules.keys.forEach { key in
-                let weekDay = WeekDay(string: key)
-                schedules[key]!.forEachInout { lesson in
-                    lesson.weekday = weekDay.rawValue
-                }
-            }
-            self.addToLessons(NSSet(array: Array(schedules.values.joined()) as! [Lesson]))
-        }
-        
-        if let exams = try? container.decode([Lesson].self, forKey: .exams) {
-            print(exams.count)
-            self.addToLessons(NSSet(array: exams))
-        }
-        
+        let rootContainer = try decoder.container(keyedBy: CodingKeys.self)
+        var container = rootContainer
         
         //Структура employee существует при получении ответа на запрос Schedule. Нужна для автоматического слияния при обновлении группы таким образом. Причём это может быть как обновление группы с уже загруженным расписанием, так и без него.
         if let employeeContainer = try? container.nestedContainer(keyedBy: CodingKeys.self, forKey: .employeeContainer) {
@@ -78,6 +52,34 @@ public class Employee: NSManagedObject, Decodable {
         
         self.photoLink = try? container.decode(String.self, forKey: .photoLink)
         
+        container = rootContainer
+            
+        //Если существует educationStart или examsStart, всегда существуют соответствующие educationEnd и examsEnd.
+        if let educationStartString = try? container.decode(String.self, forKey: .educationStart) {
+            self.educationStart = DateFormatters.shared.get(.shortDate).date(from: educationStartString)
+            self.educationEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .educationEnd))
+        }
+
+        if let examsStartString = try? container.decode(String.self, forKey: .examsStart) {
+            self.examsStart = DateFormatters.shared.get(.shortDate).date(from: examsStartString)
+            self.examsEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .examsEnd))
+        }
+        
+        if var schedules = try? container.decode([String:[Lesson]].self, forKey: .lessons) {
+            schedules.keys.forEach { key in
+                let weekDay = WeekDay(string: key)
+                schedules[key]!.forEachInout { lesson in
+                    lesson.weekday = weekDay.rawValue
+                    lesson.employeesIDs = [self.id]
+                }
+            }
+            self.addToLessons(NSSet(array: Array(schedules.values.joined()) as! [Lesson]))
+        }
+        
+        if let exams = try? container.decode([Lesson].self, forKey: .exams) {
+            self.addToLessons(NSSet(array: exams))
+        }
+    
     }
     
     private enum CodingKeys: String, CodingKey {

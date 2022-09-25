@@ -27,7 +27,6 @@ extension LessonsSectioned {
     func lessonsSections() -> [LessonsSection] {
         let lessons = lessons?.allObjects as! [Lesson]
         var lessonsSection: [LessonsSection] = []
-      print(lessons)
         educationDates.forEach { date in
             let filteredLessons = lessons.filter { lesson in
                 return ((lesson.weekday == date.weekDay().rawValue &&

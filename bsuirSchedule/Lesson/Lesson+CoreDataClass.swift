@@ -24,6 +24,9 @@ public class Lesson: NSManagedObject, Decodable {
         //Abbreviation cannot be optional, because it used as constraint
         self.abbreviation = ((try? container.decode(String.self, forKey: .abbreviation)) ?? "")
         
+        self.note = try? container.decode(String.self, forKey: .note)
+        self.subgroup = Int16(try! container.decode(Int.self, forKey: .subgroup))
+        
         switch (try? container.decode(String.self, forKey: .lessonTypeValue)) {
         case "ЛК":
             self.lessonType = .lecture
@@ -44,32 +47,25 @@ public class Lesson: NSManagedObject, Decodable {
         case "Кандидатский зачет":
             self.lessonType = .candidateText
         default:
-            if let type = try? container.decode(String.self, forKey: .lessonTypeValue) {
-                print(type)
-            }
             self.lessonType = .none
             break
         }
         
+        //MARK: Classrooms
         if let classrooms = try? container.decode([String].self, forKey: .classroom) {
             classrooms.forEach { classroomName in
+                //If the classroom is unknown it is created from the available information
                 if let classroom = ClassroomStorage.shared.classroom(name: classroomName) {
                     self.addToClassrooms(classroom)
                 } else {
-#warning("Добавить какой-то иной вывод ошибки")
-                    print(classroomName)
+                    let classroom = Classroom(string: classroomName)
+                    print("\(classroomName) == \(classroom.formattedName(showBuilding: true))")
+                    self.addToClassrooms(classroom)
                 }
             }
         }
         
-        self.note = try? container.decode(String.self, forKey: .note)
-        
-        //        self.addToGroups(NSSet(array: GroupStorage.shared.groups(ids: try! container.decode([String].self, forKey: .groups))))
-        self.subgroup = Int16(try! container.decode(Int.self, forKey: .subgroup))
-        
-        self.timeStart = try! container.decode(String.self, forKey: .timeStart)
-        self.timeEnd = try! container.decode(String.self, forKey: .timeEnd)
-        
+        //MARK: Date and time
         if let date = try? container.decode(String.self, forKey: .date) {
             self.dateString = date
         } else {
@@ -82,8 +78,12 @@ public class Lesson: NSManagedObject, Decodable {
             = DateFormatters.shared.shortDate.date(from: try! container.decode(String.self, forKey: .endLessonDate))
         }
         
-        //Массив недель может быть [0, 1, 2, 3 ,4], но нам удобнее считать с нуля, так как 0 тут значит, что занятие есть на всех неделях, поэтому отнимаем единицу у всех значений массива.
+        self.timeStart = try! container.decode(String.self, forKey: .timeStart)
+        self.timeEnd = try! container.decode(String.self, forKey: .timeEnd)
         
+        //MARK: Weeks
+        // An array of weeks can take values [0, 1, 2, 3 ,4], but it is more convenient for us to count the weeks from zero, and in the API 0 means that there is an occupation for all weeks, so we subtract one from all the values of the array.
+        //[1, 2 ,4] -> [0, 1, 3]
         if let weeks = try? container.decode([Int].self, forKey: .weeks) {
             self.weeks = weeks.map{ $0 - 1 }
             if self.weeks.contains(-1) {
@@ -91,31 +91,31 @@ public class Lesson: NSManagedObject, Decodable {
             }
         }
         
-        let employees: [[String: Any]] = try container.decode(Array<Any>.self, forKey: .employee) as! [[String: Any]]
-        
-        self.employeesIDs = employees.map { $0["id"] as! Int }
-        
-        employeesIDs?.forEachInout(body: { employeeID in
-            if let employee = EmployeeStorage.shared.values.value.first(where: { $0.id == employeeID }) {
-                self.addToEmployees(employee)
-            } else {
-                print(employeeID)
-            }
-        })
-        
         //MARK: Announcement
-        //Announcement are
         if try! container.decode(Bool.self, forKey: .announcement) == true {
             self.abbreviation = "Объявление"
             
+            //Announcement can be repeated every certain day of the week, the boundaries of which are defined by startLessonDate and endLessonDate
             self.weeks = [0, 1, 2, 3]
+            //Start and end time in announcementStart and announcementEnd fields can be different then time in timeStart and timeEnd
             self.timeStart = try! container.decode(String.self, forKey: .announcementStart)
             self.timeEnd = try! container.decode(String.self, forKey: .announcementEnd)
             
             let weekday = self.startLessonDate!.weekDay()
             self.weekday = weekday.rawValue
         }
+        
+        //MARK: Employees
+        if let employees = try? container.decode([Employee].self, forKey: .employees) {
+            self.employeesIDs = employees.map {$0.id}
+            self.addToEmployees(NSSet(array: employees))
+        }
+        
+        //MARK: Groups
+        let groups = try! container.decode([Group].self, forKey: .groups)
+        self.addToGroups(NSSet(array: groups))
     }
+    
     
     
     private enum CodingKeys: String, CodingKey {
@@ -138,35 +138,6 @@ public class Lesson: NSManagedObject, Decodable {
         case startLessonDate = "startLessonDate"
         case endLessonDate = "endLessonDate"
         
-        case employee = "employees"
-    }
-}
-
-
-
-extension Lesson {
-    func getLessonTypeAbbreviation() -> String {
-        switch self.lessonType {
-        case .none:
-            return "Без типа"
-        case .lecture:
-            return "ЛК"
-        case .remoteLecture:
-            return "УЛК"
-        case .practice:
-            return "ПЗ"
-        case .remotePractice:
-            return "УПЗ"
-        case .laboratory:
-            return "ЛР"
-        case .remoteLaboratory:
-            return "УЛР"
-        case .consultation:
-            return "Конс"
-        case .exam:
-            return "Экз"
-        case .candidateText:
-            return "КЗ"
-        }
+        case employees = "employees"
     }
 }

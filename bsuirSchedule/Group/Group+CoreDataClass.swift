@@ -28,7 +28,7 @@ public class Group: NSManagedObject, Decodable {
             }
             container = con
         }
-
+        
         
         if let educationStartString = try? container.decode(String.self, forKey: .educationStart) {
             self.educationStart = DateFormatters.shared.get(.shortDate).date(from: educationStartString)
@@ -48,24 +48,23 @@ public class Group: NSManagedObject, Decodable {
                     lesson.weekday = weekDay.rawValue
                 }
             }
-            self.addToLessons(NSSet(array: Array(schedules.values.joined()) as! [Lesson]))
         }
         
-        if let exams = try? container.decode([Lesson].self, forKey: .exams) {
-            self.addToLessons(NSSet(array: exams))
-        }
+        try? container.decode([Lesson].self, forKey: .exams)
         
         //MARK: Group information
         //The studentGroup structure exists only when receiving a response to the Schedule request. It is needed for automatic merging when updating the group. Moreover, it can be either an update of the group with an already loaded schedule, or without it.
-        //This fields is also contained when fetching all groups (), but located in root
+        //This fields is also contained when fetching all groups, but located in root
         if let groupInformation = try? container.nestedContainer(keyedBy: CodingKeys.self, forKey: .groupContainer) {
             container = groupInformation
         }
-        if let id = try? container.decode(String.self, forKey: .id) {
-            self.id = id
-            
-            //MARK: Speciality
-            let specialityID = try! container.decode(Int32.self, forKey: .specialityID)
+        self.id = try! container.decode(String.self, forKey: .id)
+        if let numberOfStudents = try? container.decode(Int16.self, forKey: .numberOfStudents) {
+            self.numberOfStudents = numberOfStudents
+        }
+        
+        //MARK: Speciality
+        if let specialityID = try? container.decode(Int32.self, forKey: .specialityID) {
             //If the specialty is unknown it is created from the available information
             if let speciality = SpecialityStorage.shared.values.value.first(where: {$0.id == specialityID}) {
                 self.speciality = speciality
@@ -88,6 +87,13 @@ public class Group: NSManagedObject, Decodable {
             }
         }
         
+        //For studentGroups structure in Lesson
+        if let specialityCode = try? container.decode (String.self, forKey: .specialityCode) {
+            if let speciality = SpecialityStorage.shared.values.value.first(where: {$0.code == specialityCode}) {
+                self.speciality = speciality
+            }
+        }
+        
         if let course = try? container.decode(Int16.self, forKey: .course) {
             self.course = course
         }
@@ -97,8 +103,6 @@ public class Group: NSManagedObject, Decodable {
 
 
 private enum CodingKeys: String, CodingKey {
-    case id = "name"
-    
     case educationStart = "startDate"
     case educationEnd = "endDate"
     case examsStart = "startExamsDate"
@@ -110,9 +114,12 @@ private enum CodingKeys: String, CodingKey {
     //Group information container keys
     case groupContainer = "studentGroupDto"
     
+    case id = "name"
+    case numberOfStudents
     case course
     case specialityID = "specialityDepartmentEducationFormId"
-    case specialityName = "specialityName"
+    case specialityCode
+    case specialityName
     case specialityAbbreviation = "specialityAbbrev"
     case facultyID = "facultyId"
     case facultyAbbreviation = "facultyAbbrev"

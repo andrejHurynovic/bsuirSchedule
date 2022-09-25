@@ -38,7 +38,7 @@ extension Lesson {
     @NSManaged public var timeEnd: String!
     
     @NSManaged public var employees: NSSet?
-    @NSManaged public var employeesIDs: [Int]?
+    @NSManaged public var employeesIDs: [Int32]?
     
 }
 
@@ -115,77 +115,3 @@ extension Lesson {
     }
 }
 
-enum LessonType: Int16, CaseIterable {
-    case none = 0
-    case lecture = 1
-    case remoteLecture = 2
-    case practice = 3
-    case remotePractice = 4
-    case laboratory = 5
-    case remoteLaboratory = 6
-    case consultation = 7
-    case exam = 8
-    case candidateText = 9
-    
-    func description() -> String {
-        switch self {
-        case .none:
-            return "Без типа"
-        case .lecture:
-            return "ЛК"
-        case .remoteLecture:
-            return "УЛК"
-        case .practice:
-            return "ПЗ"
-        case .remotePractice:
-            return "УПЗ"
-        case .laboratory:
-            return "ЛР"
-        case .remoteLaboratory:
-            return "УЛР"
-        case .consultation:
-            return "Конс"
-        case .exam:
-            return "Экз"
-        case .candidateText:
-            return "КЗ"
-        }
-    }
-}
-
-enum WeekDay: Int16, CaseIterable, Decodable {
-    init(string: String) {
-        switch(string) {
-        case "Понедельник":
-            self = .Monday
-        case "Вторник":
-            self = .Tuesday
-        case "Среда":
-            self = .Wednesday
-        case "Четверг":
-            self = .Thursday
-        case "Пятница":
-            self = .Friday
-        case "Суббота":
-            self = .Saturday
-        case "Воскресенье":
-            self = .Sunday
-        default:
-            self = .none
-        }
-    }
-    case Monday = 0
-    case Tuesday = 1
-    case Wednesday = 2
-    case Thursday = 3
-    case Friday = 4
-    case Saturday = 5
-    case Sunday = 6
-    case none = 7
-}
-
-extension Date {
-    func weekDay() -> WeekDay {
-        WeekDay(rawValue: Int16((Calendar(identifier: .iso8601).ordinality(of: .weekday, in: .weekOfYear, for: self)! - 1)))!
-    }
-}
