@@ -46,6 +46,8 @@ class DesignManager: ObservableObject {
             return practiceColor
         case .laboratory:
             return laboratoryColor
+        case .remoteLaboratory:
+            return laboratoryColor
         case .consultation:
             return consultationColor
         case .exam:

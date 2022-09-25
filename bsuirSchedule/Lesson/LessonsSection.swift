@@ -45,7 +45,7 @@ struct LessonsSection: Hashable {
         if searchText == "" {
             return lessons
         } else {
-            return lessons.filter({ $0.subject.localizedStandardContains(searchText) })
+            return lessons.filter({ $0.abbreviation.localizedStandardContains(searchText) })
         }
     }
     

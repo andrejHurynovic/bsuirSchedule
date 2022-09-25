@@ -103,7 +103,9 @@ struct LessonsView: View {
                             LessonView(lesson: lesson, showEmployee: viewModel.showEmployees, showGroups: viewModel.showGroups, color: DesignManager.shared.color(lesson.lessonType), showToday: today)
 //                                .id(DateFormatters.shared.get(.shortDate).string(from: section.date) + "\(arc4random())")
                                 .contextMenu {
-                                    Text(lesson.subject)
+                                    if let subject = lesson.subject {
+                                        Text(subject)
+                                    }
                                     Button {
                                         //                                        taskViewModel.likeInit(lesson: lesson, lessonsSections: viewModel.sectionsWithLessonsAfterToday(lesson))
                                         taskViewPresented = true

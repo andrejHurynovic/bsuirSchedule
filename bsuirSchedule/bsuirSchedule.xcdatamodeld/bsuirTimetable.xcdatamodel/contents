@@ -80,15 +80,15 @@
         <attribute name="taskDescription" attributeType="String"/>
     </entity>
     <entity name="Lesson" representedClassName="Lesson" syncable="YES">
-        <attribute name="abbreviation" optional="YES" attributeType="String"/>
+        <attribute name="abbreviation" attributeType="String"/>
         <attribute name="dateString" attributeType="String"/>
         <attribute name="employeesIDs" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[Int]"/>
-        <attribute name="endLessonDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="endLessonDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="lessonTypeValue" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="note" optional="YES" attributeType="String"/>
-        <attribute name="startLessonDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="startLessonDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="subgroup" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="subject" attributeType="String"/>
+        <attribute name="subject" optional="YES" attributeType="String"/>
         <attribute name="timeEnd" attributeType="String"/>
         <attribute name="timeStart" attributeType="String"/>
         <attribute name="weekday" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -98,7 +98,7 @@
         <relationship name="groups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="lessons" inverseEntity="Group"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
-                <constraint value="subject"/>
+                <constraint value="abbreviation"/>
                 <constraint value="employeesIDs"/>
                 <constraint value="timeStart"/>
                 <constraint value="weekday"/>

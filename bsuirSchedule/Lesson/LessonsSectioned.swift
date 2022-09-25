@@ -32,7 +32,7 @@ extension LessonsSectioned {
             let filteredLessons = lessons.filter { lesson in
                 return ((lesson.weekday == date.weekDay().rawValue &&
                 lesson.weeks.contains(date.educationWeek) &&
-                lesson.dateRange.contains(date))
+                (lesson.dateRange?.contains(date) == true))
                 //exams
                 || (lesson.date == date))
             }

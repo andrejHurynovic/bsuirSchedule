@@ -53,7 +53,7 @@ class TaskViewModel: ObservableObject {
     
     func lessonDescription() -> String {
         if let lesson = lesson {
-            return lesson.subject + " (\(lesson.getLessonTypeAbbreviation()))"
+            return lesson.abbreviation + " (\(lesson.getLessonTypeAbbreviation()))"
         }
         
         if let task = task {

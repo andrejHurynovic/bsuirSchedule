@@ -23,7 +23,7 @@ struct GroupsList: View {
             Section(section.title) {
                 ForEach(section.groups, id: \.id, content: { group in
                     NavigationLink(destination: GroupDetailedView(viewModel: GroupViewModel(group))){
-                        Text(group.id)
+                        Text(group.id ?? "Error")
                     }
                     .contextMenu {
                         FavoriteButton(group.favourite) {

@@ -20,20 +20,11 @@ public class Lesson: NSManagedObject, Decodable {
         
         let container = try! decoder.container(keyedBy: CodingKeys.self)
         
-        self.subject = ((try? container.decode(String.self, forKey: .subject)) ?? "")
+        self.subject = try? container.decode(String.self, forKey: .subject)
+        //Abbreviation cannot be optional, because it used as constraint
         self.abbreviation = ((try? container.decode(String.self, forKey: .abbreviation)) ?? "")
         
         switch (try? container.decode(String.self, forKey: .lessonTypeValue)) {
-            //Бывают занятия без типа. Возможно следует убрать enum для типа занятий, хотя без этого не будет возможности локализовать приложение
-        case nil:
-            if let announcement = try? container.decode(Bool.self, forKey: .announcement) {
-                if announcement == true {
-                    self.abbreviation = "Объявление"
-                    self.subject = "Объявление"
-                }
-                self.lessonType = .none
-            }
-            
         case "ЛК":
             self.lessonType = .lecture
         case "УЛк":
@@ -44,6 +35,8 @@ public class Lesson: NSManagedObject, Decodable {
             self.lessonType = .remotePractice
         case "ЛР":
             self.lessonType = .laboratory
+        case "УЛР":
+            self.lessonType = .remoteLaboratory
         case "Экзамен":
             self.lessonType = .exam
         case "Консультация":
@@ -51,6 +44,9 @@ public class Lesson: NSManagedObject, Decodable {
         case "Кандидатский зачет":
             self.lessonType = .candidateText
         default:
+            if let type = try? container.decode(String.self, forKey: .lessonTypeValue) {
+                print(type)
+            }
             self.lessonType = .none
             break
         }
@@ -60,7 +56,7 @@ public class Lesson: NSManagedObject, Decodable {
                 if let classroom = ClassroomStorage.shared.classroom(name: classroomName) {
                     self.addToClassrooms(classroom)
                 } else {
-                    #warning("Добавить какой-то иной вывод ошибки")
+#warning("Добавить какой-то иной вывод ошибки")
                     print(classroomName)
                 }
             }
@@ -68,17 +64,11 @@ public class Lesson: NSManagedObject, Decodable {
         
         self.note = try? container.decode(String.self, forKey: .note)
         
-//        self.addToGroups(NSSet(array: GroupStorage.shared.groups(ids: try! container.decode([String].self, forKey: .groups))))
+        //        self.addToGroups(NSSet(array: GroupStorage.shared.groups(ids: try! container.decode([String].self, forKey: .groups))))
         self.subgroup = Int16(try! container.decode(Int.self, forKey: .subgroup))
         
         self.timeStart = try! container.decode(String.self, forKey: .timeStart)
         self.timeEnd = try! container.decode(String.self, forKey: .timeEnd)
-        
-        self.startLessonDate = DateFormatters.shared.shortDate.date(from: try! container.decode(String.self, forKey: .startLessonDate))
-        self.endLessonDate
-        = DateFormatters.shared.shortDate.date(from: try! container.decode(String.self, forKey: .endLessonDate))
-        
-        //Массив недель может быть [0, 1, 2, 3 ,4], но нам удобнее считать с нуля, так как 0 тут значит, что занятие есть на всех неделях, поэтому отнимаем единицу у всех значений массива.
         
         if let date = try? container.decode(String.self, forKey: .date) {
             self.dateString = date
@@ -86,17 +76,21 @@ public class Lesson: NSManagedObject, Decodable {
             self.dateString = ""
         }
         
+        if let startLessonDateString = try? container.decode(String.self, forKey: .startLessonDate) {
+            self.startLessonDate = DateFormatters.shared.shortDate.date(from: startLessonDateString)
+            self.endLessonDate
+            = DateFormatters.shared.shortDate.date(from: try! container.decode(String.self, forKey: .endLessonDate))
+        }
+        
+        //Массив недель может быть [0, 1, 2, 3 ,4], но нам удобнее считать с нуля, так как 0 тут значит, что занятие есть на всех неделях, поэтому отнимаем единицу у всех значений массива.
+        
         if let weeks = try? container.decode([Int].self, forKey: .weeks) {
             self.weeks = weeks.map{ $0 - 1 }
             if self.weeks.contains(-1) {
                 self.weeks.removeFirst()
             }
-        } else {
-            //Для anauncmentsssss
-            self.weeks = []
-            self.dateString = try! container.decode(String.self, forKey: .startLessonDate)
         }
-
+        
         let employees: [[String: Any]] = try container.decode(Array<Any>.self, forKey: .employee) as! [[String: Any]]
         
         self.employeesIDs = employees.map { $0["id"] as! Int }
@@ -108,7 +102,21 @@ public class Lesson: NSManagedObject, Decodable {
                 print(employeeID)
             }
         })
+        
+        //MARK: Announcement
+        //Announcement are
+        if try! container.decode(Bool.self, forKey: .announcement) == true {
+            self.abbreviation = "Объявление"
+            
+            self.weeks = [0, 1, 2, 3]
+            self.timeStart = try! container.decode(String.self, forKey: .announcementStart)
+            self.timeEnd = try! container.decode(String.self, forKey: .announcementEnd)
+            
+            let weekday = self.startLessonDate!.weekDay()
+            self.weekday = weekday.rawValue
+        }
     }
+    
     
     private enum CodingKeys: String, CodingKey {
         case subject = "subjectFullName"
@@ -124,6 +132,8 @@ public class Lesson: NSManagedObject, Decodable {
         case weeks = "weekNumber"
         case timeStart = "startLessonTime"
         case timeEnd = "endLessonTime"
+        case announcementStart = "announcementStart"
+        case announcementEnd = "announcementEnd"
         case date = "dateLesson"
         case startLessonDate = "startLessonDate"
         case endLessonDate = "endLessonDate"
@@ -149,6 +159,8 @@ extension Lesson {
             return "УПЗ"
         case .laboratory:
             return "ЛР"
+        case .remoteLaboratory:
+            return "УЛР"
         case .consultation:
             return "Конс"
         case .exam:

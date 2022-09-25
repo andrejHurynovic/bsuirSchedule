@@ -25,14 +25,14 @@ class GroupViewModel: ObservableObject {
     
     init(_ group: Group) {
         self.group = group
-        let cancellable = GroupStorage.shared.values.eraseToAnyPublisher().sink(receiveValue: { groups in
-            withAnimation {
-                self.group = groups.first { group in    
-                    self.group.id == group.id
-                }!
-            }
-        })
-        cancellables.insert(cancellable)
+//        let cancellable = GroupStorage.shared.values.eraseToAnyPublisher().sink(receiveValue: { groups in
+//            withAnimation {
+//                self.group = groups.first { group in    
+//                    self.group.id == group.id
+//                }!
+//            }
+//        })
+//        cancellables.insert(cancellable)
     }
     
     func getUpdateDate() {

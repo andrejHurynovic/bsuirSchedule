@@ -19,7 +19,7 @@ extension Lesson {
         return request
     }
     
-    @NSManaged public var subject: String!
+    @NSManaged public var subject: String?
     @NSManaged public var abbreviation: String!
     @NSManaged public var lessonTypeValue: Int16
     @NSManaged public var classrooms:  NSSet?
@@ -31,8 +31,8 @@ extension Lesson {
     @NSManaged public var weekday: Int16
     @NSManaged public var weeks: [Int]!
     @NSManaged public var dateString: String!
-    @NSManaged public var startLessonDate: Date!
-    @NSManaged public var endLessonDate: Date!
+    @NSManaged public var startLessonDate: Date?
+    @NSManaged public var endLessonDate: Date?
     
     @NSManaged public var timeStart: String!
     @NSManaged public var timeEnd: String!
@@ -106,8 +106,12 @@ extension Lesson {
         return DateFormatters.shared.get(.shortDate).date(from: self.dateString)!
     }
     ///Range between start and end date
-    var dateRange: ClosedRange<Date> {
-        return startLessonDate...endLessonDate
+    var dateRange: ClosedRange<Date>? {
+        if let startLessonDate = self.startLessonDate, let endLessonDate = self.endLessonDate {
+            return startLessonDate...endLessonDate
+        } else {
+            return nil
+        }
     }
 }
 
@@ -118,9 +122,10 @@ enum LessonType: Int16, CaseIterable {
     case practice = 3
     case remotePractice = 4
     case laboratory = 5
-    case consultation = 6
-    case exam = 7
-    case candidateText = 8
+    case remoteLaboratory = 6
+    case consultation = 7
+    case exam = 8
+    case candidateText = 9
     
     func description() -> String {
         switch self {
@@ -136,6 +141,8 @@ enum LessonType: Int16, CaseIterable {
             return "УПЗ"
         case .laboratory:
             return "ЛР"
+        case .remoteLaboratory:
+            return "УЛР"
         case .consultation:
             return "Конс"
         case .exam:

@@ -19,6 +19,17 @@ public class Group: NSManagedObject, Decodable {
         
         var container = try decoder.container(keyedBy: CodingKeys.self)
         
+        if let groupInformation = try? container.nestedContainer(keyedBy: CodingKeys.self, forKey: .groupContainer) {
+            let con = container
+            container = groupInformation
+            if let id = try? container.decode(String.self, forKey: .id) {
+                self.id = id
+                print(id)
+            }
+            container = con
+        }
+
+        
         if let educationStartString = try? container.decode(String.self, forKey: .educationStart) {
             self.educationStart = DateFormatters.shared.get(.shortDate).date(from: educationStartString)
             self.educationEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .educationEnd))
