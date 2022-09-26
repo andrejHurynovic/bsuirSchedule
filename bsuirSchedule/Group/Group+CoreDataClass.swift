@@ -19,17 +19,6 @@ public class Group: NSManagedObject, Decodable {
         
         var container = try decoder.container(keyedBy: CodingKeys.self)
         
-        if let groupInformation = try? container.nestedContainer(keyedBy: CodingKeys.self, forKey: .groupContainer) {
-            let con = container
-            container = groupInformation
-            if let id = try? container.decode(String.self, forKey: .id) {
-                self.id = id
-                print(id)
-            }
-            container = con
-        }
-        
-        
         if let educationStartString = try? container.decode(String.self, forKey: .educationStart) {
             self.educationStart = DateFormatters.shared.get(.shortDate).date(from: educationStartString)
             self.educationEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .educationEnd))
@@ -50,7 +39,7 @@ public class Group: NSManagedObject, Decodable {
             }
         }
         
-        try? container.decode([Lesson].self, forKey: .exams)
+        let _ = try? container.decode([Lesson].self, forKey: .exams)
         
         //MARK: Group information
         //The studentGroup structure exists only when receiving a response to the Schedule request. It is needed for automatic merging when updating the group. Moreover, it can be either an update of the group with an already loaded schedule, or without it.

@@ -24,7 +24,7 @@ class EmployeeViewModel: ObservableObject {
     init(_ employee: Employee) {
         self.employee = employee
         
-        getUpdateDate()
+//        getUpdateDate()
     }
     
     func getUpdateDate() {

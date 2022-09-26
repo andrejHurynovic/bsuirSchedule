@@ -21,11 +21,13 @@ public class Employee: NSManagedObject, Decodable {
         let rootContainer = try decoder.container(keyedBy: CodingKeys.self)
         var container = rootContainer
         
-        //Структура employee существует при получении ответа на запрос Schedule. Нужна для автоматического слияния при обновлении группы таким образом. Причём это может быть как обновление группы с уже загруженным расписанием, так и без него.
+        //MARK: Employee container
+        //This container exists only if fetching schedule.
         if let employeeContainer = try? container.nestedContainer(keyedBy: CodingKeys.self, forKey: .employeeContainer) {
             container = employeeContainer
         }
         
+        //ID should be specified before lessons processing
         self.id = (try! container.decode(Int32.self, forKey: .id))
         if let urlID = try? container.decode(String.self, forKey: .urlID) {
             self.urlID = urlID
@@ -54,7 +56,6 @@ public class Employee: NSManagedObject, Decodable {
         
         container = rootContainer
             
-        //Если существует educationStart или examsStart, всегда существуют соответствующие educationEnd и examsEnd.
         if let educationStartString = try? container.decode(String.self, forKey: .educationStart) {
             self.educationStart = DateFormatters.shared.get(.shortDate).date(from: educationStartString)
             self.educationEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .educationEnd))
@@ -69,6 +70,7 @@ public class Employee: NSManagedObject, Decodable {
             schedules.keys.forEach { key in
                 let weekDay = WeekDay(string: key)
                 schedules[key]!.forEachInout { lesson in
+                    //Set correct weekday and employeesID
                     lesson.weekday = weekDay.rawValue
                     lesson.employeesIDs = [self.id]
                 }
@@ -81,29 +83,31 @@ public class Employee: NSManagedObject, Decodable {
         }
     
     }
+}
+
+
+
+private enum CodingKeys: String, CodingKey {
+    case id
+    case urlID = "urlId"
+    case firstName
+    case middleName
+    case lastName
     
-    private enum CodingKeys: String, CodingKey {
-        case id
-        case urlID = "urlId"
-        case firstName
-        case middleName
-        case lastName
-        
-        case educationStart = "startDate"
-        case educationEnd = "endDate"
-        case examsStart = "startExamsDate"
-        case examsEnd = "endExamsDate"
-        
-        case departments = "academicDepartment"
-        case rank
-        case degree
-        
-        case photoLink
-        
-        case lessons = "schedules"
-        case exams = "exams"
-        
-        case employeeContainer = "employeeDto"
-    }
+    case educationStart = "startDate"
+    case educationEnd = "endDate"
+    case examsStart = "startExamsDate"
+    case examsEnd = "endExamsDate"
+    
+    case departments = "academicDepartment"
+    case rank
+    case degree
+    
+    case photoLink
+    
+    case lessons = "schedules"
+    case exams = "exams"
+    
+    case employeeContainer = "employeeDto"
 }
 

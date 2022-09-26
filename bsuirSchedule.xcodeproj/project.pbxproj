@@ -298,8 +298,8 @@
 				F65F832026E8F37800B8CC4E /* EmployeesViewModel.swift */,
 				F64AD7AF266A816D00115E6B /* EmployeesView.swift */,
 				F64BEDD926E9072900C7AD09 /* EmployeeView.swift */,
-				F69C463626E91B430036D6A1 /* EmployeeDetailedView.swift */,
 				F698C25828D4995000C24EFB /* EmployeeViewModel.swift */,
+				F69C463626E91B430036D6A1 /* EmployeeDetailedView.swift */,
 			);
 			path = Employee;
 			sourceTree = "<group>";
