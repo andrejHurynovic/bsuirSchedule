@@ -20,6 +20,7 @@ struct GroupDetailedView: View {
                 educationDates
                 lastUpdate
             }
+            statistics
         }
         .navigationTitle(viewModel.navigationTitle)
         .refreshable {
@@ -42,6 +43,16 @@ struct GroupDetailedView: View {
                 Form("Последние обновление", DateFormatters.shared.shortDate.string(from: date))
             }
             
+        }
+    }
+    
+    @ViewBuilder var lessons: some View {
+        if let lessons = viewModel.group.lessons?.allObjects as? [Lesson], lessons.isEmpty == false {
+            NavigationLink {
+                LessonsView(viewModel: LessonsViewModel(viewModel.group))
+            } label: {
+                Label("Расписание группы", systemImage: "calendar")
+            }
         }
     }
     
@@ -68,7 +79,6 @@ struct GroupDetailedView: View {
         }
     }
     @ViewBuilder var lastUpdate: some View {
-        
         HStack {
             Text("Последнее обновление в ИИС")
                 .onAppear {
@@ -85,13 +95,40 @@ struct GroupDetailedView: View {
         }
     }
     
-    @ViewBuilder var lessons: some View {
-        if let lessons = viewModel.group.lessons?.allObjects as? [Lesson], lessons.isEmpty == false {
-            NavigationLink {
-                LessonsView(viewModel: LessonsViewModel(viewModel.group))
-            } label: {
-                Label("Расписание группы", systemImage: "calendar")
-            }
+    @ViewBuilder var statistics: some View {
+        DisclosureGroup("Статистика") {
+            let lessonsSections = viewModel.group.lessonsSections()
+            let allLessons = Array(lessonsSections.map { $0.lessons }.joined())
+            let subjects = Set(allLessons.compactMap { $0.abbreviation }).sorted()
+            ForEach(subjects, id: \.self, content: { subject in
+                DisclosureGroup {
+                    let subjectLessons = allLessons.filter { $0.abbreviation == subject }
+                    let lessonTypes = Set(subjectLessons.map({ $0.lessonType })).sorted { $0.rawValue < $1.rawValue }
+                    ForEach(lessonTypes, id: \.self) { lessonType in
+                        let lessonTypeLessons = subjectLessons.filter { $0.lessonType == lessonType }
+                        var subgroups = Set(lessonTypeLessons.map { $0.subgroup }).sorted()
+                        if subgroups.count == 1 {
+                            Form(lessonType.description(), String(lessonTypeLessons.count))
+                        } else {
+                            DisclosureGroup {
+                                let subgroupp = subgroups.removeFirst()
+                                let subgroupLessons = lessonTypeLessons.filter { $0.subgroup == subgroupp }
+                                Form("Общие", String(subgroupLessons.count))
+                                ForEach(subgroups, id: \.self) { subgroup in
+                                    let subgroupLessons = lessonTypeLessons.filter { $0.subgroup == subgroup }
+                                    Form("\(subgroup)-ая подгруппа", "\(subgroupLessons.count)")
+                                }
+                            } label: {
+                                Form(lessonType.description(), String(lessonTypeLessons.count))
+                            }
+                        }
+                    }
+                } label: {
+                    Text(subject)
+                }
+                
+            })
+            
         }
     }
     
@@ -99,6 +136,6 @@ struct GroupDetailedView: View {
 
 struct GroupDetaildView_Previews: PreviewProvider {
     static var previews: some View {
-        GroupDetailedView(viewModel: GroupViewModel(GroupStorage.shared.groups(ids: ["950503"]).first!))
+        GroupDetailedView(viewModel: GroupViewModel(GroupStorage.shared.groups(ids: ["950502"]).first!))
     }
 }

@@ -66,8 +66,8 @@ class GroupStorage: Storage<Group> {
         
         var filitredGroups = groups.filter { group in
             searchText.isEmpty ||
-            group.id!.localizedStandardContains(searchText) ||
-            group.speciality!.abbreviation!.localizedStandardContains(searchText)
+            group.id.localizedStandardContains(searchText) ||
+            (group.speciality?.abbreviation?.localizedStandardContains(searchText) == true)
         }
         
         if let selectedFaculty = selectedFaculty {

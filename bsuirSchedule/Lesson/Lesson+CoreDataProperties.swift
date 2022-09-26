@@ -84,18 +84,6 @@ extension Lesson {
 
 extension Lesson : Identifiable { }
 
-//MARK: LessonType
-extension Lesson {
-    var lessonType: LessonType {
-        get {
-            return LessonType(rawValue: self.lessonTypeValue)!
-        }
-        set {
-            self.lessonTypeValue = newValue.rawValue
-        }
-    }
-}
-
 //MARK: Dates
 extension Lesson {
     ///Converts dateString to Date type

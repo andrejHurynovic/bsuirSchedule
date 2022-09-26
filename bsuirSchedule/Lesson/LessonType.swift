@@ -46,6 +46,17 @@ enum LessonType: Int16, CaseIterable {
 }
 
 extension Lesson {
+    var lessonType: LessonType {
+        get {
+            return LessonType(rawValue: self.lessonTypeValue)!
+        }
+        set {
+            self.lessonTypeValue = newValue.rawValue
+        }
+    }
+}
+
+extension Lesson {
     func getLessonTypeAbbreviation() -> String {
         switch self.lessonType {
         case .none:

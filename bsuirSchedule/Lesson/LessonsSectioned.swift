@@ -43,4 +43,16 @@ extension LessonsSectioned {
         
         return lessonsSection
     }
+    
+    ///Lessons sections from specified date and time.
+    ///Lessons with start time before time in specified date are removed
+    func lessonsSectionsFrom(date: Date) -> [LessonsSection]{
+        let currentDate = date.withTime(DateFormatters.shared.time.date(from: "00:00")!)
+        let currentTime = DateFormatters.shared.time.string(from: date)
+        var sections = lessonsSections().filter { $0.date >= currentDate }
+        if let firstSection = sections.first, firstSection.date == currentDate {
+            sections[0].lessons = sections[0].lessons.filter {$0.timeStart > currentTime}
+        }
+        return sections
+    }
 }
