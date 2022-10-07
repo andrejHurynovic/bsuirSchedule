@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ClassroomView: View {
-    var classroom: Classroom
+    @State var classroom: Classroom
     
     var favorite: Bool = false
     
@@ -37,6 +37,7 @@ struct ClassroomView: View {
                                         .font(.headline)
                                         .fontWeight(.regular)
                                         .foregroundColor(Color.gray)
+                                        .lineLimit(2)
                                 }
                             }
                             Spacer()

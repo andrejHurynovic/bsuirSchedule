@@ -31,7 +31,7 @@ extension Array where Element == Group {
     }
     
     ///Returns array of group sections sorted by speciality or number
-    func sections(by sortingType: GroupSortingType) -> [GroupSection] {
+    func sections(by sortingType: GroupSortingType = .speciality) -> [GroupSection] {
         var sections: [GroupSection] = []
         
         switch sortingType {

@@ -58,7 +58,7 @@ public class Lesson: NSManagedObject, Decodable {
 //                if let classroom = ClassroomStorage.shared.classroom(name: classroomName) {
 //                    self.addToClassrooms(classroom)
 //                } else {
-                let classroom = Classroom(string: classroomName, context: context)
+                let classroom = try! Classroom(string: classroomName, context: context)
                     print("\(classroomName) == \(classroom.formattedName(showBuilding: true))")
                     self.addToClassrooms(classroom)
 //                }

@@ -21,7 +21,12 @@ struct FavoritesView: View {
             NSSortDescriptor(keyPath: \Employee.firstName, ascending: true)],
         predicate: NSPredicate(format: "favourite = true"))
     var favouriteEmployees: FetchedResults<Employee>
-    
+    @FetchRequest(
+        entity: Classroom.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \Classroom.originalName, ascending: true)],
+        predicate:
+            NSPredicate(format: "favourite = true"))
+    var favouriteClassrooms: FetchedResults<Classroom>
     
     var body: some View {
         NavigationView {
@@ -41,7 +46,7 @@ struct FavoritesView: View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 500))], alignment: .leading, spacing: 8, pinnedViews: [.sectionHeaders]) {
 //            tasks
             groups
-//            classrooms
+            classrooms
         }
         .padding([.leading, .horizontal, .top])
     }
@@ -114,7 +119,7 @@ struct FavoritesView: View {
             Section {
                 ForEach(favouriteEmployees) { employee in
                     NavigationLink {
-                        //                        LessonsView(viewModel: LessonsViewModel(employee))
+//                        LessonsView(viewModel: LessonsViewModel(employee))
                     } label: {
                         EmployeeFavoriteView(employee: employee)
                     }
@@ -131,29 +136,29 @@ struct FavoritesView: View {
             }
         }
     }
-//    @ViewBuilder var classrooms: some View {
-//        if classrooms.isEmpty == false {
-//            Section {
-//                ForEach(viewModel.classrooms) { classroom in
-//                    NavigationLink {
-//                        ClassroomDetailedView(classroom: classroom)
-//                    } label: {
-//                        ClassroomView(classroom: classroom, favorite: true)
-//                    }
-//                    .contextMenu {
-//                        FavoriteButton(classroom.favourite) {
-//                            classroom.favourite.toggle()
-//                        }
-//                    }
-//
-//                }
-//            } header: {
-//                standardizedHeader(title: "Кабинеты")
-//                    .transition(.scale)
-//            }
-//        }
-//
-//    }
+    @ViewBuilder var classrooms: some View {
+        if favouriteClassrooms.isEmpty == false {
+            Section {
+                ForEach(favouriteClassrooms) { classroom in
+                    NavigationLink {
+                        ClassroomDetailedView(classroom: classroom)
+                    } label: {
+                        ClassroomView(classroom: classroom, favorite: true)
+                    }
+                    .contextMenu {
+                        FavoriteButton(classroom.favourite) {
+                            classroom.favourite.toggle()
+                        }
+                    }
+
+                }
+            } header: {
+                standardizedHeader(title: "Кабинеты")
+                    .transition(.scale)
+            }
+        }
+
+    }
     
     
     

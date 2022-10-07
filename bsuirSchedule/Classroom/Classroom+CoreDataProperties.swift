@@ -51,66 +51,101 @@ extension Classroom {
 
 }
 
-extension Classroom : LessonsSectioned {
+extension Classroom: LessonsSectioned { }
+
+//MARK: Identifiable
+extension Classroom: Identifiable {
+    var type: ClassroomType {
+        ClassroomType(rawValue: typeValue)!
+    }
+}
+
+//MARK: EducationDates
+extension Classroom: EducationDated {
     var educationStart: Date? {
-        Date()
-//        LessonStorage.groups(lessons: self.lessons).compactMap { $0.educationStart }.sorted().first
+        self.groups.compactMap { $0.educationStart }.sorted().first
     }
     var educationEnd: Date? {
-        Date()
-//        LessonStorage.groups(lessons: self.lessons).compactMap { $0.educationEnd }.sorted().last
+        self.groups.compactMap { $0.educationEnd }.sorted().last
     }
     var examsStart: Date? {
-        Date()
-//        LessonStorage.groups(lessons: self.lessons).compactMap { $0.examsStart }.sorted().first
+        self.groups.compactMap { $0.examsStart }.sorted().first
     }
     var examsEnd: Date? {
-        Date()
-//        LessonStorage.groups(lessons: self.lessons).compactMap { $0.examsEnd }.sorted().last
+        self.groups.compactMap { $0.examsEnd }.sorted().last
     }
-    
-    var lessonsDates: [Date] {
-        datesBetween(educationStart, educationEnd)
-    }
-    var examsDates: [Date] {
-        datesBetween(examsStart, examsEnd)
-    }
-    var educationRange: ClosedRange<Date>? {
-        let dates = [educationStart, educationEnd, examsStart, examsEnd].compactMap {$0}.sorted()
-        guard dates.isEmpty == false else {
-            return nil
-        }
-        return dates.first!...dates.last!
-    }
-    
-    func lessonsSections() -> [LessonsSection] {
-        var sections: [LessonsSection] = []
+
+}
+
+//MARK: Request
+extension Classroom {
+    static func getClassrooms() -> [Classroom] {
+        let request = self.fetchRequest()
+        let classrooms = try! PersistenceController.shared.container.viewContext.fetch(request)
         
-        let educationDates = datesBetween(educationRange?.lowerBound, educationRange?.upperBound)
-        educationDates.forEach({ date in
-            var lessons = lessons?.allObjects as! [Lesson]
-            lessons = lessons.filter { lesson in
-                if let lessonDate = lesson.date  {
-                    return date == lessonDate
-                } else {
-                    return lesson.weekday == date.weekDay().rawValue && lesson.weeks.contains(date.educationWeek) && Array((lesson.groups?.allObjects as! [Group]).map {$0.lessonsDates}.joined()).contains(date) == true
-                }
-            }
-            if lessons.isEmpty == false {
-                sections.append(LessonsSection(date: date, showWeek: true, lessons: lessons))
-            }
-        })
-        return sections
-    }
-    
-    var haveLessons: Bool {
-        self.lessons?.allObjects.isEmpty == false
+        return classrooms
     }
     
 }
 
-extension Classroom : Identifiable {
-    var type: ClassroomType {
-        ClassroomType(rawValue: typeValue)!
+//MARK: Fetch
+extension Classroom {
+    static func fetchAll() async {
+        let data = try! await URLSession.shared.data(from: FetchDataType.classrooms.rawValue)
+        guard let dictionaries = try! JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] else {
+            return
+        }
+        
+        var classrooms = getClassrooms()
+        
+        for dictionary in dictionaries {
+            let decoder = JSONDecoder()
+            decoder.userInfo[.managedObjectContext] = PersistenceController.shared.container.viewContext
+            let data = try! JSONSerialization.data(withJSONObject: dictionary)
+            
+            let name = dictionary["name"] as! String
+            
+            let buildingDictionary = dictionary["buildingNumber"] as! [String: Any]
+            let buildingString = buildingDictionary["name"] as! String
+            let originalName = "\(name)-\(buildingString)"
+            
+            if let classroom = classrooms.first (where: { $0.originalName == originalName }) {
+                var classroome = classroom
+                try! decoder.update(&classroome, from: data)
+            } else {
+                let _ = try? decoder.decode(Classroom.self, from: data)
+            }
+        }
     }
+    
+}
+
+//MARK: Accessors
+extension Classroom {
+    var groups: [Group] {
+        let lessons = lessons?.allObjects as! [Lesson]
+        let groups = Array(lessons.compactMap {($0.groups?.allObjects as! [Group])}.joined())
+        return Set(groups).sorted { $0.id < $1.id }
+    }
+    
+}
+
+//MARK: Formatted name
+extension Classroom {
+    func formattedName(showBuilding: Bool) -> String {
+        if outsideUniversity == true {
+            //Оutside university buildings
+            //"Транзистор", "epam-104", "Столовая"
+            return self.name
+        } else {
+            if showBuilding {
+                //321-4
+                return String(self.floor) + self.name + "-" + String(self.building)
+            } else {
+                //321
+                return String(self.floor) + self.name
+            }
+        }
+    }
+    
 }

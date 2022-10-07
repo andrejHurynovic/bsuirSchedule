@@ -10,11 +10,6 @@ import SwiftUI
 struct ClassroomDetailedView: View {
     var classroom: Classroom
     
-    //GroupList
-    @State var selectedFaculty: Faculty? = nil
-    @State var selectedEducationType: EducationType? = nil
-    @State var sortedBy: GroupSortingType = .speciality
-    
     var body: some View {
         List {
             department
@@ -23,13 +18,13 @@ struct ClassroomDetailedView: View {
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Menu {
-                    FavoriteButton(classroom.favourite, circle: true) {
-                        classroom.favourite.toggle()
-                    }
-                } label: {
-                    Image(systemName: (selectedFaculty == nil && selectedEducationType == nil) ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
-                }
+//                Menu {
+//                    FavoriteButton(classroom.favourite, circle: true) {
+//                        classroom.favourite.toggle()
+//                    }
+//                } label: {
+//                    Image(systemName: (selectedFaculty == nil && selectedEducationType == nil) ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
+//                }
             }
         }
         .navigationTitle(classroom.formattedName(showBuilding: true))
@@ -44,7 +39,7 @@ struct ClassroomDetailedView: View {
     }
     
     @ViewBuilder var scheduleButton: some View {
-        if classroom.haveLessons {
+        if classroom.lessons?.allObjects.isEmpty == false {
             NavigationLink {
                 LessonsView(viewModel: LessonsViewModel(classroom))
             } label: {
@@ -55,11 +50,9 @@ struct ClassroomDetailedView: View {
     
     @ViewBuilder var groups: some View {
         let groups = classroom.groups
-//        if  groups.isEmpty == false {
-//            Section("Группы") {}
-//                GroupsSectionsList(groups: groups, searchText: nil, selectedFaculty: $selectedFaculty, selectedEducationType:
-//                            $selectedEducationType, sortedBy: $sortedBy)
-//        }
+        if groups.isEmpty == false {
+            GroupsSectionsView(sections: groups.sections())
+        }
     }
     
 }
