@@ -137,14 +137,14 @@ class TaskViewModel: ObservableObject {
         task.deadline = date
         task.taskDescription = text
         task.photosData = coreDataObjectFromImages(images: self.images)
-        TaskStorage.shared.save()
+//        TaskStorage.shared.save()
     }
     
     func saveTask() {
         task!.deadline = date
         task!.taskDescription = text
         task!.photosData = coreDataObjectFromImages(images: self.images)
-        TaskStorage.shared.save()
+//        TaskStorage.shared.save()
     }
     
     func coreDataObjectFromImages(images: [UIImage]) -> Data? {

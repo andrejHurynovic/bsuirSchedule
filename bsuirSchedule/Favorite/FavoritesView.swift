@@ -23,12 +23,6 @@ struct FavoritesView: View {
     var favouriteEmployees: FetchedResults<Employee>
     
     
-//    @StateObject var viewModel = FavoritesViewModel()
-    
-//    @AppStorage("primaryGroup") var primaryGroup: String?
-    
-//    @State var primaryGroupPresented = false
-    
     var body: some View {
         NavigationView {
             ScrollView {
