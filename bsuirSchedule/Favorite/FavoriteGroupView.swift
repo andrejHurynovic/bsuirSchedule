@@ -14,7 +14,7 @@ struct FavoriteGroupView: View {
         RoundedRectangle(cornerRadius: 16)
             .fill(.background)
             .aspectRatio(contentMode: .fill)
-            .standardizedShadow()
+            .standardisedShadow()
             .overlay {
                 VStack(alignment: .leading) {
                     Text(group.id!)

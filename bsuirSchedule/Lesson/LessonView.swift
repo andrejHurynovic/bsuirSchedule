@@ -43,7 +43,7 @@ struct LessonView: View {
         .listRowSeparator(.hidden)
         .background(in: RoundedRectangle(cornerRadius: 16))
         .clipped()
-        .standardizedShadow()
+        .standardisedShadow()
     }
     
     var subject: some View {

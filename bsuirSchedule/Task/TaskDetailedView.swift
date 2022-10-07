@@ -30,7 +30,7 @@ struct TaskDetailedView: View {
                 textEditor
                 photos
                 endButton
-                    .standardizedShadow()
+                    .standardisedShadow()
             }
             .padding(.horizontal)
         }
@@ -124,7 +124,7 @@ struct TaskDetailedView: View {
             .focused($textEditorFocused)
             .frame(minHeight: 128)
             .cornerRadius(16)
-            .standardizedShadow()
+            .standardisedShadow()
     }
     
     //MARK: Photos
@@ -149,7 +149,7 @@ struct TaskDetailedView: View {
             RoundedRectangle(cornerRadius: 16)
                 .fill(.background)
                 .aspectRatio(contentMode: .fill)
-                .standardizedShadow()
+                .standardisedShadow()
                 .overlay {
                     Image(uiImage: image)
                         .resizable()
@@ -188,7 +188,7 @@ struct TaskDetailedView: View {
             RoundedRectangle(cornerRadius: 16)
                 .fill(.background)
                 .aspectRatio(contentMode: .fill)
-                .standardizedShadow()
+                .standardisedShadow()
                 .overlay {
                     Image(systemName: "plus")
                         .resizable()
@@ -205,7 +205,7 @@ struct TaskDetailedView: View {
             RoundedRectangle(cornerRadius: 16)
                 .fill(.background)
                 .aspectRatio(contentMode: .fill)
-                .standardizedShadow()
+                .standardisedShadow()
                 .overlay {
                     Image(systemName: "camera")
                         .resizable()

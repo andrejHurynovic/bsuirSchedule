@@ -131,7 +131,7 @@ private struct saveToPhotosLibrary: View {
 //MARK: Shadow
 
 extension View {
-    func standardizedShadow() -> some View {
+    func standardisedShadow() -> some View {
         shadow(color: Color(uiColor: UIColor(named: "shadowColor")!), radius: 8, x: 0, y: 0)
     }
 }

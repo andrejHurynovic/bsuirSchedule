@@ -14,7 +14,7 @@ struct TaskView: View {
         RoundedRectangle(cornerRadius: 16)
             .fill(.background)
             .aspectRatio(contentMode: .fill)
-            .standardizedShadow()
+            .standardisedShadow()
             .overlay {
                 HStack {
                     VStack(alignment: .leading) {
