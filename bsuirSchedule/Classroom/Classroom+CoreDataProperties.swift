@@ -53,16 +53,20 @@ extension Classroom {
 
 extension Classroom : LessonsSectioned {
     var educationStart: Date? {
-        LessonStorage.groups(lessons: self.lessons).compactMap { $0.educationStart }.sorted().first
+        Date()
+//        LessonStorage.groups(lessons: self.lessons).compactMap { $0.educationStart }.sorted().first
     }
     var educationEnd: Date? {
-        LessonStorage.groups(lessons: self.lessons).compactMap { $0.educationEnd }.sorted().last
+        Date()
+//        LessonStorage.groups(lessons: self.lessons).compactMap { $0.educationEnd }.sorted().last
     }
     var examsStart: Date? {
-        LessonStorage.groups(lessons: self.lessons).compactMap { $0.examsStart }.sorted().first
+        Date()
+//        LessonStorage.groups(lessons: self.lessons).compactMap { $0.examsStart }.sorted().first
     }
     var examsEnd: Date? {
-        LessonStorage.groups(lessons: self.lessons).compactMap { $0.examsEnd }.sorted().last
+        Date()
+//        LessonStorage.groups(lessons: self.lessons).compactMap { $0.examsEnd }.sorted().last
     }
     
     var lessonsDates: [Date] {

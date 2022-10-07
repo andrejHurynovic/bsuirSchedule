@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @ObservedObject var groupsViewModel = GroupsViewModel()
-    @ObservedObject var employeesViewModel = EmployeesViewModel()
-    @ObservedObject var lessonsStorage = LessonStorage.shared
-    @ObservedObject var facultyStorage = FacultyStorage.shared
-    @ObservedObject var classroomStorage = ClassroomStorage.shared
-    @ObservedObject var specialityStorage = SpecialityStorage.shared
+//    @ObservedObject var groupsViewModel = GroupsViewModel()
+//    @ObservedObject var employeesViewModel = EmployeesViewModel()
+//    @ObservedObject var lessonsStorage = LessonStorage.shared
+//    @ObservedObject var facultyStorage = FacultyStorage.shared
+//    @ObservedObject var classroomStorage = ClassroomStorage.shared
+//    @ObservedObject var specialityStorage = SpecialityStorage.shared
     
     @StateObject var colorManager = DesignManager.shared
     
@@ -27,7 +27,7 @@ struct SettingsView: View {
             List {
                 primaryGroupSection
                 colors
-                developer
+//                developer
             }
             .navigationTitle("Настройки")
         }.navigationViewStyle(StackNavigationViewStyle())
@@ -82,71 +82,71 @@ struct SettingsView: View {
         }
     }
     
-    @ViewBuilder var developer: some View {
-        Button {
-            WeekStorage.shared.fetch()
-        } label: {
-            Text("Неделя")
-        }
-        Section("Разработчик") {
-            NavigationLink("UpdateView") {
-                UpdateView()
-            }
-            
-            
-            Button {
-                FacultyStorage.shared.fetch()
-            } label: {
-                Text("Факультеты")
-            }
-            Button {
-                SpecialityStorage.shared.fetch()
-            } label: {
-                Text("Специальности")
-            }
-            Button {
-                ClassroomStorage.shared.fetch()
-            } label: {
-                Text("Кабинеты")
-            }
-            //            Button {
-            //                GroupStorage.shared.deleteAll()
-            //            } label: {
-            //                Label("Удалить группы (\(groupsViewModel.groups.count))", systemImage: "person.2.circle")
-            //                    .foregroundColor(.red)
-            //        }
+//    @ViewBuilder var developer: some View {
+//        Button {
+//            WeekStorage.shared.fetch()
+//        } label: {
+//            Text("Неделя")
+//        }
+//        Section("Разработчик") {
+//            NavigationLink("UpdateView") {
+//                UpdateView()
+//            }
+//
+//
 //            Button {
-//                EmployeeStorage.shared.deleteAll()
+//                FacultyStorage.shared.fetch()
 //            } label: {
-//                Label("Удалить преподов (\(EmployeeStorage.shared.values.value.count))", systemImage: "person.circle")
+//                Text("Факультеты")
+//            }
+//            Button {
+//                SpecialityStorage.shared.fetch()
+//            } label: {
+//                Text("Специальности")
+//            }
+//            Button {
+//                ClassroomStorage.shared.fetch()
+//            } label: {
+//                Text("Кабинеты")
+//            }
+//            //            Button {
+//            //                GroupStorage.shared.deleteAll()
+//            //            } label: {
+//            //                Label("Удалить группы (\(groupsViewModel.groups.count))", systemImage: "person.2.circle")
+//            //                    .foregroundColor(.red)
+//            //        }
+////            Button {
+////                EmployeeStorage.shared.deleteAll()
+////            } label: {
+////                Label("Удалить преподов (\(EmployeeStorage.shared.values.value.count))", systemImage: "person.circle")
+////                    .foregroundColor(.red)
+////            }
+//            Button {
+//                lessonsStorage.deleteAll()
+//            } label: {
+//                Label("Удалить занятия (\(lessonsStorage.values.value.count))", systemImage: "book.circle")
 //                    .foregroundColor(.red)
 //            }
-            Button {
-                lessonsStorage.deleteAll()
-            } label: {
-                Label("Удалить занятия (\(lessonsStorage.values.value.count))", systemImage: "book.circle")
-                    .foregroundColor(.red)
-            }
-            Button {
-                FacultyStorage.shared.deleteAll()
-            } label: {
-                Label("Удалить факультеты (\(facultyStorage.values.value.count))", systemImage: "building.2.crop.circle")
-                    .foregroundColor(.red)
-            }
-            Button {
-                classroomStorage.deleteAll()
-            } label: {
-                Label("Удалить кабинеты (\(classroomStorage.values.value.count))", systemImage: "house.circle")
-                    .foregroundColor(.red)
-            }
-            Button {
-                specialityStorage.deleteAll()
-            } label: {
-                Label("Удалить специальности (\(specialityStorage.values.value.count))", systemImage: "folder.circle")
-                    .foregroundColor(.red)
-            }
-        }
-    }
+//            Button {
+//                FacultyStorage.shared.deleteAll()
+//            } label: {
+//                Label("Удалить факультеты (\(facultyStorage.values.value.count))", systemImage: "building.2.crop.circle")
+//                    .foregroundColor(.red)
+//            }
+//            Button {
+//                classroomStorage.deleteAll()
+//            } label: {
+//                Label("Удалить кабинеты (\(classroomStorage.values.value.count))", systemImage: "house.circle")
+//                    .foregroundColor(.red)
+//            }
+//            Button {
+//                specialityStorage.deleteAll()
+//            } label: {
+//                Label("Удалить специальности (\(specialityStorage.values.value.count))", systemImage: "folder.circle")
+//                    .foregroundColor(.red)
+//            }
+//        }
+//    }
     
     
 }
