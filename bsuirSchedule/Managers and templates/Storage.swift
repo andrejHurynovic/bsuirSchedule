@@ -13,7 +13,7 @@ class Storage<T: NSManagedObject>: NSObject, NSFetchedResultsControllerDelegate,
     
     
     //new for now
-    @Published var tempValues: [T] = []
+//    @Published var tempValues: [T] = []
     //end of new
     
     
@@ -36,17 +36,17 @@ class Storage<T: NSManagedObject>: NSObject, NSFetchedResultsControllerDelegate,
             try fetchController.performFetch()
             values.value = fetchController.fetchedObjects ?? []
         } catch {
-            
+
         }
-        
-        cancellables.insert(self.values.eraseToAnyPublisher().sink { values in
-            self.tempValues = values
-        })
+
+//        cancellables.insert(self.values.eraseToAnyPublisher().sink { values in
+//            self.tempValues = values
+//        })
     }
     
     func save() {
         do {
-            try PersistenceController.shared.container.viewContext.save()
+//            try PersistenceController.shared.container.viewContext.save()
         } catch {
             print(error.localizedDescription)
         }

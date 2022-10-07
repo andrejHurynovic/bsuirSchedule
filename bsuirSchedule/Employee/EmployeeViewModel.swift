@@ -7,13 +7,13 @@
 
 import Foundation
 import Combine
+import CoreData
 
 class EmployeeViewModel: ObservableObject {
     
     @Published var employee: Employee
     
     @Published var lastUpdateDate: Date? = nil
-    var cancellable: AnyCancellable? = nil
     
     @Published var imagesViewModel = ImagesViewModel()
     
@@ -23,22 +23,24 @@ class EmployeeViewModel: ObservableObject {
     
     init(_ employee: Employee) {
         self.employee = employee
-        
-//        getUpdateDate()
     }
     
-    func getUpdateDate() {
-        cancellable = FetchManager.shared.fetch(dataType: .employeeUpdateDate, argument: employee.urlID) { [weak self] (date: LastUpdateDate) -> () in
-            self?.lastUpdateDate = date.lastUpdateDate
-            
-            if let employeeUpdateDate = self?.employee.updateDate, employeeUpdateDate < date.lastUpdateDate{
-                self?.update()
-            }
+    func update() async {
+        let _ = await employee.update()
+        let _ = await employee.updatePhoto()
+        await MainActor.run {
+            try! PersistenceController.shared.container.viewContext.save()
         }
     }
     
-    func update() {
-        EmployeeStorage.shared.update(employee)
+    func fetchLastUpdateDate() async {
+        let data = try! await URLSession.shared.data(from: FetchDataType.employeeUpdateDate.rawValue + String(employee.urlID))
+        
+        if let date = try? JSONDecoder().decode(LastUpdateDate.self, from: data) {
+            await MainActor.run {
+                self.lastUpdateDate = date.lastUpdateDate
+            }
+        }
     }
     
 }

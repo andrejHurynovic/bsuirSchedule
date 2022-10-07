@@ -7,31 +7,30 @@
 
 import SwiftUI
 import Combine
+import CoreData
 
 class EmployeesViewModel: ObservableObject {
-    @Published var employees: [Employee] = []
     
-    private var cancelable: AnyCancellable?
-    
-    init(employeePublisher: AnyPublisher<[Employee], Never> = EmployeeStorage.shared.values.eraseToAnyPublisher()) {
-        cancelable = employeePublisher.sink { employees in
-            self.employees = employees
-        }
-    }
-    
-    func foundEmployees(_ searchText: String) -> [Employee] {
+    func foundEmployees(employees: FetchedResults<Employee>, _ searchText: String) -> [Employee] {
         employees.filter {employee in
             searchText.isEmpty || employee.lastName!.localizedStandardContains(searchText) || employee.departments!.contains(where: { department in
                 department.localizedStandardContains(searchText)
             })
         }
     }
-
-    func fetchEmployees() {
-        EmployeeStorage.shared.fetch()
-    }
     
-    func updateEmployees() {
-        
+    func updateAll() async {
+        await Employee.fetchAllEmployees()
+        let employees = Employee.getEmployees()
+        await Employee.updatePhotos(for: employees)
+//        await Employee.updateEmployees(employees: employees)
+        await MainActor.run {
+            try! PersistenceController.shared.container.viewContext.save()
+        }
     }
+}
+
+
+extension CodingUserInfoKey {
+    static let managedObjectContext = CodingUserInfoKey(rawValue: "managedObjectContext")!
 }

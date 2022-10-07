@@ -14,9 +14,9 @@ import UIKit.UIImage
 public class Employee: NSManagedObject, Decodable {
     
     required public convenience init(from decoder: Decoder) throws {
-        let context = PersistenceController.shared.container.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "Employee", in: context)
-        self.init(entity: entity!, insertInto: context)
+        let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
+        let entity = Employee.entity()
+        self.init(entity: entity, insertInto: context)
         
         let rootContainer = try decoder.container(keyedBy: CodingKeys.self)
         var container = rootContainer
@@ -43,12 +43,14 @@ public class Employee: NSManagedObject, Decodable {
         self.degree = try? container.decode(String.self, forKey: .degree)
         if var departments = try? container.decode([String].self, forKey: .departments) {
             departments.forEachInout { department in
-                if let range = department.range(of: "каф.") {
+                if let range = department.range(of: "Каф.") {
                     department.removeSubrange(range)
                 }
                 department = department.trimmingCharacters(in: .whitespaces)
             }
             self.departments = departments
+        } else {
+            self.departments = []
         }
         self.favourite = false
         
@@ -83,8 +85,71 @@ public class Employee: NSManagedObject, Decodable {
         }
     
     }
+    
 }
 
+//MARK: Update
+extension Employee: DecoderUpdatable {
+    func update(from decoder: Decoder) throws {
+        let rootContainer = try decoder.container(keyedBy: CodingKeys.self)
+        var container = rootContainer
+                    
+        if let educationStartString = try? container.decode(String.self, forKey: .educationStart) {
+            self.educationStart = DateFormatters.shared.get(.shortDate).date(from: educationStartString)
+            self.educationEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .educationEnd))
+        }
+
+        if let examsStartString = try? container.decode(String.self, forKey: .examsStart) {
+            self.examsStart = DateFormatters.shared.get(.shortDate).date(from: examsStartString)
+            self.examsEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .examsEnd))
+        }
+        
+        if var schedules = try? container.decode([String:[Lesson]].self, forKey: .lessons) {
+            schedules.keys.forEach { key in
+                let weekDay = WeekDay(string: key)
+                schedules[key]!.forEachInout { lesson in
+                    //Set correct weekday and employeesID
+                    lesson.weekday = weekDay.rawValue
+                    lesson.employeesIDs = [self.id]
+                }
+            }
+            self.addToLessons(NSSet(array: Array(schedules.values.joined()) as! [Lesson]))
+        }
+        
+        if let exams = try? container.decode([Lesson].self, forKey: .exams) {
+            self.addToLessons(NSSet(array: exams))
+        }
+        
+        //MARK: Employee container
+        //This container exists only if fetching schedule.
+        if let employeeContainer = try? container.nestedContainer(keyedBy: CodingKeys.self, forKey: .employeeContainer) {
+            container = employeeContainer
+        }
+        
+        if let urlID = try? container.decode(String.self, forKey: .urlID) {
+            self.urlID = urlID
+        } else {
+            
+        }
+        self.firstName = try! container.decode(String.self, forKey: .firstName)
+        self.middleName = try? container.decode(String.self, forKey: .middleName)
+        self.lastName = try! container.decode(String.self, forKey: .lastName)
+        
+        self.rank = try? container.decode(String.self, forKey: .rank)
+        self.degree = try? container.decode(String.self, forKey: .degree)
+        if var departments = try? container.decode([String].self, forKey: .departments) {
+            departments.forEachInout { department in
+                if let range = department.range(of: "Каф.") {
+                    department.removeSubrange(range)
+                }
+                department = department.trimmingCharacters(in: .whitespaces)
+            }
+            self.departments = departments
+        }
+        
+        self.photoLink = try? container.decode(String.self, forKey: .photoLink)
+    }
+}
 
 
 private enum CodingKeys: String, CodingKey {

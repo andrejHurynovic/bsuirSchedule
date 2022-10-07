@@ -14,9 +14,9 @@ import SwiftUI
 public class Lesson: NSManagedObject, Decodable {
     
     required convenience public init(from decoder: Decoder) throws {
-        let context = PersistenceController.shared.container.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "Lesson", in: context)
-        self.init(entity: entity!, insertInto: context)
+        let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
+        let entity = Lesson.entity()
+        self.init(entity: entity, insertInto: context)
         
         let container = try! decoder.container(keyedBy: CodingKeys.self)
         
@@ -55,13 +55,13 @@ public class Lesson: NSManagedObject, Decodable {
         if let classrooms = try? container.decode([String].self, forKey: .classroom) {
             classrooms.forEach { classroomName in
                 //If the classroom is unknown it is created from the available information
-                if let classroom = ClassroomStorage.shared.classroom(name: classroomName) {
-                    self.addToClassrooms(classroom)
-                } else {
-                    let classroom = Classroom(string: classroomName)
+//                if let classroom = ClassroomStorage.shared.classroom(name: classroomName) {
+//                    self.addToClassrooms(classroom)
+//                } else {
+                let classroom = Classroom(string: classroomName, context: context)
                     print("\(classroomName) == \(classroom.formattedName(showBuilding: true))")
                     self.addToClassrooms(classroom)
-                }
+//                }
             }
         }
         
@@ -110,7 +110,7 @@ public class Lesson: NSManagedObject, Decodable {
             self.employeesIDs = employees.map {$0.id}
             self.addToEmployees(NSSet(array: employees))
         }
-        
+
         //MARK: Groups
         let groups = try! container.decode([Group].self, forKey: .groups)
         self.addToGroups(NSSet(array: groups))

@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct EmployeesView: View {
+    @FetchRequest(entity: Employee.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Employee.lastName, ascending: true),
+                                                               NSSortDescriptor(keyPath: \Employee.firstName, ascending: true)]) var employees: FetchedResults<Employee>
+    
     @StateObject private var viewModel = EmployeesViewModel()
     @State var searchText = ""
     
@@ -15,8 +18,8 @@ struct EmployeesView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                if let employees = viewModel.foundEmployees(searchText), employees.isEmpty == false {
-                    List {
+                List {
+                    if let employees = viewModel.foundEmployees(employees: employees, searchText), employees.isEmpty == false {
                         ForEach(employees, id: \.id) { employee in
                             EmployeeView(employee: employee)
                                 .swipeActions(edge: .trailing, allowsFullSwipe: true) {
@@ -33,26 +36,19 @@ struct EmployeesView: View {
                         HStack {
                             Text("Всего преподавателей: \(employees.count)")
                         }
+                    } else {
+                        Text("Ничего не найдено")
+                            .foregroundColor(Color.gray)
                     }
-                    .refreshable {
-                        viewModel.fetchEmployees()
-                    }
-                } else {
-                    Text("Ничего не найдено")
-                        .foregroundColor(Color.gray)
+                    
                 }
-                
-                if viewModel.employees.isEmpty {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .onAppear {
-                            viewModel.fetchEmployees()
-                        }
+                .refreshable {
+                    await viewModel.updateAll()
                 }
-            }
-            .navigationTitle("Преподаватели")
-            .searchable(text: $searchText, prompt: "Фамилия, кафедра")
-        }.navigationViewStyle(StackNavigationViewStyle())
+                .navigationTitle("Преподаватели")
+                .searchable(text: $searchText, prompt: "Фамилия, кафедра")
+            }.navigationViewStyle(StackNavigationViewStyle())
+        }
     }
 }
 

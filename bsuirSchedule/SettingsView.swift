@@ -112,8 +112,8 @@ struct SettingsView: View {
             Button {
                 GroupStorage.shared.deleteAll()
             } label: {
-                Label("Удалить группы (\(groupsViewModel.groups.count))", systemImage: "person.2.circle")
-                    .foregroundColor(.red)
+//                Label("Удалить группы (\(groupsViewModel.groups.count))", systemImage: "person.2.circle")
+//                    .foregroundColor(.red)
             }
             Button {
                 EmployeeStorage.shared.deleteAll()

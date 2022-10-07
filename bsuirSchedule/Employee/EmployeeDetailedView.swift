@@ -34,7 +34,7 @@ struct EmployeeDetailedView: View {
                 .environmentObject(viewModel.imagesViewModel)
         }
         .refreshable {
-            viewModel.update()
+            await viewModel.update()
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -129,6 +129,11 @@ struct EmployeeDetailedView: View {
             } else {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle(tint: .gray))
+            }
+        }
+        .task {
+            if viewModel.lastUpdateDate == nil {
+                await viewModel.fetchLastUpdateDate()
             }
         }
     }

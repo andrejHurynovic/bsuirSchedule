@@ -14,7 +14,6 @@ class GroupViewModel: ObservableObject {
     @Published var group: Group
     
     @Published var lastUpdateDate: Date? = nil
-    var cancellables = Set<AnyCancellable>()
 
     @Published var showEducationDuration = false
     @Published var showExamsDuration = false
@@ -25,29 +24,23 @@ class GroupViewModel: ObservableObject {
     
     init(_ group: Group) {
         self.group = group
-//        let cancellable = GroupStorage.shared.values.eraseToAnyPublisher().sink(receiveValue: { groups in
-//            withAnimation {
-//                self.group = groups.first { group in    
-//                    self.group.id == group.id
-//                }!
-//            }
-//        })
-//        cancellables.insert(cancellable)
     }
     
-    func getUpdateDate() {
-        let cancellable = FetchManager.shared.fetch(dataType: .groupUpdateDate, argument: group.id) { [weak self] (date: LastUpdateDate) -> () in
-            self?.lastUpdateDate = date.lastUpdateDate
-            
-            if let groupUpdateDate = self?.group.updateDate, groupUpdateDate < date.lastUpdateDate{
-                self?.update()
+    func update() async {
+        let _ = await group.update()
+        await MainActor.run {
+            try! PersistenceController.shared.container.viewContext.save()
+        }
+    }
+    
+    func fetchLastUpdateDate() async {
+        let data = try! await URLSession.shared.data(from: FetchDataType.groupUpdateDate.rawValue + String(group.id))
+        
+        if let date = try? JSONDecoder().decode(LastUpdateDate.self, from: data) {
+            await MainActor.run {
+                self.lastUpdateDate = date.lastUpdateDate
             }
         }
-        cancellables.insert(cancellable)
-    }
-    
-    func update() {
-        GroupStorage.shared.update(group)
     }
     
 }

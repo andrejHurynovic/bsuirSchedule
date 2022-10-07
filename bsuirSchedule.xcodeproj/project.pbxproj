@@ -75,8 +75,11 @@
 		F6C1A33C272AE2E700AD38E1 /* FavoriteEmployeeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C1A33B272AE2E600AD38E1 /* FavoriteEmployeeView.swift */; };
 		F6CB615526EFF43900D29807 /* LessonStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CB615426EFF43900D29807 /* LessonStorage.swift */; };
 		F6CB615726F000EE00D29807 /* LessonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CB615626F000EE00D29807 /* LessonView.swift */; };
+		F6CF52F528EEBB3B00522C89 /* DecoderUpdatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CF52F428EEBB3B00522C89 /* DecoderUpdatable.swift */; };
 		F6D3C10328E0BA550055B800 /* LessonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D3C10228E0BA550055B800 /* LessonType.swift */; };
 		F6D3C10528E0BAB40055B800 /* WeekDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D3C10428E0BAB40055B800 /* WeekDay.swift */; };
+		F6D588D128E4685B00CB58AC /* FetchDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D588CF28E4685B00CB58AC /* FetchDataType.swift */; };
+		F6D588D228E4685B00CB58AC /* FetchError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D588D028E4685B00CB58AC /* FetchError.swift */; };
 		F6DB7B14286CAF70009BE5FB /* ClassroomType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DB7B13286CAF70009BE5FB /* ClassroomType.swift */; };
 		F6DCD72326B30EF0003761B0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DCD72226B30EF0003761B0 /* SettingsView.swift */; };
 		F6DCD72526B30F86003761B0 /* LessonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DCD72426B30F86003761B0 /* LessonsView.swift */; };
@@ -181,8 +184,11 @@
 		F6C1A33B272AE2E600AD38E1 /* FavoriteEmployeeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteEmployeeView.swift; sourceTree = "<group>"; };
 		F6CB615426EFF43900D29807 /* LessonStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonStorage.swift; sourceTree = "<group>"; };
 		F6CB615626F000EE00D29807 /* LessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonView.swift; sourceTree = "<group>"; };
+		F6CF52F428EEBB3B00522C89 /* DecoderUpdatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoderUpdatable.swift; sourceTree = "<group>"; };
 		F6D3C10228E0BA550055B800 /* LessonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonType.swift; sourceTree = "<group>"; };
 		F6D3C10428E0BAB40055B800 /* WeekDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDay.swift; sourceTree = "<group>"; };
+		F6D588CF28E4685B00CB58AC /* FetchDataType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchDataType.swift; sourceTree = "<group>"; };
+		F6D588D028E4685B00CB58AC /* FetchError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchError.swift; sourceTree = "<group>"; };
 		F6DB7B13286CAF70009BE5FB /* ClassroomType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomType.swift; sourceTree = "<group>"; };
 		F6DCD72226B30EF0003761B0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		F6DCD72426B30F86003761B0 /* LessonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsView.swift; sourceTree = "<group>"; };
@@ -227,9 +233,12 @@
 			isa = PBXGroup;
 			children = (
 				F697441B271CE90400A7AE30 /* FetchManager.swift */,
+				F6D588D028E4685B00CB58AC /* FetchError.swift */,
+				F6D588CF28E4685B00CB58AC /* FetchDataType.swift */,
 				F6AFC4612721EC43008CC065 /* DesignManager.swift */,
 				F69CAC32271DCA0B00D0403E /* Storage.swift */,
 				F6BC18A42811D4A100BA549D /* DateFormatters.swift */,
+				F6CF52F428EEBB3B00522C89 /* DecoderUpdatable.swift */,
 			);
 			path = "Managers and templates";
 			sourceTree = "<group>";
@@ -532,6 +541,7 @@
 				F6B4805226F9ED070085D5FE /* FavoritesViewModel.swift in Sources */,
 				F68465FC26FA5321000F185E /* Faculty+CoreDataProperties.swift in Sources */,
 				F697BF8526FFA960008FA7A9 /* ClassroomsView.swift in Sources */,
+				F6D588D228E4685B00CB58AC /* FetchError.swift in Sources */,
 				F6F87816271A1ED7005E3C41 /* Speciality+CoreDataClass.swift in Sources */,
 				F601E5A52730B88F00773F02 /* CapturePhotoView.swift in Sources */,
 				F6DCD72526B30F86003761B0 /* LessonsView.swift in Sources */,
@@ -550,6 +560,7 @@
 				F65F832326E8F5B900B8CC4E /* EmployeeStorage.swift in Sources */,
 				F6BC18A52811D4A100BA549D /* DateFormatters.swift in Sources */,
 				F6BCE3AA26EFD72C0067B5DA /* Schedule.swift in Sources */,
+				F6CF52F528EEBB3B00522C89 /* DecoderUpdatable.swift in Sources */,
 				F699F21A26EA24CE00747BE0 /* Extensions.swift in Sources */,
 				F6CB615526EFF43900D29807 /* LessonStorage.swift in Sources */,
 				F6D3C10328E0BA550055B800 /* LessonType.swift in Sources */,
@@ -586,6 +597,7 @@
 				F601E5A92731AA3900773F02 /* TaskViewModel.swift in Sources */,
 				F601E5A32730760100773F02 /* ImagesViewModel.swift in Sources */,
 				F614250C271B7EFF006C3CE1 /* ClassroomDetailedView.swift in Sources */,
+				F6D588D128E4685B00CB58AC /* FetchDataType.swift in Sources */,
 				F697BF7C26FFA1BA008FA7A9 /* Classroom+CoreDataClass.swift in Sources */,
 				F6BF723A272F311A00D18ADD /* PhotoPickerView.swift in Sources */,
 				F6F6B4F226FA55F200814354 /* FacultyStorage.swift in Sources */,

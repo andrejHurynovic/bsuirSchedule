@@ -9,18 +9,15 @@ import SwiftUI
 import Combine
 
 class GroupsViewModel: ObservableObject {
-    
-    @Published var groups: [Group] = []
-    private var cancelable: AnyCancellable?
-    
-    init(groupPublisher: AnyPublisher<[Group], Never> = GroupStorage.shared.values.eraseToAnyPublisher()) {
-        cancelable = groupPublisher.sink { groups in
-            self.groups = groups
+
+    func updateAll() async {
+        await Group.fetchAllGroups()
+//        let employees = Employee.getEmployees()
+//        await Employee.updatePhotos(for: employees)
+//        await Employee.updateEmployees(employees: employees)
+        await MainActor.run {
+            try! PersistenceController.shared.container.viewContext.save()
         }
     }
-    
-    func fetchGroups() {
-        GroupStorage.shared.fetch()
-        GroupStorage.shared.fetchAllDetailed()
-    }
+
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EmployeeView: View {
-    var employee: Employee
+    @ObservedObject var employee: Employee
     
     var body: some View {
         HStack {
@@ -24,10 +24,12 @@ struct EmployeeView: View {
             }
             Spacer()
             if let photo = employee.photo {
-                Image(uiImage: UIImage(data: photo)!)
-                    .resizable()
-                    .frame(width: 80.0, height: 80.0)
-                    .clipShape(Circle())
+                withAnimation {
+                    Image(uiImage: UIImage(data: photo)!)
+                        .resizable()
+                        .frame(width: 80.0, height: 80.0)
+                        .clipShape(Circle())
+                }
             } else {
                 Image(systemName: "person.circle.fill")
                     .resizable()

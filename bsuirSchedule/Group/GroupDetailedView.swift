@@ -24,7 +24,7 @@ struct GroupDetailedView: View {
         }
         .navigationTitle(viewModel.navigationTitle)
         .refreshable {
-            viewModel.update()
+            await viewModel.update()
         }
     }
     
@@ -82,7 +82,7 @@ struct GroupDetailedView: View {
         HStack {
             Text("Последнее обновление в ИИС")
                 .onAppear {
-                    viewModel.getUpdateDate()
+//                    viewModel.getUpdateDate()
                 }
             Spacer()
             if let date = viewModel.lastUpdateDate {
@@ -92,6 +92,9 @@ struct GroupDetailedView: View {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle(tint: .gray))
             }
+        }
+        .task {
+            await viewModel.fetchLastUpdateDate()
         }
     }
     

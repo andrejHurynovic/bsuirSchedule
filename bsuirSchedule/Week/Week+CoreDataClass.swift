@@ -22,4 +22,14 @@ public class Week: NSManagedObject, Decodable {
         self.updatedWeek = try! decoder.singleValueContainer().decode(Int16.self) - 1
         self.updateDate = Date()
     }
+    
+    convenience init() {
+        let context = PersistenceController.shared.container.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "Week", in: context)
+        self.init(entity: entity!, insertInto: context)
+        
+        //-1 для приведения к виду [0,3], вместо [1,4]
+        self.updatedWeek = 0
+        self.updateDate = Date()
+    }
 }

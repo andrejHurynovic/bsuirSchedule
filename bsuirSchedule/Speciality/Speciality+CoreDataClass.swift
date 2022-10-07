@@ -13,7 +13,7 @@ import CoreData
 public class Speciality: NSManagedObject, Decodable {
     
     required convenience public init(from decoder: Decoder) throws {
-        let context = PersistenceController.shared.container.viewContext
+        let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
         let entity = NSEntityDescription.entity(forEntityName: "Speciality", in: context)
         self.init(entity: entity!, insertInto: context)
         
@@ -32,15 +32,23 @@ public class Speciality: NSManagedObject, Decodable {
         self.code = try! container.decode(String.self, forKey: .code)
     }
     
-    convenience public init(id: Int32, name: String, abbreviation: String, faculty: Faculty) {
-        let context = PersistenceController.shared.container.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "Speciality", in: context)
-        self.init(entity: entity!, insertInto: context)
+    convenience public init(context: NSManagedObjectContext, id: Int32, name: String, abbreviation: String, faculty: Faculty) {
+        let entity = Speciality.entity()
+        self.init(entity: entity, insertInto: context)
         
         self.id = id
         self.name = name
         self.abbreviation = abbreviation
         self.faculty = faculty
+    }
+    
+    static func fetch(specialityCode: String, in context: NSManagedObjectContext) -> Speciality? {
+        let request = Speciality.fetchRequest()
+        request.predicate = NSPredicate(format: "code == %@", specialityCode)
+        guard let specialities = try? context.fetch(request), let speciality = specialities.first else {
+            return nil
+        }
+        return speciality
     }
 }
 

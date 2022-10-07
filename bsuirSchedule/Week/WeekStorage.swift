@@ -12,7 +12,7 @@ class WeekStorage: Storage<Week> {
     static let shared = WeekStorage(sortDescriptors: [])
     
     var currentValue: Week {
-        return WeekStorage.shared.values.value.last!
+        return WeekStorage.shared.values.value.last ?? Week()
     }
     
     //MARK: Fetch

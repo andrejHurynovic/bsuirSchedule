@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct GroupsView: View {
+    @FetchRequest(entity: Group.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Group.id, ascending: true)]) var groups: FetchedResults<Group>
+    
     @StateObject private var viewModel = GroupsViewModel()
     
     @State var searchText = ""
@@ -19,12 +21,12 @@ struct GroupsView: View {
         NavigationView {
             ZStack {
                 List {
-                    GroupsList(groups: viewModel.groups, searchText: $searchText, selectedFaculty: $selectedFaculty, selectedEducationType: $selectedEducationType, sortedBy: $sortedBy)
+                    GroupsList(groups: groups.map({ $0 }), searchText: $searchText, selectedFaculty: $selectedFaculty, selectedEducationType: $selectedEducationType, sortedBy: $sortedBy)
                 }
                 .navigationBarTitle("Группы")
                 .searchable(text: $searchText, prompt: "Номер группы, специальность")
                 .refreshable {
-                    viewModel.fetchGroups()
+                    await viewModel.updateAll()
                 }
             }
             

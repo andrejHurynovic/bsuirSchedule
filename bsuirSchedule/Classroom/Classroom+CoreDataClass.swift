@@ -12,10 +12,9 @@ import CoreData
 @objc(Classroom)
 public class Classroom: NSManagedObject {
     
-    convenience public init(string: String) {
-        let context = PersistenceController.shared.container.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "Classroom", in: context)
-        self.init(entity: entity!, insertInto: context)
+    convenience public init(string: String, context: NSManagedObjectContext) {
+        let entity = Classroom.entity()
+        self.init(entity: entity, insertInto: context)
         
         self.originalName = string
         
