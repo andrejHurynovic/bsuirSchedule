@@ -36,12 +36,12 @@ struct SettingsView: View {
     
     @ViewBuilder var primaryGroupSection: some View {
         Section("Основная группа") {
-            Picker(selection: $primaryGroup, label: Text("Группа")) {
-                Text("Нет").tag(nil as String?)
-                ForEach(GroupStorage.shared.favorites()) { group in
-                    Text(group.id).tag(group.id as String?)
-                }
-            }
+            //            Picker(selection: $primaryGroup, label: Text("Группа")) {
+            //                Text("Нет").tag(nil as String?)
+            //                ForEach(GroupStorage.shared.favorites()) { group in
+            //                    Text(group.id).tag(group.id as String?)
+            //                }
+            //            }
             Picker(selection: $primaryGroupSubgroup, label: Text("Подгруппа")) {
                 Text("Любая").tag(nil as Int?)
                 Text("Первая").tag(1 as Int?)
@@ -93,7 +93,7 @@ struct SettingsView: View {
                 UpdateView()
             }
             
- 
+            
             Button {
                 FacultyStorage.shared.fetch()
             } label: {
@@ -109,12 +109,12 @@ struct SettingsView: View {
             } label: {
                 Text("Кабинеты")
             }
-            Button {
-                GroupStorage.shared.deleteAll()
-            } label: {
-//                Label("Удалить группы (\(groupsViewModel.groups.count))", systemImage: "person.2.circle")
-//                    .foregroundColor(.red)
-            }
+            //            Button {
+            //                GroupStorage.shared.deleteAll()
+            //            } label: {
+            //                Label("Удалить группы (\(groupsViewModel.groups.count))", systemImage: "person.2.circle")
+            //                    .foregroundColor(.red)
+            //        }
             Button {
                 EmployeeStorage.shared.deleteAll()
             } label: {

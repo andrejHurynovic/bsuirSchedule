@@ -27,7 +27,6 @@ struct ClassroomDetailedView: View {
                     FavoriteButton(classroom.favourite, circle: true) {
                         classroom.favourite.toggle()
                     }
-                    GroupToolbarMenu(selectedFaculty: $selectedFaculty, selectedEducationType: $selectedEducationType, sortedBy: $sortedBy)
                 } label: {
                     Image(systemName: (selectedFaculty == nil && selectedEducationType == nil) ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
                 }
@@ -56,11 +55,11 @@ struct ClassroomDetailedView: View {
     
     @ViewBuilder var groups: some View {
         let groups = classroom.groups
-        if  groups.isEmpty == false {
-            Section("Группы") {}
-                GroupsList(groups: groups, searchText: nil, selectedFaculty: $selectedFaculty, selectedEducationType:
-                            $selectedEducationType, sortedBy: $sortedBy)
-        }
+//        if  groups.isEmpty == false {
+//            Section("Группы") {}
+//                GroupsSectionsList(groups: groups, searchText: nil, selectedFaculty: $selectedFaculty, selectedEducationType:
+//                            $selectedEducationType, sortedBy: $sortedBy)
+//        }
     }
     
 }

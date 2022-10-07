@@ -81,9 +81,6 @@ struct GroupDetailedView: View {
     @ViewBuilder var lastUpdate: some View {
         HStack {
             Text("Последнее обновление в ИИС")
-                .onAppear {
-//                    viewModel.getUpdateDate()
-                }
             Spacer()
             if let date = viewModel.lastUpdateDate {
                 Text("\(DateFormatters.shared.longDate.string(from: date))")
@@ -135,10 +132,4 @@ struct GroupDetailedView: View {
         }
     }
     
-}
-
-struct GroupDetaildView_Previews: PreviewProvider {
-    static var previews: some View {
-        GroupDetailedView(viewModel: GroupViewModel(GroupStorage.shared.groups(ids: ["950502"]).first!))
-    }
 }

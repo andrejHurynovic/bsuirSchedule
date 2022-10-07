@@ -78,5 +78,11 @@ extension Speciality : Identifiable {
     var educationType: EducationType {
         EducationType(rawValue: educationTypeValue)!
     }
-    
+}
+
+extension Speciality {
+    ///Name + education type + faculty abbreviation
+    public override var description: String {
+        "\(self.name!) (\(self.educationType.description), \(self.faculty!.abbreviation!))"
+    }
 }

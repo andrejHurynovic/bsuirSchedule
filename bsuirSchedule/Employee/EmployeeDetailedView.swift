@@ -42,7 +42,6 @@ struct EmployeeDetailedView: View {
                     FavoriteButton(viewModel.employee.favourite, circle: true) {
                         viewModel.employee.favourite.toggle()
                     }
-                    GroupToolbarMenu(selectedFaculty: $viewModel.selectedFaculty, selectedEducationType: $viewModel.selectedEducationType, sortedBy: $viewModel.sortedBy)
                 } label: {
                     Image(systemName: (viewModel.selectedFaculty == nil && viewModel.selectedEducationType == nil) ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
                 }
@@ -140,9 +139,6 @@ struct EmployeeDetailedView: View {
     
     @ViewBuilder var groups: some View {
         let groups = LessonStorage.groups(lessons: viewModel.employee.lessons)
-        if groups.isEmpty == false {
-            GroupsList(groups: groups, searchText: nil, selectedFaculty: $viewModel.selectedFaculty, selectedEducationType:
-                        $viewModel.selectedEducationType, sortedBy: $viewModel.sortedBy)
-        }
+
     }
 }

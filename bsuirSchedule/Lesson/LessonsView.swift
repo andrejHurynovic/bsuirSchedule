@@ -278,8 +278,8 @@ func randomString(length: Int) -> String {
   return String((0..<length).map{ _ in letters.randomElement()! })
 }
 
-struct LessonsView_Previews: PreviewProvider {
-    static var previews: some View {
-        LessonsView(viewModel: LessonsViewModel(GroupStorage.shared.values.value.first!))
-    }
-}
+//struct LessonsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        LessonsView(viewModel: LessonsViewModel(GroupStorage.shared.values.value.first!))
+//    }
+//}

@@ -58,7 +58,7 @@ class FetchManager {
                     //If there is no information about group it will be deleted.
                     if dataType == .group {
                         Task.init(priority: .high, operation: {
-                            GroupStorage.shared.delete(id: argument ?? "")
+//                            GroupStorage.shared.delete(id: argument ?? "")
                         })
                     }
                     return Just(.failure(error))

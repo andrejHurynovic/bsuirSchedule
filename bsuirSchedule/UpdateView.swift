@@ -13,7 +13,7 @@ struct UpdateView: View {
     @ObservedObject var facultyStorage = FacultyStorage.shared
     @ObservedObject var specialityStorage = SpecialityStorage.shared
     @ObservedObject var classroomStorage = ClassroomStorage.shared
-    @ObservedObject var groupStorage = GroupStorage.shared
+//    @ObservedObject var groupStorage = GroupStorage.shared
     @ObservedObject var employeeStorage = EmployeeStorage.shared
     
     @State var facultyFetched = false
