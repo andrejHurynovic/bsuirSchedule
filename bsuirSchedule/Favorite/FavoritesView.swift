@@ -8,16 +8,31 @@
 import SwiftUI
 
 struct FavoritesView: View {
-    @StateObject var viewModel = FavoritesViewModel()
+    @FetchRequest(
+        entity: Group.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \Group.id, ascending: true)],
+        predicate:
+            NSPredicate(format: "favourite = true"))
+    var favouriteGroups: FetchedResults<Group>
+    @FetchRequest(
+        entity: Employee.entity(),
+        sortDescriptors: [
+            NSSortDescriptor(keyPath: \Employee.lastName, ascending: true),
+            NSSortDescriptor(keyPath: \Employee.firstName, ascending: true)],
+        predicate: NSPredicate(format: "favourite = true"))
+    var favouriteEmployees: FetchedResults<Employee>
     
-    @AppStorage("primaryGroup") var primaryGroup: String?
     
-    @State var primaryGroupPresented = false
+//    @StateObject var viewModel = FavoritesViewModel()
+    
+//    @AppStorage("primaryGroup") var primaryGroup: String?
+    
+//    @State var primaryGroupPresented = false
     
     var body: some View {
         NavigationView {
             ScrollView {
-                primaryGroupOnLoad
+//                primaryGroupOnLoad
                 squareObjects
                 rectangleObjects
             }
@@ -30,9 +45,9 @@ struct FavoritesView: View {
     
     @ViewBuilder var squareObjects: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 500))], alignment: .leading, spacing: 8, pinnedViews: [.sectionHeaders]) {
-            tasks
+//            tasks
             groups
-            classrooms
+//            classrooms
         }
         .padding([.leading, .horizontal, .top])
     }
@@ -46,40 +61,40 @@ struct FavoritesView: View {
     
     //MARK: Objects
     
-    @ViewBuilder var tasks: some View {
-        if viewModel.tasks.isEmpty == false {
-            Section {
-                ForEach(viewModel.tasks) { task in
-                    NavigationLink {
-                        TaskDetailedView()
-                            .environmentObject(TaskViewModel(task: task))
-                    } label: {
-                        TaskView(task: task)
-                    }
-                    .contextMenu {
-                        Button(role: .destructive) {
-                            withAnimation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.9)) {
-                                TaskStorage.shared.delete(task)
-                            }
-                        } label: {
-                            Label("Удалить", systemImage: "trash")
-                        }
-                        
-                    }
-                    
-                }
-            } header: {
-                standardizedHeader(title: "Задания")
-                    .transition(.scale)
-            }
-        }
-        
-    }
+//    @ViewBuilder var tasks: some View {
+//        if viewModel.tasks.isEmpty == false {
+//            Section {
+//                ForEach(viewModel.tasks) { task in
+//                    NavigationLink {
+//                        TaskDetailedView()
+//                            .environmentObject(TaskViewModel(task: task))
+//                    } label: {
+//                        TaskView(task: task)
+//                    }
+//                    .contextMenu {
+//                        Button(role: .destructive) {
+//                            withAnimation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.9)) {
+//                                TaskStorage.shared.delete(task)
+//                            }
+//                        } label: {
+//                            Label("Удалить", systemImage: "trash")
+//                        }
+//
+//                    }
+//
+//                }
+//            } header: {
+//                standardizedHeader(title: "Задания")
+//                    .transition(.scale)
+//            }
+//        }
+//
+//    }
     
     @ViewBuilder var groups: some View {
-        if viewModel.groups.isEmpty == false {
+        if favouriteGroups.isEmpty == false {
             Section {
-                ForEach(viewModel.groups) { group in
+                ForEach(favouriteGroups) { group in
                     NavigationLink {
                         LessonsView(viewModel: LessonsViewModel(group))
                     } label: {
@@ -88,11 +103,6 @@ struct FavoritesView: View {
                     .contextMenu {
                         FavoriteButton(group.favourite) {
                             group.favourite.toggle()
-                        }
-                        Button {
-                            GroupStorage.shared.update(group)
-                        } label: {
-                            Text("UPD")
                         }
                     }
                     
@@ -105,36 +115,12 @@ struct FavoritesView: View {
         
     }
     
-    @ViewBuilder var classrooms: some View {
-        if viewModel.classrooms.isEmpty == false {
-            Section {
-                ForEach(viewModel.classrooms) { classroom in
-                    NavigationLink {
-                        ClassroomDetailedView(classroom: classroom)
-                    } label: {
-                        ClassroomView(classroom: classroom, favorite: true)
-                    }
-                    .contextMenu {
-                        FavoriteButton(classroom.favourite) {
-                            classroom.favourite.toggle()
-                        }
-                    }
-                    
-                }
-            } header: {
-                standardizedHeader(title: "Кабинеты")
-                    .transition(.scale)
-            }
-        }
-        
-    }
-    
     @ViewBuilder var employees: some View {
-        if viewModel.employees.isEmpty == false {
+        if favouriteEmployees.isEmpty == false {
             Section {
-                ForEach(viewModel.employees) { employee in
+                ForEach(favouriteEmployees) { employee in
                     NavigationLink {
-//                        LessonsView(viewModel: LessonsViewModel(employee))
+                        //                        LessonsView(viewModel: LessonsViewModel(employee))
                     } label: {
                         EmployeeFavoriteView(employee: employee)
                     }
@@ -151,23 +137,47 @@ struct FavoritesView: View {
             }
         }
     }
+//    @ViewBuilder var classrooms: some View {
+//        if classrooms.isEmpty == false {
+//            Section {
+//                ForEach(viewModel.classrooms) { classroom in
+//                    NavigationLink {
+//                        ClassroomDetailedView(classroom: classroom)
+//                    } label: {
+//                        ClassroomView(classroom: classroom, favorite: true)
+//                    }
+//                    .contextMenu {
+//                        FavoriteButton(classroom.favourite) {
+//                            classroom.favourite.toggle()
+//                        }
+//                    }
+//
+//                }
+//            } header: {
+//                standardizedHeader(title: "Кабинеты")
+//                    .transition(.scale)
+//            }
+//        }
+//
+//    }
     
     
     
-    @ViewBuilder var primaryGroupOnLoad: some View {
-        EmptyView()
-        if let primaryGroup = primaryGroup {
-            if let group = viewModel.groups.first(where: {$0.id == primaryGroup}) {
-                NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group)), isActive: $primaryGroupPresented) {
-                    EmptyView()
-                }
-                .hidden()
-                .onLoad {
-                    primaryGroupPresented = true
-                }
-            }
-        }
-    }
+    
+//    @ViewBuilder var primaryGroupOnLoad: some View {
+//        EmptyView()
+//        if let primaryGroup = primaryGroup {
+//            if let group = viewModel.groups.first(where: {$0.id == primaryGroup}) {
+//                NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group)), isActive: $primaryGroupPresented) {
+//                    EmptyView()
+//                }
+//                .hidden()
+//                .onLoad {
+//                    primaryGroupPresented = true
+//                }
+//            }
+//        }
+//    }
     
 }
 
