@@ -6,8 +6,7 @@
 //
 
 import Foundation
-import Combine
-import CoreData
+import SwiftUI
 
 class EmployeeViewModel: ObservableObject {
     
@@ -34,11 +33,15 @@ class EmployeeViewModel: ObservableObject {
     }
     
     func fetchLastUpdateDate() async {
-        let data = try! await URLSession.shared.data(from: FetchDataType.employeeUpdateDate.rawValue + String(employee.urlID))
+        guard let data = try? await URLSession.shared.data(from: FetchDataType.employeeUpdateDate.rawValue + String(employee.urlID)) else {
+            return
+        }
         
         if let date = try? JSONDecoder().decode(LastUpdateDate.self, from: data) {
             await MainActor.run {
-                self.lastUpdateDate = date.lastUpdateDate
+                withAnimation {
+                    self.lastUpdateDate = date.lastUpdateDate
+                }
             }
         }
     }

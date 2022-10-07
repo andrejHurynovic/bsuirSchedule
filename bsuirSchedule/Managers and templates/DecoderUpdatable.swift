@@ -7,18 +7,6 @@
 
 import Foundation
 
-
-
-//JSONDecoder().update(&someObject, from: data)
-
-//mutating func update(from decoder: Decoder) throws {
-//    let container = try decoder.container(keyedBy: Keys.self)
-//    try container.update(&child, forKey: .child)
-//}
-
-//func decode<T : Decodable>(_ type: T.Type, from data: Data) throws -> T
-
-
 extension JSONDecoder: DecodingFormat {
     func decoder(for data: Data) -> Decoder {
         // Can try! here because DecoderExtractor's init(from: Decoder) never throws

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Combine
 import SwiftUI
 
 class GroupViewModel: ObservableObject {
@@ -34,11 +33,15 @@ class GroupViewModel: ObservableObject {
     }
     
     func fetchLastUpdateDate() async {
-        let data = try! await URLSession.shared.data(from: FetchDataType.groupUpdateDate.rawValue + String(group.id))
+        guard let data = try? await URLSession.shared.data(from: FetchDataType.groupUpdateDate.rawValue + String(group.id)) else {
+            return
+        }
         
         if let date = try? JSONDecoder().decode(LastUpdateDate.self, from: data) {
             await MainActor.run {
-                self.lastUpdateDate = date.lastUpdateDate
+                withAnimation {
+                    self.lastUpdateDate = date.lastUpdateDate
+                }
             }
         }
     }

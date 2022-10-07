@@ -100,7 +100,7 @@ class GroupStorage: Storage<Group> {
                 let specialityGroups = groups.filter{$0.speciality == speciality}
                 if specialityGroups.isEmpty == false {
                     sections.append(GroupSection(
-                        title: "\(speciality.name!) (\(speciality.educationType.description), \(speciality.faculty?.abbreviation!))" ,
+                        title: "\(speciality.name!) (\(speciality.educationType.description), \(speciality.faculty!.abbreviation!))" ,
                         groups: specialityGroups))
                 }
             }

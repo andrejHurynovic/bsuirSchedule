@@ -16,7 +16,7 @@ struct GroupsList: View {
     var sortedBy: Binding<GroupSortingType> = .constant(.speciality)
     
     var body: some View {
-        ForEach (GroupStorage.sections(groups,
+        ForEach(GroupStorage.sections(groups,
                                        searchText?.wrappedValue ?? "", selectedFaculty.wrappedValue,
                                        selectedEducationType.wrappedValue, sortedBy.wrappedValue),
                  id: \.self) { section in
@@ -60,10 +60,6 @@ struct GroupToolbarMenu: View {
                     Text(educationType.description)
                         .tag(educationType as EducationType?)
                 }
-//                Text("дневная").tag(1 as Int?)
-//                Text("заочная").tag(2 as Int?)
-//                Text("дистанционная").tag(3 as Int?)
-//                Text("вечерняя").tag(4 as Int?)
             }
     }
 }
