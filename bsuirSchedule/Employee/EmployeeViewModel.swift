@@ -24,6 +24,8 @@ class EmployeeViewModel: ObservableObject {
         self.employee = employee
     }
     
+    
+    
     func update() async {
         let _ = await employee.update()
         let _ = await employee.updatePhoto()

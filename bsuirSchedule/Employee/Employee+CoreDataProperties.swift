@@ -151,3 +151,18 @@ extension Employee {
     }
     
 }
+
+//MARK: Accessors?
+extension Employee {
+    var groups: [Group] {
+        guard let groups = self.lessons?.compactMap({ lesson in
+            (lesson as! Lesson).groups?.allObjects as? [Group]
+        }) else {
+            return []
+        }
+        
+        let set = Set(groups.map({ $0 }).joined())
+        
+        return set.sorted {$0.id < $1.id}
+    }
+}

@@ -138,7 +138,22 @@ struct EmployeeDetailedView: View {
     }
     
     @ViewBuilder var groups: some View {
-        let groups = LessonStorage.groups(lessons: viewModel.employee.lessons)
-
+        let groups = viewModel.employee.groups
+        if groups.isEmpty == false {
+            ForEach(groups.sections(by: .speciality), id: \.self) { section in
+                Section(section.title) {
+                    ForEach(section.groups, id: \.id, content: { group in
+                        NavigationLink(destination: GroupDetailedView(viewModel: GroupViewModel(group))){
+                            Text(group.id)
+                        }
+                        .contextMenu {
+                            FavoriteButton(group.favourite) {
+                                group.favourite.toggle()
+                            }
+                        }
+                    })
+                }
+            }
+        }
     }
 }
