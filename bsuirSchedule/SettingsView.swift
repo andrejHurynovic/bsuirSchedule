@@ -115,12 +115,12 @@ struct SettingsView: View {
             //                Label("Удалить группы (\(groupsViewModel.groups.count))", systemImage: "person.2.circle")
             //                    .foregroundColor(.red)
             //        }
-            Button {
-                EmployeeStorage.shared.deleteAll()
-            } label: {
-                Label("Удалить преподов (\(EmployeeStorage.shared.values.value.count))", systemImage: "person.circle")
-                    .foregroundColor(.red)
-            }
+//            Button {
+//                EmployeeStorage.shared.deleteAll()
+//            } label: {
+//                Label("Удалить преподов (\(EmployeeStorage.shared.values.value.count))", systemImage: "person.circle")
+//                    .foregroundColor(.red)
+//            }
             Button {
                 lessonsStorage.deleteAll()
             } label: {
