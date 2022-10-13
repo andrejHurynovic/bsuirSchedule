@@ -48,37 +48,53 @@ extension Speciality {
     
 }
 
-//MARK: EducationType
-
-enum EducationType: Int16, CaseIterable {
-    case unknown = 0
-    case fullTime = 1
-    case distant = 2
-    case remote = 3
-    case night = 4
-    
-    var description: String {
-        switch self {
-        case .unknown:
-            return "неизвестно"
-        case .fullTime:
-            return "дневная"
-        case .distant:
-            return "заочная"
-        case .remote:
-            return "дистанционная"
-        case .night:
-            return "вечерняя"
-        }
-    }
-}
-
 extension Speciality : Identifiable {
     
     var educationType: EducationType {
         EducationType(rawValue: educationTypeValue)!
     }
 }
+
+//MARK: Request
+extension Speciality {
+    static func getAll() -> [Speciality] {
+        let request = self.fetchRequest()
+        let specialities = try! PersistenceController.shared.container.viewContext.fetch(request)
+
+        return specialities
+    }
+
+}
+
+//MARK: Fetch
+extension Speciality {
+    static func fetchAll() async {
+        let data = try! await URLSession.shared.data(from: FetchDataType.specialities.rawValue)
+        guard let dictionaries = try! JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] else {
+            return
+        }
+        
+        let specialities = getAll()
+        
+        let decoder = JSONDecoder()
+        decoder.userInfo[.managedObjectContext] = PersistenceController.shared.container.viewContext
+        decoder.userInfo[.faculties] = Faculty.getAll()
+        for dictionary in dictionaries {
+            let data = try! JSONSerialization.data(withJSONObject: dictionary)
+            
+            let id = dictionary["id"] as! Int32
+            
+            if let specialty = specialities.first (where: { $0.id == id }) {
+                var mutableSpecialty = specialty
+                try! decoder.update(&mutableSpecialty, from: data)
+            } else {
+                let _ = try? decoder.decode(Speciality.self, from: data)
+            }
+        }
+    }
+    
+}
+
 
 extension Speciality {
     ///Name + education type + faculty abbreviation

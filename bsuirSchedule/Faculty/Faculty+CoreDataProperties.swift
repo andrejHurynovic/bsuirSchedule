@@ -20,7 +20,7 @@ extension Faculty {
 
     @NSManaged public var id: Int16
     @NSManaged public var name: String?
-    @NSManaged public var abbreviation: String!
+    @NSManaged public var abbreviation: String?
     
     @NSManaged public var specialities: NSSet?
 
@@ -47,7 +47,7 @@ extension Faculty : Identifiable {}
 
 //MARK: Request
 extension Faculty {
-    static func getFaculties() -> [Faculty] {
+    static func getAll() -> [Faculty] {
         let request = self.fetchRequest()
         let faculties = try! PersistenceController.shared.container.viewContext.fetch(request)
 
@@ -64,7 +64,7 @@ extension Faculty {
             return
         }
         
-        let faculties = getFaculties()
+        let faculties = getAll()
         
         for dictionary in dictionaries {
             let decoder = JSONDecoder()

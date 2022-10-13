@@ -42,7 +42,7 @@ struct GroupsView: View {
                             Text("все").tag(nil as Faculty?)
                             let faculties = Set(groups.compactMap({ $0.speciality.faculty }))
                             ForEach(faculties.sorted(by: { $0.name! < $1.name! }), id: \.self) {faculty in
-                                Text(faculty.abbreviation).tag(faculty.self as Faculty?)
+                                Text(faculty.abbreviation ?? "Нет названия").tag(faculty.self as Faculty?)
                             }
                         }
                         Text("Форма обучения:")

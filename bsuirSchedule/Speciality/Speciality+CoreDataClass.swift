@@ -14,22 +14,9 @@ public class Speciality: NSManagedObject {
     
     required convenience public init(from decoder: Decoder) throws {
         let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
-        let entity = NSEntityDescription.entity(forEntityName: "Speciality", in: context)
-        self.init(entity: entity!, insertInto: context)
+        self.init(entity: Speciality.entity(), insertInto: context)
         
-        let container = try! decoder.container(keyedBy: CodingKeys.self)
-        self.id = try! container.decode(Int32.self, forKey: .id)
-        self.name = try! container.decode(String.self, forKey: .name)
-        self.abbreviation = try! container.decode(String.self, forKey: .abbreviation)
-        
-#warning("Что делать в случае отсутствия факультета? А? А?А?А?А?А? Сделать обработку ошибок короче")
-//        let facultyID = try! container.decode(Int16.self, forKey: .facultyID)
-//        self.faculty = FacultyStorage.shared.faculty(id: facultyID)
-        
-        let nestedContainer = try! container.nestedContainer(keyedBy: EducationTypeCodingKeys.self, forKey: .educationTypeContainer)
-        
-        self.educationTypeValue = try! nestedContainer.decode(Int16.self, forKey: .educationTypeId)
-        self.code = try! container.decode(String.self, forKey: .code)
+        try! self.update(from: decoder)
     }
     
     convenience public init(context: NSManagedObjectContext, id: Int32, name: String, abbreviation: String, faculty: Faculty) {
@@ -42,14 +29,6 @@ public class Speciality: NSManagedObject {
         self.faculty = faculty
     }
     
-    static func fetch(specialityCode: String, in context: NSManagedObjectContext) -> Speciality? {
-        let request = Speciality.fetchRequest()
-        request.predicate = NSPredicate(format: "code == %@", specialityCode)
-        guard let specialities = try? context.fetch(request), let speciality = specialities.first else {
-            return nil
-        }
-        return speciality
-    }
 }
 
 extension Speciality: Decodable {
@@ -68,4 +47,30 @@ extension Speciality: Decodable {
     private enum EducationTypeCodingKeys: String, CodingKey {
         case educationTypeId = "id"
     }
+}
+
+//MARK: Update
+extension Speciality: DecoderUpdatable {
+    func update(from decoder: Decoder) throws {
+        let container = try! decoder.container(keyedBy: CodingKeys.self)
+        let faculties = decoder.userInfo[.faculties] as! [Faculty]
+
+        self.id = try! container.decode(Int32.self, forKey: .id)
+        self.name = try! container.decode(String.self, forKey: .name)
+        self.abbreviation = try! container.decode(String.self, forKey: .abbreviation)
+        
+        self.code = try! container.decode(String.self, forKey: .code)
+        
+        let facultyID = try! container.decode(Int16.self, forKey: .facultyID)
+        if let faculty = faculties.first(where: {$0.id == facultyID}) {
+            self.faculty = faculty
+        } else {
+            print(facultyID, name!)
+            self.faculty = Faculty(id: facultyID)
+        }
+        
+        let nestedContainer = try! container.nestedContainer(keyedBy: EducationTypeCodingKeys.self, forKey: .educationTypeContainer)
+        self.educationTypeValue = try! nestedContainer.decode(Int16.self, forKey: .educationTypeId)
+    }
+    
 }

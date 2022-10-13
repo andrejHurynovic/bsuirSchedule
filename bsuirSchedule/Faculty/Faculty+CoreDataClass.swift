@@ -13,19 +13,17 @@ import CoreData
 public class Faculty: NSManagedObject {
  
     required convenience public init(from decoder: Decoder) throws {
-        let context = PersistenceController.shared.container.viewContext
+        let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
         self.init(entity: Faculty.entity(), insertInto: context)
         
         try! self.update(from: decoder)
     }
     
-    //No need?
-    convenience public init(id: Int16, abbreviation: String) {
+    convenience public init(id: Int16) {
         let context = PersistenceController.shared.container.viewContext
         self.init(entity: Faculty.entity(), insertInto: context)
         
         self.id = id
-        self.abbreviation = abbreviation
     }
     
 }
@@ -48,5 +46,10 @@ extension Faculty: DecoderUpdatable {
         self.abbreviation = try! container.decode(String.self, forKey: .abbreviation)
     }
     
+}
+
+//MARK: CodingUserInfoKey
+extension CodingUserInfoKey {
+    static let faculties = CodingUserInfoKey(rawValue: "faculties")!
 }
 

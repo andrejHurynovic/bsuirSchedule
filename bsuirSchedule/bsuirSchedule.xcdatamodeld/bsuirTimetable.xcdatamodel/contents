@@ -44,7 +44,7 @@
         </uniquenessConstraints>
     </entity>
     <entity name="Faculty" representedClassName="Faculty" syncable="YES">
-        <attribute name="abbreviation" attributeType="String"/>
+        <attribute name="abbreviation" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="specialities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Speciality" inverseName="faculty" inverseEntity="Speciality"/>

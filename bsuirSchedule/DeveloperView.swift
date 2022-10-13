@@ -35,7 +35,7 @@ struct DeveloperView: View {
             Section("Загрузка") {
 //                DeveloperUpdateView<Week>(name: "недели", symbol: "calendar.circle")
                 DeveloperUpdateView<Faculty>(name: "факультеты", symbol: "graduationcap.circle")
-//                DeveloperUpdateView<Speciality>(name: "специальности", symbol: "book.circle")
+                DeveloperUpdateView<Speciality>(name: "специальности", symbol: "book.circle")
                 DeveloperUpdateView<Classroom>(name: "кабинеты", symbol: "building.columns.circle")
                 DeveloperUpdateView<Group>(name: "группы", symbol: "person.2.circle")
                 DeveloperUpdateView<Employee>(name: "преподаватели", symbol: "person.crop.circle")
@@ -83,7 +83,6 @@ struct DeveloperUpdateView<T: DecoderUpdatable>: View {
            
         } label: {
             Label("Загрузить \(name)", systemImage: symbol)
-//                .foregroundColor(.red)
         }
     }
     

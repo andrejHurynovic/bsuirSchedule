@@ -31,7 +31,10 @@ struct GroupDetailedView: View {
     @ViewBuilder var information: some View {
         Section(viewModel.group.speciality.name) {
             Form("Аббревиатура", viewModel.group.speciality.abbreviation)
-            Form("Факультет", viewModel.group.speciality.faculty.abbreviation)
+            if let facultyAbbreviation = viewModel.group.speciality.faculty.abbreviation {
+                Form("Факультет", facultyAbbreviation)
+            }
+            
             if let code = viewModel.group.speciality.code {
                 Form("Шифр", code)
             }
