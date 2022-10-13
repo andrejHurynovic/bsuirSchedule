@@ -14,90 +14,11 @@ public class Group: NSManagedObject {
     
     required public convenience init(from decoder: Decoder) throws {
         let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
-        let entity = Group.entity()
-        self.init(entity: entity, insertInto: context)
+        self.init(entity: Group.entity(), insertInto: context)
         
-        var container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        if let educationStartString = try? container.decode(String.self, forKey: .educationStart) {
-            self.educationStart = DateFormatters.shared.get(.shortDate).date(from: educationStartString)
-            self.educationEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .educationEnd))
-        }
-        
-        if let examsStartString = try? container.decode(String.self, forKey: .examsStart) {
-            self.examsStart = DateFormatters.shared.get(.shortDate).date(from: examsStartString)
-            self.examsEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .examsEnd))
-        }
-        
-        if var schedules = try? container.decode([String:[Lesson]].self, forKey: .lessons) {
-            schedules.keys.forEach { key in
-                let weekDay = WeekDay(string: key)
-                schedules[key]!.forEachInout { lesson in
-                    //Assign every lesson correct weekday
-                    lesson.weekday = weekDay.rawValue
-                }
-            }
-        }
-        
-        let _ = try? container.decode([Lesson].self, forKey: .exams)
-        
-        //MARK: Group information
-        //The studentGroup structure exists only when receiving a response to the Schedule request. It is needed for automatic merging when updating the group. Moreover, it can be either an update of the group with an already loaded schedule, or without it.
-        //This fields is also contained when fetching all groups, but located in root
-        if let groupInformation = try? container.nestedContainer(keyedBy: CodingKeys.self, forKey: .groupContainer) {
-            container = groupInformation
-        }
-        self.id = try! container.decode(String.self, forKey: .id)
-        if let numberOfStudents = try? container.decode(Int16.self, forKey: .numberOfStudents) {
-            self.numberOfStudents = numberOfStudents
-        }
-        
-        //MARK: Speciality
-        if let specialityID = try? container.decode(Int32.self, forKey: .specialityID) {
-            //If the specialty is unknown it is created from the available information
-            if let speciality = SpecialityStorage.shared.values.value.first(where: {$0.id == specialityID}) {
-                self.speciality = speciality
-            } else {
-                
-#warning("Переработать fetch")
-//                //MARK: Faculty
-//                //If the faculty is unknown it is created from the available information
-//                let facultyID = try! container.decode(Int16.self, forKey: .facultyID)
-//                let faculty: Faculty
-//
-//                if let existingFaculty = FacultyStorage.shared.faculty(id: facultyID) {
-//                    faculty = existingFaculty
-//                } else {
-//                    let facultyAbbreviation = try! container.decode(String.self, forKey: .facultyAbbreviation)
-//                    faculty = Faculty(id: facultyID, abbreviation: facultyAbbreviation)
-//                }
-//
-//                let specialityName = try! container.decode(String.self, forKey: .specialityName)
-//                let specialityAbbreviation = try! container.decode(String.self, forKey: .specialityAbbreviation)
-//                self.speciality = Speciality(context: context, id: specialityID, name: specialityName, abbreviation: specialityAbbreviation, faculty: faculty)
-#warning("Переработать fetch")
-            }
-        }
-        
-        //For studentGroups structure in Lesson
-        //        if let specialityCode = try? container.decode (String.self, forKey: .specialityCode) {
-        //            if let speciality = Speciality.fetch(specialityCode: specialityCode, in: context) {
-        //                self.speciality = speciality
-        //            }
-        //        }
-        
-        if let course = try? container.decode(Int16.self, forKey: .course) {
-            self.course = course
-        }
+        try! self.update(from: decoder)
     }
-    static func fetch(id: String, in context: NSManagedObjectContext) -> Group? {
-        let request = Group.fetchRequest()
-        request.predicate = NSPredicate(format: "id == %@", id)
-        guard let groups = try? context.fetch(request), let group = groups.first else {
-            return nil
-        }
-        return group
-    }
+    
 }
 
 //MARK: Update
@@ -105,8 +26,6 @@ public class Group: NSManagedObject {
 extension Group: DecoderUpdatable {
     //MARK: Update
     func update(from decoder: Decoder) throws {
-        let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
-        
         var container = try decoder.container(keyedBy: CodingKeys.self)
         
         if let educationStartString = try? container.decode(String.self, forKey: .educationStart) {
@@ -144,39 +63,39 @@ extension Group: DecoderUpdatable {
         
         //MARK: Speciality
         if let specialityID = try? container.decode(Int32.self, forKey: .specialityID) {
-            //If the specialty is unknown it is created from the available information
-            if let speciality = SpecialityStorage.shared.values.value.first(where: {$0.id == specialityID}) {
+            let specialities = decoder.userInfo[.specialities] as! [Speciality]
+            if let speciality = specialities.first(where: { $0.id == specialityID }) {
                 self.speciality = speciality
             } else {
+                //If the specialty is unknown it is created from the available information
                 
                 //MARK: Faculty
                 //If the faculty is unknown it is created from the available information
-#warning("Переработать fetch")
-//                let facultyID = try! container.decode(Int16.self, forKey: .facultyID)
-//                let faculty: Faculty
-//                if let existingFaculty = FacultyStorage.shared.faculty(id: facultyID) {
-//                    faculty = existingFaculty
-//                } else {
-//                    let facultyAbbreviation = try! container.decode(String.self, forKey: .facultyAbbreviation)
-//                    faculty = Faculty(id: facultyID, abbreviation: facultyAbbreviation)
-//                }
+                let facultyID = try! container.decode(Int16.self, forKey: .facultyID)
+                let faculty: Faculty
                 
-//                let specialityName = try! container.decode(String.self, forKey: .specialityName)
-//                let specialityAbbreviation = try! container.decode(String.self, forKey: .specialityAbbreviation)
-//                self.speciality = Speciality(context: context, id: specialityID, name: specialityName, abbreviation: specialityAbbreviation, faculty: faculty)
+                let facultyAbbreviation = try! container.decode(String.self, forKey: .facultyAbbreviation)
+                faculty = Faculty(id: facultyID, abbreviation: facultyAbbreviation)
+                
+                
+                let specialityName = try! container.decode(String.self, forKey: .specialityName)
+                let specialityAbbreviation = try! container.decode(String.self, forKey: .specialityAbbreviation)
+    
+                let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
+
+                self.speciality = Speciality(context: context, id: specialityID, name: specialityName, abbreviation: specialityAbbreviation, faculty: faculty)
             }
-#warning("Переработать fetch")
-        }
-        
-        //For studentGroups structure in Lesson
-        //        if let specialityCode = try? container.decode (String.self, forKey: .specialityCode) {
-        //            if let speciality = Speciality.fetch(specialityCode: specialityCode, in: context) {
-        //                self.speciality = speciality
-        //            }
-        //        }
-        
-        if let course = try? container.decode(Int16.self, forKey: .course) {
-            self.course = course
+            
+            //For studentGroups structure in Lesson
+            //        if let specialityCode = try? container.decode (String.self, forKey: .specialityCode) {
+            //            if let speciality = Speciality.fetch(specialityCode: specialityCode, in: context) {
+            //                self.speciality = speciality
+            //            }
+            //        }
+            
+            if let course = try? container.decode(Int16.self, forKey: .course) {
+                self.course = course
+            }
         }
     }
 }
@@ -204,4 +123,9 @@ extension Group: Decodable {
         case facultyID = "facultyId"
         case facultyAbbreviation = "facultyAbbrev"
     }
+}
+
+//MARK: CodingUserInfoKey
+extension CodingUserInfoKey {
+    static let groups = CodingUserInfoKey(rawValue: "groups")!
 }

@@ -74,3 +74,9 @@ extension Speciality: DecoderUpdatable {
     }
     
 }
+
+
+//MARK: CodingUserInfoKey
+extension CodingUserInfoKey {
+    static let specialities = CodingUserInfoKey(rawValue: "specialities")!
+}

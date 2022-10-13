@@ -79,7 +79,7 @@ extension Classroom: EducationDated {
 
 //MARK: Request
 extension Classroom {
-    static func getClassrooms() -> [Classroom] {
+    static func getAll() -> [Classroom] {
         let request = self.fetchRequest()
         let classrooms = try! PersistenceController.shared.container.viewContext.fetch(request)
         
@@ -96,7 +96,7 @@ extension Classroom {
             return
         }
         
-        let classrooms = getClassrooms()
+        let classrooms = getAll()
         
         for dictionary in dictionaries {
             let decoder = JSONDecoder()

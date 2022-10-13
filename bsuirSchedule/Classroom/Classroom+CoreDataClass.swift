@@ -167,3 +167,9 @@ extension Classroom: Decodable {
         case departmentAbbreviation = "abbrev"
     }
 }
+
+//MARK: CodingUserInfoKey
+extension CodingUserInfoKey {
+    static let classrooms = CodingUserInfoKey(rawValue: "classrooms")!
+}
+

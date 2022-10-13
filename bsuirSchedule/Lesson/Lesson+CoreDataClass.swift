@@ -14,9 +14,9 @@ import SwiftUI
 public class Lesson: NSManagedObject {
     
     required convenience public init(from decoder: Decoder) throws {
-        let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
-        let entity = Lesson.entity()
-        self.init(entity: entity, insertInto: context)
+//        let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
+        let context = PersistenceController.shared.container.viewContext
+        self.init(entity: Lesson.entity(), insertInto: context)
         
         let container = try! decoder.container(keyedBy: CodingKeys.self)
         
@@ -52,16 +52,23 @@ public class Lesson: NSManagedObject {
         }
         
         //MARK: Classrooms
-        if let classrooms = try? container.decode([String].self, forKey: .classroom) {
-            classrooms.forEach { classroomName in
+        if let classroomNames = try? container.decode([String].self, forKey: .classroom) {
+            
+            let classrooms = decoder.userInfo[.classrooms] as! [Classroom]
+            
+            classroomNames.forEach { classroomName in
                 //If the classroom is unknown it is created from the available information
-//                if let classroom = ClassroomStorage.shared.classroom(name: classroomName) {
-//                    self.addToClassrooms(classroom)
-//                } else {
-                let classroom = try! Classroom(string: classroomName, context: context)
-                    print("\(classroomName) == \(classroom.formattedName(showBuilding: true))")
+                if let classroom = classrooms.first(where: { $0.originalName == classroomName }) {
+                    if self != nil {
+                        self.addToClassrooms(classroom)
+                    }
+                    
+                } else {
+                    print("\(classroomName) == \(classroomName)")
+                    
+                    let classroom = try! Classroom(string: classroomName, context: context)
                     self.addToClassrooms(classroom)
-//                }
+                }
             }
         }
         
@@ -106,14 +113,50 @@ public class Lesson: NSManagedObject {
         }
         
         //MARK: Employees
-        if let employees = try? container.decode([Employee].self, forKey: .employees) {
-            self.employeesIDs = employees.map {$0.id}
-            self.addToEmployees(NSSet(array: employees))
+        if let employeeDictionaries = try? container.decode(Array<Any>.self, forKey: .employees) as? [[String: Any]] {
+            let employees = decoder.userInfo[.employees] as! [Employee]
+            var lessonsEmployees: [Employee] = []
+            
+            for dictionary in employeeDictionaries {
+                let decoder = JSONDecoder()
+                decoder.userInfo[.managedObjectContext] = PersistenceController.shared.container.viewContext
+                let data = try! JSONSerialization.data(withJSONObject: dictionary)
+                
+                if let employee = employees.first (where: { $0.id == Int32(dictionary["id"] as! Int) }) {
+                    var mutableEmployee = employee
+                    try! decoder.update(&mutableEmployee, from: data)
+                    lessonsEmployees.append(mutableEmployee)
+                    
+                } else {
+                    let employee = try! decoder.decode(Employee.self, from: data)
+                    lessonsEmployees.append(employee)
+                }
+            }
+            self.employeesIDs = lessonsEmployees.map {$0.id}
+            self.addToEmployees(NSSet(array: lessonsEmployees))
+            
         }
 
         //MARK: Groups
-        let groups = try! container.decode([Group].self, forKey: .groups)
-        self.addToGroups(NSSet(array: groups))
+        let groupsDictionaries = try! container.decode(Array<Any>.self, forKey: .groups) as! [[String: Any]]
+        
+        let groups = decoder.userInfo[.groups] as! [Group]
+        let nestedDecoder = JSONDecoder()
+        nestedDecoder.userInfo[.managedObjectContext] = decoder.userInfo[.managedObjectContext]
+        nestedDecoder.userInfo[.specialities] = decoder.userInfo[.specialities]
+    
+        for dictionary in groupsDictionaries {
+            let data = try! JSONSerialization.data(withJSONObject: dictionary)
+            
+            if let group = groups.first (where: { $0.id == dictionary["name"] as? String }) {
+                var mutableGroup = group
+                try! nestedDecoder.update(&mutableGroup, from: data)
+                self.addToGroups(mutableGroup)
+            } else {
+                let group = try! nestedDecoder.decode(Group.self, from: data)
+                self.addToGroups(group)
+            }
+        }
     }
     
 }

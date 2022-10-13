@@ -40,7 +40,7 @@ struct GroupsView: View {
                         Text("Факультеты:")
                         Picker("", selection: $selectedFaculty) {
                             Text("все").tag(nil as Faculty?)
-                            let faculties = Set(groups.compactMap({ $0.speciality.faculty }))
+                            let faculties = Set(groups.compactMap({ $0.speciality?.faculty }))
                             ForEach(faculties.sorted(by: { $0.name! < $1.name! }), id: \.self) {faculty in
                                 Text(faculty.abbreviation ?? "Нет названия").tag(faculty.self as Faculty?)
                             }
@@ -48,7 +48,7 @@ struct GroupsView: View {
                         Text("Форма обучения:")
                         Picker("", selection: $selectedEducationType) {
                             Text("все").tag(nil as EducationType?)
-                            let educationTypes = Set(groups.map ({ $0.speciality.educationType }))
+                            let educationTypes = Set(groups.compactMap ({ $0.speciality?.educationType }))
                             ForEach(educationTypes.sorted(by: { $0.rawValue < $1.rawValue }), id: \.rawValue) { educationType in
                                 Text(educationType.description)
                                     .tag(educationType as EducationType?)

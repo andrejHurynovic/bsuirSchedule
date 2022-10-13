@@ -11,7 +11,7 @@ import Combine
 class ClassroomsViewModel: ObservableObject {
     
     func update() async {
-        for classroom in Classroom.getClassrooms() {
+        for classroom in Classroom.getAll() {
             PersistenceController.shared.container.viewContext.delete(classroom)
         }
         await MainActor.run {

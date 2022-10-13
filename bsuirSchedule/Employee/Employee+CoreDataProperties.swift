@@ -66,7 +66,7 @@ extension Employee: LessonsSectioned { }
 
 //MARK: Request
 extension Employee {
-    static func getEmployees() -> [Employee] {
+    static func getAll() -> [Employee] {
         let request = self.fetchRequest()
         let employees = try! PersistenceController.shared.container.viewContext.fetch(request)
         
@@ -83,7 +83,7 @@ extension Employee {
             return
         }
         
-        let employees = getEmployees()
+        let employees = getAll()
         
         for dictionary in dictionaries {
             let decoder = JSONDecoder()
@@ -91,8 +91,8 @@ extension Employee {
             let data = try! JSONSerialization.data(withJSONObject: dictionary)
             
             if let employee = employees.first (where: { $0.id == dictionary["id"] as! Int32 }) {
-                var employeee = employee
-                try! decoder.update(&employeee, from: data)
+                var mutableEmployee = employee
+                try! decoder.update(&mutableEmployee, from: data)
             } else {
                 let _ = try! decoder.decode(Employee.self, from: data)
             }
@@ -103,22 +103,42 @@ extension Employee {
 
 //MARK: Update
 extension Employee {
-    func update() async -> Employee? {
+    func update(decoder: JSONDecoder? = nil) async -> Employee? {
         guard let url = URL(string: FetchDataType.employee.rawValue + String(self.urlID)) else {
             return nil
         }
         let (data, _) = try! await URLSession.shared.data(from: url)
         var employee = self
-        let decoder = JSONDecoder()
-        decoder.userInfo[.managedObjectContext] = PersistenceController.shared.container.viewContext
-        try! decoder.update(&employee, from: data)
+    
+        guard data.count != 0 else {
+            return nil
+        }
+        
+        var decoder = decoder
+        if decoder == nil {
+            decoder = JSONDecoder()
+            decoder!.userInfo[.managedObjectContext] = PersistenceController.shared.container.viewContext
+            decoder!.userInfo[.groups] = Group.getAll()
+            decoder!.userInfo[.employees] = Employee.getAll()
+            decoder!.userInfo[.classrooms] = Classroom.getAll()
+            decoder!.userInfo[.specialities] = Speciality.getAll()
+        }
+        
+        try! decoder!.update(&employee, from: data)
         return employee
     }
     static func updateEmployees(employees: [Employee]) async {
+        let decoder = JSONDecoder()
+        decoder.userInfo[.managedObjectContext] = PersistenceController.shared.container.viewContext
+        decoder.userInfo[.groups] = Group.getAll()
+        decoder.userInfo[.employees] = Employee.getAll()
+        decoder.userInfo[.classrooms] = Classroom.getAll()
+        decoder.userInfo[.specialities] = Speciality.getAll()
+        
         try! await withThrowingTaskGroup(of: Employee?.self) { group in
             for employee in employees {
                 group.addTask {
-                    await employee.update()
+                    await employee.update(decoder: decoder)
                 }
             }
             //Await all tasks

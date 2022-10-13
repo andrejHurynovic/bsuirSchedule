@@ -19,11 +19,17 @@ public class Faculty: NSManagedObject {
         try! self.update(from: decoder)
     }
     
-    convenience public init(id: Int16) {
+    convenience public init(id: Int16, name: String? = nil, abbreviation: String? = nil) {
         let context = PersistenceController.shared.container.viewContext
         self.init(entity: Faculty.entity(), insertInto: context)
         
         self.id = id
+        if let name = name {
+            self.name = name
+        }
+        if let abbreviation = abbreviation {
+            self.abbreviation = abbreviation
+        }
     }
     
 }

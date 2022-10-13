@@ -176,3 +176,8 @@ extension Employee: Decodable {
         case employeeContainer = "employeeDto"
     }
 }
+
+//MARK: CodingUserInfoKey
+extension CodingUserInfoKey {
+    static let employees = CodingUserInfoKey(rawValue: "employees")!
+}
