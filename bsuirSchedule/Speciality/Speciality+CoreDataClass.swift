@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 @objc(Speciality)
-public class Speciality: NSManagedObject, Decodable {
+public class Speciality: NSManagedObject {
     
     required convenience public init(from decoder: Decoder) throws {
         let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
@@ -52,19 +52,20 @@ public class Speciality: NSManagedObject, Decodable {
     }
 }
 
-
-private enum CodingKeys: String, CodingKey {
+extension Speciality: Decodable {
+    private enum CodingKeys: String, CodingKey {
+        
+        case id
+        case name
+        case abbreviation = "abbrev"
+        
+        case facultyID = "facultyId"
+        
+        case educationTypeContainer = "educationForm"
+        case code
+    }
     
-    case id
-    case name
-    case abbreviation = "abbrev"
-    
-    case facultyID = "facultyId"
-    
-    case educationTypeContainer = "educationForm"
-    case code
-}
-
-private enum EducationTypeCodingKeys: String, CodingKey {
-    case educationTypeId = "id"
+    private enum EducationTypeCodingKeys: String, CodingKey {
+        case educationTypeId = "id"
+    }
 }

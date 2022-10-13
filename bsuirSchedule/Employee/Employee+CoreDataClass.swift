@@ -11,7 +11,7 @@ import CoreData
 import UIKit.UIImage
 
 @objc(Employee)
-public class Employee: NSManagedObject, Decodable {
+public class Employee: NSManagedObject {
     
     required public convenience init(from decoder: Decoder) throws {
         let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
@@ -151,28 +151,28 @@ extension Employee: DecoderUpdatable {
     }
 }
 
-
-private enum CodingKeys: String, CodingKey {
-    case id
-    case urlID = "urlId"
-    case firstName
-    case middleName
-    case lastName
-    
-    case educationStart = "startDate"
-    case educationEnd = "endDate"
-    case examsStart = "startExamsDate"
-    case examsEnd = "endExamsDate"
-    
-    case departments = "academicDepartment"
-    case rank
-    case degree
-    
-    case photoLink
-    
-    case lessons = "schedules"
-    case exams = "exams"
-    
-    case employeeContainer = "employeeDto"
+extension Employee: Decodable {
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case urlID = "urlId"
+        case firstName
+        case middleName
+        case lastName
+        
+        case educationStart = "startDate"
+        case educationEnd = "endDate"
+        case examsStart = "startExamsDate"
+        case examsEnd = "endExamsDate"
+        
+        case departments = "academicDepartment"
+        case rank
+        case degree
+        
+        case photoLink
+        
+        case lessons = "schedules"
+        case exams = "exams"
+        
+        case employeeContainer = "employeeDto"
+    }
 }
-

@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 @objc(Group)
-public class Group: NSManagedObject, Decodable {
+public class Group: NSManagedObject {
     
     required public convenience init(from decoder: Decoder) throws {
         let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
@@ -181,26 +181,27 @@ extension Group: DecoderUpdatable {
     }
 }
 
-
-private enum CodingKeys: String, CodingKey {
-    case educationStart = "startDate"
-    case educationEnd = "endDate"
-    case examsStart = "startExamsDate"
-    case examsEnd = "endExamsDate"
-    
-    case lessons = "schedules"
-    case exams = "exams"
-    
-    //Group information container keys
-    case groupContainer = "studentGroupDto"
-    
-    case id = "name"
-    case numberOfStudents
-    case course
-    case specialityID = "specialityDepartmentEducationFormId"
-    case specialityCode
-    case specialityName
-    case specialityAbbreviation = "specialityAbbrev"
-    case facultyID = "facultyId"
-    case facultyAbbreviation = "facultyAbbrev"
+extension Group: Decodable {
+    private enum CodingKeys: String, CodingKey {
+        case educationStart = "startDate"
+        case educationEnd = "endDate"
+        case examsStart = "startExamsDate"
+        case examsEnd = "endExamsDate"
+        
+        case lessons = "schedules"
+        case exams = "exams"
+        
+        //Group information container keys
+        case groupContainer = "studentGroupDto"
+        
+        case id = "name"
+        case numberOfStudents
+        case course
+        case specialityID = "specialityDepartmentEducationFormId"
+        case specialityCode
+        case specialityName
+        case specialityAbbreviation = "specialityAbbrev"
+        case facultyID = "facultyId"
+        case facultyAbbreviation = "facultyAbbrev"
+    }
 }

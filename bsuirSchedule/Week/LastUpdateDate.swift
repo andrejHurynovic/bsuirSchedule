@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LastUpdateDate: Decodable {
+struct LastUpdateDate {
     var lastUpdateDate: Date!
     
     public init(from decoder: Decoder) throws {
@@ -16,7 +16,10 @@ struct LastUpdateDate: Decodable {
             self.lastUpdateDate = DateFormatters.shared.get(.shortDate).date(from: dateString)!
         }
     }
-    
+
+}
+
+extension LastUpdateDate: Decodable {
     private enum CodingKeys: String, CodingKey {
         case date = "lastUpdateDate"
     }

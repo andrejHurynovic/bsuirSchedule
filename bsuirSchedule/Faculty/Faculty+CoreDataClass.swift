@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 @objc(Faculty)
-public class Faculty: NSManagedObject, Decodable {
+public class Faculty: NSManagedObject {
  
     required convenience public init(from decoder: Decoder) throws {
         let context = PersistenceController.shared.container.viewContext
@@ -44,8 +44,8 @@ extension Faculty: DecoderUpdatable {
     
 }
 
-extension Faculty {
-    enum CodingKeys: String, CodingKey {
+extension Faculty: Decodable {
+    private enum CodingKeys: String, CodingKey {
         case id
         case name
         case abbreviation = "abbrev"

@@ -11,7 +11,7 @@ import CoreData
 import SwiftUI
 
 @objc(Lesson)
-public class Lesson: NSManagedObject, Decodable {
+public class Lesson: NSManagedObject {
     
     required convenience public init(from decoder: Decoder) throws {
         let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
@@ -116,8 +116,9 @@ public class Lesson: NSManagedObject, Decodable {
         self.addToGroups(NSSet(array: groups))
     }
     
-    
-    
+}
+
+extension Lesson: Decodable {
     private enum CodingKeys: String, CodingKey {
         case subject = "subjectFullName"
         case abbreviation = "subject"
