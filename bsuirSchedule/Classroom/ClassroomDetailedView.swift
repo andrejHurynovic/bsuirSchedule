@@ -16,17 +16,6 @@ struct ClassroomDetailedView: View {
             scheduleButton
             groups
         }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-//                Menu {
-//                    FavoriteButton(classroom.favourite, circle: true) {
-//                        classroom.favourite.toggle()
-//                    }
-//                } label: {
-//                    Image(systemName: (selectedFaculty == nil && selectedEducationType == nil) ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
-//                }
-            }
-        }
         .navigationTitle(classroom.formattedName(showBuilding: true))
     }
     

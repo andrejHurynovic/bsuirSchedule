@@ -13,65 +13,71 @@ struct ClassroomsView: View {
     @StateObject private var viewModel = ClassroomsViewModel()
     
     @State var searchText = ""
-//    @State var classroomTypes: [ClassroomType: Binding<Bool>] = ClassroomsViewModel.classroomsTypesDefaults()
-//    @State var buildings: [Bool] = ClassroomsViewModel.buildingsDefaults()
+    @State var selectedClassroomType: ClassroomType? = nil
+    @State var selectedBuilding: Int16? = nil
     
     var body: some View {
         NavigationView {
+            let filteredClassrooms = classrooms
+                .filter { searchText.isEmpty || $0.originalName.localizedStandardContains(searchText) }
+                .filtered(by: selectedBuilding, selectedClassroomType)
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 256))], alignment: .leading, spacing: 8, pinnedViews: [.sectionHeaders]) {
-                    let filteredClassrooms = classrooms.filter { searchText.isEmpty || $0.originalName.localizedStandardContains(searchText) }
                     ForEach(filteredClassrooms.sections(), id: \.self) { section in
-                            Section {
-                                ForEach(section.classrooms, id: \.self) { classroom in
-                                    NavigationLink {
-                                        ClassroomDetailedView(classroom: classroom)
-                                    } label: {
-                                        ClassroomView(classroom: classroom)
-                                    }
-                                    .contextMenu {
-                                        FavoriteButton(classroom.favourite) {
-                                            classroom.favourite.toggle()
-                                        }
+                        Section {
+                            ForEach(section.classrooms, id: \.self) { classroom in
+                                NavigationLink {
+                                    ClassroomDetailedView(classroom: classroom)
+                                } label: {
+                                    ClassroomView(classroom: classroom)
+                                }
+                                .contextMenu {
+                                    FavoriteButton(classroom.favourite) {
+                                        classroom.favourite.toggle()
                                     }
                                 }
-                            } header: {
-                                standardizedHeader(title: section.title)
                             }
+                        } header: {
+                            standardizedHeader(title: section.title)
+                        }
                         
                     }
                 }
                 .padding()
             }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Menu {
+                        Text("Тип:")
+                        let types = Set(classrooms.map ({ $0.type })).sorted { $0.rawValue < $1.rawValue }
+                        Picker("", selection: $selectedClassroomType) {
+                            Text("любой").tag(nil as ClassroomType?)
+                            ForEach(types, id: \.self) { type in
+                                Text(type.description)
+                                    .tag(type.self as ClassroomType?)
+                            }
+                        }
+                        Text("Здание:")
+                        let buildings = Set(classrooms.map ({ $0.building })).sorted { $0 < $1 }
+                        Picker("", selection: $selectedBuilding) {
+                            Text("любое").tag(nil as Int16?)
+                            ForEach(buildings, id: \.self) { building in
+                                Text(String(building))
+                                    .tag(building as Int16?)
+                            }
+                        }
+                    } label: {
+                        Image(systemName: (selectedClassroomType == nil && selectedBuilding == nil) ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
+                    }
+                }
+            }
             .navigationTitle("Кабинеты")
             .refreshable {
                 await viewModel.update()
             }
-//            .toolbar {
-//                ToolbarItem(placement: .navigationBarTrailing) {
-//                    
-//                    Menu {
-//                        Text("Тип кабинета:")
-//                        ForEach(ClassroomType.allCases, id: \.rawValue) {classroomType in
-//                            Toggle(isOn: classroomTypes[classroomType]!) {
-//                                let _ = print(classroomTypes[classroomType])
-//                                Text(classroomType.description)
-//                            }
-//                        }
-//                        Text("Корпуса")
-//                        ForEach(1...8, id: \.self) {index in
-//                            Toggle(isOn: $buildings[index - 1]) {
-//                                Text(String(index))
-//                            }
-//                        }
-//                    } label: {
-////                        Image(systemName: classroomTypes == ClassroomsViewModel.classroomsTypesDefaults() ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
-//                        Image(systemName: true == true ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
-//                    }
-//                }
-//            }
-        }.navigationViewStyle(StackNavigationViewStyle())
-            .searchable(text: $searchText, prompt: "Номер, кафедра")
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
+        .searchable(text: $searchText, prompt: "Номер, кафедра")
     }
 }
 

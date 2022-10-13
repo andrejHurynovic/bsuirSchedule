@@ -6,11 +6,10 @@
 //
 
 import SwiftUI
-import Combine
 
 class GroupsViewModel: ObservableObject {
 
-    func updateAll() async {
+    func update() async {
         await Group.fetchAllGroups()
         await MainActor.run {
             try! PersistenceController.shared.container.viewContext.save()

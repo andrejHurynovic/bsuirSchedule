@@ -23,22 +23,4 @@ class ClassroomsViewModel: ObservableObject {
         }
     }
     
-//    static func classroomsTypesDefaults() -> [ClassroomType: Binding<Bool>] {
-//        [.lecture: .constant(true),
-//         .practice: .constant(true),
-//         .laboratory: .constant(true),
-//         .computerClass: .constant(false),
-//         .maintenance: .constant(false),
-//         .office: .constant(false),
-//         .scienceLaboratory: .constant(false)
-//        ]
-//    }
-//
-//    static func buildingsDefaults() -> [Bool] {
-//        return [true, true, true, true, true, true, true, true, true]
-//    }
-//
-//    func fetchClassrooms() {
-//        ClassroomStorage.shared.fetch()
-//    }
 }

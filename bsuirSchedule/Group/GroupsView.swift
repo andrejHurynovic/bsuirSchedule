@@ -62,7 +62,7 @@ struct GroupsView: View {
             .navigationBarTitle("Группы")
             .searchable(text: $searchText, prompt: "Номер группы, специальность")
             .refreshable {
-                await viewModel.updateAll()
+                await viewModel.update()
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())

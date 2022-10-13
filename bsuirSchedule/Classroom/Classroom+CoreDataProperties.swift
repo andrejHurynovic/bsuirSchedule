@@ -96,7 +96,7 @@ extension Classroom {
             return
         }
         
-        var classrooms = getClassrooms()
+        let classrooms = getClassrooms()
         
         for dictionary in dictionaries {
             let decoder = JSONDecoder()

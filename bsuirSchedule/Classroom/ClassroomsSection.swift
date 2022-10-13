@@ -5,14 +5,24 @@
 //  Created by Andrej Hurynovič on 7.10.22.
 //
 
-import Foundation
-
 struct ClassroomSection: Hashable {
     var title: String
     var classrooms: [Classroom]
 }
 
 extension Array where Element == Classroom {
+    ///Returns array of classrooms filtered by building and classroomType if they are presented
+    func filtered(by building: Int16?, _ classroomType: ClassroomType?) -> [Classroom] {
+        var classrooms = self
+        if let building = building {
+            classrooms.removeAll { $0.building != building }
+        }
+        if let classroomType = classroomType {
+            classrooms.removeAll { $0.type != classroomType }
+        }
+        return classrooms
+    }
+    
     ///Returns array of classrooms sections grouped by building and floor
     func sections() -> [ClassroomSection] {
         var sections: [ClassroomSection] = []
