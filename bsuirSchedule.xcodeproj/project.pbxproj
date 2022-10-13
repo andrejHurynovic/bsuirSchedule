@@ -64,7 +64,6 @@
 		F69CAC33271DCA0B00D0403E /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69CAC32271DCA0B00D0403E /* Storage.swift */; };
 		F6A42DA026E52F8A004B239C /* GroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A42D9F26E52F8A004B239C /* GroupsView.swift */; };
 		F6AA210F26EC83BB006218F8 /* GroupsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AA210E26EC83BB006218F8 /* GroupsViewModel.swift */; };
-		F6AACFA627C6E61100667403 /* UpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AACFA527C6E61100667403 /* UpdateView.swift */; };
 		F6AFC4622721EC43008CC065 /* DesignManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AFC4612721EC43008CC065 /* DesignManager.swift */; };
 		F6BC18A52811D4A100BA549D /* DateFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BC18A42811D4A100BA549D /* DateFormatters.swift */; };
 		F6BC18A72811E8FE00BA549D /* GroupDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BC18A62811E8FD00BA549D /* GroupDetailedView.swift */; };
@@ -171,7 +170,6 @@
 		F69CAC32271DCA0B00D0403E /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		F6A42D9F26E52F8A004B239C /* GroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsView.swift; sourceTree = "<group>"; };
 		F6AA210E26EC83BB006218F8 /* GroupsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsViewModel.swift; sourceTree = "<group>"; };
-		F6AACFA527C6E61100667403 /* UpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateView.swift; sourceTree = "<group>"; };
 		F6AFC4612721EC43008CC065 /* DesignManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignManager.swift; sourceTree = "<group>"; };
 		F6BC18A42811D4A100BA549D /* DateFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatters.swift; sourceTree = "<group>"; };
 		F6BC18A62811E8FD00BA549D /* GroupDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailedView.swift; sourceTree = "<group>"; };
@@ -270,7 +268,6 @@
 				F632DEED26696CCB00E4C55F /* ContentView.swift */,
 				F6DCD72226B30EF0003761B0 /* SettingsView.swift */,
 				F6857C7628F06F4300195388 /* DeveloperView.swift */,
-				F6AACFA527C6E61100667403 /* UpdateView.swift */,
 				F6F6B4F726FA5D2700814354 /* Favorite */,
 				F699F21826EA249E00747BE0 /* Group */,
 				F65F831F26E8F35500B8CC4E /* Employee */,
@@ -529,7 +526,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6AACFA627C6E61100667403 /* UpdateView.swift in Sources */,
 				F68B4CF82845399C00C8DBF6 /* WeekStorage.swift in Sources */,
 				F68465FB26FA5321000F185E /* Faculty+CoreDataClass.swift in Sources */,
 				F68465FC26FA5321000F185E /* Faculty+CoreDataProperties.swift in Sources */,
