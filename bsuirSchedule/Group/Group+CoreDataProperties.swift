@@ -66,7 +66,7 @@ extension Group {
 
 //MARK: Fetch
 extension Group {
-    static func fetchAllGroups() async {
+    static func fetchAll() async {
         let data = try! await URLSession.shared.data(from: FetchDataType.groups.rawValue)
         guard let dictionaries = try! JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] else {
             return

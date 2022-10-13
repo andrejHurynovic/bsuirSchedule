@@ -43,6 +43,43 @@ extension Faculty {
 
 }
 
-extension Faculty : Identifiable {
+extension Faculty : Identifiable {}
 
+//MARK: Request
+extension Faculty {
+    static func getFaculties() -> [Faculty] {
+        let request = self.fetchRequest()
+        let faculties = try! PersistenceController.shared.container.viewContext.fetch(request)
+
+        return faculties
+    }
+
+}
+
+//MARK: Fetch
+extension Faculty {
+    static func fetchAll() async {
+        let data = try! await URLSession.shared.data(from: FetchDataType.faculties.rawValue)
+        guard let dictionaries = try! JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] else {
+            return
+        }
+        
+        let faculties = getFaculties()
+        
+        for dictionary in dictionaries {
+            let decoder = JSONDecoder()
+            decoder.userInfo[.managedObjectContext] = PersistenceController.shared.container.viewContext
+            let data = try! JSONSerialization.data(withJSONObject: dictionary)
+            
+            let id = dictionary["id"] as! Int16
+            
+            if let faculty = faculties.first (where: { $0.id == id }) {
+                var mutableFaculty = faculty
+                try! decoder.update(&mutableFaculty, from: data)
+            } else {
+                let _ = try? decoder.decode(Faculty.self, from: data)
+            }
+        }
+    }
+    
 }

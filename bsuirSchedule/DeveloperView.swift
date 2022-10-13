@@ -22,22 +22,32 @@ struct DeveloperView: View {
     var body: some View {
         List {
             Section("Удаление") {
-                deleteView(name: "недели", symbol: "calendar.circle", elements: weeks)
-                deleteView(name: "факультеты", symbol: "graduationcap.circle", elements: faculties)
-                deleteView(name: "специальности", symbol: "book.circle", elements: specialities)
-                deleteView(name: "кабинеты", symbol: "building.columns.circle", elements: classrooms)
-                deleteView(name: "группы", symbol: "person.2.circle", elements: groups)
-                deleteView(name: "преподаватели", symbol: "person.crop.circle", elements: employees)
-                deleteView(name: "занятия", symbol: "books.vertical.circle", elements: lessons)
-                deleteView(name: "задания", symbol: "house.circle", elements: tasks)
+                DeveloperDeleteView(name: "недели", symbol: "calendar.circle", elements: weeks)
+                DeveloperDeleteView(name: "факультеты", symbol: "graduationcap.circle", elements: faculties)
+                DeveloperDeleteView(name: "специальности", symbol: "book.circle", elements: specialities)
+                DeveloperDeleteView(name: "кабинеты", symbol: "building.columns.circle", elements: classrooms)
+                DeveloperDeleteView(name: "группы", symbol: "person.2.circle", elements: groups)
+                DeveloperDeleteView(name: "преподаватели", symbol: "person.crop.circle", elements: employees)
+                DeveloperDeleteView(name: "занятия", symbol: "books.vertical.circle", elements: lessons)
+                DeveloperDeleteView(name: "задания", symbol: "house.circle", elements: tasks)
             }
+            
+            Section("Загрузка") {
+//                DeveloperUpdateView<Week>(name: "недели", symbol: "calendar.circle")
+                DeveloperUpdateView<Faculty>(name: "факультеты", symbol: "graduationcap.circle")
+//                DeveloperUpdateView<Speciality>(name: "специальности", symbol: "book.circle")
+                DeveloperUpdateView<Classroom>(name: "кабинеты", symbol: "building.columns.circle")
+                DeveloperUpdateView<Group>(name: "группы", symbol: "person.2.circle")
+                DeveloperUpdateView<Employee>(name: "преподаватели", symbol: "person.crop.circle")
+            }
+            
         }
         .navigationTitle("Разработчик")
     }
     
 }
 
-struct deleteView<T: NSFetchRequestResult>: View {
+struct DeveloperDeleteView<T: NSFetchRequestResult>: View {
     
     var name: String
     var symbol: String
@@ -52,6 +62,28 @@ struct deleteView<T: NSFetchRequestResult>: View {
         } label: {
             Label("Удалить \(name) (\(elements.count))", systemImage: symbol)
                 .foregroundColor(.red)
+        }
+    }
+    
+}
+
+struct DeveloperUpdateView<T: DecoderUpdatable>: View {
+    
+    var name: String
+    var symbol: String
+    
+    var body: some View {
+        Button {
+            Task {
+                await T.fetchAll()
+                await MainActor.run {
+                    try! PersistenceController.shared.container.viewContext.save()
+                }
+            }
+           
+        } label: {
+            Label("Загрузить \(name)", systemImage: symbol)
+//                .foregroundColor(.red)
         }
     }
     

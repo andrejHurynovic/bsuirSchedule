@@ -10,7 +10,7 @@ import SwiftUI
 class GroupsViewModel: ObservableObject {
 
     func update() async {
-        await Group.fetchAllGroups()
+        await Group.fetchAll()
         await MainActor.run {
             try! PersistenceController.shared.container.viewContext.save()
         }

@@ -32,6 +32,7 @@ struct DecoderExtractor: Decodable {
 //MARK: DecoderUpdatable
 protocol DecoderUpdatable {
     mutating func update(from decoder: Decoder) throws
+    static func fetchAll() async
 }
 
 //MARK: DecodingFormat

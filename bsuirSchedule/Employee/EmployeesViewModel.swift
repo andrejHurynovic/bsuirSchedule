@@ -10,7 +10,7 @@ import SwiftUI
 class EmployeesViewModel: ObservableObject {
     
     func update() async {
-        await Employee.fetchAllEmployees()
+        await Employee.fetchAll()
         let employees = Employee.getEmployees()
         await Employee.updatePhotos(for: employees)
 //        await Employee.updateEmployees(employees: employees)

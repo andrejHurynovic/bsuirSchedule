@@ -77,7 +77,7 @@ extension Employee {
 
 //MARK: Fetch
 extension Employee {
-    static func fetchAllEmployees() async {
+    static func fetchAll() async {
         let data = try! await URLSession.shared.data(from: FetchDataType.employees.rawValue)
         guard let dictionaries = try! JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] else {
             return
