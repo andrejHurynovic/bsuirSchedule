@@ -59,20 +59,23 @@ public class Group: NSManagedObject, Decodable {
                 self.speciality = speciality
             } else {
                 
-                //MARK: Faculty
-                //If the faculty is unknown it is created from the available information
-                let facultyID = try! container.decode(Int16.self, forKey: .facultyID)
-                let faculty: Faculty
-                if let existingFaculty = FacultyStorage.shared.faculty(id: facultyID) {
-                    faculty = existingFaculty
-                } else {
-                    let facultyAbbreviation = try! container.decode(String.self, forKey: .facultyAbbreviation)
-                    faculty = Faculty(id: facultyID, abbreviation: facultyAbbreviation)
-                }
-                
-                let specialityName = try! container.decode(String.self, forKey: .specialityName)
-                let specialityAbbreviation = try! container.decode(String.self, forKey: .specialityAbbreviation)
-                self.speciality = Speciality(context: context, id: specialityID, name: specialityName, abbreviation: specialityAbbreviation, faculty: faculty)
+#warning("Переработать fetch")
+//                //MARK: Faculty
+//                //If the faculty is unknown it is created from the available information
+//                let facultyID = try! container.decode(Int16.self, forKey: .facultyID)
+//                let faculty: Faculty
+//
+//                if let existingFaculty = FacultyStorage.shared.faculty(id: facultyID) {
+//                    faculty = existingFaculty
+//                } else {
+//                    let facultyAbbreviation = try! container.decode(String.self, forKey: .facultyAbbreviation)
+//                    faculty = Faculty(id: facultyID, abbreviation: facultyAbbreviation)
+//                }
+//
+//                let specialityName = try! container.decode(String.self, forKey: .specialityName)
+//                let specialityAbbreviation = try! container.decode(String.self, forKey: .specialityAbbreviation)
+//                self.speciality = Speciality(context: context, id: specialityID, name: specialityName, abbreviation: specialityAbbreviation, faculty: faculty)
+#warning("Переработать fetch")
             }
         }
         
@@ -148,19 +151,21 @@ extension Group: DecoderUpdatable {
                 
                 //MARK: Faculty
                 //If the faculty is unknown it is created from the available information
-                let facultyID = try! container.decode(Int16.self, forKey: .facultyID)
-                let faculty: Faculty
-                if let existingFaculty = FacultyStorage.shared.faculty(id: facultyID) {
-                    faculty = existingFaculty
-                } else {
-                    let facultyAbbreviation = try! container.decode(String.self, forKey: .facultyAbbreviation)
-                    faculty = Faculty(id: facultyID, abbreviation: facultyAbbreviation)
-                }
+#warning("Переработать fetch")
+//                let facultyID = try! container.decode(Int16.self, forKey: .facultyID)
+//                let faculty: Faculty
+//                if let existingFaculty = FacultyStorage.shared.faculty(id: facultyID) {
+//                    faculty = existingFaculty
+//                } else {
+//                    let facultyAbbreviation = try! container.decode(String.self, forKey: .facultyAbbreviation)
+//                    faculty = Faculty(id: facultyID, abbreviation: facultyAbbreviation)
+//                }
                 
-                let specialityName = try! container.decode(String.self, forKey: .specialityName)
-                let specialityAbbreviation = try! container.decode(String.self, forKey: .specialityAbbreviation)
-                self.speciality = Speciality(context: context, id: specialityID, name: specialityName, abbreviation: specialityAbbreviation, faculty: faculty)
+//                let specialityName = try! container.decode(String.self, forKey: .specialityName)
+//                let specialityAbbreviation = try! container.decode(String.self, forKey: .specialityAbbreviation)
+//                self.speciality = Speciality(context: context, id: specialityID, name: specialityName, abbreviation: specialityAbbreviation, faculty: faculty)
             }
+#warning("Переработать fetch")
         }
         
         //For studentGroups structure in Lesson

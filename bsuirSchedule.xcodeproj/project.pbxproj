@@ -80,7 +80,6 @@
 		F6DB7B14286CAF70009BE5FB /* ClassroomType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DB7B13286CAF70009BE5FB /* ClassroomType.swift */; };
 		F6DCD72326B30EF0003761B0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DCD72226B30EF0003761B0 /* SettingsView.swift */; };
 		F6DCD72526B30F86003761B0 /* LessonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DCD72426B30F86003761B0 /* LessonsView.swift */; };
-		F6F6B4F226FA55F200814354 /* FacultyStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F6B4F126FA55F200814354 /* FacultyStorage.swift */; };
 		F6F87816271A1ED7005E3C41 /* Speciality+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F87810271A1ED7005E3C41 /* Speciality+CoreDataClass.swift */; };
 		F6F87817271A1ED7005E3C41 /* Speciality+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F87811271A1ED7005E3C41 /* Speciality+CoreDataProperties.swift */; };
 		F6F8781A271A2111005E3C41 /* SpecialityStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F87819271A2111005E3C41 /* SpecialityStorage.swift */; };
@@ -186,7 +185,6 @@
 		F6DB7B13286CAF70009BE5FB /* ClassroomType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomType.swift; sourceTree = "<group>"; };
 		F6DCD72226B30EF0003761B0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		F6DCD72426B30F86003761B0 /* LessonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsView.swift; sourceTree = "<group>"; };
-		F6F6B4F126FA55F200814354 /* FacultyStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacultyStorage.swift; sourceTree = "<group>"; };
 		F6F87810271A1ED7005E3C41 /* Speciality+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Speciality+CoreDataClass.swift"; sourceTree = "<group>"; };
 		F6F87811271A1ED7005E3C41 /* Speciality+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Speciality+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F6F87819271A2111005E3C41 /* SpecialityStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialityStorage.swift; sourceTree = "<group>"; };
@@ -320,7 +318,6 @@
 			children = (
 				F68465F926FA5321000F185E /* Faculty+CoreDataClass.swift */,
 				F68465FA26FA5321000F185E /* Faculty+CoreDataProperties.swift */,
-				F6F6B4F126FA55F200814354 /* FacultyStorage.swift */,
 			);
 			path = Faculty;
 			sourceTree = "<group>";
@@ -588,7 +585,6 @@
 				F6D588D128E4685B00CB58AC /* FetchDataType.swift in Sources */,
 				F697BF7C26FFA1BA008FA7A9 /* Classroom+CoreDataClass.swift in Sources */,
 				F6BF723A272F311A00D18ADD /* PhotoPickerView.swift in Sources */,
-				F6F6B4F226FA55F200814354 /* FacultyStorage.swift in Sources */,
 				F632DEEC26696CCB00E4C55F /* bsuirTimetableApp.swift in Sources */,
 				F64BEDDA26E9072900C7AD09 /* EmployeeView.swift in Sources */,
 				F68E9CDE2729BB4100704EB0 /* FavoriteGroupView.swift in Sources */,

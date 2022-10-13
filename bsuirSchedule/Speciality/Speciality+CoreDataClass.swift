@@ -23,8 +23,8 @@ public class Speciality: NSManagedObject, Decodable {
         self.abbreviation = try! container.decode(String.self, forKey: .abbreviation)
         
 #warning("Что делать в случае отсутствия факультета? А? А?А?А?А?А? Сделать обработку ошибок короче")
-        let facultyID = try! container.decode(Int16.self, forKey: .facultyID)
-        self.faculty = FacultyStorage.shared.faculty(id: facultyID)
+//        let facultyID = try! container.decode(Int16.self, forKey: .facultyID)
+//        self.faculty = FacultyStorage.shared.faculty(id: facultyID)
         
         let nestedContainer = try! container.nestedContainer(keyedBy: EducationTypeCodingKeys.self, forKey: .educationTypeContainer)
         
