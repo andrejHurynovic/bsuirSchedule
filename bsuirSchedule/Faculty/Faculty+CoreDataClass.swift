@@ -14,8 +14,7 @@ public class Faculty: NSManagedObject {
  
     required convenience public init(from decoder: Decoder) throws {
         let context = PersistenceController.shared.container.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "Faculty", in: context)
-        self.init(entity: entity!, insertInto: context)
+        self.init(entity: Faculty.entity(), insertInto: context)
         
         try! self.update(from: decoder)
     }
@@ -23,13 +22,20 @@ public class Faculty: NSManagedObject {
     //No need?
     convenience public init(id: Int16, abbreviation: String) {
         let context = PersistenceController.shared.container.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "Faculty", in: context)
-        self.init(entity: entity!, insertInto: context)
+        self.init(entity: Faculty.entity(), insertInto: context)
         
         self.id = id
         self.abbreviation = abbreviation
     }
     
+}
+
+extension Faculty: Decodable {
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case abbreviation = "abbrev"
+    }
 }
 
 //MARK: Update
@@ -44,10 +50,3 @@ extension Faculty: DecoderUpdatable {
     
 }
 
-extension Faculty: Decodable {
-    private enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case abbreviation = "abbrev"
-    }
-}
