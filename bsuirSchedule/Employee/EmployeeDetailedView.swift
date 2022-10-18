@@ -22,10 +22,9 @@ struct EmployeeDetailedView: View {
                 }
             }
             information
-            links
-            Section {
+            Section("Ссылки") {
                 lessons
-                lastUpdate
+                urlLinks
             }
             groups
         }
@@ -94,17 +93,16 @@ struct EmployeeDetailedView: View {
                 }
                 
             }
+            lastUpdate
         }
     }
     
-    var links: some View {
-        Section("Ссылки") {
-            Link(destination: URL(string: "https://iis.bsuir.by/departments/employees/" + viewModel.employee.urlID!)!) {
-                Label("Контакты", systemImage: "teletype")
-            }
-            Link(destination: URL(string: "https://iis.bsuir.by/scheduleEmployee/" + viewModel.employee.urlID!)!) {
-                Label("Расписание в ИИС", systemImage: "calendar")
-            }
+    @ViewBuilder var urlLinks: some View {
+        Link(destination: URL(string: "https://iis.bsuir.by/departments/employees/" + viewModel.employee.urlID!)!) {
+            Label("Контакты", systemImage: "teletype")
+        }
+        Link(destination: URL(string: "https://iis.bsuir.by/scheduleEmployee/" + viewModel.employee.urlID!)!) {
+            Label("Расписание в ИИС", systemImage: "globe")
         }
     }
     
