@@ -15,13 +15,17 @@ struct GroupDetailedView: View {
     var body: some View {
         List {
             information
-            lessons
-            Section {
+            Section("Ссылки") {
+                lessons
+                flow
+                employees
+            }
+            Section("Дополнительная информация") {
                 educationDates
                 lastUpdate
+                statistics
             }
-            statistics
-            employees
+
         }
         .navigationTitle(viewModel.navigationTitle)
         .refreshable {
@@ -100,52 +104,70 @@ struct GroupDetailedView: View {
     }
     
     @ViewBuilder var statistics: some View {
-        DisclosureGroup("Статистика") {
-            let lessonsSections = viewModel.group.lessonsSections()
-            let allLessons = Array(lessonsSections.map { $0.lessons }.joined())
-            let subjects = Set(allLessons.compactMap { $0.abbreviation }).sorted()
-            ForEach(subjects, id: \.self, content: { subject in
-                DisclosureGroup {
-                    let subjectLessons = allLessons.filter { $0.abbreviation == subject }
-                    let lessonTypes = Set(subjectLessons.map({ $0.lessonType })).sorted { $0.rawValue < $1.rawValue }
-                    ForEach(lessonTypes, id: \.self) { lessonType in
-                        let lessonTypeLessons = subjectLessons.filter { $0.lessonType == lessonType }
-                        var subgroups = Set(lessonTypeLessons.map { $0.subgroup }).sorted()
-                        if subgroups.count == 1 {
-                            Form(lessonType.description(), String(lessonTypeLessons.count))
-                        } else {
-                            DisclosureGroup {
-                                let subgroupp = subgroups.removeFirst()
-                                let subgroupLessons = lessonTypeLessons.filter { $0.subgroup == subgroupp }
-                                Form("Общие", String(subgroupLessons.count))
-                                ForEach(subgroups, id: \.self) { subgroup in
-                                    let subgroupLessons = lessonTypeLessons.filter { $0.subgroup == subgroup }
-                                    Form("\(subgroup)-ая подгруппа", "\(subgroupLessons.count)")
-                                }
-                            } label: {
+        let lessonsSections = viewModel.group.lessonsSections()
+        if lessonsSections.isEmpty == false {
+            DisclosureGroup("Статистика") {
+                
+                let allLessons = Array(lessonsSections.map { $0.lessons }.joined())
+                let subjects = Set(allLessons.compactMap { $0.abbreviation }).sorted()
+                ForEach(subjects, id: \.self, content: { subject in
+                    DisclosureGroup {
+                        let subjectLessons = allLessons.filter { $0.abbreviation == subject }
+                        let lessonTypes = Set(subjectLessons.map({ $0.lessonType })).sorted { $0.rawValue < $1.rawValue }
+                        ForEach(lessonTypes, id: \.self) { lessonType in
+                            let lessonTypeLessons = subjectLessons.filter { $0.lessonType == lessonType }
+                            var subgroups = Set(lessonTypeLessons.map { $0.subgroup }).sorted()
+                            if subgroups.count == 1 {
                                 Form(lessonType.description(), String(lessonTypeLessons.count))
+                            } else {
+                                DisclosureGroup {
+                                    let subgroupp = subgroups.removeFirst()
+                                    let subgroupLessons = lessonTypeLessons.filter { $0.subgroup == subgroupp }
+                                    Form("Общие", String(subgroupLessons.count))
+                                    ForEach(subgroups, id: \.self) { subgroup in
+                                        let subgroupLessons = lessonTypeLessons.filter { $0.subgroup == subgroup }
+                                        Form("\(subgroup)-ая подгруппа", "\(subgroupLessons.count)")
+                                    }
+                                } label: {
+                                    Form(lessonType.description(), String(lessonTypeLessons.count))
+                                }
                             }
                         }
+                    } label: {
+                        Text(subject)
                     }
-                } label: {
-                    Text(subject)
-                }
+                    
+                })
                 
-            })
-            
+            }
+        }
+    }
+    
+    @ViewBuilder var flow: some View {
+        if let flow = viewModel.group.flow {
+            DisclosureGroup {
+                ForEach(flow) { group in
+                    NavigationLink(destination: GroupDetailedView(viewModel: GroupViewModel(group))){
+                        Text(group.id)
+                    }
+                }
+            } label: {
+                Label("Поток", systemImage: "bookmark")
+            }
         }
     }
     
     @ViewBuilder var employees: some View {
-        let employees = viewModel.group.employees
-        if employees.isEmpty == false {
-            Section("Преподавтели") {
+        if let employees = viewModel.group.employees {
+            DisclosureGroup {
                 ForEach(employees) { employee in
                     EmployeeView(employee: employee)
                         .background(NavigationLink("", destination: {
                             EmployeeDetailedView(viewModel: EmployeeViewModel(employee))
                         }).opacity(0))
                 }
+            } label: {
+                Label("Преподаватели", systemImage: "person.3")
             }
         }
     }
