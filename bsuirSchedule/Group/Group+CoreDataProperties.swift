@@ -138,3 +138,13 @@ extension Group {
     }
     
 }
+
+//MARK: Accessors
+extension Group {
+    var employees: [Employee] {
+        let lessons = self.lessons?.allObjects as! [Lesson]
+        let employees = Array(lessons.compactMap {($0.employees?.allObjects as! [Employee])}.joined())
+        return Set(employees).sorted { $0.lastName < $1.lastName }
+    }
+    
+}

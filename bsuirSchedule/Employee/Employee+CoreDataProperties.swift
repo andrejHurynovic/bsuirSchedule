@@ -182,7 +182,6 @@ extension Employee {
         }
         
         let set = Set(groups.map({ $0 }).joined())
-        
-        return set.sorted {$0.id < $1.id}
+        return set.sorted {$0.id! < $1.id!}
     }
 }

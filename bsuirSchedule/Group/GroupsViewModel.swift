@@ -15,10 +15,10 @@ class GroupsViewModel: ObservableObject {
             try! PersistenceController.shared.container.viewContext.save()
         }
         let groups = Group.getAll()
-        await Group.updateGroups(groups: groups)
-        await MainActor.run {
-            try! PersistenceController.shared.container.viewContext.save()
-        }
+//        await Group.updateGroups(groups: groups)
+//        await MainActor.run {
+//            try! PersistenceController.shared.container.viewContext.save()
+//        }
 //        let groupsArrays = groups.chunked(into: 1)
 //
 //        for array in groupsArrays {

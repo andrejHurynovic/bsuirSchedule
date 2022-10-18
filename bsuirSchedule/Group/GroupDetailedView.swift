@@ -21,6 +21,7 @@ struct GroupDetailedView: View {
                 lastUpdate
             }
             statistics
+            employees
         }
         .navigationTitle(viewModel.navigationTitle)
         .refreshable {
@@ -132,6 +133,20 @@ struct GroupDetailedView: View {
                 
             })
             
+        }
+    }
+    
+    @ViewBuilder var employees: some View {
+        let employees = viewModel.group.employees
+        if employees.isEmpty == false {
+            Section("Преподавтели") {
+                ForEach(employees) { employee in
+                    EmployeeView(employee: employee)
+                        .background(NavigationLink("", destination: {
+                            EmployeeDetailedView(viewModel: EmployeeViewModel(employee))
+                        }).opacity(0))
+                }
+            }
         }
     }
     
