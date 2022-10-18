@@ -18,6 +18,7 @@ struct EmployeesView: View {
         NavigationView {
             ZStack {
                 let employees = employees.filter {
+                    searchText.isEmpty ||
                     $0.lastName!.localizedStandardContains(searchText) == true ||
                     $0.departments!.contains(where: { $0.localizedStandardContains(searchText) }) == true
                 }
@@ -46,7 +47,8 @@ struct EmployeesView: View {
                 }
                 .navigationTitle("Преподаватели")
                 .searchable(text: $searchText, prompt: "Фамилия, кафедра")
-            }.navigationViewStyle(StackNavigationViewStyle())
+            }
+            .navigationViewStyle(StackNavigationViewStyle())
         }
     }
     
