@@ -18,8 +18,8 @@ struct EmployeesView: View {
         NavigationView {
             ZStack {
                 let employees = employees.filter {
-                    $0.lastName!.localizedStandardContains(searchText) == false &&
-                    $0.departments!.contains(where: { $0.localizedStandardContains(searchText) }) == false
+                    $0.lastName!.localizedStandardContains(searchText) == true ||
+                    $0.departments!.contains(where: { $0.localizedStandardContains(searchText) }) == true
                 }
                 
                 List {
