@@ -83,11 +83,6 @@ extension Date: Strideable {
     }
 }
 
-func weeksBetween(start: Date, end: Date) -> Int {
-    let calendar = Calendar(identifier: .iso8601)
-    return calendar.dateComponents([.weekOfYear], from: end).weekOfYear! - calendar.dateComponents([.weekOfYear], from: start).weekOfYear!
-}
-
 //MARK: UserDefaults
 
 extension UserDefaults {

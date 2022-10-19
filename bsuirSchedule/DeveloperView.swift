@@ -10,7 +10,6 @@ import CoreData
 
 struct DeveloperView: View {
     
-    @FetchRequest(entity: Week.entity(), sortDescriptors: []) var weeks: FetchedResults<Week>
     @FetchRequest(entity: Faculty.entity(), sortDescriptors: []) var faculties: FetchedResults<Faculty>
     @FetchRequest(entity: Speciality.entity(), sortDescriptors: []) var specialities: FetchedResults<Speciality>
     @FetchRequest(entity: Classroom.entity(), sortDescriptors: []) var classrooms: FetchedResults<Classroom>
@@ -22,7 +21,6 @@ struct DeveloperView: View {
     var body: some View {
         List {
             Section("Удаление") {
-                DeveloperDeleteView(name: "недели", symbol: "calendar.circle", elements: weeks)
                 DeveloperDeleteView(name: "факультеты", symbol: "graduationcap.circle", elements: faculties)
                 DeveloperDeleteView(name: "специальности", symbol: "book.circle", elements: specialities)
                 DeveloperDeleteView(name: "кабинеты", symbol: "building.columns.circle", elements: classrooms)
@@ -33,7 +31,6 @@ struct DeveloperView: View {
             }
             
             Section("Загрузка") {
-//                DeveloperUpdateView<Week>(name: "недели", symbol: "calendar.circle")
                 DeveloperUpdateView<Faculty>(name: "факультеты", symbol: "graduationcap.circle")
                 DeveloperUpdateView<Speciality>(name: "специальности", symbol: "book.circle")
                 DeveloperUpdateView<Classroom>(name: "кабинеты", symbol: "building.columns.circle")
