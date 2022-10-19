@@ -40,7 +40,6 @@ extension Date {
         
         let yearOfSelf = calendar.dateComponents([.year], from: self).year!
         let yearOfDate = calendar.dateComponents([.year], from: end).year!
-        let yearsBetweenDates = yearOfSelf - yearOfDate
 
         //52 is number of not-full in every year
         if (yearOfSelf < yearOfDate && weeksOfDateYear != 52) {
