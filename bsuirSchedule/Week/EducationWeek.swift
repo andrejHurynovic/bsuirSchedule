@@ -9,7 +9,7 @@ import Foundation
 
 extension Date {
     ///Week for this date in range [0; 3]
-    ///Calculates the first of September for the date. If the first of September of this year has not yet been relative to this date, then the weeks are counted from the first of September of the previous year. The difference in weeks between dates is divided modulo 4, which gives the correct week format
+    ///Calculates the first of September for the date. If the first of September of this year has not yet been relative to this date, then the weeks are counted from the first of September of the previous year. The difference in weeks between dates is divided modulo 4, which gives the correct week format.
     var educationWeek: Int {
         let calendar = Calendar.init(identifier: .iso8601)
         var firstSeptemberDateComponents = calendar.dateComponents([.year], from: self)
