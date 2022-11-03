@@ -44,7 +44,14 @@ extension Array where Element == Group {
             }
         case .speciality:
             let specialities = Set((self.compactMap { $0.speciality }))
-            for speciality in specialities.sorted(by: { $0.name < $1.name }) {
+            for speciality in specialities.sorted(by: {
+                if $0.name == $1.name {
+                    return $0.id < $1.id
+                }
+                
+                return $0.name < $1.name
+                
+            }) {
                 sections.append(GroupSection(
                     title: speciality.description,
                     groups: self.filter({ $0.speciality == speciality })))
