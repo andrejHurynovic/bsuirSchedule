@@ -10,7 +10,7 @@ import SwiftUI
 struct GroupsSectionsView: View {
     
     var sections: [GroupSection]
-    var groupsCount: Int = 0
+    var groupsCount: Int
     
     var body: some View {
         

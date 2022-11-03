@@ -26,8 +26,13 @@ class GroupViewModel: ObservableObject {
     }
     
     func update() async {
-        let _ = await group.update()
+        guard let updatedGroup = await group.update() else {
+            return
+        }
         await MainActor.run {
+            withAnimation {
+                self.group = updatedGroup
+            }
             try! PersistenceController.shared.container.viewContext.save()
         }
     }

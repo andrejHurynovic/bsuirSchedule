@@ -19,7 +19,7 @@ enum LessonType: Int16, CaseIterable {
     case exam = 8
     case candidateText = 9
     
-    func description() -> String {
+    var description: String {
         switch self {
         case .none:
             return "Без типа"
@@ -52,33 +52,6 @@ extension Lesson {
         }
         set {
             self.lessonTypeValue = newValue.rawValue
-        }
-    }
-}
-
-extension Lesson {
-    func getLessonTypeAbbreviation() -> String {
-        switch self.lessonType {
-        case .none:
-            return "Без типа"
-        case .lecture:
-            return "ЛК"
-        case .remoteLecture:
-            return "УЛК"
-        case .practice:
-            return "ПЗ"
-        case .remotePractice:
-            return "УПЗ"
-        case .laboratory:
-            return "ЛР"
-        case .remoteLaboratory:
-            return "УЛР"
-        case .consultation:
-            return "Конс"
-        case .exam:
-            return "Экз"
-        case .candidateText:
-            return "КЗ"
         }
     }
 }

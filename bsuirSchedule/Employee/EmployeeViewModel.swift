@@ -27,9 +27,14 @@ class EmployeeViewModel: ObservableObject {
     
     
     func update() async {
-        let _ = await employee.update()
+        guard let updatedEmployee = await employee.update() else {
+            return
+        }
         let _ = await employee.updatePhoto()
         await MainActor.run {
+            withAnimation {
+                self.employee = updatedEmployee
+            }
             try! PersistenceController.shared.container.viewContext.save()
         }
     }

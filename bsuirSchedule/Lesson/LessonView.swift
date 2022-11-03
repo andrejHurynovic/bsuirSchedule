@@ -8,14 +8,32 @@
 import SwiftUI
 
 struct LessonView: View {
-    @Environment(\.colorScheme) var colorScheme
-    
     var lesson: Lesson
     var showEmployee: Bool
     var showGroups: Bool
     
-    var color: Color
-    var showToday: Bool
+    @AppStorage("lectureColor") var lectureColor: Color!
+    @AppStorage("practiceColor") var practiceColor: Color!
+    @AppStorage("laboratoryColor") var laboratoryColor: Color!
+    @AppStorage("consultationColor") var consultationColor: Color!
+    @AppStorage("examColor") var examColor: Color!
+    
+    var color: Color {
+        switch lesson.lessonType {
+        case .lecture, .remoteLecture:
+            return lectureColor
+        case .practice, .remotePractice:
+            return practiceColor
+        case .laboratory, .remoteLaboratory:
+            return laboratoryColor
+        case .consultation:
+            return consultationColor
+        case .exam, .candidateText:
+            return examColor
+        case .none:
+            return .gray
+        }
+    }
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -31,14 +49,12 @@ struct LessonView: View {
                     Spacer()
                     groups
                     employees
+                    note
                 }
                 Spacer()
                 time
             }
-            note
         }
-        //не работает, так как у нас новая система дат теперь
-//        .opacity((showToday && lesson.date == .orderedDescending) ? 0.5 : 1)
         .padding(.all)
         .listRowSeparator(.hidden)
         .background(in: RoundedRectangle(cornerRadius: 16))
@@ -46,16 +62,18 @@ struct LessonView: View {
         .standardisedShadow()
     }
     
-    var subject: some View {
-        HStack {
-            Text(lesson.abbreviation!)
-                .font(.title2)
-                .fontWeight(.bold)
-                .foregroundColor(color)
-            if (lesson.subgroup != 0) {
-                Image(systemName: String(lesson.subgroup) + ".circle.fill")
-                    .font(.title2.bold())
+    @ViewBuilder var subject: some View {
+        if let abbreviation = lesson.abbreviation, abbreviation.isEmpty == false {
+            HStack {
+                Text(abbreviation)
+                    .font(.title2)
+                    .fontWeight(.bold)
                     .foregroundColor(color)
+                if (lesson.subgroup != 0) {
+                    Image(systemName: String(lesson.subgroup) + ".circle.fill")
+                        .font(.title2.bold())
+                        .foregroundColor(color)
+                }
             }
         }
     }
@@ -84,21 +102,24 @@ struct LessonView: View {
         }
     }
     
-    var lessonType: some View {
-        Text(lesson.getLessonTypeAbbreviation())
-            .fontWeight(.medium)
-            .foregroundColor(color)
+    @ViewBuilder var lessonType: some View {
+        if lesson.lessonType != .none {
+            Text(lesson.lessonType.description)
+                .fontWeight(.medium)
+                .foregroundColor(color)
+        }
+
     }
     
     @ViewBuilder var groups: some View {
         if showGroups {
-            HStack(alignment: .top) {
-                Image(systemName: "person.2.circle")
-                if let groups = self.lesson.groups?.allObjects as? [Group] {
+            if let groups = self.lesson.groups?.allObjects as? [Group], groups.isEmpty == false {
+                HStack(alignment: .top) {
+                    Image(systemName: "person.2.circle")
                     if let groupsIDs = groups.map({$0.id!}).sorted() {
                         Text(groupsString(groupsIDs))
                             .contextMenu {
-                                ForEach(groups.sorted(by: {String($0.id) < String($1.id)})) { group in
+                                ForEach(groups.sorted(by: { String($0.id) < String($1.id) })) { group in
                                     NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group))) {
                                         Label("\(group.id!), \(group.speciality.abbreviation), \(group.speciality.faculty.abbreviation ?? "")", systemImage: "person.2.circle")
                                     }

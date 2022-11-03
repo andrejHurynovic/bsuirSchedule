@@ -27,6 +27,20 @@ struct GroupDetailedView: View {
             }
 
         }
+        .toolbar(content: {
+            Button {
+                withAnimation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.9)) {
+                    viewModel.group.favourite = true
+                    try! PersistenceController.shared.container.viewContext.save()
+                }
+            } label: {
+                Label(viewModel.group.favourite ? "Убрать из избранных" : "Добавить в избранные",
+                      systemImage: viewModel.group.favourite ? "star.circle" : "star.fill")
+            }
+//            FavoriteButton(viewModel.group.favourite) {
+//                viewModel.group.favourite.toggle()
+//            }
+        })
         .navigationTitle(viewModel.navigationTitle)
         .refreshable {
             await viewModel.update()
@@ -104,7 +118,7 @@ struct GroupDetailedView: View {
     }
     
     @ViewBuilder var statistics: some View {
-        let lessonsSections = viewModel.group.lessonsSections()
+        let lessonsSections = viewModel.group.dateBasedLessonsSections()
         if lessonsSections.isEmpty == false {
             DisclosureGroup("Статистика") {
                 
@@ -118,7 +132,7 @@ struct GroupDetailedView: View {
                             let lessonTypeLessons = subjectLessons.filter { $0.lessonType == lessonType }
                             var subgroups = Set(lessonTypeLessons.map { $0.subgroup }).sorted()
                             if subgroups.count == 1 {
-                                Form(lessonType.description(), String(lessonTypeLessons.count))
+                                Form(lessonType.description, String(lessonTypeLessons.count))
                             } else {
                                 DisclosureGroup {
                                     let subgroupp = subgroups.removeFirst()
@@ -129,7 +143,7 @@ struct GroupDetailedView: View {
                                         Form("\(subgroup)-ая подгруппа", "\(subgroupLessons.count)")
                                     }
                                 } label: {
-                                    Form(lessonType.description(), String(lessonTypeLessons.count))
+                                    Form(lessonType.description, String(lessonTypeLessons.count))
                                 }
                             }
                         }

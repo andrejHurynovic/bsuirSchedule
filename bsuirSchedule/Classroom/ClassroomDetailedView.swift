@@ -40,7 +40,7 @@ struct ClassroomDetailedView: View {
     @ViewBuilder var groups: some View {
         let groups = classroom.groups
         if groups.isEmpty == false {
-            GroupsSectionsView(sections: groups.sections())
+            GroupsSectionsView(sections: groups.sections(), groupsCount: groups.count)
         }
     }
     

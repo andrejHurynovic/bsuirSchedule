@@ -119,7 +119,7 @@ struct FavoritesView: View {
             Section {
                 ForEach(favouriteEmployees) { employee in
                     NavigationLink {
-//                        LessonsView(viewModel: LessonsViewModel(employee))
+                        LessonsView(viewModel: LessonsViewModel(employee))
                     } label: {
                         EmployeeFavoriteView(employee: employee)
                     }

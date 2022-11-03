@@ -59,10 +59,7 @@ public class Lesson: NSManagedObject {
             classroomNames.forEach { classroomName in
                 //If the classroom is unknown it is created from the available information
                 if let classroom = classrooms.first(where: { $0.originalName == classroomName }) {
-                    if self != nil {
-                        self.addToClassrooms(classroom)
-                    }
-                    
+                    self.addToClassrooms(classroom)
                 } else {
                     print("\(classroomName) == \(classroomName)")
                     
@@ -89,7 +86,7 @@ public class Lesson: NSManagedObject {
         self.timeEnd = try! container.decode(String.self, forKey: .timeEnd)
         
         //MARK: Weeks
-        // An array of weeks can take values [0, 1, 2, 3 ,4], but it is more convenient for us to count the weeks from zero, and in the API 0 means that there is an occupation for all weeks, so we subtract one from all the values of the array.
+        // An array of weeks can take values [0, 1, 2, 3 ,4], but it is more convenient to count the weeks from zero, and in the API 0 means that there is an occupation for all weeks, so we subtract one from all the values of the array.
         //[1, 2 ,4] -> [0, 1, 3]
         if let weeks = try? container.decode([Int].self, forKey: .weeks) {
             self.weeks = weeks.map{ $0 - 1 }
@@ -100,8 +97,6 @@ public class Lesson: NSManagedObject {
         
         //MARK: Announcement
         if try! container.decode(Bool.self, forKey: .announcement) == true {
-            self.abbreviation = "Объявление"
-            
             //Announcement can be repeated every certain day of the week, the boundaries of which are defined by startLessonDate and endLessonDate
             self.weeks = [0, 1, 2, 3]
             //Start and end time in announcementStart and announcementEnd fields can be different then time in timeStart and timeEnd

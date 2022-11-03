@@ -26,7 +26,7 @@ class TaskViewModel: ObservableObject {
     
     @Published var images: [UIImage] = []
     
-//    func likeInit(lesson: Lesson, lessonsSections: [LessonsSection]) {
+//    func likeInit(lesson: Lesson, dateLessonsSections: [LessonsSection]) {
 ////        self.nextSections = lessonsSections
 //        self.lesson = lesson
 //        
@@ -53,7 +53,7 @@ class TaskViewModel: ObservableObject {
     
     func lessonDescription() -> String {
         if let lesson = lesson {
-            return lesson.abbreviation + " (\(lesson.getLessonTypeAbbreviation()))"
+            return lesson.abbreviation + " (\(lesson.lessonType.description)"
         }
         
         if let task = task {
@@ -132,7 +132,7 @@ class TaskViewModel: ObservableObject {
     func createTask() {
         let task = Hometask(context: PersistenceController.shared.container.viewContext)
         task.subject = lesson!.subject
-        task.lessonType = lesson?.getLessonTypeAbbreviation()
+        task.lessonType = lesson?.lessonType.description
         task.creation = Date()
         task.deadline = date
         task.taskDescription = text

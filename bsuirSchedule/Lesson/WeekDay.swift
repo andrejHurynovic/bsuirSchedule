@@ -28,6 +28,28 @@ enum WeekDay: Int16, CaseIterable, Decodable {
             self = .none
         }
     }
+    
+    var description: String {
+        switch(self) {
+        case .Monday:
+            return "Понедельник"
+        case .Tuesday:
+            return "Вторник"
+        case .Wednesday:
+            return "Среда"
+        case .Thursday:
+            return "Четверг"
+        case .Friday:
+            return "Пятница"
+        case .Saturday:
+            return "Суббота"
+        case .Sunday:
+            return "Воскресенье"
+        default:
+            return ""
+        }
+    }
+    
     case Monday = 0
     case Tuesday = 1
     case Wednesday = 2

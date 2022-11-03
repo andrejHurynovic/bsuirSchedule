@@ -11,7 +11,7 @@ import SwiftUI
 struct bsuirScheduleApp: App {
     let persistenceController = PersistenceController.shared
     
-    @AppStorage("mainColor") var color = DesignManager.shared.mainColor
+    @AppStorage("mainColor") var color: Color!
     
     var body: some Scene {
         WindowGroup {

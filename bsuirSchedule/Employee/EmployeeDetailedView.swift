@@ -107,7 +107,7 @@ struct EmployeeDetailedView: View {
     }
     
     @ViewBuilder var lessons: some View {
-        if let _ = viewModel.employee.lessons?.allObjects as? [Lesson] {
+        if let lessons = viewModel.employee.lessons?.allObjects as? [Lesson], lessons.isEmpty == false {
             NavigationLink {
                 LessonsView(viewModel: LessonsViewModel(viewModel.employee))
             } label: {
@@ -138,7 +138,7 @@ struct EmployeeDetailedView: View {
     @ViewBuilder var groups: some View {
         let groups = viewModel.employee.groups
         if groups.isEmpty == false {
-            GroupsSectionsView(sections: groups.sections())
+            GroupsSectionsView(sections: groups.sections(), groupsCount: groups.count)
         }
     }
 }

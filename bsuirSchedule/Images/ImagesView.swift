@@ -66,7 +66,7 @@ struct ImagesView: View {
                 } label: {
                     Circle()
                         .frame(width: 48, height: 48)
-                        .shadow(color: DesignManager.shared.mainColor, radius: 8)
+                        .shadow(color: .accentColor, radius: 8)
                         .overlay(Image(systemName: "square.and.arrow.up")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)

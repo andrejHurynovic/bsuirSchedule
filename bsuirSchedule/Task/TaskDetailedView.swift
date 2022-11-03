@@ -106,7 +106,7 @@ struct TaskDetailedView: View {
                 } label: {
                     Circle()
                         .frame(width: 40, height: 40)
-                        .shadow(color: DesignManager.shared.mainColor, radius: 8)
+                        .shadow(color: .accentColor, radius: 8)
                         .overlay(Image(systemName: "keyboard.chevron.compact.down")
                                     .resizable()
                                     .font(Font.system(.title).bold())
@@ -193,7 +193,7 @@ struct TaskDetailedView: View {
                     Image(systemName: "plus")
                         .resizable()
                         .frame(width: 32, height: 32)
-                        .foregroundColor(DesignManager.shared.mainColor)
+                        .foregroundColor(.accentColor)
                 }
         }
     }
@@ -211,7 +211,7 @@ struct TaskDetailedView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(height: 32)
-                        .foregroundColor(DesignManager.shared.mainColor)
+                        .foregroundColor(.accentColor)
                 }
         }
     }
@@ -233,11 +233,11 @@ struct TaskDetailedView: View {
                 .frame(minWidth: 0, maxWidth: .infinity)
                 .padding()
                 .foregroundColor(.white)
-                .background(DesignManager.shared.mainColor)
+                .background(Color.accentColor)
                 .cornerRadius(40)
         }
         .padding(.vertical)
-        .shadow(color: DesignManager.shared.mainColor, radius: 8)
+        .shadow(color: .accentColor, radius: 8)
     }
     
 }
