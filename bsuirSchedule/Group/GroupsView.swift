@@ -19,16 +19,21 @@ struct GroupsView: View {
     
     var body: some View {
         NavigationView {
-            let filteredGroups = groups
-                .filter({ searchText.isEmpty || $0.id.localizedStandardContains(searchText) })
+            let filteredGroups = groups.filter { group in
+                searchText.isEmpty == true
+                || group.id.localizedStandardContains(searchText)
+                || (group.speciality != nil && group.speciality.abbreviation.localizedStandardContains(searchText))
+            }
                 .filtered(by: selectedFaculty, selectedEducationType)
             let sections = filteredGroups.sections(by: sortedBy)
             
             List {
-                GroupsSectionsView(sections: sections)
-                if groups.isEmpty == false {
-                    Text("Всего групп: \(filteredGroups.count)")
-                }
+                GroupsSectionsView(sections: sections, groupsCount: filteredGroups.count)
+                
+//                Text(filteredGroups.isEmpty == false ?
+//                     "Всего групп: \(filteredGroups.count)" :
+//                        "Группы с такими критериями поиска отсутствуют"
+//                )
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
