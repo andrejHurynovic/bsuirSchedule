@@ -59,16 +59,6 @@ func datesBetween(_ dateA: Date?, _ dateB: Date?) -> [Date] {
     }
 }
 
-extension Date: Strideable {
-    public func distance(to other: Date) -> TimeInterval {
-        return other.timeIntervalSinceReferenceDate - self.timeIntervalSinceReferenceDate
-    }
-    
-    public func advanced(by n: TimeInterval) -> Date {
-        return self + n
-    }
-}
-
 extension Date {
     func minutesFromMidnight() -> Int {
         let dateComponents = Calendar.current.dateComponents([.minute, .hour], from: self)
