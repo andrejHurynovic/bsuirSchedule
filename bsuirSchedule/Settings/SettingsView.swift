@@ -123,7 +123,7 @@ struct SettingsView: View {
                 DeveloperView()
             } label: {
                 Label("Разработчик", systemImage: "lock.open.laptopcomputer")
-                    .foregroundColor(.blue)
+                    .foregroundColor(.accentColor)
             }
         }
     }

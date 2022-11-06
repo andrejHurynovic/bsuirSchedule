@@ -118,7 +118,7 @@ struct GroupDetailedView: View {
     }
     
     @ViewBuilder var statistics: some View {
-        let lessonsSections = viewModel.group.dateBasedLessonsSections()
+        let lessonsSections = viewModel.group.dateBasedLessonsSectionsForStatistics()
         if lessonsSections.isEmpty == false {
             DisclosureGroup("Статистика") {
                 

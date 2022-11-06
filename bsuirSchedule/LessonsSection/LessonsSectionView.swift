@@ -19,7 +19,8 @@ struct LessonsSectionView: View {
         Section {
             LessonsGroupView(lessons: section.lessons,
                              showEmployees: showEmployees,
-                             showGroups: showGroups)
+                             showGroups: showGroups,
+                             sectionID: section.id)
         } header: {
             Button {
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.9)) {

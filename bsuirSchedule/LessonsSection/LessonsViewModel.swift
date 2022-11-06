@@ -19,6 +19,11 @@ class LessonsViewModel: ObservableObject {
     
     @Published var navigationViewTitle: String!
     
+    //SearchField
+    @Published var searchFieldFocusState = false
+    @Published var showSearchField = false
+    @Published var searchText = ""
+    
     //DatePicker
     @Published var datePickerOffset = CGSize(width: 0, height: 0)
     @Published var showDatePicker = false
@@ -27,6 +32,8 @@ class LessonsViewModel: ObservableObject {
     //Toolbar
     @Published var showGroups = false
     @Published var showEmployees = false
+    @Published var showSubgroupPicker = false
+    @Published var subgroup: Int? = nil
     
     init(_ element: LessonsSectioned) {
         self.element = element
@@ -35,6 +42,7 @@ class LessonsViewModel: ObservableObject {
         //                currentTimeSection = nearestSection(to: Date())
         
         if let group = element as? Group {
+            showSubgroupPicker = true
             navigationViewTitle = group.id
             showEmployees = true
         }
@@ -90,14 +98,32 @@ class LessonsViewModel: ObservableObject {
     
     //MARK: Sections
     func updateSections() async {
-        await MainActor.run {
-                switch representationMode {
-                case .dateBased:
-                    self.sections = element.dateBasedLessonsSections()
-                case .weekBased:
-                    self.sections = element.weekBasedLessonsSections()
-                }
+        
+        let lessonsSections: [LessonsSection]
+        switch representationMode {
+        case .dateBased:
+            lessonsSections = await element.dateBasedLessonsSections(searchString: searchText, subgroup: subgroup)
+        case .weekBased:
+            lessonsSections = await element.weekBasedLessonsSections(searchString: searchText, subgroup: subgroup)
         }
+        
+        await MainActor.run {
+            self.sections = lessonsSections
+            currentTimeSection = nearestSection(to: Date())
+            self.targetSection = currentTimeSection
+        }
+    }
+    
+    //MARK: SearchField
+    func searchFieldToggle() {
+            if showSearchField {
+                searchText = ""
+                searchFieldFocusState = false
+                UIApplication.shared.endEditing()
+            } else {
+                searchFieldFocusState = true
+            }
+            showSearchField.toggle()
     }
     
     //MARK: DatePicker
@@ -134,7 +160,8 @@ class LessonsViewModel: ObservableObject {
         switch element.self {
         case is Group:
             if showEmployees == true,
-               showGroups == false {
+               showGroups == false,
+               subgroup == nil {
                 return true
             }
         case is Employee:

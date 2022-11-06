@@ -11,6 +11,8 @@ struct LessonsView: View {
     
     @ObservedObject var viewModel: LessonsViewModel
     
+    @FocusState var searchFieldFocused: Bool
+    
     var body: some View {
         
             ScrollView {
@@ -21,20 +23,15 @@ struct LessonsView: View {
                         }
                         .onLoad{
                             Task.init {
-                                await MainActor.run {
-                                    viewModel.sections = viewModel.element.dateBasedLessonsSections()
-                                    viewModel.currentTimeSection = viewModel.nearestSection(to: Date())
-                                }
-                                viewModel.scrollToSection(viewModel.currentTimeSection, in: proxy)
-
+                                await viewModel.updateSections()
                             }
                         }
                 }
             }.overlay {
                 VStack {
                     Spacer()
-//                    searchField
                     datePicker
+                    searchField
                 }
             }
             
@@ -59,10 +56,42 @@ struct LessonsView: View {
     
     //MARK: Search field
     @ViewBuilder var searchField: some View {
-        if viewModel.showDatePicker {
-            
-//            Capsule()
+        VStack {
+            if viewModel.showSearchField {
+                HStack {
+                    Button {
+                        viewModel.searchFieldToggle()
+                    } label: {
+                        Text("Готово")
+                            .bold()
+                            .foregroundColor(.primary)
+                    }
+                    
+                    TextField("", text: $viewModel.searchText, prompt: Text(Image(systemName: "magnifyingglass")) + Text(" Предмет"))
+                        .focused($searchFieldFocused)
+                        .textFieldStyle(.plain)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 8))
+                    
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
+                .background(.thinMaterial)
+                
+                .transition(.move(edge: .bottom))
+            }
         }
+        .onChange(of: viewModel.searchFieldFocusState) { newState in
+                searchFieldFocused = newState
+        }
+        .onChange(of: viewModel.searchText) { newValue in
+            viewModel.searchText = newValue
+            Task.init {
+                await viewModel.updateSections()
+            }
+        }
+            
     }
     
     //MARK: DatePicker
@@ -75,7 +104,7 @@ struct LessonsView: View {
                        displayedComponents: .date)
             
             .datePickerStyle(.graphical)
-            .background(.thinMaterial)
+            .background(.regularMaterial)
             .cornerRadius(16)
             .padding()
             
@@ -100,11 +129,11 @@ struct LessonsView: View {
     
     //MARK: Toolbar
     @ViewBuilder var toolbar : some View {
+        searchFieldToggle
         detailedViewNavigationLink
         Menu {
-            Text("Отображать по:")
-            representationModeToggle
-            Text("Отображать:")
+            representationModePicker
+            subgroupPicker
             showGroupsToggle
             showEmployeesToggle
         } label: {
@@ -112,7 +141,14 @@ struct LessonsView: View {
                                ? "line.3.horizontal.decrease.circle"
                                : "line.3.horizontal.decrease.circle.fill"))
         }
-        
+    }
+    
+    var searchFieldToggle: some View {
+        Button {
+            viewModel.searchFieldToggle()
+        } label: {
+            Image(systemName: viewModel.showSearchField ? "magnifyingglass.circle.fill" : "magnifyingglass.circle")
+        }
     }
     
     var detailedViewNavigationLink: some View {
@@ -134,7 +170,8 @@ struct LessonsView: View {
         }
     }
     
-    var representationModeToggle: some View {
+    @ViewBuilder var representationModePicker: some View {
+        Text("Отображать по:")
         Picker("", selection: $viewModel.representationMode) {
             ForEach(LessonsSectionRepresentationMode.allCases, id: \.self) { representationMode in
                 Text(representationMode.description)
@@ -147,7 +184,24 @@ struct LessonsView: View {
             }
         }
     }
-    var showGroupsToggle: some View {
+    
+    @ViewBuilder var subgroupPicker: some View {
+        Text("Подгруппа:")
+        Picker("", selection: $viewModel.subgroup) {
+            Text("любая").tag(nil as Int?)
+            Text("первая").tag(1 as Int?)
+            Text("вторая").tag(2 as Int?)
+        }
+        .onChange(of: viewModel.subgroup) { newSubgroup in
+            viewModel.subgroup = newSubgroup
+            Task.init {
+                await viewModel.updateSections()
+            }
+        }
+    }
+    
+    @ViewBuilder var showGroupsToggle: some View {
+        Text("Отображать:")
         Toggle(isOn: $viewModel.showGroups
             .animation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.9))) {
                 Text("группы")

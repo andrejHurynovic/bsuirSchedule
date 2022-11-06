@@ -82,7 +82,11 @@ extension Lesson {
     @NSManaged public func removeFromClassrooms(_ values: NSSet)
 }
 
-extension Lesson : Identifiable { }
+extension Lesson : Identifiable {
+    func id(sectionID: String) -> String {
+        return "\(sectionID)-\(self.abbreviation!)-\(self.timeStart!)-\(self.subgroup)"
+    }
+}
 
 //MARK: Dates
 extension Lesson {
@@ -101,5 +105,22 @@ extension Lesson {
             return nil
         }
     }
+    
 }
 
+extension Array where Element == Lesson {
+    mutating func filter(abbreviation: String) {
+        guard !abbreviation.isEmpty else {
+            return
+        }
+        self.removeAll { $0.abbreviation.localizedStandardContains(abbreviation) == false }
+    }
+    
+    mutating func filter(subgroup: Int?) {
+        guard let subgroup = subgroup else {
+            return
+        }
+        let allowedSubgroups: [Int16] = [0, Int16(subgroup)]
+        self.removeAll { allowedSubgroups.contains($0.subgroup) == false }
+    }
+}

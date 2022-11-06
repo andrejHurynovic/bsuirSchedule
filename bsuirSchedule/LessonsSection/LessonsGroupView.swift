@@ -12,6 +12,7 @@ struct LessonsGroupView: View {
     var lessons: [Lesson]
     var showEmployees: Bool
     var showGroups: Bool
+    var sectionID: String
     
     var body: some View {
         ForEach(lessons, id: \.self) { lesson in
@@ -19,6 +20,7 @@ struct LessonsGroupView: View {
                        showEmployee: showEmployees,
                        showGroups: showGroups
             )
+            .id(lesson.id(sectionID: sectionID))
             .contextMenu {
                 if let subject = lesson.subject {
                     Text(subject)
