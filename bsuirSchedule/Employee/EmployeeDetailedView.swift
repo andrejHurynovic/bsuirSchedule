@@ -28,10 +28,6 @@ struct EmployeeDetailedView: View {
             }
             groups
         }
-        .overlay {
-            ImagesView()
-                .environmentObject(viewModel.imagesViewModel)
-        }
         .refreshable {
             await viewModel.update()
         }
@@ -52,20 +48,15 @@ struct EmployeeDetailedView: View {
     @ViewBuilder var photo: some View {
         if let data = viewModel.employee.photo {
             if let photo = UIImage(data: data) {
-                Button {
-                    viewModel.imagesViewModel.images = [photo]
-                    viewModel.imagesViewModel.present(selectedImage: photo)
-                } label: {
-                    Image(uiImage: photo)
-                        .resizable()
-                        .frame(width: 80.0, height: 80.0)
-                        .clipShape(Circle())
-                        .contextMenu {
-                            ShareLink(item: Image(uiImage: photo), preview: SharePreview("Поделиться фото", image: Image(uiImage: photo)))
-                        } preview: {
-                            Image(uiImage: photo)
-                        }
-                }
+                Image(uiImage: photo)
+                    .resizable()
+                    .frame(width: 80.0, height: 80.0)
+                    .clipShape(Circle())
+                    .contextMenu {
+                        ShareLink(item: Image(uiImage: photo), preview: SharePreview("Поделиться фото", image: Image(uiImage: photo)))
+                    } preview: {
+                        Image(uiImage: photo)
+                    }
             }
         } else {
             Image(systemName: "person.circle.fill")

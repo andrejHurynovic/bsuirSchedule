@@ -13,9 +13,7 @@ class EmployeeViewModel: ObservableObject {
     @Published var employee: Employee
     
     @Published var lastUpdateDate: Date? = nil
-    
-    @Published var imagesViewModel = ImagesViewModel()
-    
+        
     @Published var selectedFaculty: Faculty? = nil
     @Published var selectedEducationType: EducationType? = nil
     @Published var sortedBy: GroupSortingType = .speciality
