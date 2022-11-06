@@ -160,7 +160,7 @@ struct TaskDetailedView: View {
                 }
             
         }.contextMenu {
-            PhotoActionButtons(image: image)
+//            PhotoActionButtons(image: image)
             removeImageButton(image)
         }
     }

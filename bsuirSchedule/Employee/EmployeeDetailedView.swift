@@ -61,7 +61,9 @@ struct EmployeeDetailedView: View {
                         .frame(width: 80.0, height: 80.0)
                         .clipShape(Circle())
                         .contextMenu {
-                            PhotoActionButtons(image: photo)
+                            ShareLink(item: Image(uiImage: photo), preview: SharePreview("Поделиться фото", image: Image(uiImage: photo)))
+                        } preview: {
+                            Image(uiImage: photo)
                         }
                 }
             }

@@ -25,7 +25,18 @@ struct LessonsGroupView: View {
                 if let subject = lesson.subject {
                     Text(subject)
                 }
+            } preview: {
+                LessonView(lesson: lesson,
+                           showEmployee: showEmployees,
+                           showGroups: showGroups
+                )
             }
+
+//            .contextMenu {
+//                if let subject = lesson.subject {
+//                    Text(subject)
+//                }
+//            }
         }
     }
     

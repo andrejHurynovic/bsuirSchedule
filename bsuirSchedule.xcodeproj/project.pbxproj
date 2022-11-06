@@ -248,8 +248,8 @@
 				F62B36FE2902D03600FA2BE8 /* LessonsSectionRepresentationMode.swift */,
 				F68B4CED284535C000C8DBF6 /* LessonsSection.swift */,
 				F6748DF228DFB7C80072FB04 /* LessonsSectioned.swift */,
-				F6916031290023EA0033AE14 /* LessonsGroupView.swift */,
 				F691603329002BCD0033AE14 /* LessonsSectionView.swift */,
+				F6916031290023EA0033AE14 /* LessonsGroupView.swift */,
 				F69009D326F6958000379A74 /* LessonsViewModel.swift */,
 				F691602D29001F290033AE14 /* LessonsView.swift */,
 			);
@@ -801,7 +801,7 @@
 				DEVELOPMENT_TEAM = L4638VTQ6Z;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = bsuirSchedule/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -828,7 +828,7 @@
 				DEVELOPMENT_TEAM = L4638VTQ6Z;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = bsuirSchedule/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

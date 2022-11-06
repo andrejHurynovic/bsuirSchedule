@@ -44,38 +44,6 @@ func FavoriteButton(_ favorite: Bool, circle: Bool = false, toggle: @escaping ()
     
 }
 
-//MARK: Context menu buttons
-
-struct PhotoActionButtons: View {
-    var image: UIImage
-    var body: some View {
-        pasteToCopyboard(image: image)
-        saveToPhotosLibrary(image: image)
-    }
-}
-
-private struct pasteToCopyboard: View {
-    var image: UIImage
-    var body: some View {
-        Button {
-            UIPasteboard.general.image = image
-        } label: {
-            Label("Скопировать фото", systemImage: "doc.on.doc")
-        }
-    }
-}
-
-private struct saveToPhotosLibrary: View {
-    var image: UIImage
-    var body: some View {
-        Button {
-            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-        } label: {
-            Label("Сохранить фото", systemImage: "square.and.arrow.down")
-        }
-    }
-}
-
 //MARK: Shadow
 
 extension View {
