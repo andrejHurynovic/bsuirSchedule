@@ -37,9 +37,6 @@ struct GroupDetailedView: View {
                 Label(viewModel.group.favourite ? "Убрать из избранных" : "Добавить в избранные",
                       systemImage: viewModel.group.favourite ? "star.circle" : "star.fill")
             }
-//            FavoriteButton(viewModel.group.favourite) {
-//                viewModel.group.favourite.toggle()
-//            }
         })
         .navigationTitle(viewModel.navigationTitle)
         .refreshable {
@@ -52,6 +49,20 @@ struct GroupDetailedView: View {
             Form("Аббревиатура", viewModel.group.speciality.abbreviation)
             if let facultyAbbreviation = viewModel.group.speciality.faculty.abbreviation {
                 Form("Факультет", facultyAbbreviation)
+            }
+            
+            if viewModel.group.favourite {
+                HStack {
+                    Text("Псевдоним")
+                        .foregroundColor(.primary)
+                    Spacer()
+                    TextField("Нажмите для ввода", text: $viewModel.nicknameString)
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.trailing)
+                        .onSubmit {
+                            viewModel.submitNickname()
+                        }
+                }
             }
             
             if let code = viewModel.group.speciality.code {

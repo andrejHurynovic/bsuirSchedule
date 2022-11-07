@@ -17,6 +17,8 @@ extension Group {
     @NSManaged public var favourite: Bool
     @NSManaged public var updateDate: Date?
     
+    @NSManaged public var nickname: String?
+    
     @NSManaged public var speciality: Speciality!
     
     @NSManaged public var educationStart: Date?

@@ -11,9 +11,10 @@ import SwiftUI
 class GroupViewModel: ObservableObject {
     
     @Published var group: Group
+    @Published var nicknameString: String = ""
     
     @Published var lastUpdateDate: Date? = nil
-
+    
     @Published var showEducationDuration = false
     @Published var showExamsDuration = false
     
@@ -23,6 +24,18 @@ class GroupViewModel: ObservableObject {
     
     init(_ group: Group) {
         self.group = group
+        if let nickname = group.nickname {
+            nicknameString = nickname
+        }
+    }
+    
+    func submitNickname() {
+        if nicknameString.isEmpty {
+            group.nickname = nil
+        } else {
+            group.nickname = nicknameString
+        }
+        try! PersistenceController.shared.container.viewContext.save()
     }
     
     func update() async {

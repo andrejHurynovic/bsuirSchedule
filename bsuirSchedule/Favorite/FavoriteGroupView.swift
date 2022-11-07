@@ -22,7 +22,7 @@ struct FavoriteGroupView: View {
                         .multilineTextAlignment(.leading)
                         .foregroundColor(Color.primary)
                     Spacer(minLength: 0)
-                    Text(group.speciality!.abbreviation!)
+                    Text(group.nickname ?? group.speciality!.abbreviation!)
                         .minimumScaleFactor(0.01)
                         .lineLimit(1...2)
                         .multilineTextAlignment(.leading)
