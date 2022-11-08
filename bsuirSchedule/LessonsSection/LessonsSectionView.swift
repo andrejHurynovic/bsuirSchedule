@@ -10,6 +10,7 @@ import SwiftUI
 struct LessonsSectionView: View {
     
     var section: LessonsSection
+    var showWeeks: Bool
     var showEmployees: Bool
     var showGroups: Bool
     
@@ -20,6 +21,7 @@ struct LessonsSectionView: View {
             LessonsGroupView(lessons: section.lessons,
                              showEmployees: showEmployees,
                              showGroups: showGroups,
+                             showWeeks: showWeeks,
                              sectionID: section.id)
         } header: {
             Button {

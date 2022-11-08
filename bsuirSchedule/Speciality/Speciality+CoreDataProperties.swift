@@ -78,7 +78,18 @@ extension Speciality {
         
         let decoder = JSONDecoder()
         decoder.userInfo[.managedObjectContext] = PersistenceController.shared.container.viewContext
-        decoder.userInfo[.faculties] = Faculty.getAll()
+        
+        //For faculties not presented in API
+        var faculties = Faculty.getAll()
+        for dictionary in dictionaries {
+            let facultyID = dictionary["facultyId"] as! Int16
+            if faculties.first(where: {$0.id == facultyID}) == nil {
+                faculties.append(Faculty(id: facultyID))
+            }
+        }
+        try! PersistenceController.shared.container.viewContext.save()
+        
+        decoder.userInfo[.faculties] = faculties
         for dictionary in dictionaries {
             let data = try! JSONSerialization.data(withJSONObject: dictionary)
             

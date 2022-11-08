@@ -44,9 +44,10 @@ struct LessonsView: View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 240, maximum: 500))], alignment: .leading, spacing: 8, pinnedViews: []) {
             ForEach(viewModel.sections) { section in
                 LessonsSectionView(section: section,
-                                       showEmployees: viewModel.showEmployees,
-                                       showGroups: viewModel.showGroups,
-                                       showDatePicker: $viewModel.showDatePicker)
+                                   showWeeks: viewModel.showWeeks,
+                                   showEmployees: viewModel.showEmployees,
+                                   showGroups: viewModel.showGroups,
+                                   showDatePicker: $viewModel.showDatePicker)
                 
             }
         }
@@ -134,6 +135,8 @@ struct LessonsView: View {
         Menu {
             representationModePicker
             subgroupPicker
+            Text("Отображать:")
+            showWeeksToggle
             showGroupsToggle
             showEmployeesToggle
         } label: {
@@ -200,8 +203,14 @@ struct LessonsView: View {
         }
     }
     
+    @ViewBuilder var showWeeksToggle: some View {
+        Toggle(isOn: $viewModel.showWeeks
+            .animation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.9))) {
+                Text("недели")
+            }
+    }
+    
     @ViewBuilder var showGroupsToggle: some View {
-        Text("Отображать:")
         Toggle(isOn: $viewModel.showGroups
             .animation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.9))) {
                 Text("группы")
@@ -215,3 +224,13 @@ struct LessonsView: View {
     }
 }
 
+struct LessonsView_Previews: PreviewProvider {
+    static var previews: some View {
+        let groups = Group.getAll()
+        if let testGroup = groups.first(where: { $0.id == "950502" }) {
+            NavigationView {
+                LessonsView(viewModel: LessonsViewModel(testGroup))
+            }
+        }
+    }
+}

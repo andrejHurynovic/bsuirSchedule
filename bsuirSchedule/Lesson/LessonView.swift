@@ -11,6 +11,9 @@ struct LessonView: View {
     var lesson: Lesson
     var showEmployee: Bool
     var showGroups: Bool
+    var showWeeks: Bool
+    
+    var showSubject: Bool = false
     
     @AppStorage("lectureColor") var lectureColor: Color!
     @AppStorage("practiceColor") var practiceColor: Color!
@@ -36,45 +39,87 @@ struct LessonView: View {
     }
     
     var body: some View {
+        //Top
         VStack(alignment: .leading) {
-            HStack(alignment: .top) {
-                subject
-                Spacer()
-                classrooms
-                lessonType
+            if showSubject {
+                detailedHeader
+            } else {
+                minimisedHeader
             }
-            
-            HStack(alignment: .bottom) {
-                VStack(alignment: .leading) {
-                    Spacer()
-                    groups
-                    employees
-                    note
-                }
-                Spacer()
-                time
-            }
+                footer
         }
         .padding(.all)
         .listRowSeparator(.hidden)
         .background(in: RoundedRectangle(cornerRadius: 16))
         .clipped()
         .standardisedShadow()
+        
+        .contextMenu {
+            Text("Добавить задание")
+        } preview: {
+            LessonView(lesson: lesson, showEmployee: true, showGroups: true, showWeeks: true, showSubject: true)
+        }
     }
     
-    @ViewBuilder var subject: some View {
-        if let abbreviation = lesson.abbreviation, abbreviation.isEmpty == false {
-            HStack {
-                Text(abbreviation)
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .foregroundColor(color)
-                if (lesson.subgroup != 0) {
-                    Image(systemName: String(lesson.subgroup) + ".circle.fill")
-                        .font(.title2.bold())
-                        .foregroundColor(color)
-                }
+    var detailedHeader: some View {
+        VStack(alignment: .leading) {
+            HStack(alignment: .top) {
+                subject
+                Spacer()
+                subgroup
             }
+            Divider()
+            HStack(alignment:.top) {
+                lessonType
+                Spacer()
+                classrooms
+            }
+        }
+    }
+    
+    var minimisedHeader: some View {
+        HStack(alignment: .top) {
+            subject
+            subgroup
+            Spacer()
+            classrooms
+            lessonType
+        }
+    }
+    
+    var footer: some View {
+        HStack(alignment: .bottom) {
+            VStack(alignment: .leading) {
+                Spacer()
+                HStack {
+                    groups
+                    weeks
+                }
+                employees
+                note
+            }
+            Spacer()
+            time
+        }
+    }
+    
+    
+    //MARK: Elements
+    @ViewBuilder var subject: some View {
+        let subject = showSubject ? lesson.subject : lesson.abbreviation
+        if let subject = subject, subject.isEmpty == false {
+            Text(subject)
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(color)
+        }
+    }
+    
+    @ViewBuilder var subgroup: some View {
+        if (lesson.subgroup != 0) {
+            Image(systemName: String(lesson.subgroup) + ".circle.fill")
+                .font(.title2.bold())
+                .foregroundColor(color)
         }
     }
     
@@ -103,12 +148,21 @@ struct LessonView: View {
     }
     
     @ViewBuilder var lessonType: some View {
-        if lesson.lessonType != .none {
-            Text(lesson.lessonType.description)
+        let lessonType = lesson.lessonType
+        let lessonTypeString = showSubject ? lessonType.description : lessonType.abbreviation
+        
+        if showSubject {
+            Text(lessonTypeString)
                 .fontWeight(.medium)
-                .foregroundColor(color)
+        } else {
+            if lesson.lessonType != .none {
+                Text(lessonTypeString)
+                    .fontWeight(.medium)
+                    .foregroundColor(color)
+            }
         }
-
+        
+        
     }
     
     @ViewBuilder var groups: some View {
@@ -116,16 +170,14 @@ struct LessonView: View {
             if let groups = self.lesson.groups?.allObjects as? [Group], groups.isEmpty == false {
                 HStack(alignment: .top) {
                     Image(systemName: "person.2.circle")
-                    if let groupsIDs = groups.map({$0.id!}).sorted() {
-                        Text(groupsString(groupsIDs))
-                            .contextMenu {
-                                ForEach(groups.sorted(by: { String($0.id) < String($1.id) })) { group in
-                                    NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group))) {
-                                        Label("\(group.id!), \(group.speciality.abbreviation), \(group.speciality.faculty.abbreviation ?? "")", systemImage: "person.2.circle")
-                                    }
+                    Text(groups.description())
+                        .contextMenu {
+                            ForEach(groups.sorted(by: { String($0.id) < String($1.id) })) { group in
+                                NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group))) {
+                                    Label("\(group.id!), \(group.speciality.abbreviation), \(group.speciality.faculty.abbreviation ?? "")", systemImage: "person.2.circle")
                                 }
                             }
-                    }
+                        }
                 }
             }
         }
@@ -143,12 +195,12 @@ struct LessonView: View {
                             if let photo = employee.photo {
                                 Image(uiImage: UIImage(data: photo)!)
                                     .resizable()
-                                    .frame(width: 35.0, height: 35.0)
+                                    .frame(width: 37.0, height: 37.0)
                                     .clipShape(Circle())
                             } else {
                                 Image(systemName: "person.circle.fill")
                                     .resizable()
-                                    .frame(width: 35.0, height: 35.0)
+                                    .frame(width: 37.0, height: 37.0)
                             }
                             VStack(alignment: .leading) {
                                 Text(employee.lastName!)
@@ -165,15 +217,22 @@ struct LessonView: View {
                             employee.favourite.toggle()
                         }
                     }
-  
+                    
                 }
             }
+        }
+    }
+    
+    @ViewBuilder var weeks: some View {
+        if showWeeks, let weeksString = lesson.weeksDescription() {
+            Label(weeksString, systemImage: "calendar")
         }
     }
     
     var time: some View {
         VStack(alignment: .trailing) {
             Text(lesson.timeStart)
+                .font(.body)
                 .fontWeight(.semibold)
             Text(lesson.timeEnd)
         }
@@ -188,38 +247,18 @@ struct LessonView: View {
         }
     }
     
-    
-    
-    func groupsString(_ groups: [String]) -> String {
-        if groups.isEmpty {
-            return ""
-        }
-        if groups.count == 1 {
-            return groups.first!
-        }
-        var groups = groups
-        var nearGroups: [String] = []
-        var finalGroups: [String] = []
-        
-        repeat {
-            nearGroups.removeAll()
-            nearGroups.append(groups.removeFirst())
-            if groups.isEmpty == false {
-                while groups.isEmpty == false, Int(groups.first!)! - Int(nearGroups.last!)! == 1 {
-                    nearGroups.append(groups.removeFirst())
-                }
-                if nearGroups.count > 1 {
-                    finalGroups.append("\(nearGroups.first!)-\((String(nearGroups.last!)).last!)")
-                } else {
-                    finalGroups.append(String(nearGroups.first!))
-                }
-                
-            } else {
-                finalGroups.append(String(nearGroups.first!))
-            }
-            
-        } while (groups.isEmpty == false)
-        return finalGroups.joined(separator: ", ")
-    }
 }
 
+struct LessonView_Previews: PreviewProvider {
+    static var previews: some View {
+        let groups = Group.getAll()
+        if let testGroup = groups.first(where: { $0.id == "950502" }), let lessons = testGroup.lessons?.allObjects as? [Lesson] {
+            
+            ForEach(lessons) { lesson in
+                LessonView(lesson: lesson, showEmployee: true, showGroups: true, showWeeks: true, showSubject: true)
+                    .padding()
+            }
+            
+        }
+    }
+}

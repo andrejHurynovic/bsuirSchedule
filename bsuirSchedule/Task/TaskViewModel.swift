@@ -53,7 +53,7 @@ class TaskViewModel: ObservableObject {
     
     func lessonDescription() -> String {
         if let lesson = lesson {
-            return lesson.abbreviation + " (\(lesson.lessonType.description)"
+            return lesson.abbreviation + " (\(lesson.lessonType.abbreviation)"
         }
         
         if let task = task {
@@ -132,7 +132,7 @@ class TaskViewModel: ObservableObject {
     func createTask() {
         let task = Hometask(context: PersistenceController.shared.container.viewContext)
         task.subject = lesson!.subject
-        task.lessonType = lesson?.lessonType.description
+        task.lessonType = lesson?.lessonType.abbreviation
         task.creation = Date()
         task.deadline = date
         task.taskDescription = text

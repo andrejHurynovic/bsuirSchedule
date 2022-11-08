@@ -124,3 +124,45 @@ extension Array where Element == Lesson {
         self.removeAll { allowedSubgroups.contains($0.subgroup) == false }
     }
 }
+
+
+//MARK: Others
+extension Lesson {
+    func weeksDescription() -> String? {
+        guard self.weeks.isEmpty == false else {
+            return nil
+        }
+        
+        if weeks.count == 1 {
+            return String(weeks.first!)
+        }
+        
+        var weeks = self.weeks.map {$0 + 1}
+
+        var resultWeeks: [String] = []
+        var nearWeeks: [Int] = []
+
+        repeat {
+            nearWeeks.removeAll()
+            nearWeeks.append(weeks.removeFirst())
+            
+            while(weeks.isEmpty == false) {
+                if nearWeeks.last! + 1 == weeks.first {
+                    nearWeeks.append(weeks.removeFirst())
+                } else {
+                    break
+                }
+            }
+            
+            if nearWeeks.count == 1 {
+                resultWeeks.append(String(nearWeeks.first!))
+            } else {
+                resultWeeks.append("\(nearWeeks.first!)-\(nearWeeks.last!)")
+            }
+                
+        } while(weeks.isEmpty == false)
+
+       return resultWeeks.joined(separator: ", ")
+
+    }
+}

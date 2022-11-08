@@ -143,7 +143,7 @@ struct GroupDetailedView: View {
                             let lessonTypeLessons = subjectLessons.filter { $0.lessonType == lessonType }
                             var subgroups = Set(lessonTypeLessons.map { $0.subgroup }).sorted()
                             if subgroups.count == 1 {
-                                Form(lessonType.description, String(lessonTypeLessons.count))
+                                Form(lessonType.abbreviation, String(lessonTypeLessons.count))
                             } else {
                                 DisclosureGroup {
                                     let subgroupp = subgroups.removeFirst()
@@ -154,7 +154,7 @@ struct GroupDetailedView: View {
                                         Form("\(subgroup)-ая подгруппа", "\(subgroupLessons.count)")
                                     }
                                 } label: {
-                                    Form(lessonType.description, String(lessonTypeLessons.count))
+                                    Form(lessonType.abbreviation, String(lessonTypeLessons.count))
                                 }
                             }
                         }

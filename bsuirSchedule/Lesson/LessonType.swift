@@ -24,6 +24,31 @@ enum LessonType: Int16, CaseIterable {
         case .none:
             return "Без типа"
         case .lecture:
+            return "Лекция"
+        case .remoteLecture:
+            return "Удалённая лекция"
+        case .practice:
+            return "Практическое занятие"
+        case .remotePractice:
+            return "Удалённое практическое занятие"
+        case .laboratory:
+            return "Лабораторная работа"
+        case .remoteLaboratory:
+            return "Удалённая лабораторная работа"
+        case .consultation:
+            return "Консультация"
+        case .exam:
+            return "Экзамен"
+        case .candidateText:
+            return "Кандидатский зачёт"
+        }
+    }
+    
+    var abbreviation: String {
+        switch self {
+        case .none:
+            return "Без типа"
+        case .lecture:
             return "ЛК"
         case .remoteLecture:
             return "УЛК"

@@ -59,9 +59,9 @@ extension Group: LessonsSectioned { }
 extension Group {
     static func getAll() -> [Group] {
         let request = self.fetchRequest()
-        let employees = try! PersistenceController.shared.container.viewContext.fetch(request)
+        let groups = try! PersistenceController.shared.container.viewContext.fetch(request)
         
-        return employees
+        return groups
     }
     
 }
@@ -167,4 +167,41 @@ extension Group {
         return flow.sorted { $0.id! < $1.id }
     }
     
+}
+
+//MARK: Additional
+extension Array where Element == Group {
+    func description() -> String {
+        guard self.isEmpty == false else {
+                return ""
+            }
+        
+        guard self.count > 1 else {
+            return self.first!.id
+        }
+        
+        var groups = self.map { $0.id! }.sorted()
+            var nearGroups: [String] = []
+            var finalGroups: [String] = []
+            
+            repeat {
+                nearGroups.removeAll()
+                nearGroups.append(groups.removeFirst())
+                if groups.isEmpty == false {
+                    while groups.isEmpty == false, Int(groups.first!)! - Int(nearGroups.last!)! == 1 {
+                        nearGroups.append(groups.removeFirst())
+                    }
+                    if nearGroups.count > 1 {
+                        finalGroups.append("\(nearGroups.first!)-\((String(nearGroups.last!)).last!)")
+                    } else {
+                        finalGroups.append(String(nearGroups.first!))
+                    }
+                    
+                } else {
+                    finalGroups.append(String(nearGroups.first!))
+                }
+                
+            } while (groups.isEmpty == false)
+            return finalGroups.joined(separator: ", ")
+    }
 }

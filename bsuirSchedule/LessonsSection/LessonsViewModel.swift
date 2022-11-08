@@ -32,6 +32,8 @@ class LessonsViewModel: ObservableObject {
     //Toolbar
     @Published var showGroups = false
     @Published var showEmployees = false
+    @Published var showWeeks = false
+    
     @Published var showSubgroupPicker = false
     @Published var subgroup: Int? = nil
     
@@ -103,8 +105,14 @@ class LessonsViewModel: ObservableObject {
         switch representationMode {
         case .dateBased:
             lessonsSections = await element.dateBasedLessonsSections(searchString: searchText, subgroup: subgroup)
+            await MainActor.run {
+                showWeeks = false
+            }
         case .weekBased:
             lessonsSections = await element.weekBasedLessonsSections(searchString: searchText, subgroup: subgroup)
+            await MainActor.run {
+                showWeeks = true
+            }
         }
         
         await MainActor.run {
@@ -157,27 +165,32 @@ class LessonsViewModel: ObservableObject {
     
     //MARK: Toolbar
     var toolbarDefaultCriteria: Bool {
+        
+        switch representationMode {
+        case .dateBased:
+            if showWeeks {
+                return false
+            }
+        case .weekBased:
+            if !showWeeks {
+                return false
+            }
+        }
+        
+        if self.representationMode == .weekBased && showWeeks || self.representationMode == .dateBased && !showWeeks {
+            return true
+        }
+        
         switch element.self {
         case is Group:
-            if showEmployees == true,
-               showGroups == false,
-               subgroup == nil {
-                return true
-            }
+            return showEmployees && !showGroups && !showWeeks && subgroup == nil
         case is Employee:
-            if showEmployees == false,
-               showGroups == true {
-                return true
-            }
+            return !showEmployees && showGroups && !showWeeks
         case is Classroom:
-            if showEmployees == true,
-               showGroups == true {
-                return true
-            }
+            return showEmployees == true && showGroups == true
         default:
             return false
         }
-        return false
     }
     
 }

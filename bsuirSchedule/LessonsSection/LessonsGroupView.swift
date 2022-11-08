@@ -12,31 +12,17 @@ struct LessonsGroupView: View {
     var lessons: [Lesson]
     var showEmployees: Bool
     var showGroups: Bool
+    var showWeeks: Bool
     var sectionID: String
     
     var body: some View {
         ForEach(lessons, id: \.self) { lesson in
             LessonView(lesson: lesson,
                        showEmployee: showEmployees,
-                       showGroups: showGroups
+                       showGroups: showGroups,
+                       showWeeks: showWeeks
             )
             .id(lesson.id(sectionID: sectionID))
-            .contextMenu {
-                if let subject = lesson.subject {
-                    Text(subject)
-                }
-            } preview: {
-                LessonView(lesson: lesson,
-                           showEmployee: showEmployees,
-                           showGroups: showGroups
-                )
-            }
-
-//            .contextMenu {
-//                if let subject = lesson.subject {
-//                    Text(subject)
-//                }
-//            }
         }
     }
     
