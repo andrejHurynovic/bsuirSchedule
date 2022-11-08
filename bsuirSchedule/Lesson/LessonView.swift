@@ -38,8 +38,9 @@ struct LessonView: View {
         }
     }
     
+    
+    
     var body: some View {
-        //Top
         VStack(alignment: .leading) {
             if showSubject {
                 detailedHeader
@@ -49,9 +50,7 @@ struct LessonView: View {
                 footer
         }
         .padding(.all)
-        .listRowSeparator(.hidden)
         .background(in: RoundedRectangle(cornerRadius: 16))
-        .clipped()
         .standardisedShadow()
         
         .contextMenu {
@@ -61,6 +60,7 @@ struct LessonView: View {
         }
     }
     
+    //MARK: View
     var detailedHeader: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
@@ -173,12 +173,15 @@ struct LessonView: View {
                     Text(groups.description())
                         .contextMenu {
                             ForEach(groups.sorted(by: { String($0.id) < String($1.id) })) { group in
-                                NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group))) {
+                                Button {
+                                    navigateToGroup(group: group)
+                                } label: {
                                     Label("\(group.id!), \(group.speciality.abbreviation), \(group.speciality.faculty.abbreviation ?? "")", systemImage: "person.2.circle")
                                 }
                             }
                         }
                 }
+                .background(groupNavigationLink)
             }
         }
     }
@@ -245,6 +248,22 @@ struct LessonView: View {
                 .fontWeight(.regular)
                 .foregroundColor(.gray)
         }
+    }
+    
+    @ViewBuilder var groupNavigationLink: some View {
+        if let linkGroup = linkGroup {
+            NavigationLink(destination: GroupDetailedView(viewModel: GroupViewModel(linkGroup)), isActive: $groupLinkActive) {
+                EmptyView()
+            }
+        }
+    }
+    
+   @State var groupLinkActive = false
+   @State var linkGroup: Group? = nil
+    
+    func navigateToGroup(group: Group) {
+        linkGroup = group
+        groupLinkActive = true
     }
     
 }
