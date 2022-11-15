@@ -21,13 +21,14 @@ struct LessonsView: View {
                         .onChange(of: viewModel.targetSection) { targetSection in
                             viewModel.scrollToSection(targetSection, in: proxy)
                         }
-                        .onLoad{
+                        .onLoad {
                             Task.init {
                                 await viewModel.updateSections()
                             }
                         }
                 }
-            }.overlay {
+            }
+            .overlay {
                 VStack {
                     Spacer()
                     datePicker
@@ -36,7 +37,7 @@ struct LessonsView: View {
             }
             
         
-        .toolbar {toolbar}
+        .toolbar { toolbar }
         .navigationTitle(viewModel.navigationViewTitle)
     }
     

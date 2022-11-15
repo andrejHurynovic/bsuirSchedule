@@ -72,6 +72,7 @@ struct LessonView: View {
             HStack(alignment:.top) {
                 lessonType
                 Spacer()
+                weeks
                 classrooms
             }
         }
@@ -82,6 +83,7 @@ struct LessonView: View {
             subject
             subgroup
             Spacer()
+            weeks
             classrooms
             lessonType
         }
@@ -91,10 +93,7 @@ struct LessonView: View {
         HStack(alignment: .bottom) {
             VStack(alignment: .leading) {
                 Spacer()
-                HStack {
-                    groups
-                    weeks
-                }
+                groups
                 employees
                 note
             }
