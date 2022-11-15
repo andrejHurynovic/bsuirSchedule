@@ -14,6 +14,8 @@ struct LessonsSectionView: View {
     var showEmployees: Bool
     var showGroups: Bool
     
+    var today: Bool
+    
     @Binding var showDatePicker: Bool
     
     var body: some View {
@@ -22,7 +24,8 @@ struct LessonsSectionView: View {
                              showEmployees: showEmployees,
                              showGroups: showGroups,
                              showWeeks: showWeeks,
-                             sectionID: section.id)
+                             sectionID: section.id,
+                             today: today)
         } header: {
             Button {
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.9)) {

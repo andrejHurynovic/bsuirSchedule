@@ -9,9 +9,15 @@ import SwiftUI
 
 struct LessonView: View {
     var lesson: Lesson
+    
     var showEmployee: Bool
     var showGroups: Bool
     var showWeeks: Bool
+    
+    var today: Bool
+    var passedLesson: Bool {
+        return today && lesson.timeRange.upperBound < Date().time
+    }
     
     var showSubject: Bool = false
     
@@ -51,12 +57,13 @@ struct LessonView: View {
         }
         .padding(.all)
         .background(in: RoundedRectangle(cornerRadius: 16))
+        .opacity(passedLesson ? 0.5 : 1.0)
         .standardisedShadow()
         
         .contextMenu {
             Text("Добавить задание")
         } preview: {
-            LessonView(lesson: lesson, showEmployee: true, showGroups: true, showWeeks: true, showSubject: true)
+            LessonView(lesson: lesson, showEmployee: true, showGroups: true, showWeeks: true, today: false, showSubject: true)
         }
     }
     
@@ -273,7 +280,7 @@ struct LessonView_Previews: PreviewProvider {
         if let testGroup = groups.first(where: { $0.id == "950502" }), let lessons = testGroup.lessons?.allObjects as? [Lesson] {
             
             ForEach(lessons) { lesson in
-                LessonView(lesson: lesson, showEmployee: true, showGroups: true, showWeeks: true, showSubject: true)
+                LessonView(lesson: lesson, showEmployee: true, showGroups: true, showWeeks: true, today: true, showSubject: true)
                     .padding()
             }
             

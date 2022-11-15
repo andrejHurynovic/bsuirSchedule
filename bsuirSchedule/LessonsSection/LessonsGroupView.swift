@@ -15,12 +15,15 @@ struct LessonsGroupView: View {
     var showWeeks: Bool
     var sectionID: String
     
+    var today: Bool
+    
     var body: some View {
         ForEach(lessons, id: \.self) { lesson in
             LessonView(lesson: lesson,
                        showEmployee: showEmployees,
                        showGroups: showGroups,
-                       showWeeks: showWeeks
+                       showWeeks: showWeeks,
+                       today: today
             )
             .id(lesson.id(sectionID: sectionID))
         }

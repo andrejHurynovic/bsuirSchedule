@@ -48,6 +48,7 @@ struct LessonsView: View {
                                    showWeeks: viewModel.showWeeks,
                                    showEmployees: viewModel.showEmployees,
                                    showGroups: viewModel.showGroups,
+                                   today: viewModel.isToday(section: section),
                                    showDatePicker: $viewModel.showDatePicker)
                 
             }
@@ -131,9 +132,6 @@ struct LessonsView: View {
     
     //MARK: Toolbar
     @ViewBuilder var toolbar : some View {
-        Button("s") {
-            viewModel.scrollTargetID = "8.10.2022, 0:00-БД-12:25-0"
-        }
         searchFieldToggle
         detailedViewNavigationLink
         Menu {

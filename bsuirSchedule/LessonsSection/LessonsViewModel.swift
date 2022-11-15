@@ -13,7 +13,8 @@ class LessonsViewModel: ObservableObject {
     @Published var element: LessonsSectioned
 
     @Published var sections: [LessonsSection] = []
-    @Published var currentTimeSection: LessonsSection? = nil
+    @Published var nearestSection: LessonsSection? = nil
+    @Published var currentDateSection: LessonsSection? = nil
     @Published var scrollTargetID: String? = nil
     @Published var representationMode: LessonsSectionRepresentationMode = .dateBased
     
@@ -85,6 +86,29 @@ class LessonsViewModel: ObservableObject {
 
     }
     
+    ///Returns section satisfied for provided date. Week-based sections works too.
+    func dateSection(date: Date) -> LessonsSection? {
+        switch representationMode {
+        case .dateBased:
+            let date = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: date)!
+            return sections.first(where: { $0.date! == date })
+        case .weekBased:
+            let week = date.educationWeek
+            let weekday = date.weekDay()
+            
+            return sections.first { $0.week == week && $0.weekday == weekday }
+        }
+    }
+    
+    ///Checks is provided section equal to pre-calculated today section
+    func isToday(section: LessonsSection) -> Bool {
+        guard let todaySection = currentDateSection else {
+            return false
+        }
+        print(section == todaySection)
+        return section == todaySection
+    }
+    
     func weekDay(date: Date) -> WeekDay {
         WeekDay(rawValue: Int16((Calendar(identifier: .iso8601).ordinality(of: .weekday, in: .weekOfYear, for: date)! - 1)))!
     }
@@ -118,9 +142,10 @@ class LessonsViewModel: ObservableObject {
         
         await MainActor.run {
             self.sections = lessonsSections
-            currentTimeSection = nearestSection(to: Date())
+            self.nearestSection = nearestSection(to: Date())
+            self.currentDateSection = dateSection(date: Date())
             
-            self.scrollTargetID = currentTimeSection?.nearestLesson()!.id(sectionID: currentTimeSection!.id)
+            self.scrollTargetID = nearestSection?.nearestLesson()?.id(sectionID: nearestSection!.id)
         }
     }
     
