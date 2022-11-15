@@ -21,8 +21,8 @@ extension Date {
         self = Calendar.current.date(bySettingHour: dateComponents.hour!, minute: dateComponents.minute!, second: dateComponents.second!, of: self)!
     }
     
-    func withTime(_ time: Date) -> Date {
-        let dateComponents = Calendar.current.dateComponents([.hour, .minute, .second], from: time)
+    func withTime(_ timeSourceDate: Date) -> Date {
+        let dateComponents = Calendar.current.dateComponents([.hour, .minute, .second], from: timeSourceDate)
         return Calendar.current.date(bySettingHour: dateComponents.hour!, minute: dateComponents.minute!, second: dateComponents.second!, of: self)!
     }
     
@@ -37,7 +37,7 @@ extension Date {
         return Calendar.current.date(byAdding: .minute, value: minutes, to: self)!
     }
 
-    func time() -> Date {
+    var time: Date {
         return DateFormatters.shared.get(.shortDate).date(from: "01.01.2000")!.withTime(self)
     }
     

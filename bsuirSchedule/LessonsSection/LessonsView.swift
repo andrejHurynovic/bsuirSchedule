@@ -17,9 +17,9 @@ struct LessonsView: View {
         
             ScrollView {
                 ScrollViewReader { proxy in
-                    sections
-                        .onChange(of: viewModel.targetSection) { targetSection in
-                            viewModel.scrollToSection(targetSection, in: proxy)
+                    lessonsGrid
+                        .onChange(of: viewModel.scrollTargetID) { targetSection in
+                            viewModel.scrollToID(targetSection, in: proxy)
                         }
                         .onLoad {
                             Task.init {
@@ -41,7 +41,7 @@ struct LessonsView: View {
         .navigationTitle(viewModel.navigationViewTitle)
     }
     
-    var sections: some View {
+    var lessonsGrid: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 240, maximum: 500))], alignment: .leading, spacing: 8, pinnedViews: []) {
             ForEach(viewModel.sections) { section in
                 LessonsSectionView(section: section,
@@ -131,6 +131,9 @@ struct LessonsView: View {
     
     //MARK: Toolbar
     @ViewBuilder var toolbar : some View {
+        Button("s") {
+            viewModel.scrollTargetID = "8.10.2022, 0:00-БД-12:25-0"
+        }
         searchFieldToggle
         detailedViewNavigationLink
         Menu {

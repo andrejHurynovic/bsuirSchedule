@@ -125,6 +125,16 @@ extension Array where Element == Lesson {
     }
 }
 
+//MARK: Time
+
+extension Lesson {
+    ///Date range in form timeStart to timeEnd
+    var timeRange: ClosedRange<Date> {
+        let dateFormatter = DateFormatters.shared.time
+        return dateFormatter.date(from: timeStart)!...dateFormatter.date(from: timeEnd)!
+    }
+    
+}
 
 //MARK: Others
 extension Lesson {

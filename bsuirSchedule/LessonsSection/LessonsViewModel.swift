@@ -14,7 +14,7 @@ class LessonsViewModel: ObservableObject {
 
     @Published var sections: [LessonsSection] = []
     @Published var currentTimeSection: LessonsSection? = nil
-    @Published var targetSection: LessonsSection? = nil
+    @Published var scrollTargetID: String? = nil
     @Published var representationMode: LessonsSectionRepresentationMode = .dateBased
     
     @Published var navigationViewTitle: String!
@@ -67,7 +67,7 @@ class LessonsViewModel: ObservableObject {
         switch representationMode {
         case .dateBased:
             let date = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: date)!
-            return sections.first(where: { $0.date! >= date })
+            return sections.first(where: { $0.date! >= date && ($0.nearestLesson() != nil) })
         case .weekBased:
             let week = date.educationWeek
             let weekday = date.weekDay()
@@ -75,6 +75,7 @@ class LessonsViewModel: ObservableObject {
             var filteredSections = sections
             filteredSections.removeAll { $0.week < week }
             filteredSections.removeAll { $0.weekday.rawValue < weekday.rawValue && $0.week == week }
+            filteredSections.removeAll { $0.nearestLesson() == nil }
             
             guard filteredSections.isEmpty == false else {
                 return sections.first
@@ -89,13 +90,13 @@ class LessonsViewModel: ObservableObject {
     }
     
     //MARK: ScrollViewProxy
-    func scrollToSection(_ section: LessonsSection?, in proxy: ScrollViewProxy) {
-        if let section = section {
+    func scrollToID(_ ID: String?, in proxy: ScrollViewProxy) {
+        if let ID = ID {
             withAnimation {
-                proxy.scrollTo(section.id, anchor: .top)
+                proxy.scrollTo(ID, anchor: .top)
             }
         }
-        targetSection = nil
+        scrollTargetID = nil
     }
     
     //MARK: Sections
@@ -118,7 +119,8 @@ class LessonsViewModel: ObservableObject {
         await MainActor.run {
             self.sections = lessonsSections
             currentTimeSection = nearestSection(to: Date())
-            self.targetSection = currentTimeSection
+            
+            self.scrollTargetID = currentTimeSection?.nearestLesson()!.id(sectionID: currentTimeSection!.id)
         }
     }
     
@@ -136,7 +138,7 @@ class LessonsViewModel: ObservableObject {
     
     //MARK: DatePicker
     func scrollToDate(_ date: Date) {
-        targetSection = nearestSection(to: date)
+        scrollTargetID = nearestSection(to: date)?.id
         withAnimation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.9)) {
             showDatePicker = false
         }

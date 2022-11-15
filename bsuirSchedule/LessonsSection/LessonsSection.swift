@@ -61,6 +61,11 @@ struct LessonsSection: Hashable {
         "\(weekday.description), \(week + 1)-ая неделя"
     }
     
+    func nearestLesson() -> Lesson? {
+        let currentTime = Date().time
+        
+        return lessons.first { currentTime < $0.timeRange.lowerBound || $0.timeRange.contains(currentTime) }
+    }
 }
 
 extension LessonsSection: Identifiable {
