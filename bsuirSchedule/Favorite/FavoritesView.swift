@@ -7,7 +7,19 @@
 
 import SwiftUI
 
+class FavouriteViewModel: ObservableObject {
+    @AppStorage("primaryGroup") var primaryGroupID: String?
+    @State var groupSection: LessonsSection?
+    @AppStorage("primaryEmployee") var primaryEmployeeID: Int?
+    @State var employeeSection: LessonsSection?
+    @AppStorage("primaryClassroom") var primaryClassroomID: String?
+    @State var classroomSection: LessonsSection?
+}
+
 struct FavoritesView: View {
+    
+    @ObservedObject var viewModel = FavouriteViewModel()
+    
     @FetchRequest(
         entity: Group.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Group.id, ascending: true)],
@@ -31,13 +43,38 @@ struct FavoritesView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-//                primaryGroupOnLoad
+                VStack {
+                    primaryGroup
+                    primaryEmployee
+                    primaryClassroom
+                }
+                .padding(.horizontal)
+                .transition(.move(edge: .leading))
                 squareObjects
                 rectangleObjects
             }
             .navigationTitle("Избранные")
         }
         .navigationViewStyle(.automatic)
+    }
+    
+    @ViewBuilder var primaryGroup: some View {
+        if let primaryGroupID = viewModel.primaryGroupID, let group = favouriteGroups.first(where: { $0.id == primaryGroupID }) {
+            VStack(alignment: .leading) {
+                FavoriteSectionView(lessonsSectioned: group)
+            }
+        }
+    }
+    @ViewBuilder var primaryEmployee: some View {
+        if let primaryEmployeeID = viewModel.primaryEmployeeID, let employee = favouriteEmployees.first(where: { $0.id == primaryEmployeeID }) {
+            FavoriteSectionView(lessonsSectioned: employee)
+            }
+        }
+    
+    @ViewBuilder var primaryClassroom: some View {
+        if let primaryClassroomID = viewModel.primaryClassroomID, let classroom = favouriteClassrooms.first(where: { $0.originalName == primaryClassroomID }) {
+            FavoriteSectionView(lessonsSectioned: classroom)
+        }
     }
     
     //MARK: Grids
@@ -183,6 +220,6 @@ struct FavoritesView: View {
 struct FavoritesView_Previews: PreviewProvider {
     static var previews: some View {
         FavoritesView()
-            .preferredColorScheme(.dark)
+            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
     }
 }

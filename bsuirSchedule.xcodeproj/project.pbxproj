@@ -65,6 +65,8 @@
 		F691602E29001F290033AE14 /* LessonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F691602D29001F290033AE14 /* LessonsView.swift */; };
 		F6916032290023EA0033AE14 /* LessonsGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6916031290023EA0033AE14 /* LessonsGroupView.swift */; };
 		F691603429002BCD0033AE14 /* LessonsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F691603329002BCD0033AE14 /* LessonsSectionView.swift */; };
+		F694249E292623EF006FF042 /* FavoriteSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F694249D292623EF006FF042 /* FavoriteSectionView.swift */; };
+		F69424A029262426006FF042 /* FavoriteSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F694249F29262426006FF042 /* FavoriteSectionViewModel.swift */; };
 		F697BF7C26FFA1BA008FA7A9 /* Classroom+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697BF7826FFA1BA008FA7A9 /* Classroom+CoreDataClass.swift */; };
 		F697BF7D26FFA1BA008FA7A9 /* Classroom+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697BF7926FFA1BA008FA7A9 /* Classroom+CoreDataProperties.swift */; };
 		F697BF8526FFA960008FA7A9 /* ClassroomsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697BF8426FFA960008FA7A9 /* ClassroomsView.swift */; };
@@ -176,6 +178,8 @@
 		F691602D29001F290033AE14 /* LessonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsView.swift; sourceTree = "<group>"; };
 		F6916031290023EA0033AE14 /* LessonsGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsGroupView.swift; sourceTree = "<group>"; };
 		F691603329002BCD0033AE14 /* LessonsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsSectionView.swift; sourceTree = "<group>"; };
+		F694249D292623EF006FF042 /* FavoriteSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSectionView.swift; sourceTree = "<group>"; };
+		F694249F29262426006FF042 /* FavoriteSectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSectionViewModel.swift; sourceTree = "<group>"; };
 		F697BF7826FFA1BA008FA7A9 /* Classroom+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Classroom+CoreDataClass.swift"; sourceTree = "<group>"; };
 		F697BF7926FFA1BA008FA7A9 /* Classroom+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Classroom+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F697BF8426FFA960008FA7A9 /* ClassroomsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomsView.swift; sourceTree = "<group>"; };
@@ -455,6 +459,8 @@
 			isa = PBXGroup;
 			children = (
 				F6606FD726F93A89002E0B3E /* FavoritesView.swift */,
+				F694249D292623EF006FF042 /* FavoriteSectionView.swift */,
+				F694249F29262426006FF042 /* FavoriteSectionViewModel.swift */,
 				F601E5AA2731E29600773F02 /* TaskView.swift */,
 				F68E9CDD2729BB4100704EB0 /* FavoriteGroupView.swift */,
 				F6C1A33B272AE2E600AD38E1 /* FavoriteEmployeeView.swift */,
@@ -619,6 +625,7 @@
 				F6916032290023EA0033AE14 /* LessonsGroupView.swift in Sources */,
 				F61C523E26E64619002CF234 /* Lesson+CoreDataClass.swift in Sources */,
 				F69009D426F6958100379A74 /* LessonsViewModel.swift in Sources */,
+				F69424A029262426006FF042 /* FavoriteSectionViewModel.swift in Sources */,
 				F67DF3B6266AA56000D96417 /* Employee+CoreDataProperties.swift in Sources */,
 				F6857C7528F049D200195388 /* GroupSection.swift in Sources */,
 				F6C1A33C272AE2E700AD38E1 /* FavoriteEmployeeView.swift in Sources */,
@@ -626,6 +633,7 @@
 				F6748DF328DFB7C80072FB04 /* LessonsSectioned.swift in Sources */,
 				F6DCD72326B30EF0003761B0 /* SettingsView.swift in Sources */,
 				F6AA210F26EC83BB006218F8 /* GroupsViewModel.swift in Sources */,
+				F694249E292623EF006FF042 /* FavoriteSectionView.swift in Sources */,
 				F6AFC4622721EC43008CC065 /* DesignManager.swift in Sources */,
 				F67AA4E428FF793100E5A7C4 /* ArrayExtensions.swift in Sources */,
 				F67AA4DE28FF775700E5A7C4 /* FetchExtensions.swift in Sources */,

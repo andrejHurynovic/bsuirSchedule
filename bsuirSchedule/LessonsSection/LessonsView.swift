@@ -21,11 +21,11 @@ struct LessonsView: View {
                         .onChange(of: viewModel.scrollTargetID) { targetSection in
                             viewModel.scrollToID(targetSection, in: proxy)
                         }
-                        .onLoad {
-                            Task.init {
-                                await viewModel.updateSections()
-                            }
-                        }
+//                        .onLoad {
+//                            Task.init {
+//                                await viewModel.updateSections()
+//                            }
+//                        }
                 }
             }
             .overlay {
@@ -43,7 +43,8 @@ struct LessonsView: View {
     
     var lessonsGrid: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 240, maximum: 500))], alignment: .leading, spacing: 8, pinnedViews: []) {
-            ForEach(viewModel.sections) { section in
+            ForEach(viewModel.filteredSections(searchString: viewModel.searchText,
+                                               subgroup: viewModel.subgroup)) { section in
                 LessonsSectionView(section: section,
                                    showWeeks: viewModel.showWeeks,
                                    showEmployees: viewModel.showEmployees,

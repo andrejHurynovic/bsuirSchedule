@@ -11,10 +11,10 @@ import SwiftUI
 class LessonsViewModel: ObservableObject {
     
     @Published var element: LessonsSectioned
-
     @Published var sections: [LessonsSection] = []
+    @Published var shownSections: [LessonsSection] = []
     @Published var nearestSection: LessonsSection? = nil
-    @Published var currentDateSection: LessonsSection? = nil
+    @Published var todaySection: LessonsSection? = nil
     @Published var scrollTargetID: String? = nil
     @Published var representationMode: LessonsSectionRepresentationMode = .dateBased
     
@@ -41,8 +41,13 @@ class LessonsViewModel: ObservableObject {
     init(_ element: LessonsSectioned) {
         self.element = element
         
-        //                self.sections = element.dateBasedLessonsSections()
-        //                currentTimeSection = nearestSection(to: Date())
+        self.sections = element.dateBasedLessonsSections
+        nearestSection = element.nearestDateBasedSection
+        todaySection = element.todayDateBasedSection
+        
+//        if let nearestSection = self.nearestSection {
+//            self.scrollTargetID = nearestSection.nearestLesson()?.id(sectionID: nearestSection.id)
+//        }
         
         if let group = element as? Group {
             showSubgroupPicker = true
@@ -62,50 +67,23 @@ class LessonsViewModel: ObservableObject {
         }
     }
     
-    
-    //Returns nearestSection to current time
-    func nearestSection(to date: Date) -> LessonsSection? {
-        switch representationMode {
-        case .dateBased:
-            let date = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: date)!
-            return sections.first(where: { $0.date! >= date && ($0.nearestLesson() != nil) })
-        case .weekBased:
-            let week = date.educationWeek
-            let weekday = date.weekDay()
-            
-            var filteredSections = sections
-            filteredSections.removeAll { $0.week < week }
-            filteredSections.removeAll { $0.weekday.rawValue < weekday.rawValue && $0.week == week }
-            filteredSections.removeAll { $0.nearestLesson() == nil }
-            
-            guard filteredSections.isEmpty == false else {
-                return sections.first
-            }
-            return filteredSections.first
+    func filteredSections(searchString: String, subgroup: Int?) -> [LessonsSection] {
+        var filteredSections: [LessonsSection] = sections
+        
+        for index in filteredSections.indices {
+            filteredSections[index].lessons.filter(abbreviation: searchString)
+            filteredSections[index].lessons.filter(subgroup: subgroup)
         }
-
-    }
-    
-    ///Returns section satisfied for provided date. Week-based sections works too.
-    func dateSection(date: Date) -> LessonsSection? {
-        switch representationMode {
-        case .dateBased:
-            let date = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: date)!
-            return sections.first(where: { $0.date! == date })
-        case .weekBased:
-            let week = date.educationWeek
-            let weekday = date.weekDay()
-            
-            return sections.first { $0.week == week && $0.weekday == weekday }
-        }
+        
+        filteredSections.removeAll { $0.lessons.isEmpty }
+        return filteredSections
     }
     
     ///Checks is provided section equal to pre-calculated today section
     func isToday(section: LessonsSection) -> Bool {
-        guard let todaySection = currentDateSection else {
+        guard let todaySection = self.todaySection else {
             return false
         }
-        print(section == todaySection)
         return section == todaySection
     }
     
@@ -126,26 +104,38 @@ class LessonsViewModel: ObservableObject {
     //MARK: Sections
     func updateSections() async {
         
-        let lessonsSections: [LessonsSection]
+        let sections: [LessonsSection]
         switch representationMode {
         case .dateBased:
-            lessonsSections = await element.dateBasedLessonsSections(searchString: searchText, subgroup: subgroup)
+            sections = element.dateBasedLessonsSections
             await MainActor.run {
                 showWeeks = false
             }
         case .weekBased:
-            lessonsSections = await element.weekBasedLessonsSections(searchString: searchText, subgroup: subgroup)
+            sections = element.weekBasedLessonsSections
             await MainActor.run {
                 showWeeks = true
             }
         }
         
         await MainActor.run {
-            self.sections = lessonsSections
-            self.nearestSection = nearestSection(to: Date())
-            self.currentDateSection = dateSection(date: Date())
+            self.sections = sections
             
-            self.scrollTargetID = nearestSection?.nearestLesson()?.id(sectionID: nearestSection!.id)
+            switch representationMode {
+            case .dateBased:
+                self.nearestSection = element.nearestDateBasedSection
+                self.todaySection = element.todayDateBasedSection
+            case .weekBased:
+                self.nearestSection = element.nearestWeekBasedSection
+                self.todaySection = element.todayWeekBasedSection
+                
+            }
+            
+            if let nearestSection = self.nearestSection {
+                self.scrollTargetID = nearestSection.nearestLesson()?.id(sectionID: nearestSection.id)
+            }
+            
+
         }
     }
     
@@ -163,7 +153,22 @@ class LessonsViewModel: ObservableObject {
     
     //MARK: DatePicker
     func scrollToDate(_ date: Date) {
-        scrollTargetID = nearestSection(to: date)?.id
+        let scrollTargetSection: LessonsSection?
+        switch representationMode {
+        case .dateBased:
+            scrollTargetSection = filteredSections(searchString: searchText, subgroup: subgroup).first { $0.date! >= date.withTime($0.date!) }
+        case .weekBased:
+            let week = date.educationWeek
+            let weekday = date.weekDay()
+            scrollTargetSection = filteredSections(searchString: searchText, subgroup: subgroup).first { section in
+                let thisWeekOrLater = section.week >= week
+                let thisDayOfTheWeekAndLaterThisWeek = section.week == week && section.weekday.rawValue >= weekday.rawValue
+                
+                return thisWeekOrLater && thisDayOfTheWeekAndLaterThisWeek
+            }
+        }
+        
+        scrollTargetID = scrollTargetSection?.id
         withAnimation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.9)) {
             showDatePicker = false
         }
