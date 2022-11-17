@@ -144,7 +144,7 @@ extension Lesson {
         }
         
         if weeks.count == 1 {
-            return String(weeks.first!)
+            return String(weeks.first! + 1)
         }
         
         var weeks = self.weeks.map {$0 + 1}
