@@ -58,7 +58,7 @@ struct LessonView: View {
         .padding(.all)
         .background(in: RoundedRectangle(cornerRadius: 16))
         .opacity(passedLesson ? 0.5 : 1.0)
-        .standardisedShadow()
+//        .standardisedShadow()
         
         .contextMenu {
             Text("Добавить задание")
