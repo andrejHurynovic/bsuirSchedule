@@ -49,11 +49,23 @@ struct LessonsSection: Hashable {
         guard let date = date else  {
             return nil
         }
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ru_BY")
-        dateFormatter.timeZone = TimeZone.autoupdatingCurrent
-        dateFormatter.dateFormat = "EEEEEE, d MMMM"
-        let dateString = dateFormatter.string(from: date)
+        let daysDifference = Date().removedTime().dateComponentsTo(date, .day)
+        var dateString: String
+        
+        if (-2...2).contains(daysDifference) {
+            let relativeDateFormatter = RelativeDateTimeFormatter()
+            relativeDateFormatter.locale = Locale(identifier: "ru_BY")
+            relativeDateFormatter.dateTimeStyle = .named
+            let dateComponents = DateComponents(day: daysDifference)
+            dateString = relativeDateFormatter.localizedString(from: dateComponents)
+        } else {
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "ru_BY")
+            dateFormatter.timeZone = TimeZone.autoupdatingCurrent
+            dateFormatter.dateFormat = "EEEEEE, d MMMM"
+            dateString = dateFormatter.string(from: date)
+        }
+        
         return "\(dateString), \(week + 1)-ая неделя"
     }
     

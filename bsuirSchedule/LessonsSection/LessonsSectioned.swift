@@ -16,7 +16,6 @@ protocol LessonsSectioned: NSManagedObject, EducationDated {
     ///Lesson weekday and week is match to the date and lesson date range contains the date  (lesson),
     ///or
     ///Lesson date is match to the date (exam or announcement)
-//    func dateBasedLessonsSections() -> [LessonsSection]
 }
 
 extension Lesson {
@@ -62,7 +61,6 @@ extension LessonsSectioned {
             let tomorrowOrLater = section.date != date
             let classesLeftToday =  section.date == date && section.nearestLesson() != nil
             
-            //
             return todayOrLater && (tomorrowOrLater || classesLeftToday)
         })
     }
@@ -95,14 +93,14 @@ extension LessonsSectioned {
         let date = Date()
         let week = date.educationWeek
         let weekday = date.weekDay()
-        
+
         return weekBasedLessonsSections.first { section in
             let thisWeekOrLater = section.week >= week
-            let thisDayOfTheWeekAndLaterThisWeek = section.week == week && section.weekday.rawValue >= weekday.rawValue
-            let tomorrowOrLater = section.week != week && section.weekday != weekday
+            let thisDayOfTheWeekAndLaterThisWeek = (section.week > week || section.weekday.rawValue >= weekday.rawValue)
+            let notToday =  !(section.week == week && section.weekday == weekday)
             let classesLeftToday = section.week == week && section.weekday == weekday && section.nearestLesson() != nil
             
-            return thisWeekOrLater && thisDayOfTheWeekAndLaterThisWeek && (tomorrowOrLater || classesLeftToday)
+            return thisWeekOrLater && thisDayOfTheWeekAndLaterThisWeek && (notToday || classesLeftToday)
         }
         
     }

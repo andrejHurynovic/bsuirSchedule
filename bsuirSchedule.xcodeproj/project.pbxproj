@@ -241,7 +241,6 @@
 			isa = PBXGroup;
 			children = (
 				F6AFC4612721EC43008CC065 /* DesignManager.swift */,
-				F6BC18A42811D4A100BA549D /* DateFormatters.swift */,
 			);
 			path = "Managers and templates";
 			sourceTree = "<group>";
@@ -364,6 +363,7 @@
 			isa = PBXGroup;
 			children = (
 				F67AA4E328FF793100E5A7C4 /* ArrayExtensions.swift */,
+				F69424A1292789E0006FF042 /* Date */,
 				F67AA4E628FF79BF00E5A7C4 /* ViewDidLoadModifier.swift */,
 				F67AA4E828FF79F200E5A7C4 /* ViewExtensions.swift */,
 				F67AA4EA28FF7A0F00E5A7C4 /* UIApplicationExtensions.swift */,
@@ -386,7 +386,6 @@
 			children = (
 				F61915B828465F4600A98101 /* LastUpdateDate.swift */,
 				F666CFD928FF5C71007F9F28 /* EducationWeek.swift */,
-				F67AA4E128FF788400E5A7C4 /* DateExtensions.swift */,
 			);
 			path = Week;
 			sourceTree = "<group>";
@@ -409,6 +408,15 @@
 				F68E9CF32729FFE900704EB0 /* Info.plist */,
 			);
 			path = Widget;
+			sourceTree = "<group>";
+		};
+		F69424A1292789E0006FF042 /* Date */ = {
+			isa = PBXGroup;
+			children = (
+				F67AA4E128FF788400E5A7C4 /* DateExtensions.swift */,
+				F6BC18A42811D4A100BA549D /* DateFormatters.swift */,
+			);
+			path = Date;
 			sourceTree = "<group>";
 		};
 		F697BF7326FFA129008FA7A9 /* Classroom */ = {

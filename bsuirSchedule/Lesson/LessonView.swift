@@ -56,7 +56,7 @@ struct LessonView: View {
                 footer
         }
         .padding(.all)
-        .background(in: RoundedRectangle(cornerRadius: 16))
+        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 16))
         .opacity(passedLesson ? 0.5 : 1.0)
 //        .standardisedShadow()
         
@@ -233,7 +233,7 @@ struct LessonView: View {
     }
     
     @ViewBuilder var weeks: some View {
-        if showWeeks, let weeksString = lesson.weeksDescription() {
+        if showWeeks, let weeksString = lesson.weeksDescription {
             Label(weeksString, systemImage: "calendar")
         }
     }

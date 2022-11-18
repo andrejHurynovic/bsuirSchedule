@@ -138,7 +138,7 @@ extension Lesson {
 
 //MARK: Others
 extension Lesson {
-    func weeksDescription() -> String? {
+    var weeksDescription: String? {
         guard self.weeks.isEmpty == false else {
             return nil
         }

@@ -34,6 +34,7 @@ extension EducationDated {
     var examsDates: [Date] {
         datesBetween(examsStart, examsEnd)
     }
+    
     var educationRange: ClosedRange<Date>? {
         let dates = [educationStart, educationEnd, examsStart, examsEnd].compactMap {$0}.sorted()
         guard dates.isEmpty == false else {
@@ -42,10 +43,9 @@ extension EducationDated {
         return dates.first!...dates.last!
     }
     var educationDates: [Date] {
-        if let range = educationRange {
-            return datesBetween(range.lowerBound, range.upperBound)
-        } else {
+        guard let range = educationRange else {
             return []
         }
+        return datesBetween(range.lowerBound, range.upperBound)
     }
 }

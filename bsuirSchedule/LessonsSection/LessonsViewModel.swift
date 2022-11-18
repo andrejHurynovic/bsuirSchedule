@@ -41,14 +41,19 @@ class LessonsViewModel: ObservableObject {
     init(_ element: LessonsSectioned) {
         self.element = element
         
+        //Sections
         self.sections = element.dateBasedLessonsSections
         nearestSection = element.nearestDateBasedSection
         todaySection = element.todayDateBasedSection
         
-//        if let nearestSection = self.nearestSection {
-//            self.scrollTargetID = nearestSection.nearestLesson()?.id(sectionID: nearestSection.id)
-//        }
-        
+        if let nearestSection = nearestSection {
+            if nearestSection == todaySection {
+                self.scrollTargetID = nearestSection.nearestLesson()?.id(sectionID: nearestSection.id)
+            } else {
+                self.scrollTargetID = nearestSection.id
+            }
+        }
+            
         if let group = element as? Group {
             showSubgroupPicker = true
             navigationViewTitle = group.id
@@ -132,7 +137,11 @@ class LessonsViewModel: ObservableObject {
             }
             
             if let nearestSection = self.nearestSection {
-                self.scrollTargetID = nearestSection.nearestLesson()?.id(sectionID: nearestSection.id)
+                if nearestSection == todaySection {
+                    self.scrollTargetID = nearestSection.nearestLesson()?.id(sectionID: nearestSection.id)
+                } else {
+                    self.scrollTargetID = nearestSection.id
+                }
             }
             
 
@@ -156,7 +165,8 @@ class LessonsViewModel: ObservableObject {
         let scrollTargetSection: LessonsSection?
         switch representationMode {
         case .dateBased:
-            scrollTargetSection = filteredSections(searchString: searchText, subgroup: subgroup).first { $0.date! >= date.withTime($0.date!) }
+            let date = date.removedTime()
+            scrollTargetSection = filteredSections(searchString: searchText, subgroup: subgroup).first { $0.date! >= date }
         case .weekBased:
             let week = date.educationWeek
             let weekday = date.weekDay()
