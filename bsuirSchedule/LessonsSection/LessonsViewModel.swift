@@ -45,14 +45,6 @@ class LessonsViewModel: ObservableObject {
         self.sections = element.dateBasedLessonsSections
         nearestSection = element.nearestDateBasedSection
         todaySection = element.todayDateBasedSection
-        
-        if let nearestSection = nearestSection {
-            if nearestSection == todaySection {
-                self.scrollTargetID = nearestSection.nearestLesson()?.id(sectionID: nearestSection.id)
-            } else {
-                self.scrollTargetID = nearestSection.id
-            }
-        }
             
         if let group = element as? Group {
             showSubgroupPicker = true
@@ -100,10 +92,20 @@ class LessonsViewModel: ObservableObject {
     func scrollToID(_ ID: String?, in proxy: ScrollViewProxy) {
         if let ID = ID {
             withAnimation {
-                proxy.scrollTo(ID, anchor: .top)
+                proxy.scrollTo(ID, anchor: .center)
             }
         }
         scrollTargetID = nil
+    }
+    
+    func updateScrollTarget() {
+        if let nearestSection = nearestSection {
+            if nearestSection == todaySection {
+                self.scrollTargetID = nearestSection.nearestLesson()?.id(sectionID: nearestSection.id)
+            } else {
+                self.scrollTargetID = nearestSection.id
+            }
+        }
     }
     
     //MARK: Sections

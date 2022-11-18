@@ -18,14 +18,13 @@ struct LessonsView: View {
             ScrollView {
                 ScrollViewReader { proxy in
                     lessonsGrid
-                        .onChange(of: viewModel.scrollTargetID) { targetSection in
-                            viewModel.scrollToID(targetSection, in: proxy)
+                        .onChange(of: viewModel.scrollTargetID) { scrollTargetID in
+                            viewModel.scrollToID(scrollTargetID, in: proxy)
                         }
-//                        .onLoad {
-//                            Task.init {
-//                                await viewModel.updateSections()
-//                            }
-//                        }
+                        .onLoad {
+                            viewModel.updateScrollTarget()
+                            viewModel.scrollToID(viewModel.scrollTargetID, in: proxy)
+                        }
                 }
             }
             .overlay {
