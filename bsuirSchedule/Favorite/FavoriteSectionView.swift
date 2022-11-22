@@ -7,51 +7,42 @@
 
 import SwiftUI
 
+enum FavoriteSectionState: CaseIterable {
+    case updating
+    case nextLesson
+    case noMoreLessons
+}
+
 struct FavoriteSectionView: View {
-    @State var lessonsSectioned: LessonsSectioned
-    @State var viewModel: LessonsViewModel? = nil
-    @State var primarySection: LessonsSection? = nil
+    
+    @ObservedObject var viewModel: FavoriteSectionViewModel
     
     @ViewBuilder var body: some View {
-        if let viewModel = viewModel, let section = primarySection {
-            let lesson = section == viewModel.todaySection ? section.nearestLesson() : section.lessons.first
-            
-            NavigationLink {
-                LessonsView(viewModel: viewModel)
-            } label: {
-                VStack(alignment: .leading) {
-                    if let group = lessonsSectioned as? Group {
-                        standardizedHeader(title: group.id)
-                            .padding(.bottom, -4)
-                    }
-                    if let employee = lessonsSectioned as? Employee {
-                        standardizedHeader(title: employee.lastName)
-                            .padding(.bottom, -4)
-                    }
-                    if let classroom = lessonsSectioned as? Classroom {
-                        standardizedHeader(title: classroom.formattedName(showBuilding: true))
-                            .padding(.bottom, -4) 
-                    }
-                    
-                    if let lesson = lesson {
-                        LessonView(lesson: lesson, showEmployee: viewModel.showEmployees, showGroups: viewModel.showGroups, showWeeks: viewModel.showWeeks, today: false)
-                    }
-                }
-                .foregroundColor(.primary)
-            }
-        } else {
-            ProgressView()
-                .padding()
-                .task {
-                    viewModel = LessonsViewModel(lessonsSectioned)
-                    let section = viewModel?.nearestSection
-                    await MainActor.run {
-                        withAnimation {
-                            self.primarySection = section
-                        }
-                    }
-                }
-        }
         
+            HStack {
+                standardizedHeader(title: viewModel.title)
+                Spacer()
+            }
+                .padding(.bottom, -4)
+//            if viewModel.favoriteSectionState == .updating {
+//                ProgressView()
+//                    .padding()
+//                    .task {
+//                            await viewModel.update()
+//                    }
+//            }
+            
+            if viewModel.favoriteSectionState == .nextLesson, let lessonsViewModel = viewModel.lessonsViewModel, let lesson = viewModel.lesson  {
+                NavigationLink {
+                    LessonsView(viewModel: lessonsViewModel)
+                } label: {
+                    LessonView(lesson: lesson,
+                               showEmployee: lessonsViewModel.showEmployees,
+                               showGroups: lessonsViewModel.showGroups,
+                               showWeeks: lessonsViewModel.showWeeks, today: false)
+                    .foregroundColor(.primary)
+                }
+            }
+            
     }
 }

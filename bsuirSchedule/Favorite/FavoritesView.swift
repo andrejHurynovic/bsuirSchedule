@@ -61,19 +61,19 @@ struct FavoritesView: View {
     @ViewBuilder var primaryGroup: some View {
         if let primaryGroupID = viewModel.primaryGroupID, let group = favouriteGroups.first(where: { $0.id == primaryGroupID }) {
             VStack(alignment: .leading) {
-                FavoriteSectionView(lessonsSectioned: group)
+                FavoriteSectionView(viewModel: FavoriteSectionViewModel(lessonsSectioned: group))
             }
         }
     }
     @ViewBuilder var primaryEmployee: some View {
         if let primaryEmployeeID = viewModel.primaryEmployeeID, let employee = favouriteEmployees.first(where: { $0.id == primaryEmployeeID }) {
-            FavoriteSectionView(lessonsSectioned: employee)
+            FavoriteSectionView(viewModel: FavoriteSectionViewModel(lessonsSectioned: employee))
             }
         }
     
     @ViewBuilder var primaryClassroom: some View {
         if let primaryClassroomID = viewModel.primaryClassroomID, let classroom = favouriteClassrooms.first(where: { $0.originalName == primaryClassroomID }) {
-            FavoriteSectionView(lessonsSectioned: classroom)
+            FavoriteSectionView(viewModel: FavoriteSectionViewModel(lessonsSectioned: classroom))
         }
     }
     
