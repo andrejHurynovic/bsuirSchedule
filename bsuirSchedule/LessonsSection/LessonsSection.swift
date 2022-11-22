@@ -45,7 +45,7 @@ struct LessonsSection: Hashable {
     }
     
     //MARK: Title
-    var dateBasedTitle: String? {
+    var dateString: String? {
         guard let date = date else  {
             return nil
         }
@@ -65,8 +65,11 @@ struct LessonsSection: Hashable {
             dateFormatter.dateFormat = "EEEEEE, d MMMM"
             dateString = dateFormatter.string(from: date)
         }
-        
-        return "\(dateString), \(week + 1)-ая неделя"
+        return dateString
+    }
+    
+    var dateBasedTitle: String? {
+        return "\(dateString!), \(week + 1)-ая неделя"
     }
     
     var weekBasedTitle: String {
