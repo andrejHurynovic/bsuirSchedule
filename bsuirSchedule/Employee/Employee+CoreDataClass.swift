@@ -116,7 +116,10 @@ extension Employee: DecoderUpdatable {
             self.addToLessons(NSSet(array: Array(schedules.values.joined()) as! [Lesson]))
         }
         
-        if let exams = try? container.decode([Lesson].self, forKey: .exams) {
+        if var exams = try? container.decode([Lesson].self, forKey: .exams) {
+            exams.forEachInout { exam in
+                exam.employeesIDs = [self.id]
+            }
             self.addToLessons(NSSet(array: exams))
         }
         
