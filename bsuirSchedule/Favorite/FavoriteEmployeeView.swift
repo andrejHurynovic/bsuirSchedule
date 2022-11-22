@@ -50,8 +50,7 @@ struct EmployeeFavoriteView: View {
             }
             .padding()
             .clipped()
-            .background(in: RoundedRectangle(cornerRadius: 16))
-            .standardisedShadow()
+            .mainBackground()
         }
     }
 }

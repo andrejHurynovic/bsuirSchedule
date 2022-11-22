@@ -12,9 +12,8 @@ struct FavoriteGroupView: View {
     
     var body: some View {
         RoundedRectangle(cornerRadius: 16)
-            .fill(.background)
+            .fill(mainMaterial())
             .aspectRatio(contentMode: .fill)
-            .standardisedShadow()
             .overlay {
                 VStack(alignment: .leading) {
                     Text(group.id!)

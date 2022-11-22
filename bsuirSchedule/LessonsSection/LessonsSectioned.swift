@@ -18,13 +18,7 @@ protocol LessonsSectioned: NSManagedObject, EducationDated {
     ///Lesson date is match to the date (exam or announcement)
 }
 
-extension Lesson {
-
-}
-
 extension LessonsSectioned {
-    
-    
     //MARK: Date-based
     var dateBasedLessonsSections: [LessonsSection] {
         let lessons = self.lessons?.allObjects as! [Lesson]

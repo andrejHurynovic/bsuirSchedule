@@ -56,9 +56,9 @@ struct LessonView: View {
                 footer
         }
         .padding(.all)
-        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 16))
+        .mainBackground()
         .opacity(passedLesson ? 0.5 : 1.0)
-//        .standardisedShadow()
+
         
         .contextMenu {
             Text("Добавить задание")
