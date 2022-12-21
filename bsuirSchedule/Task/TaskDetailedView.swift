@@ -124,7 +124,7 @@ struct TaskDetailedView: View {
             .focused($textEditorFocused)
             .frame(minHeight: 128)
             .cornerRadius(16)
-            .mainBackground()
+            .primaryBackground()
     }
     
     //MARK: Photos
@@ -149,7 +149,7 @@ struct TaskDetailedView: View {
             RoundedRectangle(cornerRadius: 16)
                 .fill(.background)
                 .aspectRatio(contentMode: .fill)
-                .mainBackground()
+                .primaryBackground()
                 .overlay {
                     Image(uiImage: image)
                         .resizable()
@@ -186,7 +186,7 @@ struct TaskDetailedView: View {
             photoPickerPresented = true
         } label: {
             RoundedRectangle(cornerRadius: 16)
-                .mainBackground()
+                .primaryBackground()
                 .aspectRatio(contentMode: .fill)
                 .overlay {
                     Image(systemName: "plus")
@@ -202,7 +202,7 @@ struct TaskDetailedView: View {
             capturePicturePresented = true
         } label: {
             RoundedRectangle(cornerRadius: 16)
-                .mainBackground()
+                .primaryBackground()
                 .aspectRatio(contentMode: .fill)
                 .overlay {
                     Image(systemName: "camera")

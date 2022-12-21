@@ -56,7 +56,7 @@ struct LessonView: View {
                 footer
         }
         .padding(.all)
-        .mainBackground()
+        .primaryBackground()
         .opacity(passedLesson ? 0.5 : 1.0)
 
         

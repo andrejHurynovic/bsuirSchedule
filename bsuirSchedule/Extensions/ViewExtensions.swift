@@ -24,13 +24,13 @@ struct mainBackgroundViewModifier: ViewModifier {
 }
 
 extension View {
-    func mainMaterial() -> Material {
+    func primaryMaterial() -> Material {
         .thinMaterial
     }
 }
 
 extension View {
-    func mainBackground() -> some View {
+    func primaryBackground() -> some View {
         modifier(mainBackgroundViewModifier())
     }
 }

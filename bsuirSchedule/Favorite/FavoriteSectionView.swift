@@ -19,18 +19,12 @@ struct FavoriteSectionView: View {
     
     @ViewBuilder var body: some View {
         
+        VStack(alignment: .leading) {
             HStack {
                 standardizedHeader(title: viewModel.title)
                 Spacer()
             }
-                .padding(.bottom, -4)
-//            if viewModel.favoriteSectionState == .updating {
-//                ProgressView()
-//                    .padding()
-//                    .task {
-//                            await viewModel.update()
-//                    }
-//            }
+            .padding(.bottom, -4)
             
             if viewModel.favoriteSectionState == .nextLesson, let lessonsViewModel = viewModel.lessonsViewModel, let lesson = viewModel.lesson  {
                 NavigationLink {
@@ -42,7 +36,14 @@ struct FavoriteSectionView: View {
                                showWeeks: lessonsViewModel.showWeeks, today: false)
                     .foregroundColor(.primary)
                 }
+                if let description = viewModel.description() {
+                    Text(description)
+                        .font(.caption)
+                        .foregroundColor(Color.gray)
+                }
             }
             
+        }
+        
     }
 }

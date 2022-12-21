@@ -50,7 +50,7 @@ struct EmployeeFavoriteView: View {
             }
             .padding()
             .clipped()
-            .mainBackground()
+            .primaryBackground()
         }
     }
 }

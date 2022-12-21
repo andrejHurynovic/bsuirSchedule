@@ -64,7 +64,13 @@ class FavoriteSectionViewModel: ObservableObject {
         await updateTitle()
     }
     
-
+    func description() -> String? {
+        if let _ = lessonsSectioned.self as? Group {
+            return nearestSection?.description(divideSubgroups: true)
+        } else {
+            return nearestSection?.description()
+        }
+    }
     
     func updateTitle() async {
         await MainActor.run {

@@ -69,13 +69,17 @@ struct LessonsSection: Hashable {
     }
     
     var dateBasedTitle: String? {
-        return "\(dateString!), \(week + 1)-ая неделя"
+        guard let dateString = dateString else {
+            return nil
+        }
+        return "\(dateString), \(week + 1)-ая неделя"
     }
     
     var weekBasedTitle: String {
         "\(weekday.description), \(week + 1)-ая неделя"
     }
-    
+        
+    //MARK: Other
     func nearestLesson() -> Lesson? {
         let currentTime = Date().time
         
@@ -85,4 +89,83 @@ struct LessonsSection: Hashable {
 
 extension LessonsSection: Identifiable {
     var id: String { date?.formatted() ?? "\(week)-\(weekday)"}
+}
+
+//MARK: Description
+extension LessonsSection {
+    func nextLessons(subgroup: Int? = nil) -> [Lesson] {
+        var lessons = self.lessons
+        lessons.filter(subgroup: subgroup)
+        
+        let currentTime = Date().time
+        let nearestLesson = lessons.first { currentTime < $0.timeRange.lowerBound || $0.timeRange.contains(currentTime) }
+        guard let nearestLesson = nearestLesson else {
+            return []
+        }
+        
+        let nearestLessonIndex = lessons.firstIndex(of: nearestLesson)!
+        let indexesRange: ClosedRange<Int>!
+        indexesRange = 0...nearestLessonIndex
+        lessons.removeSubrange(indexesRange)
+        
+        return lessons
+    }
+    
+    func groupedByType(_ lessons: [Lesson]) -> [LessonType:[Lesson]] {
+        let lessonsTypes = Set((lessons.map { $0.lessonType })).sorted { $0.rawValue < $1.rawValue }
+        var groups: [LessonType:[Lesson]] = [:]
+        
+        for lessonsType in lessonsTypes {
+            let lessonsOfLessonType = lessons.filter { $0.lessonType == lessonsType }
+            groups[lessonsType] = lessonsOfLessonType
+        }
+        return groups
+    }
+    
+    func calculateString(_ groupedLessons: [LessonType:[Lesson]]) -> String {
+        var strings: [String] = []
+        for lessonGroup in groupedLessons {
+            strings.append("\(lessonGroup.key.abbreviation) (\(lessonGroup.value.count))")
+        }
+        return strings.joined(separator: ", ")
+    }
+    
+    func subDescription(_ lessons: [Lesson]) -> String? {
+        guard lessons.isEmpty == false else {
+            return nil
+        }
+        let groupedLessons = groupedByType(lessons)
+        let string = calculateString(groupedLessons)
+        
+        return "\(lessons.count) пары из которых: \(string)"
+        
+    }
+    
+    func description(divideSubgroups: Bool = false) -> String? {
+        
+        if divideSubgroups {
+            var returnString = ""
+            let firstNextLessons = nextLessons(subgroup: 1)
+            if let firstSubgroupDescription = (subDescription(firstNextLessons)) {
+                returnString.append("1-я п.: \(firstSubgroupDescription)")
+            }
+            let secondNextLessons = nextLessons(subgroup: 2)
+            if let secondSubgroupDescription = (subDescription(secondNextLessons)) {
+                returnString.append("\n2-я п.: \(secondSubgroupDescription)")
+            }
+            
+            guard returnString.isEmpty == false else {
+                return nil
+            }
+            
+            return "И ещё: \(returnString)"
+        } else {
+            guard let subDescription = subDescription(nextLessons()) else {
+                return nil
+            }
+            return "И ещё пары \(subDescription)"
+        }
+        
+    }
+
 }
