@@ -42,9 +42,9 @@ extension LessonsSectioned {
                                                       date: date,
                                                       lessons: filteredLessons))
             }
-            lessonsSections.removeAll { $0.lessons.isEmpty }
         }
         
+        //lessonsSections.removeAll { $0.lessons.isEmpty }
         return lessonsSections
     }
     

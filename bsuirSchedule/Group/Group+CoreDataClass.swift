@@ -48,7 +48,8 @@ extension Group: DecoderUpdatable {
             }
         }
         
-        let _ = try? container.decode([Lesson].self, forKey: .exams)
+        //Exams also presented in schedules
+//        let _ = try? container.decode([Lesson].self, forKey: .exams)
         
         //MARK: Group information
         //The studentGroup structure exists only when receiving a response to the Schedule request. It is needed for automatic merging when updating the group. Moreover, it can be either an update of the group with an already loaded schedule, or without it.
