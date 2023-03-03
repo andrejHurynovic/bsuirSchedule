@@ -19,6 +19,32 @@ enum LessonType: Int16, CaseIterable {
     case exam = 8
     case candidateText = 9
     
+    init(from string: String?) {
+        switch (string) {
+        case "ЛК":
+            self = .lecture
+        case "УЛк":
+            self = .remoteLecture
+        case "ПЗ":
+            self = .practice
+        case "УПз":
+            self = .remotePractice
+        case "ЛР":
+            self = .laboratory
+        case "УЛР":
+            self = .remoteLaboratory
+        case "Экзамен":
+            self = .exam
+        case "Консультация":
+            self = .consultation
+        case "Кандидатский зачет":
+            self = .candidateText
+        default:
+            self = .none
+            break
+        }
+    }
+    
     var description: String {
         switch self {
         case .none:

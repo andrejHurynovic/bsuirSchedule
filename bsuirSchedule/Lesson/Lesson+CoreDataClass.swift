@@ -21,35 +21,13 @@ public class Lesson: NSManagedObject {
         let container = try! decoder.container(keyedBy: CodingKeys.self)
         
         self.subject = try? container.decode(String.self, forKey: .subject)
-        //Abbreviation cannot be optional, because it used as constraint
+        //Abbreviation cannot be optional, because it is used as constraint
         self.abbreviation = ((try? container.decode(String.self, forKey: .abbreviation)) ?? "")
         
         self.note = try? container.decode(String.self, forKey: .note)
         self.subgroup = Int16(try! container.decode(Int.self, forKey: .subgroup))
         
-        switch (try? container.decode(String.self, forKey: .lessonTypeValue)) {
-        case "ЛК":
-            self.lessonType = .lecture
-        case "УЛк":
-            self.lessonType = .remoteLecture
-        case "ПЗ":
-            self.lessonType = .practice
-        case "УПз":
-            self.lessonType = .remotePractice
-        case "ЛР":
-            self.lessonType = .laboratory
-        case "УЛР":
-            self.lessonType = .remoteLaboratory
-        case "Экзамен":
-            self.lessonType = .exam
-        case "Консультация":
-            self.lessonType = .consultation
-        case "Кандидатский зачет":
-            self.lessonType = .candidateText
-        default:
-            self.lessonType = .none
-            break
-        }
+        lessonType = LessonType(from: try? container.decode(String.self, forKey: .lessonTypeValue))
         
         //MARK: Classrooms
         if let classroomNames = try? container.decode([String].self, forKey: .classroom) {
