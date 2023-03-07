@@ -28,13 +28,15 @@ protocol EducationDated {
 }
 
 extension EducationDated {
+    ///Dates between educationStart and educationEnd inclusive
     var lessonsDates: [Date] {
         datesBetween(educationStart, educationEnd)
     }
+    ///Dates between examsStart and examsEnd inclusive
     var examsDates: [Date] {
         datesBetween(examsStart, examsEnd)
     }
-    
+    ///Range between the earliest and the latest dates among educationStart, educationEnd, examsStart, examsEnd
     var educationRange: ClosedRange<Date>? {
         let dates = [educationStart, educationEnd, examsStart, examsEnd].compactMap {$0}.sorted()
         guard dates.isEmpty == false else {
@@ -42,6 +44,7 @@ extension EducationDated {
         }
         return dates.first!...dates.last!
     }
+    ///Dates between lower and upper bound of educationRange
     var educationDates: [Date] {
         guard let range = educationRange else {
             return []
