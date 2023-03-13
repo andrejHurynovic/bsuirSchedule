@@ -85,6 +85,7 @@
 		F6CF52F528EEBB3B00522C89 /* DecoderUpdatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CF52F428EEBB3B00522C89 /* DecoderUpdatable.swift */; };
 		F6D3C10328E0BA550055B800 /* LessonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D3C10228E0BA550055B800 /* LessonType.swift */; };
 		F6D3C10528E0BAB40055B800 /* WeekDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D3C10428E0BAB40055B800 /* WeekDay.swift */; };
+		F6D4AAB729BEB5260044481B /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D4AAB629BEB5260044481B /* Log.swift */; };
 		F6D588D128E4685B00CB58AC /* FetchDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D588CF28E4685B00CB58AC /* FetchDataType.swift */; };
 		F6D588D228E4685B00CB58AC /* FetchError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D588D028E4685B00CB58AC /* FetchError.swift */; };
 		F6DB7B14286CAF70009BE5FB /* ClassroomType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DB7B13286CAF70009BE5FB /* ClassroomType.swift */; };
@@ -198,6 +199,7 @@
 		F6CF52F428EEBB3B00522C89 /* DecoderUpdatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoderUpdatable.swift; sourceTree = "<group>"; };
 		F6D3C10228E0BA550055B800 /* LessonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonType.swift; sourceTree = "<group>"; };
 		F6D3C10428E0BAB40055B800 /* WeekDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDay.swift; sourceTree = "<group>"; };
+		F6D4AAB629BEB5260044481B /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		F6D588CF28E4685B00CB58AC /* FetchDataType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchDataType.swift; sourceTree = "<group>"; };
 		F6D588D028E4685B00CB58AC /* FetchError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchError.swift; sourceTree = "<group>"; };
 		F6DB7B13286CAF70009BE5FB /* ClassroomType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomType.swift; sourceTree = "<group>"; };
@@ -298,6 +300,7 @@
 				F632DEF626696CD300E4C55F /* bsuirSchedule.xcdatamodeld */,
 				F632DEED26696CCB00E4C55F /* ContentView.swift */,
 				F6857C7628F06F4300195388 /* DeveloperView.swift */,
+				F6D4AAB629BEB5260044481B /* Log.swift */,
 				F67AA4E028FF779900E5A7C4 /* Fetch */,
 				F62B37012903198F00FA2BE8 /* Settings */,
 				F6F6B4F726FA5D2700814354 /* Favorite */,
@@ -644,6 +647,7 @@
 				F694249E292623EF006FF042 /* FavoriteSectionView.swift in Sources */,
 				F6AFC4622721EC43008CC065 /* DesignManager.swift in Sources */,
 				F67AA4E428FF793100E5A7C4 /* ArrayExtensions.swift in Sources */,
+				F6D4AAB729BEB5260044481B /* Log.swift in Sources */,
 				F67AA4DE28FF775700E5A7C4 /* FetchExtensions.swift in Sources */,
 				F64AD7B0266A816D00115E6B /* EmployeesView.swift in Sources */,
 				F67AA4E228FF788400E5A7C4 /* DateExtensions.swift in Sources */,
