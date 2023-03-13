@@ -14,7 +14,7 @@ class GroupsViewModel: ObservableObject {
         await MainActor.run {
             try! PersistenceController.shared.container.viewContext.save()
         }
-        let groups = Group.getAll()
+//        let groups = Group.getAll()
 //        await Group.updateGroups(groups: groups)
 //        await MainActor.run {
 //            try! PersistenceController.shared.container.viewContext.save()

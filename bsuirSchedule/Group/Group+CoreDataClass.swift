@@ -15,8 +15,8 @@ public class Group: NSManagedObject {
     required public convenience init(from decoder: Decoder) throws {
         let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
         self.init(entity: Group.entity(), insertInto: context)
-        
         try! self.update(from: decoder)
+//        Log.info("Group (\(String(self.id))) has been created, start updating")
     }
     
 }
@@ -26,6 +26,8 @@ public class Group: NSManagedObject {
 extension Group: DecoderUpdatable {
     //MARK: Update
     func update(from decoder: Decoder) throws {
+        let startTime = CFAbsoluteTimeGetCurrent()
+        
         var container = try decoder.container(keyedBy: CodingKeys.self)
         
         if let educationStartString = try? container.decode(String.self, forKey: .educationStart) {
@@ -48,9 +50,6 @@ extension Group: DecoderUpdatable {
             }
         }
         
-        //Exams also presented in schedules
-//        let _ = try? container.decode([Lesson].self, forKey: .exams)
-        
         //MARK: Group information
         //The studentGroup structure exists only when receiving a response to the Schedule request. It is needed for automatic merging when updating the group. Moreover, it can be either an update of the group with an already loaded schedule, or without it.
         //This fields is also contained when fetching all groups, but located in root
@@ -61,43 +60,47 @@ extension Group: DecoderUpdatable {
         if let numberOfStudents = try? container.decode(Int16.self, forKey: .numberOfStudents) {
             self.numberOfStudents = numberOfStudents
         }
+        if let course = try? container.decode(Int16.self, forKey: .course) {
+            self.course = course
+        }
         
-        //MARK: Speciality
+        try! updateSpeciality(from: decoder, container: container)
+        
+        Log.info("Group (\(String(self.id))) has been updated, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds")
+    }
+    
+    private func updateSpeciality(from decoder: Decoder, container: KeyedDecodingContainer<Group.CodingKeys>) throws {
+        
         if let specialityID = try? container.decode(Int32.self, forKey: .specialityID) {
             let specialities = decoder.userInfo[.specialities] as! [Speciality]
             if let speciality = specialities.first(where: { $0.id == specialityID }) {
                 self.speciality = speciality
+                Log.info("Speciality (\(String(self.speciality.id)) \(self.speciality.abbreviation!)) is found and assigned to group \(String(self.id))")
             } else {
-                //If the specialty is unknown it is created from the available information
-                
-                //MARK: Faculty
-                //If the faculty is unknown it is created from the available information
-                let facultyID = try! container.decode(Int16.self, forKey: .facultyID)
-                let faculty: Faculty
-                
-                let facultyAbbreviation = try! container.decode(String.self, forKey: .facultyAbbreviation)
-                faculty = Faculty(id: facultyID, abbreviation: facultyAbbreviation)
-                
-                
-                let specialityName = try! container.decode(String.self, forKey: .specialityName)
-                let specialityAbbreviation = try! container.decode(String.self, forKey: .specialityAbbreviation)
-    
-                let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
-
-                self.speciality = Speciality(context: context, id: specialityID, name: specialityName, abbreviation: specialityAbbreviation, faculty: faculty)
-            }
-            
-            //For studentGroups structure in Lesson
-            //        if let specialityCode = try? container.decode (String.self, forKey: .specialityCode) {
-            //            if let speciality = Speciality.fetch(specialityCode: specialityCode, in: context) {
-            //                self.speciality = speciality
-            //            }
-            //        }
-            
-            if let course = try? container.decode(Int16.self, forKey: .course) {
-                self.course = course
+                //If the specialty is unknown it is created from the available information.
+                self.speciality = try createSpeciality(from: decoder, container: container, specialityID: specialityID)
+                Log.warning("Speciality (\(String(self.speciality.id)) - \(self.speciality.abbreviation!)) is not found. The speciality was created and assigned to group \(String(self.id))")
             }
         }
+    }
+    
+    private func createSpeciality(from decoder: Decoder, container: KeyedDecodingContainer<Group.CodingKeys>, specialityID: Int32) throws -> Speciality {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        //MARK: Faculty
+        //If the faculty is unknown it is created from the available information
+        
+        let facultyID = try! container.decode(Int16.self, forKey: .facultyID)
+        
+        let facultyAbbreviation = try! container.decode(String.self, forKey: .facultyAbbreviation)
+        let faculty = Faculty(id: facultyID, abbreviation: facultyAbbreviation)
+        
+        let specialityName = try! container.decode(String.self, forKey: .specialityName)
+        let specialityAbbreviation = try! container.decode(String.self, forKey: .specialityAbbreviation)
+
+        let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
+
+        return Speciality(context: context, id: specialityID, name: specialityName, abbreviation: specialityAbbreviation, faculty: faculty)
     }
 }
 
@@ -129,4 +132,6 @@ extension Group: Decodable {
 //MARK: CodingUserInfoKey
 extension CodingUserInfoKey {
     static let groups = CodingUserInfoKey(rawValue: "groups")!
+    static let updatedGroups = CodingUserInfoKey(rawValue: "updatedGroups")!
+    static let groupUpdating = CodingUserInfoKey(rawValue: "groupUpdating")!
 }

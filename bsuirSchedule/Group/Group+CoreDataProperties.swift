@@ -100,7 +100,6 @@ extension Group {
             return nil
         }
         let (data, _) = try! await URLSession.shared.data(from: url)
-        var group = self
         
         guard data.count != 0 else {
             return nil
@@ -116,6 +115,7 @@ extension Group {
             decoder!.userInfo[.specialities] = Speciality.getAll()
         }
         
+        var group = self
         try! decoder!.update(&group, from: data)
         return group
     }
