@@ -40,13 +40,27 @@ extension Group: DecoderUpdatable {
             self.examsEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .examsEnd))
         }
         
-        if var schedules = try? container.decode([String:[Lesson]].self, forKey: .lessons) {
-            schedules.keys.forEach { key in
+        
+        if let schedulesDictionary = try? container.decode(Dictionary.self, forKey: .lessons) {
+            let lessonDecoder = JSONDecoder()
+            lessonDecoder.userInfo[.managedObjectContext] = decoder.userInfo[.managedObjectContext]
+            lessonDecoder.userInfo[.groups] = decoder.userInfo[.groups]
+            lessonDecoder.userInfo[.employees] = decoder.userInfo[.employees]
+            lessonDecoder.userInfo[.classrooms] = decoder.userInfo[.classrooms]
+            lessonDecoder.userInfo[.specialities] = decoder.userInfo[.specialities]
+            lessonDecoder.userInfo[.updatedGroups] = Set<String>()
+            
+            
+            schedulesDictionary.forEach { (key: String, value: Any) in
                 let weekDay = WeekDay(string: key)
-                schedules[key]!.forEachInout { lesson in
-                    //Assign every lesson correct weekday
+                let lessonsDictionary = value as? [Any]
+                lessonsDictionary?.forEach({ lessonDictionary in
+                    
+                    let lesson = try! lessonDecoder.decode(Lesson.self, from: JSONSerialization.data(withJSONObject: lessonDictionary))
+                    lessonDecoder.userInfo[.updatedGroups] = (lessonDecoder.userInfo[.updatedGroups] as! Set<String>).union((lesson.groups?.allObjects as! [Group]).map({$0.id }))
                     lesson.weekday = weekDay.rawValue
-                }
+                
+                })
             }
         }
         
@@ -86,6 +100,8 @@ extension Group: DecoderUpdatable {
     
     private func createSpeciality(from decoder: Decoder, container: KeyedDecodingContainer<Group.CodingKeys>, specialityID: Int32) throws -> Speciality {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+//        контейнер киед бай факульти контейнер
         
         //MARK: Faculty
         //If the faculty is unknown it is created from the available information

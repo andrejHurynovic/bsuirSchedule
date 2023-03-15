@@ -117,13 +117,16 @@ public class Lesson: NSManagedObject {
         let nestedDecoder = JSONDecoder()
         nestedDecoder.userInfo[.managedObjectContext] = decoder.userInfo[.managedObjectContext]
         nestedDecoder.userInfo[.specialities] = decoder.userInfo[.specialities]
+        let updatedGroups = decoder.userInfo[.updatedGroups] as! Set<String>
     
         for dictionary in groupsDictionaries {
             let data = try! JSONSerialization.data(withJSONObject: dictionary)
             
             if let group = groups.first (where: { $0.id == dictionary["name"] as? String }) {
                 var mutableGroup = group
-                try! nestedDecoder.update(&mutableGroup, from: data)
+                if updatedGroups.contains(mutableGroup.id) == false {
+                    try! nestedDecoder.update(&mutableGroup, from: data)
+                }
                 self.addToGroups(mutableGroup)
             } else {
                 let group = try! nestedDecoder.decode(Group.self, from: data)
