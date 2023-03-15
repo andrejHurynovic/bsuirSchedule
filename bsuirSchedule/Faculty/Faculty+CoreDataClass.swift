@@ -34,14 +34,6 @@ public class Faculty: NSManagedObject {
     
 }
 
-extension Faculty: Decodable {
-    private enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case abbreviation = "abbrev"
-    }
-}
-
 //MARK: Update
 extension Faculty: DecoderUpdatable {
     func update(from decoder: Decoder) throws {
@@ -50,8 +42,17 @@ extension Faculty: DecoderUpdatable {
         self.id = try! container.decode(Int16.self, forKey: .id)
         self.name = try! container.decode(String.self, forKey: .name)
         self.abbreviation = try! container.decode(String.self, forKey: .abbreviation)
+        Log.info("Faculty \(self.abbreviation ?? "Empty name") (\(String(self.id))) has been updated)")
     }
     
+}
+
+extension Faculty: Decodable {
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case abbreviation = "abbrev"
+    }
 }
 
 //MARK: CodingUserInfoKey

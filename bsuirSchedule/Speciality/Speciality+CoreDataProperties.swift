@@ -110,6 +110,6 @@ extension Speciality {
 extension Speciality {
     ///Name + education type + faculty abbreviation
     public override var description: String {
-        "\(self.name!) (\(self.educationType.description), \(self.faculty!.abbreviation!))"
+        "\(self.name!) (\(self.educationType.description), \(self.faculty?.abbreviation ?? "No faculty?"))"
     }
 }
