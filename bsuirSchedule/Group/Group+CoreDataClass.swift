@@ -114,9 +114,7 @@ extension Group: DecoderUpdatable {
         let specialityName = try! container.decode(String.self, forKey: .specialityName)
         let specialityAbbreviation = try! container.decode(String.self, forKey: .specialityAbbreviation)
 
-        let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
-
-        return Speciality(context: context, id: specialityID, name: specialityName, abbreviation: specialityAbbreviation, faculty: faculty)
+        return Speciality(specialityID, specialityName, specialityAbbreviation, faculty)
     }
 }
 

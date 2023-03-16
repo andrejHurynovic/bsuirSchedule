@@ -60,56 +60,64 @@ extension Speciality {
     static func getAll() -> [Speciality] {
         let request = self.fetchRequest()
         let specialities = try! PersistenceController.shared.container.viewContext.fetch(request)
-
+        
         return specialities
     }
-
 }
 
 //MARK: Fetch
 extension Speciality {
     static func fetchAll() async {
         let data = try! await URLSession.shared.data(from: FetchDataType.specialities.rawValue)
-        guard let dictionaries = try! JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] else {
+        guard let specialitiesDictionaries = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]] else {
+            Log.error("Can't create specialities dictionaries")
             return
         }
-        
-        let specialities = getAll()
-        
         let decoder = JSONDecoder()
         decoder.userInfo[.managedObjectContext] = PersistenceController.shared.container.viewContext
         
-        //For faculties not presented in API
-        var faculties = Faculty.getAll()
-        for dictionary in dictionaries {
-            let facultyID = dictionary["facultyId"] as! Int16
-            if faculties.first(where: {$0.id == facultyID}) == nil {
-                faculties.append(Faculty(id: facultyID))
-            }
-        }
-        try! PersistenceController.shared.container.viewContext.save()
+        let startTime = CFAbsoluteTimeGetCurrent()
         
-        decoder.userInfo[.faculties] = faculties
-        for dictionary in dictionaries {
-            let data = try! JSONSerialization.data(withJSONObject: dictionary)
-            
-            let id = dictionary["id"] as! Int32
-            
-            if let specialty = specialities.first (where: { $0.id == id }) {
-                var mutableSpecialty = specialty
-                try! decoder.update(&mutableSpecialty, from: data)
+        let fetchedSpecialities = Speciality.getAll()
+        let fetchedFaculties = Faculty.getAll()
+        
+        //Сollecting a set of all faculty IDs from specialities information.
+        let facultyIDs = Set(specialitiesDictionaries.map { $0["facultyId"] as! Int16 })
+        //The Faculty with the corresponding identifier a is searched for.
+        let faculties = facultyIDs.map { facultyID in
+            if let faculty = fetchedFaculties.first(where: {$0.id == facultyID}) {
+                return faculty
             } else {
-                let _ = try? decoder.decode(Speciality.self, from: data)
+                //A new Faculty record is created for faculties that are missing in the database.
+                Log.warning("Can't find faculty (\(facultyID)), creating new faculty")
+                return Faculty(id: facultyID)
             }
         }
+        
+        //The specialties are filtered by each faculty, after the specialties are created (if they are not presented in the database) and updated.
+        for faculty in faculties {
+            let facultiesSpecialitiesDictionaries = specialitiesDictionaries.filter { $0["facultyId"] as! Int16 == faculty.id }
+            
+            let specialities = facultiesSpecialitiesDictionaries.map { specialityDictionary in
+                let specialityData = try! JSONSerialization.data(withJSONObject: specialityDictionary)
+                let specialityID = specialityDictionary["id"] as! Int32
+                var speciality = fetchedSpecialities.first { $0.id == specialityID } ?? Speciality(specialityID)
+                try! decoder.update(&speciality, from: specialityData)
+                return speciality
+            }
+            //All filtered specialties are added to the corresponding faculty.
+            faculty.addToSpecialities(NSSet(array: specialities))
+            try! PersistenceController.shared.container.viewContext.save()
+        }
+
+        Log.info("Specialities \(String(self.getAll().count)) fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds\n")
     }
-    
 }
 
 
 extension Speciality {
     ///Name + education type + faculty abbreviation
     public override var description: String {
-        "\(self.name!) (\(self.educationType.description), \(self.faculty?.abbreviation ?? "No faculty?"))"
+        "\(self.name!) (\(self.educationType.description), \(self.faculty?.abbreviation ?? "Неизвестный факультет"))"
     }
 }

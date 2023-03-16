@@ -24,12 +24,8 @@ public class Faculty: NSManagedObject {
         self.init(entity: Faculty.entity(), insertInto: context)
         
         self.id = id
-        if let name = name {
-            self.name = name
-        }
-        if let abbreviation = abbreviation {
-            self.abbreviation = abbreviation
-        }
+        self.name = name
+        self.abbreviation = abbreviation
     }
     
 }
@@ -42,7 +38,7 @@ extension Faculty: DecoderUpdatable {
         self.id = try! container.decode(Int16.self, forKey: .id)
         self.name = try! container.decode(String.self, forKey: .name)
         self.abbreviation = try! container.decode(String.self, forKey: .abbreviation)
-        Log.info("Faculty \(self.abbreviation ?? "Empty name") (\(String(self.id))) has been updated)")
+        Log.info("Faculty \(self.abbreviation ?? "Empty name") (\(String(self.id))) has been updated")
     }
     
 }
@@ -59,4 +55,3 @@ extension Faculty: Decodable {
 extension CodingUserInfoKey {
     static let faculties = CodingUserInfoKey(rawValue: "faculties")!
 }
-

@@ -19,9 +19,9 @@ public class Speciality: NSManagedObject {
         try! self.update(from: decoder)
     }
     
-    convenience public init(context: NSManagedObjectContext, id: Int32, name: String, abbreviation: String, faculty: Faculty) {
+    convenience public init(_ id: Int32, _ name: String? = nil, _ abbreviation: String? = nil, _ faculty: Faculty? = nil) {
         let entity = Speciality.entity()
-        self.init(entity: entity, insertInto: context)
+        self.init(entity: entity, insertInto: PersistenceController.shared.container.viewContext)
         
         self.id = id
         self.name = name
@@ -31,50 +31,41 @@ public class Speciality: NSManagedObject {
     
 }
 
-extension Speciality: Decodable {
-    private enum CodingKeys: String, CodingKey {
-        
-        case id
-        case name
-        case abbreviation = "abbrev"
-        
-        case facultyID = "facultyId"
-        
-        case educationTypeContainer = "educationForm"
-        case code
-    }
-    
-    private enum EducationTypeCodingKeys: String, CodingKey {
-        case educationTypeId = "id"
-    }
-}
-
 //MARK: Update
 extension Speciality: DecoderUpdatable {
     func update(from decoder: Decoder) throws {
         let container = try! decoder.container(keyedBy: CodingKeys.self)
-        let faculties = decoder.userInfo[.faculties] as! [Faculty]
-
+        
         self.id = try! container.decode(Int32.self, forKey: .id)
         self.name = try! container.decode(String.self, forKey: .name)
         self.abbreviation = try! container.decode(String.self, forKey: .abbreviation)
         
         self.code = try! container.decode(String.self, forKey: .code)
         
-        let facultyID = try! container.decode(Int16.self, forKey: .facultyID)
-        if let faculty = faculties.first(where: {$0.id == facultyID}) {
-            self.faculty = faculty
-        } else {
-            print(facultyID, name!)
-            self.faculty = Faculty(id: facultyID)
-        }
+        let educationTypeContainer = try! container.nestedContainer(keyedBy: EducationTypeCodingKeys.self, forKey: .educationTypeContainer)
+        self.educationTypeValue = try! educationTypeContainer.decode(Int16.self, forKey: .educationTypeId)
         
-        let nestedContainer = try! container.nestedContainer(keyedBy: EducationTypeCodingKeys.self, forKey: .educationTypeContainer)
-        self.educationTypeValue = try! nestedContainer.decode(Int16.self, forKey: .educationTypeId)
+        Log.info("Speciality \(self.id) (\(self.abbreviation ?? "Empty name")) has been updated")
     }
-    
 }
 
+extension Speciality: Decodable {
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case abbreviation = "abbrev"
+        
+        case code
+        
+        case facultyID = "facultyId"
+        
+        case educationTypeContainer = "educationForm"
+    }
+    
+    private enum EducationTypeCodingKeys: String, CodingKey {
+        case educationTypeId = "id"
+    }
+}
 
 //MARK: CodingUserInfoKey
 extension CodingUserInfoKey {

@@ -60,26 +60,27 @@ extension Faculty {
 extension Faculty {
     static func fetchAll() async {
         let data = try! await URLSession.shared.data(from: FetchDataType.faculties.rawValue)
-        guard let dictionaries = try! JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] else {
+        guard let facultiesDictionaries = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]] else {
+            Log.error("Can't create faculties dictionaries")
             return
         }
+        let decoder = JSONDecoder()
+        decoder.userInfo[.managedObjectContext] = PersistenceController.shared.container.viewContext
         
-        let faculties = getAll()
+        let startTime = CFAbsoluteTimeGetCurrent()
         
-        for dictionary in dictionaries {
-            let decoder = JSONDecoder()
-            decoder.userInfo[.managedObjectContext] = PersistenceController.shared.container.viewContext
-            let data = try! JSONSerialization.data(withJSONObject: dictionary)
-            
-            let id = dictionary["id"] as! Int16
-            
-            if let faculty = faculties.first (where: { $0.id == id }) {
-                var mutableFaculty = faculty
-                try! decoder.update(&mutableFaculty, from: data)
-            } else {
-                let _ = try? decoder.decode(Faculty.self, from: data)
-            }
+        let fetchedFaculties = Faculty.getAll()
+        
+        let faculties = facultiesDictionaries.map { facultiesDictionary in
+            let facultyID = facultiesDictionary["id"] as! Int16
+            //Creates faculties that are not presented in the database.
+            var faculty = fetchedFaculties.first { $0.id == facultyID } ?? Faculty(id: facultyID)
+            let facultyData = try! JSONSerialization.data(withJSONObject: facultiesDictionary)
+            try! decoder.update(&faculty, from: facultyData)
+            return faculty
         }
+        
+        Log.info("Faculties (\(String(faculties.count))) fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds\n")
     }
     
 }
