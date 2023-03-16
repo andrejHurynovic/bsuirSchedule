@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21512" systemVersion="22A380" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="22D68" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Classroom" representedClassName="Classroom" syncable="YES">
         <attribute name="building" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="departmentAbbreviation" optional="YES" attributeType="String"/>
@@ -122,9 +122,5 @@
                 <constraint value="id"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
-    </entity>
-    <entity name="Week" representedClassName="Week" syncable="YES">
-        <attribute name="updateDate" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="updatedWeek" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
 </model>
