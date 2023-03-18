@@ -23,6 +23,7 @@ public class Classroom: NSManagedObject {
         let buildingContainer = try! container.nestedContainer(keyedBy: BuildingCodingKeys.self, forKey: .buildingContainer)
         let buildingString = try! buildingContainer.decode(String.self, forKey: .name)
         
+        //This code does not allow the creation of Classrooms in non-educational buildings. The description of the Algorithm is provided in decodeBuilding() method.
         guard let _ = Int16(buildingString.trimmingCharacters(in: CharacterSet.init([" ", "к", "."]))) else {
             Log.warning("Fetched non-educational building, (\((try? container.decode(String.self, forKey: .name)) ?? "No name")-\(buildingString)).")
             throw ClassroomError.nonEducationalBuilding
@@ -30,55 +31,22 @@ public class Classroom: NSManagedObject {
         
         let context = PersistenceController.shared.container.viewContext
         self.init(entity: Classroom.entity(), insertInto: context)
-        
-        do {
-            try self.update(from: decoder)
-        } catch {
-            throw error
-        }
+    
+        try self.update(from: decoder)
     }
     
-    convenience public init(string: String, context: NSManagedObjectContext) throws {
-        Log.warning("Can't find classroom \(string)")
-        let entity = Classroom.entity()
-        self.init(entity: entity, insertInto: context)
+    ///This function creates a new Classroom object from a string in the format ["000-1 к.", "604-5 к.", "epam 104 к1-2 к."].
+    convenience public init(from string: String, in context: NSManagedObjectContext) throws {
+        Log.warning("Can't find classroom \(string) in the database, the new entity is being created.")
+        self.init(entity: Classroom.entity(), insertInto: context)
         
         self.originalName = string
-        
-        var string = string
-        string.removeLast(3)
-        self.building = Int16(String(string.removeLast()))!
-        
-        string.removeLast()
-        
-        var name = string
-        
-        if name.first!.isNumber == false {
-            self.name = name
-            self.outsideUniversity = true
-        } else {
-            
-            var numberString = name.trimmingCharacters(in: .letters)
-            if numberString.count > 3 {
-                numberString.removeLast(numberString.count - 3)
-                print(name)
-            }
-            guard let number = Int(numberString.trimmingCharacters(in: .letters)) else {
-                throw ClassroomError.incorrectName(name: self.originalName)
-            }
-            if number < 100 {
-                //Ground floor: "04", "04а" -> "4а"
-                if name.first == "0" {
-                    name.removeFirst()
-                }
-                self.floor = 0
-                self.name = name
-            } else {
-                //"314", "314a"
-                self.floor = Int16(name.removeFirst().wholeNumberValue!)
-                self.name = name
-            }
-        }
+        //"604-5 к." -> "5 к."
+        let buildingString = String(string.suffix(4))
+        ////"604-5 к." -> "604"
+        let nameString = String(string.dropLast(5))
+        try decodeBuilding(string: buildingString)
+        try decodeName(string: nameString)
     }
     
 }

@@ -41,7 +41,7 @@ public class Lesson: NSManagedObject {
                 } else {
                     print("\(classroomName) == \(classroomName)")
                     
-                    let classroom = try! Classroom(string: classroomName, context: context)
+                    let classroom = try! Classroom(from: classroomName, in: context)
                     self.addToClassrooms(classroom)
                 }
             }
