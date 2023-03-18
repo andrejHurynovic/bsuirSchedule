@@ -19,6 +19,7 @@ extension Classroom {
 
     @NSManaged public var floor: Int16
     @NSManaged public var name: String!
+    ///Used for constraints and effective search when decoding Lessons.
     @NSManaged public var originalName: String!
     @NSManaged public var favourite: Bool
     
@@ -92,7 +93,7 @@ extension Classroom {
 extension Classroom {
     static func fetchAll() async {
         let data = try! await URLSession.shared.data(from: FetchDataType.classrooms.rawValue)
-        guard let dictionaries = try! JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] else {
+        guard let dictionaries = try! JSONSerialization.jsonObject(with: data) as? [[String: Any]] else {
             return
         }
         
