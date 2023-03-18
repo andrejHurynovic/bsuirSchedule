@@ -18,8 +18,7 @@ public class Classroom: NSManagedObject {
     
     required convenience public init(from decoder: Decoder) throws {
         let container = try! decoder.container(keyedBy: CodingKeys.self)
-
-        //MARK: Building container
+        
         let buildingContainer = try! container.nestedContainer(keyedBy: BuildingCodingKeys.self, forKey: .buildingContainer)
         let buildingString = try! buildingContainer.decode(String.self, forKey: .name)
         
@@ -65,6 +64,9 @@ extension Classroom: DecoderUpdatable {
         
         try decodeBuilding(string: buildingString)
         try decodeName(string: nameString)
+        
+        self.capacity = (try? container.decode(Int16.self, forKey: .capacity)) ?? 0
+        self.note = try? container.decode(String.self, forKey: .note)
         
         //MARK: Classroom container
         let classroomContainer = try? container.nestedContainer(keyedBy: ClassroomCodingKeys.self, forKey: .typeContainer)
@@ -148,6 +150,9 @@ extension Classroom: Decodable {
     private enum CodingKeys: String, CodingKey {
         case id
         case name
+        case note
+        case capacity
+        
         case buildingContainer = "buildingNumber"
         case typeContainer = "auditoryType"
         case departmentContainer = "department"

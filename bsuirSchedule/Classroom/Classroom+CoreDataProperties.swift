@@ -21,10 +21,12 @@ extension Classroom {
     @NSManaged public var name: String!
     ///Used for constraints and effective search when decoding Lessons.
     @NSManaged public var originalName: String!
+    @NSManaged public var note: String?
     @NSManaged public var favourite: Bool
     
     @NSManaged public var outsideUniversity: Bool
     @NSManaged public var building: Int16
+    @NSManaged public var capacity: Int16
     
     @NSManaged public var typeValue: Int16
     

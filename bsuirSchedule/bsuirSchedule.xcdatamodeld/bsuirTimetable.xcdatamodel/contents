@@ -2,11 +2,13 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="22D68" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Classroom" representedClassName="Classroom" syncable="YES">
         <attribute name="building" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="capacity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="departmentAbbreviation" optional="YES" attributeType="String"/>
         <attribute name="departmentName" optional="YES" attributeType="String"/>
         <attribute name="favourite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="floor" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
+        <attribute name="note" optional="YES" attributeType="String"/>
         <attribute name="originalName" attributeType="String"/>
         <attribute name="outsideUniversity" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="typeValue" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
