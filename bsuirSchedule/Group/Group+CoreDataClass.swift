@@ -109,12 +109,12 @@ extension Group: DecoderUpdatable {
         let facultyID = try! container.decode(Int16.self, forKey: .facultyID)
         
         let facultyAbbreviation = try! container.decode(String.self, forKey: .facultyAbbreviation)
-        let faculty = Faculty(id: facultyID, abbreviation: facultyAbbreviation)
+        let faculty = Faculty(id: facultyID, abbreviation: facultyAbbreviation, context: PersistenceController.shared.container.viewContext)
         
         let specialityName = try! container.decode(String.self, forKey: .specialityName)
         let specialityAbbreviation = try! container.decode(String.self, forKey: .specialityAbbreviation)
 
-        return Speciality(specialityID, specialityName, specialityAbbreviation, faculty)
+        return Speciality(specialityID, specialityName, specialityAbbreviation, faculty, context: PersistenceController.shared.container.viewContext)
     }
 }
 

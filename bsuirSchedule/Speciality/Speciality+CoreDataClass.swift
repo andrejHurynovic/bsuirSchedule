@@ -19,9 +19,8 @@ public class Speciality: NSManagedObject {
         try! self.update(from: decoder)
     }
     
-    convenience public init(_ id: Int32, _ name: String? = nil, _ abbreviation: String? = nil, _ faculty: Faculty? = nil) {
-        let entity = Speciality.entity()
-        self.init(entity: entity, insertInto: PersistenceController.shared.container.viewContext)
+    convenience public init(_ id: Int32, _ name: String? = nil, _ abbreviation: String? = nil, _ faculty: Faculty? = nil, context: NSManagedObjectContext) {
+        self.init(entity: Speciality.entity(), insertInto: context)
         
         self.id = id
         self.name = name

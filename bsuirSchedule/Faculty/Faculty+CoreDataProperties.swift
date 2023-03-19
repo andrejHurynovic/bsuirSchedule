@@ -47,9 +47,9 @@ extension Faculty : Identifiable {}
 
 //MARK: Request
 extension Faculty {
-    static func getAll() -> [Faculty] {
-        let request = self.fetchRequest()
-        let faculties = try! PersistenceController.shared.container.viewContext.fetch(request)
+    static func getAll(from context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Faculty] {
+            let request = self.fetchRequest()
+            let faculties = try! context.fetch(request)
 
         return faculties
     }
@@ -61,24 +61,29 @@ extension Faculty {
     static func fetchAll() async {
         let data = try! await URLSession.shared.data(from: FetchDataType.faculties.rawValue)
         guard let facultiesDictionaries = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]] else {
-            Log.error("Can't create faculties dictionaries")
+            Log.error("Can't create faculties dictionaries.")
             return
         }
+        
+        let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
+        
         let decoder = JSONDecoder()
-        decoder.userInfo[.managedObjectContext] = PersistenceController.shared.container.viewContext
+        decoder.userInfo[.managedObjectContext] = backgroundContext
         
         let startTime = CFAbsoluteTimeGetCurrent()
         
-        let fetchedFaculties = Faculty.getAll()
+        let fetchedFaculties = Faculty.getAll(from: backgroundContext)
         
         let faculties = facultiesDictionaries.map { facultiesDictionary in
             let facultyID = facultiesDictionary["id"] as! Int16
             //Creates faculties that are not presented in the database.
-            var faculty = fetchedFaculties.first { $0.id == facultyID } ?? Faculty(id: facultyID)
+            var faculty = fetchedFaculties.first { $0.id == facultyID } ?? Faculty(id: facultyID, context: backgroundContext)
             let facultyData = try! JSONSerialization.data(withJSONObject: facultiesDictionary)
             try! decoder.update(&faculty, from: facultyData)
             return faculty
         }
+        
+        try! backgroundContext.save()
         
         Log.info("Faculties (\(String(faculties.count))) fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds\n")
     }

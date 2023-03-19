@@ -57,9 +57,9 @@ extension Speciality : Identifiable {
 
 //MARK: Request
 extension Speciality {
-    static func getAll() -> [Speciality] {
+    static func getAll(from context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Speciality] {
         let request = self.fetchRequest()
-        let specialities = try! PersistenceController.shared.container.viewContext.fetch(request)
+        let specialities = try! context.fetch(request)
         
         return specialities
     }
@@ -70,16 +70,17 @@ extension Speciality {
     static func fetchAll() async {
         let data = try! await URLSession.shared.data(from: FetchDataType.specialities.rawValue)
         guard let specialitiesDictionaries = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]] else {
-            Log.error("Can't create specialities dictionaries")
+            Log.error("Can't create specialities dictionaries.")
             return
         }
+        let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
         let decoder = JSONDecoder()
-        decoder.userInfo[.managedObjectContext] = PersistenceController.shared.container.viewContext
+        decoder.userInfo[.managedObjectContext] = backgroundContext
         
         let startTime = CFAbsoluteTimeGetCurrent()
         
-        let fetchedSpecialities = Speciality.getAll()
-        let fetchedFaculties = Faculty.getAll()
+        let fetchedSpecialities = Speciality.getAll(from: backgroundContext)
+        let fetchedFaculties = Faculty.getAll(from: backgroundContext)
         
         //Сollecting a set of all faculty IDs from specialities information.
         let facultyIDs = Set(specialitiesDictionaries.map { $0["facultyId"] as! Int16 })
@@ -90,7 +91,7 @@ extension Speciality {
             } else {
                 //A new Faculty record is created for faculties that are missing in the database.
                 Log.warning("Can't find faculty (\(facultyID)), creating new faculty")
-                return Faculty(id: facultyID)
+                return Faculty(id: facultyID, context: backgroundContext)
             }
         }
         
@@ -101,15 +102,15 @@ extension Speciality {
             let specialities = facultiesSpecialitiesDictionaries.map { specialityDictionary in
                 let specialityData = try! JSONSerialization.data(withJSONObject: specialityDictionary)
                 let specialityID = specialityDictionary["id"] as! Int32
-                var speciality = fetchedSpecialities.first { $0.id == specialityID } ?? Speciality(specialityID)
+                var speciality = fetchedSpecialities.first { $0.id == specialityID } ?? Speciality(specialityID, context: backgroundContext)
                 try! decoder.update(&speciality, from: specialityData)
                 return speciality
             }
             //All filtered specialties are added to the corresponding faculty.
             faculty.addToSpecialities(NSSet(array: specialities))
-            try! PersistenceController.shared.container.viewContext.save()
+//            try! PersistenceController.shared.container.viewContext.save()
         }
-
+        try! backgroundContext.save()
         Log.info("Specialities \(String(self.getAll().count)) fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds\n")
     }
 }

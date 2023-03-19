@@ -40,9 +40,9 @@ public class Classroom: NSManagedObject {
         self.init(entity: Classroom.entity(), insertInto: context)
         
         self.originalName = string
-        //"604-5 к." -> "5 к."
+        //"604-5 к." -> "5 к.".
         let buildingString = String(string.suffix(4))
-        ////"604-5 к." -> "604"
+        //"604-5 к." -> "604".
         let nameString = String(string.dropLast(5))
         try decodeBuilding(string: buildingString)
         try decodeName(string: nameString)
@@ -54,7 +54,6 @@ public class Classroom: NSManagedObject {
 extension Classroom: DecoderUpdatable {
     func update(from decoder: Decoder) throws {
         let container = try! decoder.container(keyedBy: CodingKeys.self)
-        let startTime = CFAbsoluteTimeGetCurrent()
                 
         //MARK: Building container
         let buildingContainer = try! container.nestedContainer(keyedBy: BuildingCodingKeys.self, forKey: .buildingContainer)
@@ -85,7 +84,7 @@ extension Classroom: DecoderUpdatable {
             }
             self.departmentAbbreviation = departmentAbbreviation.trimmingCharacters(in: .whitespaces)
         }
-        Log.info("Classroom \(String(self.formattedName(showBuilding: true))) fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds")
+        Log.info("Classroom \(String(self.formattedName(showBuilding: true))) fetched.")
     }
     
     ///Decodes string to Int16 building number or, in the case of non-educational building, throws an error.

@@ -19,8 +19,7 @@ public class Faculty: NSManagedObject {
         try! self.update(from: decoder)
     }
     
-    convenience public init(id: Int16, name: String? = nil, abbreviation: String? = nil) {
-        let context = PersistenceController.shared.container.viewContext
+    convenience public init(id: Int16, name: String? = nil, abbreviation: String? = nil, context: NSManagedObjectContext) {
         self.init(entity: Faculty.entity(), insertInto: context)
         
         self.id = id
@@ -49,9 +48,4 @@ extension Faculty: Decodable {
         case name
         case abbreviation = "abbrev"
     }
-}
-
-//MARK: CodingUserInfoKey
-extension CodingUserInfoKey {
-    static let faculties = CodingUserInfoKey(rawValue: "faculties")!
 }
