@@ -16,7 +16,6 @@ public class Group: NSManagedObject {
         let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
         self.init(entity: Group.entity(), insertInto: context)
         try! self.update(from: decoder)
-//        Log.info("Group (\(String(self.id))) has been created, start updating")
     }
     
 }
@@ -27,42 +26,32 @@ extension Group: DecoderUpdatable {
     //MARK: Update
     func update(from decoder: Decoder) throws {
         let startTime = CFAbsoluteTimeGetCurrent()
-        
         var container = try decoder.container(keyedBy: CodingKeys.self)
         
-        if let educationStartString = try? container.decode(String.self, forKey: .educationStart) {
-            self.educationStart = DateFormatters.shared.get(.shortDate).date(from: educationStartString)
-            self.educationEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .educationEnd))
-        }
+        updateDates(from: container)
         
-        if let examsStartString = try? container.decode(String.self, forKey: .examsStart) {
-            self.examsStart = DateFormatters.shared.get(.shortDate).date(from: examsStartString)
-            self.examsEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .examsEnd))
-        }
-        
-        
-        if let schedulesDictionary = try? container.decode(Dictionary.self, forKey: .lessons) {
-            let lessonDecoder = JSONDecoder()
-            lessonDecoder.userInfo[.managedObjectContext] = decoder.userInfo[.managedObjectContext]
-            lessonDecoder.userInfo[.groups] = decoder.userInfo[.groups]
-            lessonDecoder.userInfo[.employees] = decoder.userInfo[.employees]
-            lessonDecoder.userInfo[.classrooms] = decoder.userInfo[.classrooms]
-            lessonDecoder.userInfo[.specialities] = decoder.userInfo[.specialities]
-            lessonDecoder.userInfo[.updatedGroups] = Set<String>()
-            
-            
-            schedulesDictionary.forEach { (key: String, value: Any) in
-                let weekDay = WeekDay(string: key)
-                let lessonsDictionary = value as? [Any]
-                lessonsDictionary?.forEach({ lessonDictionary in
-                    
-                    let lesson = try! lessonDecoder.decode(Lesson.self, from: JSONSerialization.data(withJSONObject: lessonDictionary))
-                    lessonDecoder.userInfo[.updatedGroups] = (lessonDecoder.userInfo[.updatedGroups] as! Set<String>).union((lesson.groups?.allObjects as! [Group]).map({$0.id }))
-                    lesson.weekday = weekDay.rawValue
-                
-                })
-            }
-        }
+//        if let schedulesDictionary = try? container.decode(Dictionary.self, forKey: .lessons) {
+//            let lessonDecoder = JSONDecoder()
+//            lessonDecoder.userInfo[.managedObjectContext] = decoder.userInfo[.managedObjectContext]
+//            lessonDecoder.userInfo[.groups] = decoder.userInfo[.groups]
+//            lessonDecoder.userInfo[.employees] = decoder.userInfo[.employees]
+//            lessonDecoder.userInfo[.classrooms] = decoder.userInfo[.classrooms]
+//            lessonDecoder.userInfo[.specialities] = decoder.userInfo[.specialities]
+//            lessonDecoder.userInfo[.updatedGroups] = Set<String>()
+//
+//
+//            schedulesDictionary.forEach { (key: String, value: Any) in
+//                let weekDay = WeekDay(string: key)
+//                let lessonsDictionary = value as? [Any]
+//                lessonsDictionary?.forEach({ lessonDictionary in
+//
+//                    let lesson = try! lessonDecoder.decode(Lesson.self, from: JSONSerialization.data(withJSONObject: lessonDictionary))
+//                    lessonDecoder.userInfo[.updatedGroups] = (lessonDecoder.userInfo[.updatedGroups] as! Set<String>).union((lesson.groups?.allObjects as! [Group]).map({$0.id }))
+//                    lesson.weekday = weekDay.rawValue
+//
+//                })
+//            }
+//        }
         
         //MARK: Group information
         //The studentGroup structure exists only when receiving a response to the Schedule request. It is needed for automatic merging when updating the group. Moreover, it can be either an update of the group with an already loaded schedule, or without it.
@@ -81,6 +70,18 @@ extension Group: DecoderUpdatable {
         try! updateSpeciality(from: decoder, container: container)
         
         Log.info("Group (\(String(self.id))) has been updated, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds")
+    }
+    
+    private func updateDates(from container: KeyedDecodingContainer<Group.CodingKeys>) {
+        if let educationStartString = try? container.decode(String.self, forKey: .educationStart) {
+            self.educationStart = DateFormatters.shared.get(.shortDate).date(from: educationStartString)
+            self.educationEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .educationEnd))
+        }
+        
+        if let examsStartString = try? container.decode(String.self, forKey: .examsStart) {
+            self.examsStart = DateFormatters.shared.get(.shortDate).date(from: examsStartString)
+            self.examsEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .examsEnd))
+        }
     }
     
     private func updateSpeciality(from decoder: Decoder, container: KeyedDecodingContainer<Group.CodingKeys>) throws {
@@ -105,17 +106,19 @@ extension Group: DecoderUpdatable {
         
         //MARK: Faculty
         //If the faculty is unknown it is created from the available information
+        let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
         
         let facultyID = try! container.decode(Int16.self, forKey: .facultyID)
         
         let facultyAbbreviation = try! container.decode(String.self, forKey: .facultyAbbreviation)
-        let faculty = Faculty(id: facultyID, abbreviation: facultyAbbreviation, context: PersistenceController.shared.container.viewContext)
+        let faculty = Faculty(id: facultyID, abbreviation: facultyAbbreviation, context: context)
         
         let specialityName = try! container.decode(String.self, forKey: .specialityName)
         let specialityAbbreviation = try! container.decode(String.self, forKey: .specialityAbbreviation)
 
-        return Speciality(specialityID, specialityName, specialityAbbreviation, faculty, context: PersistenceController.shared.container.viewContext)
+        return Speciality(specialityID, specialityName, specialityAbbreviation, faculty, context: context)
     }
+    
 }
 
 extension Group: Decodable {

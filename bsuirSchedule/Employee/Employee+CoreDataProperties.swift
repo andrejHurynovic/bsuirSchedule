@@ -66,13 +66,9 @@ extension Employee: LessonsSectioned { }
 
 //MARK: Request
 extension Employee {
-    static func getAll() -> [Employee] {
-        let request = self.fetchRequest()
-        let employees = try! PersistenceController.shared.container.viewContext.fetch(request)
-        
-        return employees
+    static func getAll(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Employee] {
+        try! context.fetch(self.fetchRequest())
     }
-    
 }
 
 //MARK: Fetch

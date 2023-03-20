@@ -57,38 +57,46 @@ extension Group: LessonsSectioned { }
 
 //MARK: Request
 extension Group {
-    static func getAll() -> [Group] {
-        let request = self.fetchRequest()
-        let groups = try! PersistenceController.shared.container.viewContext.fetch(request)
-        
-        return groups
+    static func getAll(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Group] {
+        try! context.fetch(self.fetchRequest())
     }
-    
 }
 
 //MARK: Fetch
 extension Group {
     static func fetchAll() async {
         let data = try! await URLSession.shared.data(from: FetchDataType.groups.rawValue)
-        guard let dictionaries = try! JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] else {
-            return
-        }
+        let startTime = CFAbsoluteTimeGetCurrent()
+//        guard let dictionaries = try! JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] else {
+//            Log.error("Can't create group dictionaries.")
+//            return
+//        }
         
-        let groups = getAll()
-        
+        let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
+        backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
         let decoder = JSONDecoder()
-        decoder.userInfo[.managedObjectContext] = PersistenceController.shared.container.viewContext
-        decoder.userInfo[.specialities] = Speciality.getAll()
-        for dictionary in dictionaries {
-            let data = try! JSONSerialization.data(withJSONObject: dictionary)
+        decoder.userInfo[.managedObjectContext] = backgroundContext
+//        decoder.userInfo[.specialities] = Speciality.getAll(context: backgroundContext)
+        decoder.userInfo[.specialities] = [] as! [Speciality]
+        
+        let groups = try! decoder.decode([Group].self, from: data)
+//        let groups = getAll(context: backgroundContext)
+        
+//        for dictionary in dictionaries {
+//            let data = try! JSONSerialization.data(withJSONObject: dictionary)
             
-            if let group = groups.first (where: { $0.id == dictionary["id"] as? String }) {
-                var mutableGroup = group
-                try! decoder.update(&mutableGroup, from: data)
-            } else {
-                let _ = try! decoder.decode(Group.self, from: data)
-            }
-        }
+//            if var group = groups.first (where: { $0.id == dictionary["id"] as? String }) {
+//                try! decoder.update(&group, from: data)
+//            } else {
+//                let _ = try! decoder.decode(Group.self, from: data)
+//            }
+//        }
+        
+        await backgroundContext.perform(schedule: .immediate, {
+            try! backgroundContext.save()
+//            Log.info("\(String(self.getAll(context: backgroundContext).count)) Groups fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds.\n")
+            Log.info("\(String(groups.count)) Groups fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds.\n")
+        })
     }
     
 }

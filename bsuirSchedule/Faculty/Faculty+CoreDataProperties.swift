@@ -65,10 +65,11 @@ extension Faculty {
         }
         
         let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
+        backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
         let decoder = JSONDecoder()
         decoder.userInfo[.managedObjectContext] = backgroundContext
         
-        let fetchedFaculties = await Faculty.getAll(context: backgroundContext)
+        let fetchedFaculties = Faculty.getAll(context: backgroundContext)
         
         let faculties = facultiesDictionaries.map { facultiesDictionary in
             let facultyID = facultiesDictionary["id"] as! Int16
@@ -78,10 +79,14 @@ extension Faculty {
             try! decoder.update(&faculty, from: facultyData)
             return faculty
         }
+        await backgroundContext.perform(schedule: .immediate, {
+            try! backgroundContext.save()
+        })
+        await PersistenceController.shared.container.viewContext.perform(schedule: .immediate, {
+            try! PersistenceController.shared.container.viewContext.save()
+        })
         
-        try! backgroundContext.save()
-        
-        Log.info("Faculties (\(String(faculties.count))) fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds\n")
+        Log.info("\(String(faculties.count)) Faculties fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds.\n")
     }
     
 }

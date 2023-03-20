@@ -74,6 +74,7 @@ extension Speciality {
         }
         
         let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
+        backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
         let decoder = JSONDecoder()
         decoder.userInfo[.managedObjectContext] = backgroundContext
         
@@ -107,8 +108,10 @@ extension Speciality {
             //All filtered specialties are added to the corresponding faculty.
             faculty.addToSpecialities(NSSet(array: specialities))
         }
-        try! backgroundContext.save()
-        Log.info("Specialities \(await String(self.getAll(context: backgroundContext).count)) fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds\n")
+        await backgroundContext.perform(schedule: .immediate, {
+            try! backgroundContext.save()
+            Log.info("\(String(self.getAll(context: backgroundContext).count)) Specialities fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds.\n")
+        })
     }
 }
 

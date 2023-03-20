@@ -99,6 +99,7 @@ extension Classroom {
         }
         
         let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
+        backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
         let decoder = JSONDecoder()
         decoder.userInfo[.managedObjectContext] = backgroundContext
         
@@ -119,8 +120,10 @@ extension Classroom {
                 let _ = try? decoder.decode(Classroom.self, from: data)
             }
         }
-        try! backgroundContext.save()
-        Log.info("Classrooms \(String(self.getAll(context: backgroundContext).count)) fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds\n")
+        await backgroundContext.perform(schedule: .immediate, {
+            try! backgroundContext.save()
+            Log.info("\(String(self.getAll(context: backgroundContext).count)) Classrooms fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds.\n")
+        })
     }
     
 }
