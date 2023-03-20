@@ -82,10 +82,6 @@ extension Faculty {
         await backgroundContext.perform(schedule: .immediate, {
             try! backgroundContext.save()
         })
-        await PersistenceController.shared.container.viewContext.perform(schedule: .immediate, {
-            try! PersistenceController.shared.container.viewContext.save()
-        })
-        
         Log.info("\(String(faculties.count)) Faculties fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds.\n")
     }
     
