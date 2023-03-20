@@ -57,11 +57,8 @@ extension Speciality : Identifiable {
 
 //MARK: Request
 extension Speciality {
-    static func getAll(from context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Speciality] {
-        let request = self.fetchRequest()
-        let specialities = try! context.fetch(request)
-        
-        return specialities
+    static func getAll(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Speciality] {
+        return try! context.fetch(self.fetchRequest())
     }
 }
 
@@ -69,18 +66,19 @@ extension Speciality {
 extension Speciality {
     static func fetchAll() async {
         let data = try! await URLSession.shared.data(from: FetchDataType.specialities.rawValue)
+        let startTime = CFAbsoluteTimeGetCurrent()
+        
         guard let specialitiesDictionaries = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]] else {
             Log.error("Can't create specialities dictionaries.")
             return
         }
+        
         let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
         let decoder = JSONDecoder()
         decoder.userInfo[.managedObjectContext] = backgroundContext
         
-        let startTime = CFAbsoluteTimeGetCurrent()
-        
-        let fetchedSpecialities = Speciality.getAll(from: backgroundContext)
-        let fetchedFaculties = Faculty.getAll(from: backgroundContext)
+        let fetchedFaculties = Faculty.getAll(context: backgroundContext)
+        let fetchedSpecialities = Speciality.getAll(context: backgroundContext)
         
         //Сollecting a set of all faculty IDs from specialities information.
         let facultyIDs = Set(specialitiesDictionaries.map { $0["facultyId"] as! Int16 })
@@ -108,13 +106,11 @@ extension Speciality {
             }
             //All filtered specialties are added to the corresponding faculty.
             faculty.addToSpecialities(NSSet(array: specialities))
-//            try! PersistenceController.shared.container.viewContext.save()
         }
         try! backgroundContext.save()
-        Log.info("Specialities \(String(self.getAll().count)) fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds\n")
+        Log.info("Specialities \(await String(self.getAll(context: backgroundContext).count)) fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds\n")
     }
 }
-
 
 extension Speciality {
     ///Name + education type + faculty abbreviation

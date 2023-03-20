@@ -11,68 +11,64 @@ import CoreData
 
 
 extension Faculty {
-
+    
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Faculty> {
         let request = NSFetchRequest<Faculty>(entityName: "Faculty")
         request.sortDescriptors = []
         return request
     }
-
+    
     @NSManaged public var id: Int16
     @NSManaged public var name: String?
     @NSManaged public var abbreviation: String?
     
     @NSManaged public var specialities: NSSet?
-
+    
 }
 
-// MARK: Generated accessors for specialities
+//MARK: Generated accessors for specialities
 extension Faculty {
-
+    
     @objc(addSpecialitiesObject:)
     @NSManaged public func addToSpecialities(_ value: Speciality)
-
+    
     @objc(removeSpecialitiesObject:)
     @NSManaged public func removeFromSpecialities(_ value: Speciality)
-
+    
     @objc(addSpecialities:)
     @NSManaged public func addToSpecialities(_ values: NSSet)
-
+    
     @objc(removeSpecialities:)
     @NSManaged public func removeFromSpecialities(_ values: NSSet)
-
+    
 }
 
 extension Faculty : Identifiable {}
 
 //MARK: Request
 extension Faculty {
-    static func getAll(from context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Faculty] {
-            let request = self.fetchRequest()
-            let faculties = try! context.fetch(request)
-
-        return faculties
+    static func getAll(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Faculty] {
+        return try! context.fetch(self.fetchRequest())
     }
-
+    
 }
 
 //MARK: Fetch
 extension Faculty {
     static func fetchAll() async {
         let data = try! await URLSession.shared.data(from: FetchDataType.faculties.rawValue)
+        let startTime = CFAbsoluteTimeGetCurrent()
+        
         guard let facultiesDictionaries = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]] else {
             Log.error("Can't create faculties dictionaries.")
             return
         }
         
         let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
-        
         let decoder = JSONDecoder()
         decoder.userInfo[.managedObjectContext] = backgroundContext
         
-        let startTime = CFAbsoluteTimeGetCurrent()
-        
-        let fetchedFaculties = Faculty.getAll(from: backgroundContext)
+        let fetchedFaculties = await Faculty.getAll(context: backgroundContext)
         
         let faculties = facultiesDictionaries.map { facultiesDictionary in
             let facultyID = facultiesDictionary["id"] as! Int16

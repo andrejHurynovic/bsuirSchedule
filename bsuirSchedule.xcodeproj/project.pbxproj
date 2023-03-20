@@ -78,7 +78,6 @@
 		F6AFC4622721EC43008CC065 /* DesignManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AFC4612721EC43008CC065 /* DesignManager.swift */; };
 		F6BC18A52811D4A100BA549D /* DateFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BC18A42811D4A100BA549D /* DateFormatters.swift */; };
 		F6BC18A72811E8FE00BA549D /* GroupDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BC18A62811E8FD00BA549D /* GroupDetailedView.swift */; };
-		F6BDC56729C76D3900468A0F /* NSManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BDC56629C76D3900468A0F /* NSManagedObject.swift */; };
 		F6BF723A272F311A00D18ADD /* PhotoPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BF7239272F311900D18ADD /* PhotoPickerView.swift */; };
 		F6BF723C272F4F4C00D18ADD /* ImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BF723B272F4F4C00D18ADD /* ImagesView.swift */; };
 		F6C1A33C272AE2E700AD38E1 /* FavoriteEmployeeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C1A33B272AE2E600AD38E1 /* FavoriteEmployeeView.swift */; };
@@ -193,7 +192,6 @@
 		F6AFC4612721EC43008CC065 /* DesignManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignManager.swift; sourceTree = "<group>"; };
 		F6BC18A42811D4A100BA549D /* DateFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatters.swift; sourceTree = "<group>"; };
 		F6BC18A62811E8FD00BA549D /* GroupDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailedView.swift; sourceTree = "<group>"; };
-		F6BDC56629C76D3900468A0F /* NSManagedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedObject.swift; sourceTree = "<group>"; };
 		F6BF7239272F311900D18ADD /* PhotoPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerView.swift; sourceTree = "<group>"; };
 		F6BF723B272F4F4C00D18ADD /* ImagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesView.swift; sourceTree = "<group>"; };
 		F6C1A33B272AE2E600AD38E1 /* FavoriteEmployeeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteEmployeeView.swift; sourceTree = "<group>"; };
@@ -373,7 +371,6 @@
 				F67AA4E828FF79F200E5A7C4 /* ViewExtensions.swift */,
 				F67AA4EA28FF7A0F00E5A7C4 /* UIApplicationExtensions.swift */,
 				F67AA4EC28FF7A3500E5A7C4 /* StringExtensions.swift */,
-				F6BDC56629C76D3900468A0F /* NSManagedObject.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -654,7 +651,6 @@
 				F67AA4DE28FF775700E5A7C4 /* FetchExtensions.swift in Sources */,
 				F64AD7B0266A816D00115E6B /* EmployeesView.swift in Sources */,
 				F67AA4E228FF788400E5A7C4 /* DateExtensions.swift in Sources */,
-				F6BDC56729C76D3900468A0F /* NSManagedObject.swift in Sources */,
 				F698C25928D4995000C24EFB /* EmployeeViewModel.swift in Sources */,
 				F601E5A92731AA3900773F02 /* TaskViewModel.swift in Sources */,
 				F601E5A32730760100773F02 /* ImagesViewModel.swift in Sources */,

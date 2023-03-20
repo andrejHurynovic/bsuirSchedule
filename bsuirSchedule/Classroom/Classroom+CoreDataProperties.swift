@@ -82,43 +82,45 @@ extension Classroom: EducationDated {
 
 //MARK: Request
 extension Classroom {
-    static func getAll() -> [Classroom] {
-        let request = self.fetchRequest()
-        let classrooms = try! PersistenceController.shared.container.viewContext.fetch(request)
-        
-        return classrooms
+    static func getAll(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Classroom] {
+        try! context.fetch(self.fetchRequest())
     }
-    
 }
 
 //MARK: Fetch
 extension Classroom {
     static func fetchAll() async {
         let data = try! await URLSession.shared.data(from: FetchDataType.classrooms.rawValue)
+        let startTime = CFAbsoluteTimeGetCurrent()
+        
         guard let dictionaries = try! JSONSerialization.jsonObject(with: data) as? [[String: Any]] else {
+            Log.error("Can't create classrooms dictionaries.")
             return
         }
         
-        let classrooms = getAll()
+        let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
+        let decoder = JSONDecoder()
+        decoder.userInfo[.managedObjectContext] = backgroundContext
+        
+        let classrooms = getAll(context: backgroundContext)
         
         for dictionary in dictionaries {
-            let decoder = JSONDecoder()
-            decoder.userInfo[.managedObjectContext] = PersistenceController.shared.container.viewContext
             let data = try! JSONSerialization.data(withJSONObject: dictionary)
             
             let name = dictionary["name"] as! String
-            
             let buildingDictionary = dictionary["buildingNumber"] as! [String: Any]
             let buildingString = buildingDictionary["name"] as! String
-            let originalName = "\(name)-\(buildingString)"
             
-            if let classroom = classrooms.first (where: { $0.originalName == originalName }) {
-                var classroome = classroom
-                try! decoder.update(&classroome, from: data)
+            let originalName = "\(name)-\(buildingString)"
+                        
+            if var classroom = classrooms.first (where: { $0.originalName == originalName }) {
+                try! decoder.update(&classroom, from: data)
             } else {
                 let _ = try? decoder.decode(Classroom.self, from: data)
             }
         }
+        try! backgroundContext.save()
+        Log.info("Classrooms \(String(self.getAll(context: backgroundContext).count)) fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds\n")
     }
     
 }
