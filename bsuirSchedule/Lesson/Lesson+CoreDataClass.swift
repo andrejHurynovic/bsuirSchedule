@@ -14,8 +14,7 @@ import SwiftUI
 public class Lesson: NSManagedObject {
     
     required convenience public init(from decoder: Decoder) throws {
-//        let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
-        let context = PersistenceController.shared.container.viewContext
+        let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
         self.init(entity: Lesson.entity(), insertInto: context)
         
         let container = try! decoder.container(keyedBy: CodingKeys.self)
@@ -92,7 +91,7 @@ public class Lesson: NSManagedObject {
             
             for dictionary in employeeDictionaries {
                 let decoder = JSONDecoder()
-                decoder.userInfo[.managedObjectContext] = PersistenceController.shared.container.viewContext
+                decoder.userInfo[.managedObjectContext] = context
                 let data = try! JSONSerialization.data(withJSONObject: dictionary)
                 
                 if let employee = employees.first (where: { $0.id == Int32(dictionary["id"] as! Int) }) {
@@ -115,7 +114,7 @@ public class Lesson: NSManagedObject {
         
         let groups = decoder.userInfo[.groups] as! [Group]
         let nestedDecoder = JSONDecoder()
-        nestedDecoder.userInfo[.managedObjectContext] = decoder.userInfo[.managedObjectContext]
+        nestedDecoder.userInfo[.managedObjectContext] = context
         nestedDecoder.userInfo[.specialities] = decoder.userInfo[.specialities]
         let updatedGroups = decoder.userInfo[.updatedGroups] as! Set<String>
     

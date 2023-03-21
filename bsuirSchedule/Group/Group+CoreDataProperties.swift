@@ -67,34 +67,33 @@ extension Group {
     static func fetchAll() async {
         let data = try! await URLSession.shared.data(from: FetchDataType.groups.rawValue)
         let startTime = CFAbsoluteTimeGetCurrent()
-//        guard let dictionaries = try! JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] else {
-//            Log.error("Can't create group dictionaries.")
-//            return
-//        }
+        guard let dictionaries = try! JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] else {
+            Log.error("Can't create group dictionaries.")
+            return
+        }
         
         let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
         backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
         let decoder = JSONDecoder()
         decoder.userInfo[.managedObjectContext] = backgroundContext
-//        decoder.userInfo[.specialities] = Speciality.getAll(context: backgroundContext)
-        decoder.userInfo[.specialities] = [] as! [Speciality]
+        decoder.userInfo[.specialities] = Speciality.getAll(context: backgroundContext)
+
         
-        let groups = try! decoder.decode([Group].self, from: data)
-//        let groups = getAll(context: backgroundContext)
+        var groups = getAll(context: backgroundContext)
         
-//        for dictionary in dictionaries {
-//            let data = try! JSONSerialization.data(withJSONObject: dictionary)
+        for dictionary in dictionaries {
+            let data = try! JSONSerialization.data(withJSONObject: dictionary)
             
-//            if var group = groups.first (where: { $0.id == dictionary["id"] as? String }) {
-//                try! decoder.update(&group, from: data)
-//            } else {
-//                let _ = try! decoder.decode(Group.self, from: data)
-//            }
-//        }
+            if var group = groups.first (where: { $0.id == dictionary["name"] as? String }) {
+                try! decoder.update(&group, from: data)
+            } else {
+                let group = try! decoder.decode(Group.self, from: data)
+                groups.append(group)
+            }
+        }
         
         await backgroundContext.perform(schedule: .immediate, {
             try! backgroundContext.save()
-//            Log.info("\(String(self.getAll(context: backgroundContext).count)) Groups fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds.\n")
             Log.info("\(String(groups.count)) Groups fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds.\n")
         })
     }
@@ -112,29 +111,38 @@ extension Group {
         guard data.count != 0 else {
             return nil
         }
+        let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
+        backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
         
         var decoder = decoder
         if decoder == nil {
             decoder = JSONDecoder()
-            decoder!.userInfo[.managedObjectContext] = PersistenceController.shared.container.viewContext
-            decoder!.userInfo[.groups] = Group.getAll()
-            decoder!.userInfo[.employees] = Employee.getAll()
-            decoder!.userInfo[.classrooms] = Classroom.getAll()
-            decoder!.userInfo[.specialities] = Speciality.getAll()
+            decoder!.userInfo[.managedObjectContext] = backgroundContext
+            decoder!.userInfo[.groups] = Group.getAll(context: backgroundContext)
+            decoder!.userInfo[.employees] = Employee.getAll(context: backgroundContext)
+            decoder!.userInfo[.classrooms] = Classroom.getAll(context: backgroundContext)
+            decoder!.userInfo[.specialities] = Speciality.getAll(context: backgroundContext)
         }
         
-        var group = self
-        try! decoder!.update(&group, from: data)
-        return group
+        var backgroundGroup = backgroundContext.object(with: self.objectID) as! Group
+        try! decoder!.update(&backgroundGroup, from: data)
+        
+        await backgroundContext.perform(schedule: .immediate, {
+            try! backgroundContext.save()
+        })
+        
+        return self
     }
     
     static func updateGroups(groups: [Group]) async {
         let decoder = JSONDecoder()
-        decoder.userInfo[.managedObjectContext] = PersistenceController.shared.container.viewContext
-        decoder.userInfo[.groups] = Group.getAll()
-        decoder.userInfo[.employees] = Employee.getAll()
-        decoder.userInfo[.classrooms] = Classroom.getAll()
-        decoder.userInfo[.specialities] = Speciality.getAll()
+        let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
+        backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+        decoder.userInfo[.managedObjectContext] = backgroundContext
+        decoder.userInfo[.groups] = Group.getAll(context: backgroundContext)
+        decoder.userInfo[.employees] = Employee.getAll(context: backgroundContext)
+        decoder.userInfo[.classrooms] = Classroom.getAll(context: backgroundContext)
+        decoder.userInfo[.specialities] = Speciality.getAll(context: backgroundContext)
         
         try! await withThrowingTaskGroup(of: Group?.self) { group in
             for studentGroup in groups {
@@ -145,6 +153,10 @@ extension Group {
             //Await all tasks
             for try await _ in group { }
         }
+        
+        await backgroundContext.perform(schedule: .immediate, {
+            try! backgroundContext.save()
+        })
     }
     
 }
@@ -164,7 +176,7 @@ extension Group {
     }
     
     var flow: [Group]? {
-        guard var flow = self.speciality.groups?.allObjects as? [Group] else {
+        guard var flow = self.speciality?.groups?.allObjects as? [Group] else {
             return nil
         }
         flow.removeAll { $0.course != self.course || $0 == self }

@@ -20,11 +20,11 @@ class GroupsViewModel: ObservableObject {
 //            try! PersistenceController.shared.container.viewContext.save()
 //        }
 //        let groupsArrays = groups.chunked(into: 1)
-//
+
 //        for array in groupsArrays {
 //            print(array.count)
 //            await Group.updateGroups(groups: array)
-//            await MainActor.run {
+//            await PersistenceController.shared.container.viewContext.perform {
 //                try! PersistenceController.shared.container.viewContext.save()
 //            }
 //        }
