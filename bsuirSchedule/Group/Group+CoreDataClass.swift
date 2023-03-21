@@ -126,6 +126,7 @@ extension Group: Decodable {
 //MARK: CodingUserInfoKey
 extension CodingUserInfoKey {
     static let groups = CodingUserInfoKey(rawValue: "groups")!
+    static let groupContainer = CodingUserInfoKey(rawValue: "groupContainer")!
     static let updatedGroups = CodingUserInfoKey(rawValue: "updatedGroups")!
     static let groupUpdating = CodingUserInfoKey(rawValue: "groupUpdating")!
 }

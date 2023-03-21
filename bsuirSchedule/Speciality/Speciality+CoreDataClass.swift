@@ -17,8 +17,8 @@ public class Speciality: NSManagedObject {
         self.init(entity: Speciality.entity(), insertInto: context)
         
         //If init is called from a decoder that decodes a Group and cannot find the required specialty, a special method is called to process specific Group keys.
-        if let decodingSpecialityFromGroup = decoder.userInfo[.decodingSpecialityFromGroup] as? Bool,
-           decodingSpecialityFromGroup == true {
+        if let groupContainer = decoder.userInfo[.groupContainer] as? Bool,
+           groupContainer == true {
             try! self.updateFromGroupDecoder(decoder)
         } else {
             try! self.update(from: decoder)
@@ -83,5 +83,4 @@ extension Speciality: Decodable {
 //MARK: CodingUserInfoKey
 extension CodingUserInfoKey {
     static let specialities = CodingUserInfoKey(rawValue: "specialities")!
-    static let decodingSpecialityFromGroup = CodingUserInfoKey(rawValue: "decodingSpecialityFromGroup")!
 }
