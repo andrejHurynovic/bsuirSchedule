@@ -73,11 +73,14 @@ extension Faculty {
         
         let faculties = facultiesDictionaries.map { facultiesDictionary in
             let facultyID = facultiesDictionary["id"] as! Int16
-            //Creates faculties that are not presented in the database.
-            var faculty = fetchedFaculties.first { $0.id == facultyID } ?? Faculty(id: facultyID, context: backgroundContext)
             let facultyData = try! JSONSerialization.data(withJSONObject: facultiesDictionary)
-            try! decoder.update(&faculty, from: facultyData)
-            return faculty
+            if var faculty = fetchedFaculties.first(where: { $0.id == facultyID }) {
+                try! decoder.update(&faculty, from: facultyData)
+                return faculty
+            } else {
+                return try! decoder.decode(Faculty.self, from: facultyData)
+            }
+
         }
         await backgroundContext.perform(schedule: .immediate, {
             try! backgroundContext.save()

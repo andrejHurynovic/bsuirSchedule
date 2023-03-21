@@ -16,16 +16,13 @@ public class Speciality: NSManagedObject {
         let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
         self.init(entity: Speciality.entity(), insertInto: context)
         
-        try! self.update(from: decoder)
-    }
-    
-    convenience public init(_ id: Int32, _ name: String? = nil, _ abbreviation: String? = nil, _ faculty: Faculty? = nil, context: NSManagedObjectContext) {
-        self.init(entity: Speciality.entity(), insertInto: context)
-        
-        self.id = id
-        self.name = name
-        self.abbreviation = abbreviation
-        self.faculty = faculty
+        //If init is called from a decoder that decodes a Group and cannot find the required specialty, a special method is called to process specific Group keys.
+        if let decodingSpecialityFromGroup = decoder.userInfo[.decodingSpecialityFromGroup] as? Bool,
+           decodingSpecialityFromGroup == true {
+            try! self.updateFromGroupDecoder(decoder)
+        } else {
+            try! self.update(from: decoder)
+        }
     }
     
 }
@@ -44,7 +41,18 @@ extension Speciality: DecoderUpdatable {
         let educationTypeContainer = try! container.nestedContainer(keyedBy: EducationTypeCodingKeys.self, forKey: .educationTypeContainer)
         self.educationTypeValue = try! educationTypeContainer.decode(Int16.self, forKey: .educationTypeId)
         
-        Log.info("Speciality \(self.id) (\(self.abbreviation ?? "Empty name")) has been updated")
+        Log.info("Speciality \(self.id) (\(self.abbreviation ?? "Empty name")) has been updated.")
+    }
+    
+    func updateFromGroupDecoder(_ decoder: Decoder) throws {
+        let container = try! decoder.container(keyedBy: GroupCodingKeys.self)
+        
+        self.id = try! container.decode(Int32.self, forKey: .id)
+        self.name = try! container.decode(String.self, forKey: .name)
+        self.abbreviation = try! container.decode(String.self, forKey: .abbreviation)
+        
+        self.faculty = try! Faculty(from: decoder)
+        
     }
 }
 
@@ -61,6 +69,12 @@ extension Speciality: Decodable {
         case educationTypeContainer = "educationForm"
     }
     
+    private enum GroupCodingKeys: String, CodingKey {
+        case id = "specialityDepartmentEducationFormId"
+        case name = "specialityName"
+        case abbreviation = "specialityAbbrev"
+    }
+    
     private enum EducationTypeCodingKeys: String, CodingKey {
         case educationTypeId = "id"
     }
@@ -69,4 +83,5 @@ extension Speciality: Decodable {
 //MARK: CodingUserInfoKey
 extension CodingUserInfoKey {
     static let specialities = CodingUserInfoKey(rawValue: "specialities")!
+    static let decodingSpecialityFromGroup = CodingUserInfoKey(rawValue: "decodingSpecialityFromGroup")!
 }

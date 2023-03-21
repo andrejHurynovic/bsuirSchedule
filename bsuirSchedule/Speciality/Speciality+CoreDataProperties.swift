@@ -101,9 +101,12 @@ extension Speciality {
             let specialities = facultiesSpecialitiesDictionaries.map { specialityDictionary in
                 let specialityData = try! JSONSerialization.data(withJSONObject: specialityDictionary)
                 let specialityID = specialityDictionary["id"] as! Int32
-                var speciality = fetchedSpecialities.first { $0.id == specialityID } ?? Speciality(specialityID, context: backgroundContext)
-                try! decoder.update(&speciality, from: specialityData)
-                return speciality
+                if var speciality = fetchedSpecialities.first(where: { $0.id == specialityID }) {
+                    try! decoder.update(&speciality, from: specialityData)
+                    return speciality
+                } else {
+                    return try! decoder.decode(Speciality.self, from: specialityData)
+                }
             }
             //All filtered specialties are added to the corresponding faculty.
             faculty.addToSpecialities(NSSet(array: specialities))
