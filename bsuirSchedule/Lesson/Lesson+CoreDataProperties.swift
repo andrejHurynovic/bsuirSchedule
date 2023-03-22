@@ -22,23 +22,25 @@ extension Lesson {
     @NSManaged public var subject: String?
     @NSManaged public var abbreviation: String!
     @NSManaged public var lessonTypeValue: Int16
-    @NSManaged public var classrooms:  NSSet?
     @NSManaged public var note: String?
     
-    @NSManaged public var groups: NSSet?
-    @NSManaged public var subgroup: Int16
     
+    @NSManaged public var dateString: String!
     @NSManaged public var weekday: Int16
     @NSManaged public var weeks: [Int]!
-    @NSManaged public var dateString: String!
     @NSManaged public var startLessonDate: Date?
+    @NSManaged public var startLessonDateString: String!
     @NSManaged public var endLessonDate: Date?
-    
     @NSManaged public var timeStart: String!
     @NSManaged public var timeEnd: String!
     
+    
+    @NSManaged public var groups: NSSet?
+    @NSManaged public var subgroup: Int16
+    @NSManaged public var classrooms:  NSSet?
+    @NSManaged public var classroomsNames: [String]!
     @NSManaged public var employees: NSSet?
-    @NSManaged public var employeesIDs: [Int32]?
+    @NSManaged public var employeesIDs: [Int32]!
     
 }
 
@@ -83,8 +85,8 @@ extension Lesson {
 }
 
 extension Lesson : Identifiable {
-    func id(sectionID: String) -> String {
-        return "\(sectionID)-\(self.abbreviation!)-\(self.timeStart!)-\(self.subgroup)"
+    func id(sectionID: String? = nil) -> String {
+        return "\(sectionID ?? "")-\(abbreviation!)-\(timeStart!)-\(subgroup)-\(classroomsNames ?? [])"
     }
 }
 
@@ -92,10 +94,11 @@ extension Lesson : Identifiable {
 extension Lesson {
     ///Converts dateString to Date type
     var date: Date? {
-        guard dateString.isEmpty == false else {
+        guard dateString.isEmpty == false,
+              let date = DateFormatters.shared.get(.shortDate).date(from: self.dateString) else {
             return nil
         }
-        return DateFormatters.shared.get(.shortDate).date(from: self.dateString)!
+        return date
     }
     ///Range between start and end date
     var dateRange: ClosedRange<Date>? {

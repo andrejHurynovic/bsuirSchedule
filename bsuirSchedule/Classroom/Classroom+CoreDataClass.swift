@@ -36,7 +36,6 @@ public class Classroom: NSManagedObject {
     
     ///This function creates a new Classroom object from a string in the format ["000-1 к.", "604-5 к.", "epam 104 к1-2 к."].
     convenience public init(from string: String, in context: NSManagedObjectContext) throws {
-        Log.warning("Can't find classroom \(string) in the database, the new entity is being created.")
         self.init(entity: Classroom.entity(), insertInto: context)
         
         self.originalName = string
@@ -46,6 +45,7 @@ public class Classroom: NSManagedObject {
         let nameString = String(string.dropLast(5))
         try decodeBuilding(string: buildingString)
         try decodeName(string: nameString)
+        Log.info("Classroom \(string) is created from string.")
     }
     
 }

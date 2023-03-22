@@ -13,6 +13,7 @@ extension Group {
     
     @NSManaged public var id: String!
     @NSManaged public var numberOfStudents: Int16
+    @NSManaged public var educationDegreeValue: Int16
     @NSManaged public var course: Int16
     @NSManaged public var favourite: Bool
     @NSManaged public var updateDate: Date?
@@ -77,9 +78,7 @@ extension Group {
         let decoder = JSONDecoder()
         decoder.userInfo[.managedObjectContext] = backgroundContext
         decoder.userInfo[.groupContainer] = true
-        decoder.userInfo[.specialities] = Speciality.getAll(context: backgroundContext)
 
-        
         var groups = getAll(context: backgroundContext)
         
         for dictionary in dictionaries {
@@ -103,30 +102,26 @@ extension Group {
 
 //MARK: Update
 extension Group {
-    func update(decoder: JSONDecoder? = nil) async -> Group? {
-        guard let url = URL(string: FetchDataType.group.rawValue + self.id) else {
+    func update() async -> Group? {
+        guard let url = URL(string: FetchDataType.group.rawValue + self.id),
+              let (data, _) = try? await URLSession.shared.data(from: url) else {
+            Log.error("No data for group (\(String(self.id)))")
             return nil
         }
-        let (data, _) = try! await URLSession.shared.data(from: url)
         
         guard data.count != 0 else {
+            Log.warning("Empty data while updating group (\(String(self.id)))")
             return nil
         }
+        
         let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
         backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
-        
-        var decoder = decoder
-        if decoder == nil {
-            decoder = JSONDecoder()
-            decoder!.userInfo[.managedObjectContext] = backgroundContext
-            decoder!.userInfo[.groups] = Group.getAll(context: backgroundContext)
-            decoder!.userInfo[.employees] = Employee.getAll(context: backgroundContext)
-            decoder!.userInfo[.classrooms] = Classroom.getAll(context: backgroundContext)
-            decoder!.userInfo[.specialities] = Speciality.getAll(context: backgroundContext)
-        }
+        let decoder = JSONDecoder()
+        decoder.userInfo[.managedObjectContext] = backgroundContext
+        decoder.userInfo[.groupContainer] = true
         
         var backgroundGroup = backgroundContext.object(with: self.objectID) as! Group
-        try! decoder!.update(&backgroundGroup, from: data)
+        try! decoder.update(&backgroundGroup, from: data)
         
         await backgroundContext.perform(schedule: .immediate, {
             try! backgroundContext.save()
@@ -136,28 +131,17 @@ extension Group {
     }
     
     static func updateGroups(groups: [Group]) async {
-        let decoder = JSONDecoder()
-        let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
-        backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
-        decoder.userInfo[.managedObjectContext] = backgroundContext
-        decoder.userInfo[.groups] = Group.getAll(context: backgroundContext)
-        decoder.userInfo[.employees] = Employee.getAll(context: backgroundContext)
-        decoder.userInfo[.classrooms] = Classroom.getAll(context: backgroundContext)
-        decoder.userInfo[.specialities] = Speciality.getAll(context: backgroundContext)
-        
-        try! await withThrowingTaskGroup(of: Group?.self) { group in
+        let startTime = CFAbsoluteTimeGetCurrent()
+        try! await withThrowingTaskGroup(of: Group?.self) { taskGroup in
             for studentGroup in groups {
-                group.addTask {
-                    await studentGroup.update(decoder: decoder)
+                taskGroup.addTask {
+                    await studentGroup.update()
                 }
             }
-            //Await all tasks
-            for try await _ in group { }
+            try await taskGroup.waitForAll()
         }
-        
-        await backgroundContext.perform(schedule: .immediate, {
-            try! backgroundContext.save()
-        })
+        Log.info("Groups updated in time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds")
+
     }
     
 }

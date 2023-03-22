@@ -37,7 +37,7 @@ struct LessonView: View {
             return laboratoryColor
         case .consultation:
             return consultationColor
-        case .exam, .candidateText:
+        case .exam, .candidateCredit, .candidateExam:
             return examColor
         case .none:
             return .gray

@@ -58,6 +58,7 @@
     </entity>
     <entity name="Group" representedClassName="Group" syncable="YES">
         <attribute name="course" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="educationDegreeValue" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="educationEnd" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="educationStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="examsEnd" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -85,12 +86,14 @@
     </entity>
     <entity name="Lesson" representedClassName="Lesson" syncable="YES">
         <attribute name="abbreviation" attributeType="String"/>
+        <attribute name="classroomsNames" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[String]"/>
         <attribute name="dateString" attributeType="String"/>
         <attribute name="employeesIDs" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[Int32]"/>
         <attribute name="endLessonDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="lessonTypeValue" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="note" optional="YES" attributeType="String"/>
         <attribute name="startLessonDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="startLessonDateString" optional="YES" attributeType="String"/>
         <attribute name="subgroup" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="subject" optional="YES" attributeType="String"/>
         <attribute name="timeEnd" attributeType="String"/>
@@ -103,11 +106,13 @@
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="abbreviation"/>
+                <constraint value="classroomsNames"/>
                 <constraint value="employeesIDs"/>
-                <constraint value="timeStart"/>
+                <constraint value="startLessonDateString"/>
+                <constraint value="dateString"/>
                 <constraint value="weekday"/>
                 <constraint value="weeks"/>
-                <constraint value="dateString"/>
+                <constraint value="timeStart"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>

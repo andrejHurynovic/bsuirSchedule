@@ -66,16 +66,28 @@ extension Classroom: Identifiable {
 //MARK: EducationDates
 extension Classroom: EducationDated {
     var educationStart: Date? {
-        self.groups.compactMap { $0.educationStart }.sorted().first
+        get {
+            self.groups.compactMap { $0.educationStart }.sorted().first
+        }
+        set { }
     }
     var educationEnd: Date? {
-        self.groups.compactMap { $0.educationEnd }.sorted().last
+        get {
+            self.groups.compactMap { $0.educationEnd }.sorted().last
+        }
+        set { }
     }
     var examsStart: Date? {
-        self.groups.compactMap { $0.examsStart }.sorted().first
+        get {
+            self.groups.compactMap { $0.examsStart }.sorted().first
+        }
+        set { }
     }
     var examsEnd: Date? {
-        self.groups.compactMap { $0.examsEnd }.sorted().last
+        get {
+            self.groups.compactMap { $0.examsEnd }.sorted().last
+        }
+        set { }
     }
 
 }

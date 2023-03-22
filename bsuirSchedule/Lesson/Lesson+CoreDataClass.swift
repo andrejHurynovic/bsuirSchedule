@@ -19,34 +19,27 @@ public class Lesson: NSManagedObject {
         
         let container = try! decoder.container(keyedBy: CodingKeys.self)
         
+        decodeLesson(container)
+        decodeDate(container)
+        decodeAnnouncement(container)
+        decodeEmployees(container, decoder, context)
+        decodeGroups(container, decoder, context)
+        decodeClassrooms(container, decoder, context)
+    }
+    
+    private func decodeLesson(_ container: KeyedDecodingContainer<Lesson.CodingKeys>) {
         self.subject = try? container.decode(String.self, forKey: .subject)
         //Abbreviation cannot be optional, because it is used as constraint
-        self.abbreviation = ((try? container.decode(String.self, forKey: .abbreviation)) ?? "")
+        self.abbreviation = (try? container.decode(String.self, forKey: .abbreviation)) ?? ""
         
         self.note = try? container.decode(String.self, forKey: .note)
         self.subgroup = Int16(try! container.decode(Int.self, forKey: .subgroup))
         
         lessonType = LessonType(from: try? container.decode(String.self, forKey: .lessonTypeValue))
-        
-        //MARK: Classrooms
-        if let classroomNames = try? container.decode([String].self, forKey: .classroom) {
-            
-            let classrooms = decoder.userInfo[.classrooms] as! [Classroom]
-            
-            classroomNames.forEach { classroomName in
-                //If the classroom is unknown it is created from the available information
-                if let classroom = classrooms.first(where: { $0.originalName == classroomName }) {
-                    self.addToClassrooms(classroom)
-                } else {
-                    print("\(classroomName) == \(classroomName)")
-                    
-                    let classroom = try! Classroom(from: classroomName, in: context)
-                    self.addToClassrooms(classroom)
-                }
-            }
-        }
-        
-        //MARK: Date and time
+    }
+    
+    private func decodeDate(_ container: KeyedDecodingContainer<Lesson.CodingKeys>) {
+        //DateString is a constraint, so it cannot be optional.
         if let date = try? container.decode(String.self, forKey: .date) {
             self.dateString = date
         } else {
@@ -54,83 +47,76 @@ public class Lesson: NSManagedObject {
         }
         
         if let startLessonDateString = try? container.decode(String.self, forKey: .startLessonDate) {
+            self.startLessonDateString = startLessonDateString
             self.startLessonDate = DateFormatters.shared.shortDate.date(from: startLessonDateString)
-            self.endLessonDate
-            = DateFormatters.shared.shortDate.date(from: try! container.decode(String.self, forKey: .endLessonDate))
+            self.endLessonDate = DateFormatters.shared.shortDate.date(from: try! container.decode(String.self, forKey: .endLessonDate))
+            
+            if let startLessonDate = startLessonDate,
+               let endLessonDate = endLessonDate,
+               startLessonDate > endLessonDate {
+                self.endLessonDate = startLessonDate
+                self.startLessonDate = endLessonDate
+            }
+        } else {
+            self.startLessonDateString = ""
         }
         
         self.timeStart = try! container.decode(String.self, forKey: .timeStart)
         self.timeEnd = try! container.decode(String.self, forKey: .timeEnd)
         
-        //MARK: Weeks
+        if let date = (self.date ?? self.startLessonDate) {
+            self.weekday = date.weekDay().rawValue
+        }
+        
         // An array of weeks can take values [0, 1, 2, 3 ,4], but it is more convenient to count the weeks from zero, and in the API 0 means that there is an occupation for all weeks, so we subtract one from all the values of the array.
         //[1, 2 ,4] -> [0, 1, 3]
         if let weeks = try? container.decode([Int].self, forKey: .weeks) {
             self.weeks = weeks.map{ $0 - 1 }
+            //Пояснить это позже
             if self.weeks.contains(-1) {
                 self.weeks.removeFirst()
             }
+        } else {
+            weeks = []
         }
         
-        //MARK: Announcement
+    }
+    
+    private func decodeAnnouncement(_ container: KeyedDecodingContainer<Lesson.CodingKeys>) {
+        //Перепроверить
         if try! container.decode(Bool.self, forKey: .announcement) == true {
-            //Announcement can be repeated every certain day of the week, the boundaries of which are defined by startLessonDate and endLessonDate
+            //Announcement can be repeated every certain day of the week, the boundaries of which are defined by startLessonDate and endLessonDate.
             self.weeks = [0, 1, 2, 3]
-            //Start and end time in announcementStart and announcementEnd fields can be different then time in timeStart and timeEnd
+            //Start and end time in announcementStart and announcementEnd fields can be different then time in timeStart and timeEnd.
             self.timeStart = try! container.decode(String.self, forKey: .announcementStart)
             self.timeEnd = try! container.decode(String.self, forKey: .announcementEnd)
-            
-            let weekday = self.startLessonDate!.weekDay()
-            self.weekday = weekday.rawValue
         }
         
-        //MARK: Employees
-        if let employeeDictionaries = try? container.decode(Array<Any>.self, forKey: .employees) as? [[String: Any]] {
-            let employees = decoder.userInfo[.employees] as! [Employee]
-            var lessonsEmployees: [Employee] = []
-            
-            for dictionary in employeeDictionaries {
-                let decoder = JSONDecoder()
-                decoder.userInfo[.managedObjectContext] = context
-                let data = try! JSONSerialization.data(withJSONObject: dictionary)
-                
-                if let employee = employees.first (where: { $0.id == Int32(dictionary["id"] as! Int) }) {
-                    var mutableEmployee = employee
-                    try! decoder.update(&mutableEmployee, from: data)
-                    lessonsEmployees.append(mutableEmployee)
-                    
-                } else {
-                    let employee = try! decoder.decode(Employee.self, from: data)
-                    lessonsEmployees.append(employee)
-                }
-            }
-            self.employeesIDs = lessonsEmployees.map {$0.id}
-            self.addToEmployees(NSSet(array: lessonsEmployees))
-            
-        }
-
-        //MARK: Groups
-        let groupsDictionaries = try! container.decode(Array<Any>.self, forKey: .groups) as! [[String: Any]]
-        
-        let groups = decoder.userInfo[.groups] as! [Group]
-        let nestedDecoder = JSONDecoder()
-        nestedDecoder.userInfo[.managedObjectContext] = context
-        nestedDecoder.userInfo[.specialities] = decoder.userInfo[.specialities]
-        let updatedGroups = decoder.userInfo[.updatedGroups] as! Set<String>
+    }
     
-        for dictionary in groupsDictionaries {
-            let data = try! JSONSerialization.data(withJSONObject: dictionary)
-            
-            if let group = groups.first (where: { $0.id == dictionary["name"] as? String }) {
-                var mutableGroup = group
-                if updatedGroups.contains(mutableGroup.id) == false {
-                    try! nestedDecoder.update(&mutableGroup, from: data)
-                }
-                self.addToGroups(mutableGroup)
-            } else {
-                let group = try! nestedDecoder.decode(Group.self, from: data)
-                self.addToGroups(group)
-            }
+    private func decodeClassrooms(_ container: KeyedDecodingContainer<Lesson.CodingKeys>, _ decoder: Decoder, _ context: NSManagedObjectContext) {
+        if let classroomNames = try? container.decode([String].self, forKey: .classroom) {
+            let classrooms = classroomNames.map { (try! Classroom(from: $0, in: context)) }
+            self.addToClassrooms(NSSet(array: classrooms))
+            self.classroomsNames = classrooms.map { $0.originalName }.sorted()
+        } else {
+            self.classroomsNames = []
+        }
+        
+    }
+    
+    private func decodeEmployees(_ container: KeyedDecodingContainer<Lesson.CodingKeys>, _ decoder: Decoder, _ context: NSManagedObjectContext) {
+        if let employees = try? container.decode([Employee].self, forKey: .employees) {
+            self.addToEmployees(NSSet(array: employees))
+            self.employeesIDs = employees.map { $0.id }.sorted()
+        } else {
+            self.employeesIDs = []
+        }
+    }
+    
+    private func decodeGroups(_ container: KeyedDecodingContainer<Lesson.CodingKeys>, _ decoder: Decoder, _ context: NSManagedObjectContext) {
+        if let groups = try? container.decode([Group].self, forKey: .groups) {
+            self.addToGroups(NSSet(array: groups))
         }
     }
     
@@ -142,21 +128,20 @@ extension Lesson: Decodable {
         case abbreviation = "subject"
         case lessonTypeValue = "lessonTypeAbbrev"
         case announcement = "announcement"
-        case classroom = "auditories"
         case note = "note"
+        
+        case date = "dateLesson"
+        case weeks = "weekNumber"
+        case startLessonDate = "startLessonDate"
+        case endLessonDate = "endLessonDate"
+        case announcementStart = "announcementStart"
+        case announcementEnd = "announcementEnd"
+        case timeStart = "startLessonTime"
+        case timeEnd = "endLessonTime"
         
         case groups = "studentGroups"
         case subgroup = "numSubgroup"
-        
-        case weeks = "weekNumber"
-        case timeStart = "startLessonTime"
-        case timeEnd = "endLessonTime"
-        case announcementStart = "announcementStart"
-        case announcementEnd = "announcementEnd"
-        case date = "dateLesson"
-        case startLessonDate = "startLessonDate"
-        case endLessonDate = "endLessonDate"
-        
         case employees = "employees"
+        case classroom = "auditories"
     }
 }

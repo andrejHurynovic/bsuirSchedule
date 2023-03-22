@@ -117,7 +117,6 @@ extension Employee {
             decoder!.userInfo[.groups] = Group.getAll()
             decoder!.userInfo[.employees] = Employee.getAll()
             decoder!.userInfo[.classrooms] = Classroom.getAll()
-            decoder!.userInfo[.specialities] = Speciality.getAll()
         }
         
         try! decoder!.update(&employee, from: data)
@@ -129,7 +128,6 @@ extension Employee {
         decoder.userInfo[.groups] = Group.getAll()
         decoder.userInfo[.employees] = Employee.getAll()
         decoder.userInfo[.classrooms] = Classroom.getAll()
-        decoder.userInfo[.specialities] = Speciality.getAll()
         
         try! await withThrowingTaskGroup(of: Employee?.self) { group in
             for employee in employees {

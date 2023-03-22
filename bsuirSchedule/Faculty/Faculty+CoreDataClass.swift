@@ -47,7 +47,10 @@ extension Faculty: DecoderUpdatable {
     }
     
     func updateFromGroupDecoder(_ decoder: Decoder) throws {
-        let container = try! decoder.container(keyedBy: GroupCodingKeys.self)
+        //If the decoder container is received from a Groups API call, the Speciality information is contained in root, but if it is received from a Group API call, the required information is contained in a nested container.
+        let container = (try? decoder.container(keyedBy: GroupCodingKeys.self)
+            .nestedContainer(keyedBy: GroupCodingKeys.self, forKey: .groupNestedContainer))
+        ?? (try! decoder.container(keyedBy: GroupCodingKeys.self))
         
         self.id = try! container.decode(Int16.self, forKey: .id)
         self.abbreviation = try! container.decode(String.self, forKey: .abbreviation)
@@ -64,6 +67,8 @@ extension Faculty: Decodable {
     }
     
     private enum GroupCodingKeys: String, CodingKey {
+        case groupNestedContainer = "studentGroupDto"
+        
         case id = "facultyId"
         case abbreviation = "facultyAbbrev"
     }
