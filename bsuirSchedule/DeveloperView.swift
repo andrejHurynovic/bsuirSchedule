@@ -38,6 +38,15 @@ struct DeveloperView: View {
                 DeveloperUpdateView<Employee>(name: "преподаватели", symbol: "person.crop.circle")
             }
             
+            Section("Дополнительно") {
+                Button {
+                    Log.info("Number of students: \(groups.map( {$0.numberOfStudents} ).reduce(0, +))")
+                } label: {
+                    Label("Количество студентов", systemImage: "person.crop.circle")
+                }
+
+            }
+            
         }
         .navigationTitle("Разработчик")
     }
