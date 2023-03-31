@@ -28,7 +28,7 @@ class EmployeeViewModel: ObservableObject {
         guard let updatedEmployee = await employee.update() else {
             return
         }
-        let _ = await employee.updatePhoto()
+//        let _ = await employee.updatePhoto()
         await MainActor.run {
             withAnimation {
                 self.employee = updatedEmployee
@@ -38,7 +38,8 @@ class EmployeeViewModel: ObservableObject {
     }
     
     func fetchLastUpdateDate() async {
-        guard let data = try? await URLSession.shared.data(from: FetchDataType.employeeUpdateDate.rawValue + String(employee.urlID)) else {
+        guard let urlID = employee.urlID,
+              let data = try? await URLSession.shared.data(from: FetchDataType.employeeUpdateDate.rawValue + urlID) else {
             return
         }
         

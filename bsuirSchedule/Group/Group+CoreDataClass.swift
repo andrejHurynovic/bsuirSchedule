@@ -42,7 +42,7 @@ extension Group: DecoderUpdatable {
     private func decodeGroup(_ decoder: Decoder) {
         //The group information structure nested container exists only when receiving a response to the Schedule (Group) request. This fields is also contained when fetching all groups, but located in root.
         let container = (try? decoder.container(keyedBy: CodingKeys.self)
-            .nestedContainer(keyedBy: CodingKeys.self.self, forKey: .groupNestedContainer))
+            .nestedContainer(keyedBy: CodingKeys.self, forKey: .groupNestedContainer))
         ?? (try! decoder.container(keyedBy: CodingKeys.self))
         
         self.id = try! container.decode(String.self, forKey: .id)

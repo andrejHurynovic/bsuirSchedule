@@ -86,7 +86,7 @@ extension Lesson {
 
 extension Lesson : Identifiable {
     func id(sectionID: String? = nil) -> String {
-        return "\(sectionID ?? "")-\(abbreviation!)-\(timeStart!)-\(subgroup)-\(classroomsNames ?? [])"
+        return "\(sectionID ?? "")-\(abbreviation!)-\(timeStart!)-\(subgroup)-\(classroomsNames ?? [])-\(String(describing: employeesIDs))"
     }
 }
 

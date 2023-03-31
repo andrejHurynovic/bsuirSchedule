@@ -8,82 +8,16 @@
 
 import Foundation
 import CoreData
-import UIKit.UIImage
+//import UIKit.UIImage
 
 @objc(Employee)
 public class Employee: NSManagedObject {
     
     required public convenience init(from decoder: Decoder) throws {
         let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
-        let entity = Employee.entity()
-        self.init(entity: entity, insertInto: context)
-        
-        let rootContainer = try decoder.container(keyedBy: CodingKeys.self)
-        var container = rootContainer
-        
-        //MARK: Employee container
-        //This container exists only if fetching schedule.
-        if let employeeContainer = try? container.nestedContainer(keyedBy: CodingKeys.self, forKey: .employeeContainer) {
-            container = employeeContainer
-        }
-        
-        //ID should be specified before lessons processing
-        self.id = (try! container.decode(Int32.self, forKey: .id))
-        if let urlID = try? container.decode(String.self, forKey: .urlID) {
-            self.urlID = urlID
-        } else {
-            
-        }
-        self.firstName = try! container.decode(String.self, forKey: .firstName)
-        self.middleName = try? container.decode(String.self, forKey: .middleName)
-        self.lastName = try! container.decode(String.self, forKey: .lastName)
-        
-        
-        self.rank = try? container.decode(String.self, forKey: .rank)
-        self.degree = try? container.decode(String.self, forKey: .degree)
-        if var departments = try? container.decode([String].self, forKey: .departments) {
-            departments.forEachInout { department in
-                if let range = department.range(of: "Каф.") {
-                    department.removeSubrange(range)
-                }
-                department = department.trimmingCharacters(in: .whitespaces)
-            }
-            self.departments = departments
-        } else {
-            self.departments = []
-        }
-        self.favourite = false
-        
-        self.photoLink = try? container.decode(String.self, forKey: .photoLink)
-        
-        container = rootContainer
-            
-        if let educationStartString = try? container.decode(String.self, forKey: .educationStart) {
-            self.educationStart = DateFormatters.shared.get(.shortDate).date(from: educationStartString)
-            self.educationEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .educationEnd))
-        }
-
-        if let examsStartString = try? container.decode(String.self, forKey: .examsStart) {
-            self.examsStart = DateFormatters.shared.get(.shortDate).date(from: examsStartString)
-            self.examsEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .examsEnd))
-        }
-        
-        if var schedules = try? container.decode([String:[Lesson]].self, forKey: .lessons) {
-            schedules.keys.forEach { key in
-                let weekDay = WeekDay(string: key)
-                schedules[key]!.forEachInout { lesson in
-                    //Set correct weekday and employeesID
-                    lesson.weekday = weekDay.rawValue
-                    lesson.employeesIDs = [self.id]
-                }
-            }
-            self.addToLessons(NSSet(array: Array(schedules.values.joined()) as! [Lesson]))
-        }
-        
-        if let exams = try? container.decode([Lesson].self, forKey: .exams) {
-            self.addToLessons(NSSet(array: exams))
-        }
-    
+        self.init(entity: Employee.entity(), insertInto: context)
+        try! self.update(from: decoder)
+        Log.info("Employee \(self.urlID ?? "no urlID") (\(String(self.id))) has been created.")
     }
     
 }
@@ -91,49 +25,40 @@ public class Employee: NSManagedObject {
 //MARK: Update
 extension Employee: DecoderUpdatable {
     func update(from decoder: Decoder) throws {
-        let rootContainer = try decoder.container(keyedBy: CodingKeys.self)
-        var container = rootContainer
-                    
-        if let educationStartString = try? container.decode(String.self, forKey: .educationStart) {
-            self.educationStart = DateFormatters.shared.get(.shortDate).date(from: educationStartString)
-            self.educationEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .educationEnd))
-        }
-
-        if let examsStartString = try? container.decode(String.self, forKey: .examsStart) {
-            self.examsStart = DateFormatters.shared.get(.shortDate).date(from: examsStartString)
-            self.examsEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .examsEnd))
-        }
+        let startTime = CFAbsoluteTimeGetCurrent()
+        let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        if var schedules = try? container.decode([String:[Lesson]].self, forKey: .lessons) {
-            schedules.keys.forEach { key in
-                let weekDay = WeekDay(string: key)
-                schedules[key]!.forEachInout { lesson in
-                    //Set correct weekday and employeesID
-                    lesson.weekday = weekDay.rawValue
-                    lesson.employeesIDs = [self.id]
-                }
+        decodeEmployee(decoder)
+        decodeEducationDates(decoder)
+        
+        if let lessons = try? container.decode([String:[Lesson]].self, forKey: .lessons) {
+            let lessons = Set(lessons.map{ $1 }.joined())
+            for lesson in lessons {
+                lesson.employeesIDs = [self.id]
+                lesson.addToEmployees(self)
             }
-            self.addToLessons(NSSet(array: Array(schedules.values.joined()) as! [Lesson]))
+        }
+        if let exams = try? container.decode([Lesson].self, forKey: .exams) {
+            for exam in exams {
+                exam.employeesIDs = [self.id]
+                exam.addToEmployees(self)
+            }
         }
         
-        //Exams also presented in schedules
-//        if var exams = try? container.decode([Lesson].self, forKey: .exams) {
-//            exams.forEachInout { exam in
-//                exam.employeesIDs = [self.id]
-//            }
-//            self.addToLessons(NSSet(array: exams))
-//        }
+        Log.info("Employee \(self.urlID ?? "no urlID") (\(String(self.id))) has been updated, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds")
+    }
+    
+    private func decodeEmployee(_ decoder: Decoder) {
+        //The employee information structure nested container exists only when receiving a response to the Schedule (Group) request. This fields is also contained when fetching all groups, but located in root.
+        let container = (try? decoder.container(keyedBy: CodingKeys.self)
+            .nestedContainer(keyedBy: CodingKeys.self, forKey: .employeeNestedContainer))
+        ?? (try! decoder.container(keyedBy: CodingKeys.self))
         
-        //MARK: Employee container
-        //This container exists only if fetching schedule.
-        if let employeeContainer = try? container.nestedContainer(keyedBy: CodingKeys.self, forKey: .employeeContainer) {
-            container = employeeContainer
-        }
-        
+        self.id = (try! container.decode(Int32.self, forKey: .id))
         if let urlID = try? container.decode(String.self, forKey: .urlID) {
             self.urlID = urlID
         } else {
-            
+            self.urlID = ""
         }
         self.firstName = try! container.decode(String.self, forKey: .firstName)
         self.middleName = try? container.decode(String.self, forKey: .middleName)
@@ -141,6 +66,8 @@ extension Employee: DecoderUpdatable {
         
         self.rank = try? container.decode(String.self, forKey: .rank)
         self.degree = try? container.decode(String.self, forKey: .degree)
+        self.photoLink = try? container.decode(String.self, forKey: .photoLink)
+        
         if var departments = try? container.decode([String].self, forKey: .departments) {
             departments.forEachInout { department in
                 if let range = department.range(of: "Каф.") {
@@ -151,7 +78,6 @@ extension Employee: DecoderUpdatable {
             self.departments = departments
         }
         
-        self.photoLink = try? container.decode(String.self, forKey: .photoLink)
     }
 }
 
@@ -163,11 +89,6 @@ extension Employee: Decodable {
         case middleName
         case lastName
         
-        case educationStart = "startDate"
-        case educationEnd = "endDate"
-        case examsStart = "startExamsDate"
-        case examsEnd = "endExamsDate"
-        
         case departments = "academicDepartment"
         case rank
         case degree
@@ -177,11 +98,6 @@ extension Employee: Decodable {
         case lessons = "schedules"
         case exams = "exams"
         
-        case employeeContainer = "employeeDto"
+        case employeeNestedContainer = "employeeDto"
     }
-}
-
-//MARK: CodingUserInfoKey
-extension CodingUserInfoKey {
-    static let employees = CodingUserInfoKey(rawValue: "employees")!
 }

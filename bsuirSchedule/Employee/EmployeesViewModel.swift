@@ -12,8 +12,8 @@ class EmployeesViewModel: ObservableObject {
     func update() async {
         await Employee.fetchAll()
         let employees = Employee.getAll()
-        await Employee.updatePhotos(for: employees)
-//        await Employee.updateEmployees(employees: employees)
+//        await Employee.updatePhotos(for: employees)
+        await Employee.updateEmployees(employees: employees)
         await MainActor.run {
             try! PersistenceController.shared.container.viewContext.save()
         }

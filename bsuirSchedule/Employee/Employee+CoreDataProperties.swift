@@ -20,7 +20,7 @@ extension Employee {
     }
     
     @NSManaged public var id: Int32
-    @NSManaged public var urlID: String!
+    @NSManaged public var urlID: String?
     @NSManaged public var firstName: String!
     @NSManaged public var middleName: String!
     @NSManaged public var lastName: String!
@@ -36,7 +36,7 @@ extension Employee {
     @NSManaged public var examsStart: Date?
     @NSManaged public var examsEnd: Date?
     
-    @NSManaged public var photoLink: String!
+    @NSManaged public var photoLink: String?
     @NSManaged public var photo: Data?
     
     @NSManaged public var lessons: NSSet?
@@ -75,24 +75,36 @@ extension Employee {
 extension Employee {
     static func fetchAll() async {
         let data = try! await URLSession.shared.data(from: FetchDataType.employees.rawValue)
+        let startTime = CFAbsoluteTimeGetCurrent()
         guard let dictionaries = try! JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] else {
+            Log.error("Can't create employees dictionaries.")
             return
         }
         
-        let employees = getAll()
+        let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
+        backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+        let decoder = JSONDecoder()
+        decoder.userInfo[.managedObjectContext] = backgroundContext
+        decoder.userInfo[.groupContainer] = true
+        
+        var employees = getAll(context: backgroundContext)
         
         for dictionary in dictionaries {
-            let decoder = JSONDecoder()
-            decoder.userInfo[.managedObjectContext] = PersistenceController.shared.container.viewContext
             let data = try! JSONSerialization.data(withJSONObject: dictionary)
             
-            if let employee = employees.first (where: { $0.id == dictionary["id"] as! Int32 }) {
-                var mutableEmployee = employee
-                try! decoder.update(&mutableEmployee, from: data)
+            if var employee = employees.first (where: { $0.id == dictionary["id"] as? Int32 }) {
+                try! decoder.update(&employee, from: data)
             } else {
-                let _ = try! decoder.decode(Employee.self, from: data)
+                let employee = try! decoder.decode(Employee.self, from: data)
+                employees.append(employee)
             }
         }
+        
+        await backgroundContext.perform(schedule: .immediate, {
+            try! backgroundContext.save()
+            Log.info("\(String(employees.count)) Employees fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds.\n")
+        })
+        
     }
     
 }
@@ -100,68 +112,76 @@ extension Employee {
 //MARK: Update
 extension Employee {
     func update(decoder: JSONDecoder? = nil) async -> Employee? {
-        guard let url = URL(string: FetchDataType.employee.rawValue + String(self.urlID)) else {
+        guard let urlID = self.urlID,
+              let url = URL(string: FetchDataType.employee.rawValue + urlID),
+              let (data, _) = try? await URLSession.shared.data(from: url) else {
+            Log.error("No data for employee (\(String(self.id)))")
             return nil
         }
-        let (data, _) = try! await URLSession.shared.data(from: url)
-        var employee = self
-    
+        
         guard data.count != 0 else {
+            Log.warning("Empty data while updating employee \(self.urlID ?? "no urlID") (\(String(self.id)))")
             return nil
         }
         
-        var decoder = decoder
-        if decoder == nil {
-            decoder = JSONDecoder()
-            decoder!.userInfo[.managedObjectContext] = PersistenceController.shared.container.viewContext
-            decoder!.userInfo[.groups] = Group.getAll()
-            decoder!.userInfo[.employees] = Employee.getAll()
-            decoder!.userInfo[.classrooms] = Classroom.getAll()
-        }
-        
-        try! decoder!.update(&employee, from: data)
-        return employee
-    }
-    static func updateEmployees(employees: [Employee]) async {
+        let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
+        backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
         let decoder = JSONDecoder()
-        decoder.userInfo[.managedObjectContext] = PersistenceController.shared.container.viewContext
-        decoder.userInfo[.groups] = Group.getAll()
-        decoder.userInfo[.employees] = Employee.getAll()
-        decoder.userInfo[.classrooms] = Classroom.getAll()
+        decoder.userInfo[.managedObjectContext] = backgroundContext
+        decoder.userInfo[.groupContainer] = true
         
-        try! await withThrowingTaskGroup(of: Employee?.self) { group in
-            for employee in employees {
-                group.addTask {
-                    await employee.update(decoder: decoder)
-                }
-            }
-            //Await all tasks
-            for try await _ in group { }
+        var backgroundEmployee = backgroundContext.object(with: self.objectID) as! Employee
+        let previousPhotoLink = backgroundEmployee.photoLink
+        
+        try! decoder.update(&backgroundEmployee, from: data)
+        
+        await backgroundContext.perform(schedule: .immediate, {
+            try! backgroundContext.save()
+        })
+        
+        if backgroundEmployee.photoLink != previousPhotoLink || backgroundEmployee.photoLink != nil, backgroundEmployee.photo == nil {
+            backgroundEmployee.photo = await fetchPhoto()
         }
+        
+        await backgroundContext.perform(schedule: .immediate, {
+            try! backgroundContext.save()
+        })
+        
+        return self
     }
     
-    func updatePhoto() async -> Data? {
-        guard let url = URL(string: self.photoLink) else {
-            return nil
+    static func updateEmployees(employees: [Employee]) async {
+        let startTime = CFAbsoluteTimeGetCurrent()
+        try! await withThrowingTaskGroup(of: Employee?.self) { taskGroup in
+            for employee in employees {
+                taskGroup.addTask {
+                    await employee.update()
+                }
+            }
+            try await taskGroup.waitForAll()
         }
-        let (data, _) = try! await URLSession.shared.data(from: url)
-        guard data.count != 0 else {
+        Log.info("Employees updated in time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds")
+    }
+    
+}
+
+extension Employee {
+    
+    func fetchPhoto() async -> Data? {
+        guard let photoLink = self.photoLink,
+              let url = URL(string: photoLink) else {
+            Log.error("No data for employee photo (\(String(self.id)))")
             return nil
         }
         
-        self.photo = data
-        return nil
-    }
-    static func updatePhotos(for employees: [Employee]) async {
-        try! await withThrowingTaskGroup(of: Data?.self) { group in
-            for employee in employees {
-                group.addTask {
-                    await employee.updatePhoto()
-                }
-            }
-            //Await all tasks
-            for try await _ in group { }
+        let (data, _) = try! await URLSession.shared.data(from: url)
+        guard data.count != 0 else {
+            Log.warning("Empty data while updating employee photo \(self.urlID ?? "no urlID") (\(String(self.id)))")
+            return nil
         }
+        
+        Log.info("Employee \(self.urlID ?? "no urlID") (\(String(self.id))) photo has been updated.")
+        return data
     }
     
 }
@@ -169,13 +189,10 @@ extension Employee {
 //MARK: Accessors
 extension Employee {
     var groups: [Group] {
-        guard let groups = self.lessons?.compactMap({ lesson in
-            (lesson as! Lesson).groups?.allObjects as? [Group]
-        }) else {
+        guard let groups = self.lessons?.compactMap({ ($0 as! Lesson).groups?.allObjects as? [Group]}) else {
             return []
         }
         
-        let set = Set(groups.map({ $0 }).joined())
-        return set.sorted {$0.id! < $1.id!}
+        return Set(groups.map({ $0 }).joined()).sorted {$0.id! < $1.id!}
     }
 }
