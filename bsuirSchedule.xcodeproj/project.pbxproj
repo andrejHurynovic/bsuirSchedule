@@ -316,7 +316,7 @@
 				F62B37002902DDF000FA2BE8 /* LessonsSection */,
 				F695AA3729D843600051A354 /* Department */,
 				F697BF7326FFA129008FA7A9 /* Auditorium */,
-				F695AA3629D835FF0051A354 /* ClassroomType */,
+				F695AA3629D835FF0051A354 /* AuditoriumType */,
 				F6F87818271A1F36005E3C41 /* Speciality */,
 				F68465F826FA52E8000F185E /* Faculty */,
 				F68B4CF62845393B00C8DBF6 /* Week */,
@@ -430,13 +430,13 @@
 			path = Date;
 			sourceTree = "<group>";
 		};
-		F695AA3629D835FF0051A354 /* ClassroomType */ = {
+		F695AA3629D835FF0051A354 /* AuditoriumType */ = {
 			isa = PBXGroup;
 			children = (
 				F695AA3229D835C80051A354 /* AuditoriumType+CoreDataClass.swift */,
 				F695AA3329D835C80051A354 /* AuditoriumType+CoreDataProperties.swift */,
 			);
-			path = ClassroomType;
+			path = AuditoriumType;
 			sourceTree = "<group>";
 		};
 		F695AA3729D843600051A354 /* Department */ = {
