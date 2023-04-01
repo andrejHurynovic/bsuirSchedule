@@ -72,10 +72,10 @@ struct EmployeeDetailedView: View {
     }
     
     @ViewBuilder var information: some View {
-        if !viewModel.employee.departments!.isEmpty || !viewModel.employee.degree!.isEmpty || viewModel.employee.rank != nil {
+        if viewModel.employee.departments?.count != 0 || !viewModel.employee.degree!.isEmpty || viewModel.employee.rank != nil {
             Section("Информация") {
-                if !viewModel.employee.departments!.isEmpty {
-                    Text("Кафедры: " + (viewModel.employee.departments?.joined(separator: ", "))!)
+                if let departmentsAbbreviations = viewModel.employee.departmentsAbbreviations  {
+                    Text("Кафедры: " + (departmentsAbbreviations.joined(separator: ", ")))
                 }
                 
                 if !viewModel.employee.degree!.isEmpty {

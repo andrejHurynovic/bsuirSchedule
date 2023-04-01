@@ -41,8 +41,8 @@ struct EmployeeFavoriteView: View {
                 .foregroundColor(Color.primary)
                 Spacer()
                 VStack() {
-                    if !employee.departments!.isEmpty {
-                        Text(employee.departments!.joined(separator: ", \n"))
+                    if let departmentsAbbreviations = employee.departmentsAbbreviations {
+                        Text(departmentsAbbreviations.joined(separator: ", \n"))
                             .foregroundColor(Color.gray)
                             .multilineTextAlignment(.trailing)
                     }

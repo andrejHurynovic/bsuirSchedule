@@ -20,7 +20,7 @@ struct ClassroomDetailedView: View {
     }
     
     @ViewBuilder var department: some View {
-        if let departmentName = classroom.departmentName {
+        if let departmentName = classroom.department?.name {
             Section("Информация") {
                 Text(departmentName.capitalizingFirstLetter())
                 }

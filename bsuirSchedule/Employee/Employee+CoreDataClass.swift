@@ -68,14 +68,9 @@ extension Employee: DecoderUpdatable {
         self.degree = try? container.decode(String.self, forKey: .degree)
         self.photoLink = try? container.decode(String.self, forKey: .photoLink)
         
-        if var departments = try? container.decode([String].self, forKey: .departments) {
-            departments.forEachInout { department in
-                if let range = department.range(of: "Каф.") {
-                    department.removeSubrange(range)
-                }
-                department = department.trimmingCharacters(in: .whitespaces)
-            }
-            self.departments = departments
+        if let departmentsAbbreviations = try? container.decode([String].self, forKey: .departments) {
+            let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
+            self.addToDepartments(NSSet(array: departmentsAbbreviations.compactMap { try? Department(from: $0, in: context) }))
         }
         
     }

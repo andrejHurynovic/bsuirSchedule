@@ -17,8 +17,8 @@ struct EmployeeView: View {
                     .font(.title)
                     .fontWeight(.bold)
                 Text((employee.firstName ?? "") + " " + (employee.middleName ?? ""))
-                if !(employee.departments?.isEmpty ?? true) {
-                    Text(employee.departments!.joined(separator: ", "))
+                if let departmentsAbbreviations = employee.departmentsAbbreviations {
+                    Text(departmentsAbbreviations.joined(separator: ", \n"))
                         .foregroundColor(Color.gray)
                 }
             }

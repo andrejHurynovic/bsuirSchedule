@@ -29,9 +29,7 @@ extension Classroom {
     @NSManaged public var capacity: Int16
     
     @NSManaged public var type: ClassroomType
-    
-    @NSManaged public var departmentName: String?
-    @NSManaged public var departmentAbbreviation: String?
+    @NSManaged public var department: Department?
     
     @NSManaged public var lessons: NSSet?
     

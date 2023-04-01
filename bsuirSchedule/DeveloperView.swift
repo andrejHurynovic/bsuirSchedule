@@ -12,6 +12,7 @@ struct DeveloperView: View {
     
     @FetchRequest(entity: Faculty.entity(), sortDescriptors: []) var faculties: FetchedResults<Faculty>
     @FetchRequest(entity: Speciality.entity(), sortDescriptors: []) var specialities: FetchedResults<Speciality>
+    @FetchRequest(entity: Department.entity(), sortDescriptors: []) var departments: FetchedResults<Department>
     @FetchRequest(entity: Classroom.entity(), sortDescriptors: []) var classrooms: FetchedResults<Classroom>
     @FetchRequest(entity: ClassroomType.entity(), sortDescriptors: []) var classroomTypes: FetchedResults<ClassroomType>
     @FetchRequest(entity: Group.entity(), sortDescriptors: []) var groups: FetchedResults<Group>
@@ -24,6 +25,7 @@ struct DeveloperView: View {
             Section("Удаление") {
                 DeveloperDeleteView(name: "факультеты", symbol: "graduationcap.circle", elements: faculties)
                 DeveloperDeleteView(name: "специальности", symbol: "book.circle", elements: specialities)
+                DeveloperDeleteView(name: "подразделения", symbol: "book.circle", elements: departments)
                 DeveloperDeleteView(name: "кабинеты", symbol: "building.columns.circle", elements: classrooms)
                 DeveloperDeleteView(name: "типы кабинетов", symbol: "building.columns.circle", elements: classroomTypes)
                 DeveloperDeleteView(name: "группы", symbol: "person.2.circle", elements: groups)

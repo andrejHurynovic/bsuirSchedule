@@ -20,7 +20,7 @@ struct EmployeesView: View {
                 let employees = employees.filter {
                     searchText.isEmpty ||
                     $0.lastName!.localizedStandardContains(searchText) == true ||
-                    $0.departments!.contains(where: { $0.localizedStandardContains(searchText) }) == true
+                    $0.departmentsAbbreviations?.contains(where: { $0.localizedStandardContains(searchText) }) == true
                 }
                 
                 List {

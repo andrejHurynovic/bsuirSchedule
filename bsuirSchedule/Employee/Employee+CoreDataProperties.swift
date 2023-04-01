@@ -27,7 +27,7 @@ extension Employee {
     
     @NSManaged public var rank: String?
     @NSManaged public var degree: String?
-    @NSManaged public var departments: [String]!
+    @NSManaged public var departments: NSSet?
     @NSManaged public var favourite: Bool
     @NSManaged public var updateDate: Date?
     
@@ -57,6 +57,18 @@ extension Employee {
     
     @objc(removeLessons:)
     @NSManaged public func removeFromLessons(_ values: NSSet)
+    
+    @objc(addDepartmentsObject:)
+    @NSManaged public func addToDepartments(_ value: Department)
+    
+    @objc(removeDepartmentsObject:)
+    @NSManaged public func removeFromDepartments(_ value: Department)
+    
+    @objc(addDepartments:)
+    @NSManaged public func addToDepartments(_ values: NSSet)
+    
+    @objc(removeDepartments:)
+    @NSManaged public func removeFromDepartments(_ values: NSSet)
     
 }
 
@@ -195,5 +207,19 @@ extension Employee {
         }
         
         return Set(groups.map({ $0 }).joined()).sorted {$0.id! < $1.id!}
+    }
+    
+    var departmentsArray: [Department]? {
+        guard let departments = departments?.allObjects as? [Department] else {
+            return nil
+        }
+        return departments
+    }
+    
+    var departmentsAbbreviations: [String]? {
+        guard let departments = departmentsArray else {
+            return nil
+        }
+        return departments.map { $0.abbreviation }
     }
 }

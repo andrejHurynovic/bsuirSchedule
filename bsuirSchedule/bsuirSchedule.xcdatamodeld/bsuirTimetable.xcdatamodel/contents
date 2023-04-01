@@ -3,8 +3,6 @@
     <entity name="Classroom" representedClassName="Classroom" syncable="YES">
         <attribute name="building" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="capacity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="departmentAbbreviation" optional="YES" attributeType="String"/>
-        <attribute name="departmentName" optional="YES" attributeType="String"/>
         <attribute name="favourite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="floor" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
@@ -12,6 +10,7 @@
         <attribute name="originalName" attributeType="String"/>
         <attribute name="outsideUniversity" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="typeValue" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="department" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Department" inverseName="classrooms" inverseEntity="Department"/>
         <relationship name="lessons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lesson" inverseName="classrooms" inverseEntity="Lesson"/>
         <relationship name="type" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ClassroomType" inverseName="classrooms" inverseEntity="ClassroomType"/>
         <uniquenessConstraints>
@@ -33,9 +32,20 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
+    <entity name="Department" representedClassName="Department" syncable="YES">
+        <attribute name="abbreviation" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="classrooms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Classroom" inverseName="department" inverseEntity="Classroom"/>
+        <relationship name="employees" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Employee" inverseName="departments" inverseEntity="Employee"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="abbreviation"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
     <entity name="Employee" representedClassName="Employee" syncable="YES">
         <attribute name="degree" optional="YES" attributeType="String"/>
-        <attribute name="departments" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[String]"/>
         <attribute name="educationEnd" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="educationStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="examsEnd" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -50,6 +60,7 @@
         <attribute name="rank" optional="YES" attributeType="String"/>
         <attribute name="updateDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="urlID" optional="YES" attributeType="String"/>
+        <relationship name="departments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Department" inverseName="employees" inverseEntity="Department"/>
         <relationship name="lessons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lesson" inverseName="employees" inverseEntity="Lesson"/>
         <uniquenessConstraints>
             <uniquenessConstraint>

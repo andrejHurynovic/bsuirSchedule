@@ -31,8 +31,8 @@ struct ClassroomView: View {
                             VStack(alignment: .leading) {
                                 Text(classroom.type.abbreviation)
                                     .foregroundColor(Color.primary)
-                                if let department = classroom.departmentAbbreviation {
-                                    Text(department)
+                                if let department = classroom.department {
+                                    Text(department.abbreviation)
                                         .font(.headline)
                                         .fontWeight(.regular)
                                         .foregroundColor(Color.gray)

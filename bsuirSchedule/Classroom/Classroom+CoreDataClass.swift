@@ -66,21 +66,8 @@ extension Classroom: DecoderUpdatable {
         
         self.capacity = (try? container.decode(Int16.self, forKey: .capacity)) ?? 0
         self.note = try? container.decode(String.self, forKey: .note)
-        self.type = try! container.decode(ClassroomType.self, forKey: .typeContainer)
-        
-        
-        if let nestedContainer = try? container.nestedContainer(keyedBy: DepartmentCodingKeys.self, forKey: .departmentContainer) {
-            self.departmentName = try! nestedContainer.decode(String.self, forKey: .departmentName)
-            
-            var departmentAbbreviation = try! nestedContainer.decode(String.self, forKey: .departmentAbbreviation)
-            if let range = departmentAbbreviation.range(of: "каф.") {
-                departmentAbbreviation.removeSubrange(range)
-            }
-            if let range = departmentAbbreviation.range(of: "Каф.") {
-                departmentAbbreviation.removeSubrange(range)
-            }
-            self.departmentAbbreviation = departmentAbbreviation.trimmingCharacters(in: .whitespaces)
-        }
+        self.type = try! container.decode(ClassroomType.self, forKey: .type)
+        self.department = try? container.decode(Department.self, forKey: .department)
         Log.info("Classroom \(String(self.formattedName(showBuilding: true))) fetched.")
     }
     
@@ -150,8 +137,8 @@ extension Classroom: Decodable {
         case capacity
         
         case buildingContainer = "buildingNumber"
-        case typeContainer = "auditoryType"
-        case departmentContainer = "department"
+        case type = "auditoryType"
+        case department = "department"
     }
     
     private enum BuildingCodingKeys: String, CodingKey {
@@ -159,9 +146,5 @@ extension Classroom: Decodable {
     }
     private enum ClassroomCodingKeys: String, CodingKey {
         case id
-    }
-    private enum DepartmentCodingKeys: String, CodingKey {
-        case departmentName = "name"
-        case departmentAbbreviation = "abbrev"
     }
 }
