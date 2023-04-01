@@ -24,7 +24,7 @@ public class Lesson: NSManagedObject {
         decodeAnnouncement(container)
         decodeEmployees(container, decoder, context)
         decodeGroups(container, decoder, context)
-        decodeClassrooms(container, decoder, context)
+        decodeAuditoriums(container, decoder, context)
     }
     
     private func decodeLesson(_ container: KeyedDecodingContainer<Lesson.CodingKeys>) {
@@ -94,13 +94,13 @@ public class Lesson: NSManagedObject {
         
     }
     
-    private func decodeClassrooms(_ container: KeyedDecodingContainer<Lesson.CodingKeys>, _ decoder: Decoder, _ context: NSManagedObjectContext) {
-        if let classroomNames = try? container.decode([String].self, forKey: .classroom) {
-            let classrooms = classroomNames.map { (try! Classroom(from: $0, in: context)) }
-            self.addToClassrooms(NSSet(array: classrooms))
-            self.classroomsNames = classrooms.map { "\($0.floor)\(String(describing: $0.name))-\($0.building)" }.sorted()
+    private func decodeAuditoriums(_ container: KeyedDecodingContainer<Lesson.CodingKeys>, _ decoder: Decoder, _ context: NSManagedObjectContext) {
+        if let auditoriumNames = try? container.decode([String].self, forKey: .auditorium) {
+            let auditoriums = auditoriumNames.map { (try! Auditorium(from: $0, in: context)) }
+            self.addToAuditoriums(NSSet(array: auditoriums))
+            self.auditoriumsNames = auditoriums.map { "\($0.floor)\(String(describing: $0.name))-\($0.building)" }.sorted()
         } else {
-            self.classroomsNames = []
+            self.auditoriumsNames = []
         }
         
     }
@@ -142,6 +142,6 @@ extension Lesson: Decodable {
         case groups = "studentGroups"
         case subgroup = "numSubgroup"
         case employees = "employees"
-        case classroom = "auditories"
+        case auditorium = "auditories"
     }
 }

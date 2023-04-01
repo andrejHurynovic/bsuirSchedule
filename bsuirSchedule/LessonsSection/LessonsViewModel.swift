@@ -57,8 +57,8 @@ class LessonsViewModel: ObservableObject {
             showGroups = true
         }
         
-        if let classroom = element as? Classroom {
-            navigationViewTitle = classroom.formattedName(showBuilding: true)
+        if let auditorium = element as? Auditorium {
+            navigationViewTitle = auditorium.formattedName(showBuilding: true)
             showGroups = true
             showEmployees = true
         }
@@ -230,7 +230,7 @@ class LessonsViewModel: ObservableObject {
             return showEmployees && !showGroups && !showWeeks && subgroup == nil
         case is Employee:
             return !showEmployees && showGroups && !showWeeks
-        case is Classroom:
+        case is Auditorium:
             return showEmployees == true && showGroups == true
         default:
             return false

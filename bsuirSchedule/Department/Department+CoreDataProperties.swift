@@ -20,7 +20,7 @@ extension Department {
     @NSManaged public var name: String?
     @NSManaged public var abbreviation: String
 
-    @NSManaged public var classrooms: NSSet?
+    @NSManaged public var auditoriums: NSSet?
     @NSManaged public var employees: NSSet?
     
 }
@@ -28,17 +28,17 @@ extension Department {
 // MARK: Generated accessors for employees
 extension Department {
     
-    @objc(addClassroomsObject:)
-    @NSManaged public func addToClassrooms(_ value: Classroom)
+    @objc(addAuditoriumsObject:)
+    @NSManaged public func addToAuditoriums(_ value: Auditorium)
     
-    @objc(removeClassroomsObject:)
-    @NSManaged public func removeFromClassrooms(_ value: Classroom)
+    @objc(removeAuditoriumsObject:)
+    @NSManaged public func removeFromAuditoriums(_ value: Auditorium)
     
-    @objc(addClassrooms:)
-    @NSManaged public func addToClassrooms(_ values: NSSet)
+    @objc(addAuditoriums:)
+    @NSManaged public func addToAuditoriums(_ values: NSSet)
     
-    @objc(removeClassrooms:)
-    @NSManaged public func removeFromClassrooms(_ values: NSSet)
+    @objc(removeAuditoriums:)
+    @NSManaged public func removeFromAuditoriums(_ values: NSSet)
     
     @objc(addEmployeesObject:)
     @NSManaged public func addToEmployees(_ value: Department)

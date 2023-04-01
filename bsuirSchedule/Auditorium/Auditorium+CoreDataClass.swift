@@ -1,6 +1,6 @@
 //
-//  Classroom+CoreDataClass.swift
-//  Classroom
+//  Auditorium+CoreDataClass.swift
+//  Auditorium
 //
 //  Created by Andrej Hurynovič on 25.09.21.
 //
@@ -8,13 +8,13 @@
 
 import CoreData
 
-enum ClassroomError: Error {
+enum AuditoriumError: Error {
     case incorrectName(name: String)
     case nonEducationalBuilding
 }
 
-@objc(Classroom)
-public class Classroom: NSManagedObject {
+@objc(Auditorium)
+public class Auditorium: NSManagedObject {
     
     required convenience public init(from decoder: Decoder) throws {
         let container = try! decoder.container(keyedBy: CodingKeys.self)
@@ -22,21 +22,21 @@ public class Classroom: NSManagedObject {
         let buildingContainer = try! container.nestedContainer(keyedBy: BuildingCodingKeys.self, forKey: .building)
         let buildingString = try! buildingContainer.decode(String.self, forKey: .name)
         
-        //This code does not allow the creation of Classrooms in non-educational buildings. The description of the Algorithm is provided in decodeBuilding() method.
+        //This code does not allow the creation of Auditoriums in non-educational buildings. The description of the Algorithm is provided in decodeBuilding() method.
         guard let _ = Int16(buildingString.trimmingCharacters(in: CharacterSet.init([" ", "к", "."]))) else {
             Log.warning("Fetched non-educational building, (\((try? container.decode(String.self, forKey: .name)) ?? "No name")-\(buildingString)).")
-            throw ClassroomError.nonEducationalBuilding
+            throw AuditoriumError.nonEducationalBuilding
         }
         
         let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
-        self.init(entity: Classroom.entity(), insertInto: context)
+        self.init(entity: Auditorium.entity(), insertInto: context)
     
         try self.update(from: decoder)
     }
     
-    ///This function creates a new Classroom object from a string in the format ["000-1 к.", "604-5 к.", "epam 104 к1-2 к."].
+    ///This function creates a new Auditorium object from a string in the format ["000-1 к.", "604-5 к.", "epam 104 к1-2 к."].
     convenience public init(from string: String, in context: NSManagedObjectContext) throws {
-        self.init(entity: Classroom.entity(), insertInto: context)
+        self.init(entity: Auditorium.entity(), insertInto: context)
         
         //"604-5 к." -> "5 к.".
         let buildingString = String(string.suffix(4))
@@ -47,13 +47,13 @@ public class Classroom: NSManagedObject {
         self.floor = nameParts.floor
         self.name = nameParts.name
         self.outsideUniversity = nameParts.outsideUniversity
-        Log.info("Classroom \(string) is created from string.")
+        Log.info("Auditorium \(string) is created from string.")
     }
     
 }
 
 //MARK: Update
-extension Classroom: DecoderUpdatable {
+extension Auditorium: DecoderUpdatable {
     func update(from decoder: Decoder) throws {
         let container = try! decoder.container(keyedBy: CodingKeys.self)
                 
@@ -70,34 +70,34 @@ extension Classroom: DecoderUpdatable {
         
         self.capacity = (try? container.decode(Int16.self, forKey: .capacity)) ?? 0
         self.note = try? container.decode(String.self, forKey: .note)
-        self.type = try! container.decode(ClassroomType.self, forKey: .type)
+        self.type = try! container.decode(AuditoriumType.self, forKey: .type)
         self.department = try? container.decode(Department.self, forKey: .department)
-        Log.info("Classroom \(String(self.formattedName(showBuilding: true))) fetched.")
+        Log.info("Auditorium \(String(self.formattedName(showBuilding: true))) fetched.")
     }
     
     ///Decodes string to Int16 building number or, in the case of non-educational building, throws an error.
     ///
     ///Generally a string is ["1 к.", "2 к.", "3 к.", "4 к.", "5 к.", "6 к.", "7 к.", "8 к."], but in some cases it may be ["Общежитие №4", "Филиал «Минский радиотехнический колледж»"].
-    ///In order not to create unnecessary Classrooms, the " к." part is removed from a string, making string able to cast into Int16. If string is not casted to Int16, then building is non-educational.
+    ///In order not to create unnecessary Auditoriums, the " к." part is removed from a string, making string able to cast into Int16. If string is not casted to Int16, then building is non-educational.
     ///Building container have "id" field, however there is no pattern between an id and building number, the more universal solution is to use the "name" filed.
     static func decodeBuilding(string: String) throws -> Int16 {
         guard let building = Int16(string.trimmingCharacters(in: CharacterSet.init([" ", "к", "."]))) else {
             Log.warning("Non-educational building \(string)")
-            throw ClassroomError.nonEducationalBuilding
+            throw AuditoriumError.nonEducationalBuilding
         }
         return building
     }
     
-    ///Decodes string to floor and name, checks if is classroom is outside of university.
+    ///Decodes string to floor and name, checks if is auditorium is outside of university.
     ///
     ///Generally a string is ["000", "010", "019", "04", "05", "06", "07", "08", "1 - 2", "102"], but in some cases is may be ["epam 103 к1",, "epam 401-1", "ОАО \"Планар\""].
     static func decodeName(string: String) throws -> (floor: Int16, name: String, outsideUniversity: Bool) {
-        //If the first character is not a digit, the Classroom is located outside the university, in this case there is no need to specify floor number.
+        //If the first character is not a digit, the Auditorium is located outside the university, in this case there is no need to specify floor number.
         //Example names: ["epam 103 к1",, "epam 401-1", "ОАО \"Планар\""].
         if string.first!.isNumber == false {
             return (0, string, true)
         }
-        //If the Classroom is located at the university, the name is separated into the floor number (Int16) and the name (String).
+        //If the Auditorium is located at the university, the name is separated into the floor number (Int16) and the name (String).
         //Example:
         //"000"     -> floor == 0, name == "00";
         //"04"      -> floor == 0, name == "04";
@@ -109,18 +109,18 @@ extension Classroom: DecoderUpdatable {
         
         //
         guard let number = Int(string.prefix(3)) ?? Int(string.prefix(2)) else {
-            Log.warning("Can't create name for Classroom \(string)")
-            throw ClassroomError.incorrectName(name: string)
+            Log.warning("Can't create name for Auditorium \(string)")
+            throw AuditoriumError.incorrectName(name: string)
         }
         
-        //If number is less then 100 and first character is not "0", then these are Classrooms with names such as ["34", "69"].
+        //If number is less then 100 and first character is not "0", then these are Auditoriums with names such as ["34", "69"].
         //Floor is specified as 0. Name is specified as full string (with first character).
         //Example: "34" -> floor == 0, name == "34".
         if number < 100, string.first != "0" {
             return (0, string, false)
         }
         
-        //If number is greater then 100, then these are Classrooms on higher floors with names such as [100, 234, 325].
+        //If number is greater then 100, then these are Auditoriums on higher floors with names such as [100, 234, 325].
         //First character of string is floor number, it is casted to Int16.
         let floor = Int16(String(string.first!))!
         //Name is assigned as string without first character (which represents floor).
@@ -130,7 +130,7 @@ extension Classroom: DecoderUpdatable {
     
 }
 
-extension Classroom: Decodable {
+extension Auditorium: Decodable {
     private enum CodingKeys: String, CodingKey {
         case id
         case name
@@ -145,7 +145,7 @@ extension Classroom: Decodable {
     private enum BuildingCodingKeys: String, CodingKey {
         case name
     }
-    private enum ClassroomCodingKeys: String, CodingKey {
+    private enum AuditoriumCodingKeys: String, CodingKey {
         case id
     }
 }

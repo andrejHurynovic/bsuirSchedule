@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22E252" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Classroom" representedClassName="Classroom" syncable="YES">
+    <entity name="Auditorium" representedClassName="Auditorium" syncable="YES">
         <attribute name="building" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="capacity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="favourite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
@@ -9,9 +9,9 @@
         <attribute name="note" optional="YES" attributeType="String"/>
         <attribute name="outsideUniversity" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="typeValue" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="department" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Department" inverseName="classrooms" inverseEntity="Department"/>
-        <relationship name="lessons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lesson" inverseName="classrooms" inverseEntity="Lesson"/>
-        <relationship name="type" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ClassroomType" inverseName="classrooms" inverseEntity="ClassroomType"/>
+        <relationship name="department" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Department" inverseName="auditoriums" inverseEntity="Department"/>
+        <relationship name="lessons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lesson" inverseName="auditoriums" inverseEntity="Lesson"/>
+        <relationship name="type" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AuditoriumType" inverseName="auditoriums" inverseEntity="AuditoriumType"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="building"/>
@@ -20,11 +20,11 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="ClassroomType" representedClassName="ClassroomType" syncable="YES">
+    <entity name="AuditoriumType" representedClassName="AuditoriumType" syncable="YES">
         <attribute name="abbreviation" attributeType="String"/>
         <attribute name="id" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
-        <relationship name="classrooms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Classroom" inverseName="type" inverseEntity="Classroom"/>
+        <relationship name="auditoriums" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Auditorium" inverseName="type" inverseEntity="Auditorium"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -35,7 +35,7 @@
         <attribute name="abbreviation" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="classrooms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Classroom" inverseName="department" inverseEntity="Classroom"/>
+        <relationship name="auditoriums" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Auditorium" inverseName="department" inverseEntity="Auditorium"/>
         <relationship name="employees" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Employee" inverseName="departments" inverseEntity="Employee"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -108,7 +108,7 @@
     </entity>
     <entity name="Lesson" representedClassName="Lesson" syncable="YES">
         <attribute name="abbreviation" attributeType="String"/>
-        <attribute name="classroomsNames" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[String]"/>
+        <attribute name="auditoriumsNames" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[String]"/>
         <attribute name="dateString" attributeType="String"/>
         <attribute name="employeesIDs" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[Int32]"/>
         <attribute name="endLessonDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -122,13 +122,13 @@
         <attribute name="timeStart" attributeType="String"/>
         <attribute name="weekday" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="weeks" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[Int]"/>
-        <relationship name="classrooms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Classroom" inverseName="lessons" inverseEntity="Classroom"/>
+        <relationship name="auditoriums" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Auditorium" inverseName="lessons" inverseEntity="Auditorium"/>
         <relationship name="employees" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Employee" inverseName="lessons" inverseEntity="Employee"/>
         <relationship name="groups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="lessons" inverseEntity="Group"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="abbreviation"/>
-                <constraint value="classroomsNames"/>
+                <constraint value="auditoriumsNames"/>
                 <constraint value="employeesIDs"/>
                 <constraint value="startLessonDateString"/>
                 <constraint value="dateString"/>

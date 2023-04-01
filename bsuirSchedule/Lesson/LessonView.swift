@@ -80,7 +80,7 @@ struct LessonView: View {
                 lessonType
                 Spacer()
                 weeks
-                classrooms
+                auditoriums
             }
         }
     }
@@ -91,7 +91,7 @@ struct LessonView: View {
             subgroup
             Spacer()
             weeks
-            classrooms
+            auditoriums
             lessonType
         }
     }
@@ -129,21 +129,21 @@ struct LessonView: View {
         }
     }
     
-    @ViewBuilder var classrooms: some View {
-        if let classrooms = lesson.classrooms?.allObjects as? [Classroom], classrooms.isEmpty == false {
+    @ViewBuilder var auditoriums: some View {
+        if let auditoriums = lesson.auditoriums?.allObjects as? [Auditorium], auditoriums.isEmpty == false {
             HStack(alignment: .top) {
                 Image(systemName: "mappin")
                 VStack(alignment: .leading) {
-                    ForEach(classrooms.sorted(by: {$0.name < $1.name}), id: \.self) { classroom in
+                    ForEach(auditoriums.sorted(by: {$0.name < $1.name}), id: \.self) { auditorium in
                         NavigationLink {
-                            ClassroomDetailedView(classroom: classroom)
+                            AuditoriumDetailedView(auditorium: auditorium)
                         } label: {
-                            Text(classroom.formattedName(showBuilding: true))
+                            Text(auditorium.formattedName(showBuilding: true))
                                 .foregroundColor(Color.primary)
                         }
                         .contextMenu {
-                            FavoriteButton(classroom.favourite) {
-                                classroom.favourite.toggle()
+                            FavoriteButton(auditorium.favourite) {
+                                auditorium.favourite.toggle()
                             }
                         }
                         

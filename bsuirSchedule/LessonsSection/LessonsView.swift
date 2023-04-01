@@ -166,8 +166,8 @@ struct LessonsView: View {
                 EmployeeDetailedView(viewModel: EmployeeViewModel(employee))
             }
             
-            if let classroom = viewModel.element as? Classroom {
-                ClassroomDetailedView(classroom: classroom)
+            if let auditorium = viewModel.element as? Auditorium {
+                AuditoriumDetailedView(auditorium: auditorium)
             }
             
         } label: {

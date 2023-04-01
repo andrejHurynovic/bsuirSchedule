@@ -12,8 +12,8 @@ class FavouriteViewModel: ObservableObject {
     @State var groupSection: LessonsSection?
     @AppStorage("primaryEmployee") var primaryEmployeeID: Int?
     @State var employeeSection: LessonsSection?
-    @AppStorage("primaryClassroom") var primaryClassroomID: String?
-    @State var classroomSection: LessonsSection?
+    @AppStorage("primaryAuditorium") var primaryAuditoriumID: String?
+    @State var auditoriumSection: LessonsSection?
 }
 
 struct FavoritesView: View {
@@ -34,14 +34,14 @@ struct FavoritesView: View {
         predicate: NSPredicate(format: "favourite = true"))
     var favouriteEmployees: FetchedResults<Employee>
     @FetchRequest(
-        entity: Classroom.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \Classroom.outsideUniversity, ascending: true),
-                          NSSortDescriptor(keyPath: \Classroom.building, ascending: true),
-                          NSSortDescriptor(keyPath: \Classroom.floor, ascending: true),
-                          NSSortDescriptor(keyPath: \Classroom.name, ascending: true)],
+        entity: Auditorium.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \Auditorium.outsideUniversity, ascending: true),
+                          NSSortDescriptor(keyPath: \Auditorium.building, ascending: true),
+                          NSSortDescriptor(keyPath: \Auditorium.floor, ascending: true),
+                          NSSortDescriptor(keyPath: \Auditorium.name, ascending: true)],
         predicate:
             NSPredicate(format: "favourite = true"))
-    var favouriteClassrooms: FetchedResults<Classroom>
+    var favouriteAuditoriums: FetchedResults<Auditorium>
     
     var body: some View {
         NavigationView {
@@ -49,7 +49,7 @@ struct FavoritesView: View {
                 VStack {
                     primaryGroup
                     primaryEmployee
-                    primaryClassroom
+                    primaryAuditorium
                 }
                 .padding(.horizontal)
                 .transition(.move(edge: .leading))
@@ -74,9 +74,9 @@ struct FavoritesView: View {
             }
         }
     
-    @ViewBuilder var primaryClassroom: some View {
-        if let primaryClassroomID = viewModel.primaryClassroomID, let classroom = favouriteClassrooms.first(where: { $0.formattedName(showBuilding: true) == primaryClassroomID }) {
-            FavoriteSectionView(viewModel: FavoriteSectionViewModel(lessonsSectioned: classroom))
+    @ViewBuilder var primaryAuditorium: some View {
+        if let primaryAuditoriumID = viewModel.primaryAuditoriumID, let auditorium = favouriteAuditoriums.first(where: { $0.formattedName(showBuilding: true) == primaryAuditoriumID }) {
+            FavoriteSectionView(viewModel: FavoriteSectionViewModel(lessonsSectioned: auditorium))
         }
     }
     
@@ -86,7 +86,7 @@ struct FavoritesView: View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 500))], alignment: .leading, spacing: 8, pinnedViews: [.sectionHeaders]) {
 //            tasks
             groups
-            classrooms
+            auditoriums
         }
         .padding([.leading, .horizontal, .top])
     }
@@ -176,24 +176,24 @@ struct FavoritesView: View {
             }
         }
     }
-    @ViewBuilder var classrooms: some View {
-        if favouriteClassrooms.isEmpty == false {
+    @ViewBuilder var auditoriums: some View {
+        if favouriteAuditoriums.isEmpty == false {
             Section {
-                ForEach(favouriteClassrooms) { classroom in
+                ForEach(favouriteAuditoriums) { auditorium in
                     NavigationLink {
-                        ClassroomDetailedView(classroom: classroom)
+                        AuditoriumDetailedView(auditorium: auditorium)
                     } label: {
-                        ClassroomView(classroom: classroom, favorite: true)
+                        AuditoriumView(auditorium: auditorium, favorite: true)
                     }
                     .contextMenu {
-                        FavoriteButton(classroom.favourite) {
-                            classroom.favourite.toggle()
+                        FavoriteButton(auditorium.favourite) {
+                            auditorium.favourite.toggle()
                         }
                     }
 
                 }
             } header: {
-                standardizedHeader(title: "Кабинеты")
+                standardizedHeader(title: "Аудитории")
                     .transition(.scale)
             }
         }

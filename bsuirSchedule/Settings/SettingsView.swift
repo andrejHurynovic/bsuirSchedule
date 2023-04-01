@@ -25,14 +25,14 @@ struct SettingsView: View {
         predicate: NSPredicate(format: "favourite = true"))
     var favouriteEmployees: FetchedResults<Employee>
     @FetchRequest(
-        entity: Classroom.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \Classroom.outsideUniversity, ascending: true),
-                          NSSortDescriptor(keyPath: \Classroom.building, ascending: true),
-                          NSSortDescriptor(keyPath: \Classroom.floor, ascending: true),
-                          NSSortDescriptor(keyPath: \Classroom.name, ascending: true)],
+        entity: Auditorium.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \Auditorium.outsideUniversity, ascending: true),
+                          NSSortDescriptor(keyPath: \Auditorium.building, ascending: true),
+                          NSSortDescriptor(keyPath: \Auditorium.floor, ascending: true),
+                          NSSortDescriptor(keyPath: \Auditorium.name, ascending: true)],
         predicate:
             NSPredicate(format: "favourite = true"))
-    var favouriteClassrooms: FetchedResults<Classroom>
+    var favouriteAuditoriums: FetchedResults<Auditorium>
     
     var body: some View {
         NavigationView {
@@ -62,8 +62,8 @@ struct SettingsView: View {
             primaryGroupPicker
         case .employee:
             primaryEmployeePicker
-        case .classroom:
-            primaryClassroomPicker
+        case .auditorium:
+            primaryAuditoriumPicker
         }
     }
     
@@ -88,11 +88,11 @@ struct SettingsView: View {
                 }
             }
     }
-    @ViewBuilder var primaryClassroomPicker: some View {
-            Picker(selection: $viewModel.primaryClassroom, label: Text("Выбор")) {
+    @ViewBuilder var primaryAuditoriumPicker: some View {
+            Picker(selection: $viewModel.primaryAuditorium, label: Text("Выбор")) {
                 Text("Нет").tag(nil as String?)
-                ForEach(favouriteClassrooms) { classroom in
-                    Text(classroom.formattedName(showBuilding: true)).tag(classroom.formattedName(showBuilding: true) as String?)
+                ForEach(favouriteAuditoriums) { auditorium in
+                    Text(auditorium.formattedName(showBuilding: true)).tag(auditorium.formattedName(showBuilding: true) as String?)
                 }
             }
     }

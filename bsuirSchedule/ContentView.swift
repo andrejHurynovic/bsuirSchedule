@@ -24,9 +24,9 @@ struct ContentView: View {
                 .tabItem {
                     Label("Преподаватели", systemImage: "person.3")
                 }
-            ClassroomsView()
+            AuditoriumsView()
                 .tabItem {
-                    Label("Кабинеты", systemImage: "mappin")
+                    Label("Аудитории", systemImage: "mappin")
                 }
             SettingsView()
                 .tabItem {

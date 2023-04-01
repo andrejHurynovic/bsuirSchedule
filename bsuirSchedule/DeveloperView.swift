@@ -13,8 +13,8 @@ struct DeveloperView: View {
     @FetchRequest(entity: Faculty.entity(), sortDescriptors: []) var faculties: FetchedResults<Faculty>
     @FetchRequest(entity: Speciality.entity(), sortDescriptors: []) var specialities: FetchedResults<Speciality>
     @FetchRequest(entity: Department.entity(), sortDescriptors: []) var departments: FetchedResults<Department>
-    @FetchRequest(entity: Classroom.entity(), sortDescriptors: []) var classrooms: FetchedResults<Classroom>
-    @FetchRequest(entity: ClassroomType.entity(), sortDescriptors: []) var classroomTypes: FetchedResults<ClassroomType>
+    @FetchRequest(entity: Auditorium.entity(), sortDescriptors: []) var auditoriums: FetchedResults<Auditorium>
+    @FetchRequest(entity: AuditoriumType.entity(), sortDescriptors: []) var auditoriumTypes: FetchedResults<AuditoriumType>
     @FetchRequest(entity: Group.entity(), sortDescriptors: []) var groups: FetchedResults<Group>
     @FetchRequest(entity: Employee.entity(), sortDescriptors: []) var employees: FetchedResults<Employee>
     @FetchRequest(entity: Lesson.entity(), sortDescriptors: []) var lessons: FetchedResults<Lesson>
@@ -26,8 +26,8 @@ struct DeveloperView: View {
                 DeveloperDeleteView(name: "факультеты", symbol: "graduationcap.circle", elements: faculties)
                 DeveloperDeleteView(name: "специальности", symbol: "book.circle", elements: specialities)
                 DeveloperDeleteView(name: "подразделения", symbol: "book.circle", elements: departments)
-                DeveloperDeleteView(name: "кабинеты", symbol: "building.columns.circle", elements: classrooms)
-                DeveloperDeleteView(name: "типы кабинетов", symbol: "building.columns.circle", elements: classroomTypes)
+                DeveloperDeleteView(name: "аудитории", symbol: "building.columns.circle", elements: auditoriums)
+                DeveloperDeleteView(name: "типы аудиторий", symbol: "building.columns.circle", elements: auditoriumTypes)
                 DeveloperDeleteView(name: "группы", symbol: "person.2.circle", elements: groups)
                 DeveloperDeleteView(name: "преподаватели", symbol: "person.crop.circle", elements: employees)
                 DeveloperDeleteView(name: "занятия", symbol: "books.vertical.circle", elements: lessons)
@@ -37,7 +37,7 @@ struct DeveloperView: View {
             Section("Загрузка") {
                 DeveloperUpdateView<Faculty>(name: "факультеты", symbol: "graduationcap.circle")
                 DeveloperUpdateView<Speciality>(name: "специальности", symbol: "book.circle")
-                DeveloperUpdateView<Classroom>(name: "кабинеты", symbol: "building.columns.circle")
+                DeveloperUpdateView<Auditorium>(name: "аудитории", symbol: "building.columns.circle")
                 DeveloperUpdateView<Group>(name: "группы", symbol: "person.2.circle")
                 DeveloperUpdateView<Employee>(name: "преподаватели", symbol: "person.crop.circle")
             }

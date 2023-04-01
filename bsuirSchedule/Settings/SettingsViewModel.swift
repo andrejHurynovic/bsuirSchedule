@@ -10,7 +10,7 @@ import SwiftUI
 enum PrimaryType: Int, CaseIterable {
     case group = 0
     case employee = 1
-    case classroom = 2
+    case auditorium = 2
     
     var description: String {
         switch self {
@@ -18,8 +18,8 @@ enum PrimaryType: Int, CaseIterable {
             return "Группа"
         case .employee:
             return "Преподаватель"
-        case .classroom:
-            return "Кабинет"
+        case .auditorium:
+            return "Аудитория"
         }
     }
 }
@@ -35,7 +35,7 @@ class SettingsViewModel: ObservableObject {
     @AppStorage("primaryGroup") var primaryGroup: String?
     @AppStorage("primaryGroupSubgroup") var primaryGroupSubgroup: Int?
     @AppStorage("primaryEmployee") var primaryEmployee: Int?
-    @AppStorage("primaryClassroom") var primaryClassroom: String?
+    @AppStorage("primaryAuditorium") var primaryAuditorium: String?
     
     @AppStorage("mainColor") var mainColor = Color.accentColor
     @AppStorage("lectureColor") var lectureColor: Color = Color(red: -4.06846e-06, green: 0.631373, blue: 0.847059)

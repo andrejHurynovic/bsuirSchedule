@@ -11,7 +11,7 @@ enum FetchDataType: String {
     
     case faculties = "https://iis.bsuir.by/api/v1/faculties"
     case specialities = "https://iis.bsuir.by/api/v1/specialities"
-    case classrooms = "https://iis.bsuir.by/api/v1/auditories"
+    case auditoriums = "https://iis.bsuir.by/api/v1/auditories"
     
     case groups = "https://iis.bsuir.by/api/v1/student-groups"
     case group = "https://iis.bsuir.by/api/v1/schedule?studentGroup="

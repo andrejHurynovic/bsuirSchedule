@@ -1,39 +1,39 @@
 //
-//  ClassroomsView.swift
-//  ClassroomsView
+//  AuditoriumsView.swift
+//  AuditoriumsView
 //
 //  Created by Andrej Hurynovič on 25.09.21.
 //
 
 import SwiftUI
 
-struct ClassroomsView: View {
-    @FetchRequest(entity: Classroom.entity(), sortDescriptors: []) var classrooms: FetchedResults<Classroom>
+struct AuditoriumsView: View {
+    @FetchRequest(entity: Auditorium.entity(), sortDescriptors: []) var auditoriums: FetchedResults<Auditorium>
     
-    @StateObject private var viewModel = ClassroomsViewModel()
+    @StateObject private var viewModel = AuditoriumsViewModel()
     
     @State var searchText = ""
-    @State var selectedClassroomType: ClassroomType? = nil
+    @State var selectedAuditoriumType: AuditoriumType? = nil
     @State var selectedBuilding: Int16? = nil
     
     var body: some View {
         NavigationView {
-            let filteredClassrooms = classrooms
+            let filteredAuditoriums = auditoriums
                 .filter { searchText.isEmpty || $0.formattedName(showBuilding: true).localizedStandardContains(searchText) }
-                .filtered(by: selectedBuilding, selectedClassroomType)
+                .filtered(by: selectedBuilding, selectedAuditoriumType)
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 256))], alignment: .leading, spacing: 8, pinnedViews: [.sectionHeaders]) {
-                    ForEach(filteredClassrooms.sections(), id: \.self) { section in
+                    ForEach(filteredAuditoriums.sections(), id: \.self) { section in
                         Section {
-                            ForEach(section.classrooms, id: \.self) { classroom in
+                            ForEach(section.auditoriums, id: \.self) { auditorium in
                                 NavigationLink {
-                                    ClassroomDetailedView(classroom: classroom)
+                                    AuditoriumDetailedView(auditorium: auditorium)
                                 } label: {
-                                    ClassroomView(classroom: classroom)
+                                    AuditoriumView(auditorium: auditorium)
                                 }
                                 .contextMenu {
-                                    FavoriteButton(classroom.favourite) {
-                                        classroom.favourite.toggle()
+                                    FavoriteButton(auditorium.favourite) {
+                                        auditorium.favourite.toggle()
                                     }
                                 }
                             }
@@ -49,16 +49,16 @@ struct ClassroomsView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Menu {
                         Text("Тип:")
-                        let types = Set(classrooms.compactMap ({ $0.type })).sorted { $0.id < $1.id }
-                        Picker("", selection: $selectedClassroomType) {
-                            Text("любой").tag(nil as ClassroomType?)
+                        let types = Set(auditoriums.compactMap ({ $0.type })).sorted { $0.id < $1.id }
+                        Picker("", selection: $selectedAuditoriumType) {
+                            Text("любой").tag(nil as AuditoriumType?)
                             ForEach(types, id: \.self) { type in
                                 Text(type.abbreviation)
-                                    .tag(type.self as ClassroomType?)
+                                    .tag(type.self as AuditoriumType?)
                             }
                         }
                         Text("Здание:")
-                        let buildings = Set(classrooms.map ({ $0.building })).sorted { $0 < $1 }
+                        let buildings = Set(auditoriums.map ({ $0.building })).sorted { $0 < $1 }
                         Picker("", selection: $selectedBuilding) {
                             Text("любое").tag(nil as Int16?)
                             ForEach(buildings, id: \.self) { building in
@@ -67,23 +67,23 @@ struct ClassroomsView: View {
                             }
                         }
                     } label: {
-                        Image(systemName: (selectedClassroomType == nil && selectedBuilding == nil) ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
+                        Image(systemName: (selectedAuditoriumType == nil && selectedBuilding == nil) ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
                     }
                 }
             }
-            .navigationTitle("Кабинеты")
+            .navigationTitle("Аудитории")
             .refreshable {
                 await viewModel.update()
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
-        .searchable(text: $searchText, prompt: "Номер, кафедра")
+        .searchable(text: $searchText, prompt: "Номер, подразделение")
     }
 }
 
-struct ClassroomsView_Previews: PreviewProvider {
+struct AuditoriumsView_Previews: PreviewProvider {
     static var previews: some View {
-        ClassroomsView()
+        AuditoriumsView()
             .previewInterfaceOrientation(.portrait)
     }
 }

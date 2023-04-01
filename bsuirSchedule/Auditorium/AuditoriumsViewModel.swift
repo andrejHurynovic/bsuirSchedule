@@ -1,6 +1,6 @@
 //
-//  ClassroomsViewModel.swift
-//  ClassroomsViewModel
+//  AuditoriumsViewModel.swift
+//  AuditoriumsViewModel
 //
 //  Created by Andrej Hurynovič on 25.09.21.
 //
@@ -8,16 +8,16 @@
 import SwiftUI
 import Combine
 
-class ClassroomsViewModel: ObservableObject {
+class AuditoriumsViewModel: ObservableObject {
     
     func update() async {
-        for classroom in Classroom.getAll() {
-            PersistenceController.shared.container.viewContext.delete(classroom)
+        for auditorium in Auditorium.getAll() {
+            PersistenceController.shared.container.viewContext.delete(auditorium)
         }
         await MainActor.run {
             try! PersistenceController.shared.container.viewContext.save()
         }
-        await Classroom.fetchAll()
+        await Auditorium.fetchAll()
         await MainActor.run {
             try! PersistenceController.shared.container.viewContext.save()
         }

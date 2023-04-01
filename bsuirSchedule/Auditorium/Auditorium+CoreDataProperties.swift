@@ -1,6 +1,6 @@
 //
-//  Classroom+CoreDataProperties.swift
-//  Classroom
+//  Auditorium+CoreDataProperties.swift
+//  Auditorium
 //
 //  Created by Andrej Hurynovič on 25.09.21.
 //
@@ -9,11 +9,11 @@
 import Foundation
 import CoreData
 
-extension Classroom {
+extension Auditorium {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Classroom> {
-        let request = NSFetchRequest<Classroom>(entityName: "Classroom")
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \Classroom.name, ascending: true)]
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Auditorium> {
+        let request = NSFetchRequest<Auditorium>(entityName: "Auditorium")
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \Auditorium.name, ascending: true)]
         return request
     }
 
@@ -27,7 +27,7 @@ extension Classroom {
     @NSManaged public var building: Int16
     @NSManaged public var capacity: Int16
     
-    @NSManaged public var type: ClassroomType?
+    @NSManaged public var type: AuditoriumType?
     @NSManaged public var department: Department?
     
     @NSManaged public var lessons: NSSet?
@@ -35,7 +35,7 @@ extension Classroom {
 }
 
 // MARK: Generated accessors for lessons
-extension Classroom {
+extension Auditorium {
 
     @objc(addLessonsObject:)
     @NSManaged public func addToLessons(_ value: Lesson)
@@ -51,10 +51,10 @@ extension Classroom {
 
 }
 
-extension Classroom: LessonsSectioned { }
-extension Classroom: Identifiable {}
+extension Auditorium: LessonsSectioned { }
+extension Auditorium: Identifiable {}
 
-extension Classroom: EducationDated {
+extension Auditorium: EducationDated {
     var educationStart: Date? {
         get {
             self.groups?.compactMap { $0.educationStart }.sorted().first
@@ -83,20 +83,20 @@ extension Classroom: EducationDated {
 }
 
 //MARK: Request
-extension Classroom {
-    static func getAll(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Classroom] {
+extension Auditorium {
+    static func getAll(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Auditorium] {
         try! context.fetch(self.fetchRequest())
     }
 }
 
 //MARK: Fetch
-extension Classroom {
+extension Auditorium {
     static func fetchAll() async {
-        let data = try! await URLSession.shared.data(from: FetchDataType.classrooms.rawValue)
+        let data = try! await URLSession.shared.data(from: FetchDataType.auditoriums.rawValue)
         let startTime = CFAbsoluteTimeGetCurrent()
         
         guard let dictionaries = try! JSONSerialization.jsonObject(with: data) as? [[String: Any]] else {
-            Log.error("Can't create classrooms dictionaries.")
+            Log.error("Can't create auditoriums dictionaries.")
             return
         }
         
@@ -105,7 +105,7 @@ extension Classroom {
         let decoder = JSONDecoder()
         decoder.userInfo[.managedObjectContext] = backgroundContext
         
-        let classrooms = getAll(context: backgroundContext)
+        let auditoriums = getAll(context: backgroundContext)
         
         for dictionary in dictionaries {
             let data = try! JSONSerialization.data(withJSONObject: dictionary)
@@ -115,28 +115,28 @@ extension Classroom {
             let buildingString = buildingDictionary["name"] as! String
             
                         
-            if let building = try? Classroom.decodeBuilding(string: buildingString),
-               let nameParts = try? Classroom.decodeName(string: name),
-               var classroom = classrooms.first (where: {
+            if let building = try? Auditorium.decodeBuilding(string: buildingString),
+               let nameParts = try? Auditorium.decodeName(string: name),
+               var auditorium = auditoriums.first (where: {
                    $0.building == building &&
                    $0.floor == nameParts.floor &&
                    $0.name == nameParts.name
                }) {
-                try! decoder.update(&classroom, from: data)
+                try! decoder.update(&auditorium, from: data)
             } else {
-                let _ = try? decoder.decode(Classroom.self, from: data)
+                let _ = try? decoder.decode(Auditorium.self, from: data)
             }
         }
         await backgroundContext.perform(schedule: .immediate, {
             try! backgroundContext.save()
-            Log.info("\(String(self.getAll(context: backgroundContext).count)) Classrooms fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds.\n")
+            Log.info("\(String(self.getAll(context: backgroundContext).count)) Auditoriums fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds.\n")
         })
     }
     
 }
 
 //MARK: Accessors
-extension Classroom {
+extension Auditorium {
     var groups: [Group]? {
         guard let lessons = lessons?.allObjects as? [Lesson], !lessons.isEmpty else {
             return nil
@@ -148,7 +148,7 @@ extension Classroom {
 }
 
 //MARK: Formatted name
-extension Classroom {
+extension Auditorium {
     func formattedName(showBuilding: Bool) -> String {
         if outsideUniversity == true {
             //Оutside university buildings

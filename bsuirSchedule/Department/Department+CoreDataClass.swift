@@ -23,7 +23,7 @@ public class Department: NSManagedObject {
         }
         self.init(entity: Department.entity(), insertInto: context)
         
-        self.id = (try? container.decode(Int16.self, forKey: .id)) ?? (try? container.decode(Int16.self, forKey: .idInClassroomContainer))!
+        self.id = (try? container.decode(Int16.self, forKey: .id)) ?? (try? container.decode(Int16.self, forKey: .idInAuditoriumContainer))!
         self.name = try! container.decode(String.self, forKey: .name)
         self.abbreviation = formattedAbbreviationString(from: try! container.decode(String.self, forKey: .abbreviation))
         
@@ -50,7 +50,7 @@ public class Department: NSManagedObject {
 extension Department: Decodable {
     private enum CodingKeys: String, CodingKey {
         case id = "id"
-        case idInClassroomContainer = "idDepartment"
+        case idInAuditoriumContainer = "idDepartment"
         case name = "name"
         case abbreviation = "abbrev"
     }

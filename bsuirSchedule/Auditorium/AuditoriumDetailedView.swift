@@ -1,5 +1,5 @@
 //
-//  ClassroomDetailedView.swift
+//  AuditoriumDetailedView.swift
 //  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 17.10.21.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct ClassroomDetailedView: View {
-    var classroom: Classroom
+struct AuditoriumDetailedView: View {
+    var auditorium: Auditorium
     
     var body: some View {
         List {
@@ -16,7 +16,7 @@ struct ClassroomDetailedView: View {
             links
             groups
         }
-        .navigationTitle(classroom.formattedName(showBuilding: true))
+        .navigationTitle(auditorium.formattedName(showBuilding: true))
     }
     
     @ViewBuilder var information: some View {
@@ -27,13 +27,13 @@ struct ClassroomDetailedView: View {
     }
     
     @ViewBuilder var type: some View {
-        if let type = classroom.type {
+        if let type = auditorium.type {
             Form("Тип", type.name)
         }
     }
     
     @ViewBuilder var capacity: some View {
-        let capacity = classroom.capacity
+        let capacity = auditorium.capacity
         if capacity != 0 {
             Form("Вместительность", String(capacity))
         }
@@ -49,7 +49,7 @@ struct ClassroomDetailedView: View {
     }
     
     @ViewBuilder var department: some View {
-        if let departmentName = classroom.department?.name {
+        if let departmentName = auditorium.department?.name {
             NavigationLink {
                 //                DepartmentDetailedView()
             } label: {
@@ -59,11 +59,11 @@ struct ClassroomDetailedView: View {
     }
     
     @ViewBuilder var scheduleButton: some View {
-        if classroom.lessons?.allObjects.isEmpty == false {
+        if auditorium.lessons?.allObjects.isEmpty == false {
             NavigationLink {
-                LessonsView(viewModel: LessonsViewModel(classroom))
+                LessonsView(viewModel: LessonsViewModel(auditorium))
             } label: {
-                Label("Расписание кабинета", systemImage: "calendar")
+                Label("Расписание аудитории", systemImage: "calendar")
             }
         }
     }
@@ -71,7 +71,7 @@ struct ClassroomDetailedView: View {
     
     
     @ViewBuilder var groups: some View {
-        if let groups = classroom.groups, !groups.isEmpty {
+        if let groups = auditorium.groups, !groups.isEmpty {
             GroupsSectionsView(sections: groups.sections(), groupsCount: groups.count)
         }
     }

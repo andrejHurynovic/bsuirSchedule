@@ -1,5 +1,5 @@
 //
-//  ClassroomView.swift
+//  AuditoriumView.swift
 //  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 27.10.21.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct ClassroomView: View {
-    @State var classroom: Classroom
+struct AuditoriumView: View {
+    @State var auditorium: Auditorium
     
     var favorite: Bool = false
     
@@ -20,7 +20,7 @@ struct ClassroomView: View {
                 HStack {
                     VStack(alignment: .leading) {
                         HStack {
-                            Text(classroom.formattedName(showBuilding: favorite))
+                            Text(auditorium.formattedName(showBuilding: favorite))
                                 .font(Font.system(size: 20, weight: .bold))
                                 .multilineTextAlignment(.leading)
                                 .minimumScaleFactor(0.01)
@@ -29,11 +29,11 @@ struct ClassroomView: View {
                         Spacer()
                         HStack(alignment: .bottom) {
                             VStack(alignment: .leading) {
-                                if let type = classroom.type {
+                                if let type = auditorium.type {
                                     Text(type.abbreviation)
                                         .foregroundColor(Color.primary)
                                 }
-                                if let department = classroom.department {
+                                if let department = auditorium.department {
                                     Text(department.abbreviation)
                                         .font(.headline)
                                         .fontWeight(.regular)
