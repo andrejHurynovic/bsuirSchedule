@@ -35,7 +35,10 @@ struct FavoritesView: View {
     var favouriteEmployees: FetchedResults<Employee>
     @FetchRequest(
         entity: Classroom.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \Classroom.originalName, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Classroom.outsideUniversity, ascending: true),
+                          NSSortDescriptor(keyPath: \Classroom.building, ascending: true),
+                          NSSortDescriptor(keyPath: \Classroom.floor, ascending: true),
+                          NSSortDescriptor(keyPath: \Classroom.name, ascending: true)],
         predicate:
             NSPredicate(format: "favourite = true"))
     var favouriteClassrooms: FetchedResults<Classroom>
@@ -72,7 +75,7 @@ struct FavoritesView: View {
         }
     
     @ViewBuilder var primaryClassroom: some View {
-        if let primaryClassroomID = viewModel.primaryClassroomID, let classroom = favouriteClassrooms.first(where: { $0.originalName == primaryClassroomID }) {
+        if let primaryClassroomID = viewModel.primaryClassroomID, let classroom = favouriteClassrooms.first(where: { $0.formattedName(showBuilding: true) == primaryClassroomID }) {
             FavoriteSectionView(viewModel: FavoriteSectionViewModel(lessonsSectioned: classroom))
         }
     }

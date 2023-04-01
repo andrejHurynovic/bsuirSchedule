@@ -98,7 +98,7 @@ public class Lesson: NSManagedObject {
         if let classroomNames = try? container.decode([String].self, forKey: .classroom) {
             let classrooms = classroomNames.map { (try! Classroom(from: $0, in: context)) }
             self.addToClassrooms(NSSet(array: classrooms))
-            self.classroomsNames = classrooms.map { $0.originalName }.sorted()
+            self.classroomsNames = classrooms.map { "\($0.floor)\(String(describing: $0.name))-\($0.building)" }.sorted()
         } else {
             self.classroomsNames = []
         }

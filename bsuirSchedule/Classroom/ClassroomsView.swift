@@ -19,7 +19,7 @@ struct ClassroomsView: View {
     var body: some View {
         NavigationView {
             let filteredClassrooms = classrooms
-                .filter { searchText.isEmpty || $0.originalName.localizedStandardContains(searchText) }
+                .filter { searchText.isEmpty || $0.formattedName(showBuilding: true).localizedStandardContains(searchText) }
                 .filtered(by: selectedBuilding, selectedClassroomType)
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 256))], alignment: .leading, spacing: 8, pinnedViews: [.sectionHeaders]) {

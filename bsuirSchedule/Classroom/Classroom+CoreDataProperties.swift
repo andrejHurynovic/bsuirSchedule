@@ -20,7 +20,6 @@ extension Classroom {
     @NSManaged public var floor: Int16
     @NSManaged public var name: String!
     ///Used for constraints and effective search when decoding Lessons.
-    @NSManaged public var originalName: String!
     @NSManaged public var note: String?
     @NSManaged public var favourite: Bool
     
@@ -115,9 +114,14 @@ extension Classroom {
             let buildingDictionary = dictionary["buildingNumber"] as! [String: Any]
             let buildingString = buildingDictionary["name"] as! String
             
-            let originalName = "\(name)-\(buildingString)"
                         
-            if var classroom = classrooms.first (where: { $0.originalName == originalName }) {
+            if let building = try? Classroom.decodeBuilding(string: buildingString),
+               let nameParts = try? Classroom.decodeName(string: name),
+               var classroom = classrooms.first (where: {
+                   $0.building == building &&
+                   $0.floor == nameParts.floor &&
+                   $0.name == nameParts.name
+               }) {
                 try! decoder.update(&classroom, from: data)
             } else {
                 let _ = try? decoder.decode(Classroom.self, from: data)

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct SettingsView: View {
     @ObservedObject var viewModel = SettingsViewModel()
@@ -25,7 +26,10 @@ struct SettingsView: View {
     var favouriteEmployees: FetchedResults<Employee>
     @FetchRequest(
         entity: Classroom.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \Classroom.originalName, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Classroom.outsideUniversity, ascending: true),
+                          NSSortDescriptor(keyPath: \Classroom.building, ascending: true),
+                          NSSortDescriptor(keyPath: \Classroom.floor, ascending: true),
+                          NSSortDescriptor(keyPath: \Classroom.name, ascending: true)],
         predicate:
             NSPredicate(format: "favourite = true"))
     var favouriteClassrooms: FetchedResults<Classroom>
@@ -88,7 +92,7 @@ struct SettingsView: View {
             Picker(selection: $viewModel.primaryClassroom, label: Text("Выбор")) {
                 Text("Нет").tag(nil as String?)
                 ForEach(favouriteClassrooms) { classroom in
-                    Text(classroom.formattedName(showBuilding: true)).tag(classroom.originalName as String?)
+                    Text(classroom.formattedName(showBuilding: true)).tag(classroom.formattedName(showBuilding: true) as String?)
                 }
             }
     }
