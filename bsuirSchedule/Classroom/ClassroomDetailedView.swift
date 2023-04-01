@@ -12,19 +12,50 @@ struct ClassroomDetailedView: View {
     
     var body: some View {
         List {
-            department
-            scheduleButton
+            information
+            links
             groups
         }
         .navigationTitle(classroom.formattedName(showBuilding: true))
     }
     
+    @ViewBuilder var information: some View {
+        Section("Информация") {
+            type
+            capacity
+        }
+    }
+    
+    @ViewBuilder var type: some View {
+        if let type = classroom.type {
+            Form("Тип", type.name)
+        }
+    }
+    
+    @ViewBuilder var capacity: some View {
+        let capacity = classroom.capacity
+        if capacity != 0 {
+            Form("Вместительность", String(capacity))
+        }
+    }
+    
+    
+    
+    @ViewBuilder var links: some View {
+        Section("Ссылки") {
+            scheduleButton
+            department
+        }
+    }
+    
     @ViewBuilder var department: some View {
         if let departmentName = classroom.department?.name {
-            Section("Информация") {
-                Text(departmentName.capitalizingFirstLetter())
-                }
+            NavigationLink {
+                //                DepartmentDetailedView()
+            } label: {
+                Label(departmentName, systemImage: "person.2.fill")
             }
+        }
     }
     
     @ViewBuilder var scheduleButton: some View {
@@ -37,9 +68,10 @@ struct ClassroomDetailedView: View {
         }
     }
     
+    
+    
     @ViewBuilder var groups: some View {
-        let groups = classroom.groups
-        if groups.isEmpty == false {
+        if let groups = classroom.groups, !groups.isEmpty {
             GroupsSectionsView(sections: groups.sections(), groupsCount: groups.count)
         }
     }

@@ -18,7 +18,7 @@ public class ClassroomType: NSManagedObject {
         self.init(entity: ClassroomType.entity(), insertInto: context)
         
         self.id = try! container.decode(Int16.self, forKey: .id)
-        self.name = try! container.decode(String.self, forKey: .name)
+        self.name = try! container.decode(String.self, forKey: .name).capitalizingFirstLetter()
         self.abbreviation = try! container.decode(String.self, forKey: .abbreviation).uppercased()
         
         Log.info("ClassroomType \(self.abbreviation) (\(String(self.id))) has been created.")

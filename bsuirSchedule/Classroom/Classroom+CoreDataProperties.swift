@@ -27,7 +27,7 @@ extension Classroom {
     @NSManaged public var building: Int16
     @NSManaged public var capacity: Int16
     
-    @NSManaged public var type: ClassroomType
+    @NSManaged public var type: ClassroomType?
     @NSManaged public var department: Department?
     
     @NSManaged public var lessons: NSSet?
@@ -57,25 +57,25 @@ extension Classroom: Identifiable {}
 extension Classroom: EducationDated {
     var educationStart: Date? {
         get {
-            self.groups.compactMap { $0.educationStart }.sorted().first
+            self.groups?.compactMap { $0.educationStart }.sorted().first
         }
         set { }
     }
     var educationEnd: Date? {
         get {
-            self.groups.compactMap { $0.educationEnd }.sorted().last
+            self.groups?.compactMap { $0.educationEnd }.sorted().last
         }
         set { }
     }
     var examsStart: Date? {
         get {
-            self.groups.compactMap { $0.examsStart }.sorted().first
+            self.groups?.compactMap { $0.examsStart }.sorted().first
         }
         set { }
     }
     var examsEnd: Date? {
         get {
-            self.groups.compactMap { $0.examsEnd }.sorted().last
+            self.groups?.compactMap { $0.examsEnd }.sorted().last
         }
         set { }
     }
@@ -137,8 +137,10 @@ extension Classroom {
 
 //MARK: Accessors
 extension Classroom {
-    var groups: [Group] {
-        let lessons = lessons?.allObjects as! [Lesson]
+    var groups: [Group]? {
+        guard let lessons = lessons?.allObjects as? [Lesson], !lessons.isEmpty else {
+            return nil
+        }
         let groups = Array(lessons.compactMap {($0.groups?.allObjects as! [Group])}.joined())
         return Set(groups).sorted { $0.id < $1.id }
     }

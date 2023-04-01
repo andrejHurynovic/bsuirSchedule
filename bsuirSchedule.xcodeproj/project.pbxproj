@@ -316,6 +316,7 @@
 				F62B37002902DDF000FA2BE8 /* LessonsSection */,
 				F695AA3729D843600051A354 /* Department */,
 				F697BF7326FFA129008FA7A9 /* Classroom */,
+				F695AA3629D835FF0051A354 /* ClassroomType */,
 				F6F87818271A1F36005E3C41 /* Speciality */,
 				F68465F826FA52E8000F185E /* Faculty */,
 				F68B4CF62845393B00C8DBF6 /* Week */,
@@ -452,7 +453,6 @@
 			children = (
 				F697BF7826FFA1BA008FA7A9 /* Classroom+CoreDataClass.swift */,
 				F697BF7926FFA1BA008FA7A9 /* Classroom+CoreDataProperties.swift */,
-				F695AA3629D835FF0051A354 /* ClassroomType */,
 				F6857C7828F096CE00195388 /* ClassroomsSection.swift */,
 				F697BF8626FFAA02008FA7A9 /* ClassroomsViewModel.swift */,
 				F697BF8426FFA960008FA7A9 /* ClassroomsView.swift */,

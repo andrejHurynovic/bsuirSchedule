@@ -19,7 +19,7 @@ public class Classroom: NSManagedObject {
     required convenience public init(from decoder: Decoder) throws {
         let container = try! decoder.container(keyedBy: CodingKeys.self)
         
-        let buildingContainer = try! container.nestedContainer(keyedBy: BuildingCodingKeys.self, forKey: .buildingContainer)
+        let buildingContainer = try! container.nestedContainer(keyedBy: BuildingCodingKeys.self, forKey: .building)
         let buildingString = try! buildingContainer.decode(String.self, forKey: .name)
         
         //This code does not allow the creation of Classrooms in non-educational buildings. The description of the Algorithm is provided in decodeBuilding() method.
@@ -58,7 +58,7 @@ extension Classroom: DecoderUpdatable {
         let container = try! decoder.container(keyedBy: CodingKeys.self)
                 
         //MARK: Building container
-        let buildingContainer = try! container.nestedContainer(keyedBy: BuildingCodingKeys.self, forKey: .buildingContainer)
+        let buildingContainer = try! container.nestedContainer(keyedBy: BuildingCodingKeys.self, forKey: .building)
         let buildingString = try! buildingContainer.decode(String.self, forKey: .name)
         let nameString = try! container.decode(String.self, forKey: .name)
         
@@ -137,7 +137,7 @@ extension Classroom: Decodable {
         case note
         case capacity
         
-        case buildingContainer = "buildingNumber"
+        case building = "buildingNumber"
         case type = "auditoryType"
         case department = "department"
     }

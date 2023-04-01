@@ -49,7 +49,7 @@ struct ClassroomsView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Menu {
                         Text("Тип:")
-                        let types = Set(classrooms.map ({ $0.type })).sorted { $0.id < $1.id }
+                        let types = Set(classrooms.compactMap ({ $0.type })).sorted { $0.id < $1.id }
                         Picker("", selection: $selectedClassroomType) {
                             Text("любой").tag(nil as ClassroomType?)
                             ForEach(types, id: \.self) { type in
