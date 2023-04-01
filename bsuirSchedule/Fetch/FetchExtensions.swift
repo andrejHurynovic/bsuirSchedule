@@ -8,6 +8,7 @@
 import Foundation
 
 extension CodingUserInfoKey {
+    ///NSManagedObjectContext that will be used in decoding process.
     static let managedObjectContext = CodingUserInfoKey(rawValue: "managedObjectContext")!
 }
 

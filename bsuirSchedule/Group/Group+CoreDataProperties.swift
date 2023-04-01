@@ -77,7 +77,7 @@ extension Group {
         backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
         let decoder = JSONDecoder()
         decoder.userInfo[.managedObjectContext] = backgroundContext
-        decoder.userInfo[.groupContainer] = true
+        decoder.userInfo[.groupEmbeddedContainer] = true
 
         var groups = getAll(context: backgroundContext)
         
@@ -118,7 +118,7 @@ extension Group {
         backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
         let decoder = JSONDecoder()
         decoder.userInfo[.managedObjectContext] = backgroundContext
-        decoder.userInfo[.groupContainer] = true
+        decoder.userInfo[.groupEmbeddedContainer] = true
         
         var backgroundGroup = backgroundContext.object(with: self.objectID) as! Group
         try! decoder.update(&backgroundGroup, from: data)

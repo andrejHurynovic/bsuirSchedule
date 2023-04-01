@@ -53,7 +53,7 @@ struct ClassroomsView: View {
                         Picker("", selection: $selectedClassroomType) {
                             Text("любой").tag(nil as ClassroomType?)
                             ForEach(types, id: \.self) { type in
-                                Text(type.description)
+                                Text(type.abbreviation)
                                     .tag(type.self as ClassroomType?)
                             }
                         }

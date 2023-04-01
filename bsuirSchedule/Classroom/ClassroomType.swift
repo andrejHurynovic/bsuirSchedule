@@ -15,7 +15,7 @@ enum ClassroomType: Int16, CaseIterable {
     case office = 6
     case scienceLaboratory = 7
 
-    var description: String {
+    var abbreviation: String {
         switch self {
         case .unknown:
             return "-"
@@ -35,4 +35,6 @@ enum ClassroomType: Int16, CaseIterable {
             return "НЛ"
         }
     }
+    
+    
 }

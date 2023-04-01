@@ -85,7 +85,7 @@ extension Employee {
         backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
         let decoder = JSONDecoder()
         decoder.userInfo[.managedObjectContext] = backgroundContext
-        decoder.userInfo[.groupContainer] = true
+        decoder.userInfo[.groupEmbeddedContainer] = true
         
         var employees = getAll(context: backgroundContext)
         
@@ -124,11 +124,12 @@ extension Employee {
             return nil
         }
         
+        //
         let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
         backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
         let decoder = JSONDecoder()
         decoder.userInfo[.managedObjectContext] = backgroundContext
-        decoder.userInfo[.groupContainer] = true
+        decoder.userInfo[.groupEmbeddedContainer] = true
         
         var backgroundEmployee = backgroundContext.object(with: self.objectID) as! Employee
         let previousPhotoLink = backgroundEmployee.photoLink

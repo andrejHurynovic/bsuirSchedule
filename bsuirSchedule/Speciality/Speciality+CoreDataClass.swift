@@ -17,7 +17,7 @@ public class Speciality: NSManagedObject {
         self.init(entity: Speciality.entity(), insertInto: context)
         
         //If init is called from a decoder that decodes a Group and cannot find the required specialty, a special method is called to process specific Group keys.
-        if let groupContainer = decoder.userInfo[.groupContainer] as? Bool,
+        if let groupContainer = decoder.userInfo[.groupEmbeddedContainer] as? Bool,
            groupContainer == true {
             try! self.updateFromGroupDecoder(decoder)
         } else {

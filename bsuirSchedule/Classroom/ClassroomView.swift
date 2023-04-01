@@ -29,7 +29,7 @@ struct ClassroomView: View {
                         Spacer()
                         HStack(alignment: .bottom) {
                             VStack(alignment: .leading) {
-                                Text(classroom.type.description)
+                                Text(classroom.type.abbreviation)
                                     .foregroundColor(Color.primary)
                                 if let department = classroom.departmentAbbreviation {
                                     Text(department)

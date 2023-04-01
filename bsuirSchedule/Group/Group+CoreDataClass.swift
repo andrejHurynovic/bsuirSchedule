@@ -85,10 +85,10 @@ extension Group: Decodable {
     }
 }
 
+
+
 //MARK: CodingUserInfoKey
 extension CodingUserInfoKey {
-    static let groups = CodingUserInfoKey(rawValue: "groups")!
-    static let groupContainer = CodingUserInfoKey(rawValue: "groupContainer")!
-    static let updatedGroups = CodingUserInfoKey(rawValue: "updatedGroups")!
-    static let groupUpdating = CodingUserInfoKey(rawValue: "groupUpdating")!
+    ///A boolean value that indicates that container should be decoded as being received from a Group container. Required for Faculty and Speciality decoding.
+    static let groupEmbeddedContainer = CodingUserInfoKey(rawValue: "groupEmbeddedContainer")!
 }
