@@ -28,7 +28,7 @@ extension Classroom {
     @NSManaged public var building: Int16
     @NSManaged public var capacity: Int16
     
-    @NSManaged public var typeValue: Int16
+    @NSManaged public var type: ClassroomType
     
     @NSManaged public var departmentName: String?
     @NSManaged public var departmentAbbreviation: String?
@@ -55,15 +55,8 @@ extension Classroom {
 }
 
 extension Classroom: LessonsSectioned { }
+extension Classroom: Identifiable {}
 
-//MARK: Identifiable
-extension Classroom: Identifiable {
-    var type: ClassroomType {
-        ClassroomType(rawValue: typeValue)!
-    }
-}
-
-//MARK: EducationDates
 extension Classroom: EducationDated {
     var educationStart: Date? {
         get {

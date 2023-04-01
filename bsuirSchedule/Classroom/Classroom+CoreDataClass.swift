@@ -28,7 +28,7 @@ public class Classroom: NSManagedObject {
             throw ClassroomError.nonEducationalBuilding
         }
         
-        let context = PersistenceController.shared.container.viewContext
+        let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
         self.init(entity: Classroom.entity(), insertInto: context)
     
         try self.update(from: decoder)
@@ -66,10 +66,7 @@ extension Classroom: DecoderUpdatable {
         
         self.capacity = (try? container.decode(Int16.self, forKey: .capacity)) ?? 0
         self.note = try? container.decode(String.self, forKey: .note)
-        
-        //MARK: Classroom container
-        let classroomContainer = try? container.nestedContainer(keyedBy: ClassroomCodingKeys.self, forKey: .typeContainer)
-        self.typeValue = try! classroomContainer!.decode(Int16.self, forKey: .id)
+        self.type = try! container.decode(ClassroomType.self, forKey: .typeContainer)
         
         
         if let nestedContainer = try? container.nestedContainer(keyedBy: DepartmentCodingKeys.self, forKey: .departmentContainer) {
