@@ -42,7 +42,7 @@ public class Department: NSManagedObject {
             string.removeSubrange(range)
         }
         
-        return string
+        return string.capitalizingFirstLetter()
     }
     
 }

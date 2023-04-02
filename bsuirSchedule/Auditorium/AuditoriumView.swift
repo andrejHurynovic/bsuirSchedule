@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AuditoriumView: View {
-    @State var auditorium: Auditorium
+    var auditorium: Auditorium
     
     var favorite: Bool = false
     
@@ -20,7 +20,7 @@ struct AuditoriumView: View {
                 HStack {
                     VStack(alignment: .leading) {
                         HStack {
-                            Text(auditorium.formattedName(showBuilding: favorite))
+                            Text(auditorium.formattedName)
                                 .font(Font.system(size: 20, weight: .bold))
                                 .multilineTextAlignment(.leading)
                                 .minimumScaleFactor(0.01)

@@ -92,7 +92,7 @@ struct SettingsView: View {
             Picker(selection: $viewModel.primaryAuditorium, label: Text("Выбор")) {
                 Text("Нет").tag(nil as String?)
                 ForEach(favouriteAuditoriums) { auditorium in
-                    Text(auditorium.formattedName(showBuilding: true)).tag(auditorium.formattedName(showBuilding: true) as String?)
+                    Text(auditorium.formattedName).tag(auditorium.formattedName as String?)
                 }
             }
     }

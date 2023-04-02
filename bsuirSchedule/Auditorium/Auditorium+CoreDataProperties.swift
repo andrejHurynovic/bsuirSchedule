@@ -10,15 +10,16 @@ import Foundation
 import CoreData
 
 extension Auditorium {
-
+    
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Auditorium> {
         let request = NSFetchRequest<Auditorium>(entityName: "Auditorium")
         request.sortDescriptors = [NSSortDescriptor(keyPath: \Auditorium.name, ascending: true)]
         return request
     }
-
+    
     @NSManaged public var floor: Int16
-    @NSManaged public var name: String!
+    @NSManaged public var name: String
+    @NSManaged public var formattedName: String
     ///Used for constraints and effective search when decoding Lessons.
     @NSManaged public var note: String?
     @NSManaged public var favourite: Bool
@@ -36,22 +37,22 @@ extension Auditorium {
 
 // MARK: Generated accessors for lessons
 extension Auditorium {
-
+    
     @objc(addLessonsObject:)
     @NSManaged public func addToLessons(_ value: Lesson)
-
+    
     @objc(removeLessonsObject:)
     @NSManaged public func removeFromLessons(_ value: Lesson)
-
+    
     @objc(addLessons:)
     @NSManaged public func addToLessons(_ values: NSSet)
-
+    
     @objc(removeLessons:)
     @NSManaged public func removeFromLessons(_ values: NSSet)
-
+    
 }
 
-extension Auditorium: LessonsSectioned { }
+extension Auditorium: LessonsSectioned {}
 extension Auditorium: Identifiable {}
 
 extension Auditorium: EducationDated {
@@ -79,7 +80,7 @@ extension Auditorium: EducationDated {
         }
         set { }
     }
-
+    
 }
 
 //MARK: Request
@@ -106,7 +107,7 @@ extension Auditorium {
         decoder.userInfo[.managedObjectContext] = backgroundContext
         
         let auditoriums = getAll(context: backgroundContext)
-        
+        //This is required because decoder actually can throw an error here, so we can't decode whole array instantly.
         for dictionary in dictionaries {
             let data = try! JSONSerialization.data(withJSONObject: dictionary)
             
@@ -115,12 +116,8 @@ extension Auditorium {
             let buildingString = buildingDictionary["name"] as! String
             
                         
-            if let building = try? Auditorium.decodeBuilding(string: buildingString),
-               let nameParts = try? Auditorium.decodeName(string: name),
-               var auditorium = auditoriums.first (where: {
-                   $0.building == building &&
-                   $0.floor == nameParts.floor &&
-                   $0.name == nameParts.name
+            if var auditorium = auditoriums.first (where: {
+                $0.formattedName == "\(name)-\(buildingString.first!)"
                }) {
                 try! decoder.update(&auditorium, from: data)
             } else {
@@ -143,26 +140,6 @@ extension Auditorium {
         }
         let groups = Array(lessons.compactMap {($0.groups?.allObjects as! [Group])}.joined())
         return Set(groups).sorted { $0.id < $1.id }
-    }
-    
-}
-
-//MARK: Formatted name
-extension Auditorium {
-    func formattedName(showBuilding: Bool) -> String {
-        if outsideUniversity == true {
-            //Оutside university buildings
-            //"Транзистор", "epam-104", "Столовая"
-            return self.name
-        } else {
-            if showBuilding {
-                //321-4
-                return String(self.floor) + self.name + "-" + String(self.building)
-            } else {
-                //321
-                return String(self.floor) + self.name
-            }
-        }
     }
     
 }

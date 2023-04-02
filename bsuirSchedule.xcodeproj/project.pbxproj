@@ -560,7 +560,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1400;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					F632DEE726696CCB00E4C55F = {
 						CreatedOnToolsVersion = 12.5;
@@ -958,7 +958,7 @@
 				F632DEFB26696CD300E4C55F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		F632DEFC26696CD300E4C55F /* Build configuration list for PBXNativeTarget "bsuirSchedule" */ = {
 			isa = XCConfigurationList;
@@ -967,7 +967,7 @@
 				F632DEFE26696CD300E4C55F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		F68E9CF92729FFEA00704EB0 /* Build configuration list for PBXNativeTarget "WidgetExtension" */ = {
 			isa = XCConfigurationList;
@@ -976,7 +976,7 @@
 				F68E9CFB2729FFEA00704EB0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 

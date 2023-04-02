@@ -28,7 +28,7 @@ class FavoriteSectionViewModel: ObservableObject {
             titleBase = employee.lastName
         }
         if let auditorium = lessonsSectioned as? Auditorium {
-            titleBase = auditorium.formattedName(showBuilding: true)
+            titleBase = auditorium.formattedName
         }
         title = titleBase
         

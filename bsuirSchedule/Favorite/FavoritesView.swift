@@ -75,7 +75,7 @@ struct FavoritesView: View {
         }
     
     @ViewBuilder var primaryAuditorium: some View {
-        if let primaryAuditoriumID = viewModel.primaryAuditoriumID, let auditorium = favouriteAuditoriums.first(where: { $0.formattedName(showBuilding: true) == primaryAuditoriumID }) {
+        if let primaryAuditoriumID = viewModel.primaryAuditoriumID, let auditorium = favouriteAuditoriums.first(where: { $0.formattedName == primaryAuditoriumID }) {
             FavoriteSectionView(viewModel: FavoriteSectionViewModel(lessonsSectioned: auditorium))
         }
     }

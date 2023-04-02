@@ -58,7 +58,7 @@ class LessonsViewModel: ObservableObject {
         }
         
         if let auditorium = element as? Auditorium {
-            navigationViewTitle = auditorium.formattedName(showBuilding: true)
+            navigationViewTitle = auditorium.formattedName
             showGroups = true
             showEmployees = true
         }

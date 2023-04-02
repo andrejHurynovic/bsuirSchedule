@@ -8,82 +8,102 @@
 import SwiftUI
 
 struct AuditoriumsView: View {
-    @FetchRequest(entity: Auditorium.entity(), sortDescriptors: []) var auditoriums: FetchedResults<Auditorium>
+    @FetchRequest(sortDescriptors: [
+        SortDescriptor(\.floor),
+        SortDescriptor(\.name)],
+                  animation: .spring())
+    var auditoriums: FetchedResults<Auditorium>
+    
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.id)])
+    var auditoriumTypes: FetchedResults<AuditoriumType>
     
     @StateObject private var viewModel = AuditoriumsViewModel()
     
     @State var searchText = ""
+    @State var selectedSectionType: AuditoriumSectionType = .building
     @State var selectedAuditoriumType: AuditoriumType? = nil
-    @State var selectedBuilding: Int16? = nil
     
     var body: some View {
         NavigationView {
-            let filteredAuditoriums = auditoriums
-                .filter { searchText.isEmpty || $0.formattedName(showBuilding: true).localizedStandardContains(searchText) }
-                .filtered(by: selectedBuilding, selectedAuditoriumType)
             ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 256))], alignment: .leading, spacing: 8, pinnedViews: [.sectionHeaders]) {
-                    ForEach(filteredAuditoriums.sections(), id: \.self) { section in
-                        Section {
-                            ForEach(section.auditoriums, id: \.self) { auditorium in
-                                NavigationLink {
-                                    AuditoriumDetailedView(auditorium: auditorium)
-                                } label: {
-                                    AuditoriumView(auditorium: auditorium)
-                                }
-                                .contextMenu {
-                                    FavoriteButton(auditorium.favourite) {
-                                        auditorium.favourite.toggle()
-                                    }
-                                }
-                            }
-                        } header: {
-                            standardizedHeader(title: section.title)
-                        }
-                        
-                    }
-                }
-                .padding()
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Menu {
-                        Text("Тип:")
-                        let types = Set(auditoriums.compactMap ({ $0.type })).sorted { $0.id < $1.id }
-                        Picker("", selection: $selectedAuditoriumType) {
-                            Text("любой").tag(nil as AuditoriumType?)
-                            ForEach(types, id: \.self) { type in
-                                Text(type.abbreviation)
-                                    .tag(type.self as AuditoriumType?)
-                            }
-                        }
-                        Text("Здание:")
-                        let buildings = Set(auditoriums.map ({ $0.building })).sorted { $0 < $1 }
-                        Picker("", selection: $selectedBuilding) {
-                            Text("любое").tag(nil as Int16?)
-                            ForEach(buildings, id: \.self) { building in
-                                Text(String(building))
-                                    .tag(building as Int16?)
-                            }
-                        }
-                    } label: {
-                        Image(systemName: (selectedAuditoriumType == nil && selectedBuilding == nil) ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
-                    }
-                }
+                let sections = Array(auditoriums).sections(selectedSectionType)
+                AuditoriumsGridView(sections: sections)
+                    .padding()
+                
             }
             .navigationTitle("Аудитории")
-            .refreshable {
-                await viewModel.update()
+            .toolbar { toolbar }
+            .refreshable { await viewModel.update()}
+            
+            .searchable(text: $searchText, prompt: "Номер, подразделение")
+            .onChange(of: searchText) { newText in
+                auditoriums.nsPredicate = viewModel.calculatePredicate(selectedAuditoriumType, newText)
+            }
+            
+        }
+    }
+    
+    // MARK: - Toolbar
+    
+    @ViewBuilder var toolbar: some View {
+        Menu {
+            sectionTypeSelector
+            auditoriumTypeSelector
+        } label: {
+            Image(systemName: (selectedAuditoriumType == nil) ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
+        }
+    }
+    
+    @ViewBuilder var auditoriumTypeSelector: some View  {
+        Text("Тип:")
+        Picker("", selection: $selectedAuditoriumType) {
+            Text("Любой").tag(nil as AuditoriumType?)
+            ForEach(auditoriumTypes, id: \.self) { type in
+                Text(type.abbreviation)
+                    .tag(type.self as AuditoriumType?)
             }
         }
-        .navigationViewStyle(StackNavigationViewStyle())
-        .searchable(text: $searchText, prompt: "Номер, подразделение")
+        .onChange(of: selectedAuditoriumType) { newType in
+            auditoriums.nsPredicate = viewModel.calculatePredicate(newType, searchText)
+        }
+        
+    }
+    
+    @ViewBuilder var sectionTypeSelector: some View  {
+        Text("Сортировка:")
+        Picker("", selection: $selectedSectionType.animation(.spring())) {
+            ForEach(AuditoriumSectionType.allCases, id: \.self) { type in
+                Text(type.description)
+            }
+        }
+    }
+}
+
+private struct AuditoriumsGridView: View {
+    let sections: [AuditoriumSection]
+    
+    var body: some View {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 256))], alignment: .leading, spacing: 8, pinnedViews: []) {
+            ForEach(sections, id: \.title) { section in
+                Section {
+                    ForEach(section.auditoriums) { auditorium in
+                        NavigationLink {
+                            AuditoriumDetailedView(auditorium: auditorium)
+                        } label: {
+                            AuditoriumView(auditorium: auditorium)
+                        }
+                    }
+                } header: {
+                    standardizedHeader(title: section.title)
+                }
+                
+            }
+        }
     }
 }
 
 struct AuditoriumsView_Previews: PreviewProvider {
     static var previews: some View {
         AuditoriumsView()
-            .previewInterfaceOrientation(.portrait)
     }
 }

@@ -138,7 +138,7 @@ struct LessonView: View {
                         NavigationLink {
                             AuditoriumDetailedView(auditorium: auditorium)
                         } label: {
-                            Text(auditorium.formattedName(showBuilding: true))
+                            Text(auditorium.formattedName)
                                 .foregroundColor(Color.primary)
                         }
                         .contextMenu {

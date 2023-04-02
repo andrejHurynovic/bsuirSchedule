@@ -16,13 +16,15 @@ struct AuditoriumDetailedView: View {
             links
             groups
         }
-        .navigationTitle(auditorium.formattedName(showBuilding: true))
+        .navigationTitle(auditorium.formattedName)
     }
     
     @ViewBuilder var information: some View {
-        Section("Информация") {
-            type
-            capacity
+        if auditorium.type != nil || auditorium.capacity != 0 {
+            Section("Информация") {
+                type
+                capacity
+            }
         }
     }
     
@@ -42,9 +44,11 @@ struct AuditoriumDetailedView: View {
     
     
     @ViewBuilder var links: some View {
-        Section("Ссылки") {
-            scheduleButton
-            department
+        if auditorium.groups != nil || auditorium.department != nil {
+            Section("Ссылки") {
+                scheduleButton
+                department
+            }
         }
     }
     
