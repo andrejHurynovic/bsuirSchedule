@@ -8,47 +8,43 @@
 import SwiftUI
 
 struct EmployeesView: View {
-    @FetchRequest(entity: Employee.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Employee.lastName, ascending: true),
-                                                               NSSortDescriptor(keyPath: \Employee.firstName, ascending: true)]) var employees: FetchedResults<Employee>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.lastName),
+                                    SortDescriptor(\.firstName)],
+                  predicate: nil,
+                  animation: .spring())
+    var employees: FetchedResults<Employee>
     
     @StateObject private var viewModel = EmployeesViewModel()
+    
     @State var searchText = ""
     
     var body: some View {
         NavigationView {
-            ZStack {
-                let employees = employees.filter {
-                    searchText.isEmpty ||
-                    $0.lastName!.localizedStandardContains(searchText) == true ||
-                    $0.departmentsAbbreviations?.contains(where: { $0.localizedStandardContains(searchText) }) == true
+            
+            List {
+                ForEach(employees, id: \.id) { employee in
+                    EmployeeView(employee: employee)
+                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                            Button {
+                                employee.favourite.toggle()
+                            } label: {
+                                Image(systemName: employee.favourite ? "star.slash" : "star")
+                            }
+                            
+                        }.background(NavigationLink("", destination: {
+                            EmployeeDetailedView(viewModel: EmployeeViewModel(employee))
+                        }).opacity(0))
                 }
+                Text("Всего преподавателей: \(employees.count)")
                 
-                List {
-                    ForEach(employees, id: \.id) { employee in
-                        EmployeeView(employee: employee)
-                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                Button {
-                                    employee.favourite.toggle()
-                                } label: {
-                                    Image(systemName: employee.favourite ? "star.slash" : "star")
-                                }
-                                
-                            }.background(NavigationLink("", destination: {
-                                EmployeeDetailedView(viewModel: EmployeeViewModel(employee))
-                            }).opacity(0))
-                    }
-                    HStack {
-                        Text("Всего преподавателей: \(employees.count)")
-                    }
-                    
-                }
-                .refreshable {
-                    await viewModel.update()
-                }
-                .navigationTitle("Преподаватели")
-                .searchable(text: $searchText, prompt: "Фамилия, кафедра")
             }
-            .navigationViewStyle(StackNavigationViewStyle())
+            .navigationTitle("Преподаватели")
+            .refreshable { await viewModel.update() }
+                        
+            .searchable(text: $searchText, prompt: "Фамилия, имя, подраздедение")
+            .onChange(of: searchText) { newText in
+                employees.nsPredicate = viewModel.calculatePredicate(searchText)
+            }
         }
     }
     

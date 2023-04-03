@@ -8,7 +8,6 @@
 
 import Foundation
 import CoreData
-//import UIKit.UIImage
 
 @objc(Employee)
 public class Employee: NSManagedObject {
@@ -31,19 +30,22 @@ extension Employee: DecoderUpdatable {
         decodeEmployee(decoder)
         decodeEducationDates(decoder)
         
-        if let lessons = try? container.decode([String:[Lesson]].self, forKey: .lessons) {
-            let lessons = Set(lessons.map{ $1 }.joined())
-            for lesson in lessons {
-                lesson.employeesIDs = [self.id]
-                lesson.addToEmployees(self)
-            }
+        var lessons = [Lesson]()
+        
+        if let lessonsDictionary = try? container.decode([String:[Lesson]].self, forKey: .lessons) {
+            let mappedLessons = Set(lessonsDictionary
+                .map{ $1 }
+                .joined())
+            lessons.append(contentsOf: mappedLessons)
         }
         if let exams = try? container.decode([Lesson].self, forKey: .exams) {
-            for exam in exams {
-                exam.employeesIDs = [self.id]
-                exam.addToEmployees(self)
-            }
+            lessons.append(contentsOf: exams)
         }
+
+        for lesson in lessons {
+            lesson.employeesIDs = [self.id]
+        }
+        self.addToLessons(NSSet(array: lessons))
         
         Log.info("Employee \(self.urlID ?? "no urlID") (\(String(self.id))) has been updated, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds")
     }

@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct AuditoriumView: View {
+    
     var auditorium: Auditorium
-    
     var favorite: Bool = false
-    
+
     var body: some View {
         RoundedRectangle(cornerRadius: 16)
-            .fill(primaryMaterial())
+//            .fill(.white)
             .aspectRatio(contentMode: .fill)
             .overlay {
                 HStack {
@@ -24,20 +24,20 @@ struct AuditoriumView: View {
                                 .font(Font.system(size: 20, weight: .bold))
                                 .multilineTextAlignment(.leading)
                                 .minimumScaleFactor(0.01)
-                                .foregroundColor(Color.primary)
+                                .foregroundColor(.primary)
                         }
                         Spacer()
                         HStack(alignment: .bottom) {
                             VStack(alignment: .leading) {
                                 if let type = auditorium.type {
                                     Text(type.abbreviation)
-                                        .foregroundColor(Color.primary)
+                                        .foregroundColor(.primary)
                                 }
                                 if let department = auditorium.department {
                                     Text(department.abbreviation)
                                         .font(.headline)
                                         .fontWeight(.regular)
-                                        .foregroundColor(Color.gray)
+                                        .foregroundColor(.gray)
                                         .lineLimit(2)
                                 }
                             }

@@ -25,7 +25,7 @@ struct mainBackgroundViewModifier: ViewModifier {
 
 extension View {
     func primaryMaterial() -> Material {
-        .thinMaterial
+        .regular
     }
 }
 
