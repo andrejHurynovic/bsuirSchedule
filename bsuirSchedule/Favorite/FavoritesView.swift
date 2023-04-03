@@ -183,7 +183,7 @@ struct FavoritesView: View {
                     NavigationLink {
                         AuditoriumDetailedView(auditorium: auditorium)
                     } label: {
-                        AuditoriumView(auditorium: auditorium, favorite: true)
+                        AuditoriumView(auditorium: auditorium)
                     }
                     .contextMenu {
                         FavoriteButton(auditorium.favourite) {

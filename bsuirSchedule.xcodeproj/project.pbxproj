@@ -11,6 +11,8 @@
 		F601E5A52730B88F00773F02 /* CapturePhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F601E5A42730B88E00773F02 /* CapturePhotoView.swift */; };
 		F601E5A92731AA3900773F02 /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F601E5A82731AA3900773F02 /* TaskViewModel.swift */; };
 		F601E5AB2731E29600773F02 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F601E5AA2731E29600773F02 /* TaskView.swift */; };
+		F612D8B429DB812C00D4DDEB /* RoundedRectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F612D8B329DB812C00D4DDEB /* RoundedRectangleView.swift */; };
+		F612D8B629DB856A00D4DDEB /* AuditoriumsGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F612D8B529DB856A00D4DDEB /* AuditoriumsGridView.swift */; };
 		F614250C271B7EFF006C3CE1 /* AuditoriumDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F614250B271B7EFF006C3CE1 /* AuditoriumDetailedView.swift */; };
 		F61915B728465F2100A98101 /* GroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61915B628465F2100A98101 /* GroupViewModel.swift */; };
 		F61915B928465F4600A98101 /* LastUpdateDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61915B828465F4600A98101 /* LastUpdateDate.swift */; };
@@ -126,6 +128,8 @@
 		F601E5A42730B88E00773F02 /* CapturePhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapturePhotoView.swift; sourceTree = "<group>"; };
 		F601E5A82731AA3900773F02 /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
 		F601E5AA2731E29600773F02 /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
+		F612D8B329DB812C00D4DDEB /* RoundedRectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedRectangleView.swift; sourceTree = "<group>"; };
+		F612D8B529DB856A00D4DDEB /* AuditoriumsGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriumsGridView.swift; sourceTree = "<group>"; };
 		F614250B271B7EFF006C3CE1 /* AuditoriumDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriumDetailedView.swift; sourceTree = "<group>"; };
 		F61915B628465F2100A98101 /* GroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewModel.swift; sourceTree = "<group>"; };
 		F61915B828465F4600A98101 /* LastUpdateDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastUpdateDate.swift; sourceTree = "<group>"; };
@@ -253,6 +257,14 @@
 			path = "Managers and templates";
 			sourceTree = "<group>";
 		};
+		F612D8B229DB811600D4DDEB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F612D8B329DB812C00D4DDEB /* RoundedRectangleView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		F62B37002902DDF000FA2BE8 /* LessonsSection */ = {
 			isa = PBXGroup;
 			children = (
@@ -298,6 +310,7 @@
 		F632DEEA26696CCB00E4C55F /* bsuirSchedule */ = {
 			isa = PBXGroup;
 			children = (
+				F612D8B229DB811600D4DDEB /* View */,
 				F67AA4E528FF795A00E5A7C4 /* Extensions */,
 				F601E5A62731918400773F02 /* Images */,
 				F601E5A7273191C300773F02 /* Managers and templates */,
@@ -456,6 +469,7 @@
 				F6857C7828F096CE00195388 /* AuditoriumsSection.swift */,
 				F697BF8626FFAA02008FA7A9 /* AuditoriumsViewModel.swift */,
 				F697BF8426FFA960008FA7A9 /* AuditoriumsView.swift */,
+				F612D8B529DB856A00D4DDEB /* AuditoriumsGridView.swift */,
 				F68E9CDB2729B57300704EB0 /* AuditoriumView.swift */,
 				F614250B271B7EFF006C3CE1 /* AuditoriumDetailedView.swift */,
 			);
@@ -670,6 +684,7 @@
 				F6C1A33C272AE2E700AD38E1 /* FavoriteEmployeeView.swift in Sources */,
 				F69C463726E91B430036D6A1 /* EmployeeDetailedView.swift in Sources */,
 				F6748DF328DFB7C80072FB04 /* LessonsSectioned.swift in Sources */,
+				F612D8B629DB856A00D4DDEB /* AuditoriumsGridView.swift in Sources */,
 				F695AA3529D835C80051A354 /* AuditoriumType+CoreDataProperties.swift in Sources */,
 				F6DCD72326B30EF0003761B0 /* SettingsView.swift in Sources */,
 				F6AA210F26EC83BB006218F8 /* GroupsViewModel.swift in Sources */,
@@ -677,6 +692,7 @@
 				F6AFC4622721EC43008CC065 /* DesignManager.swift in Sources */,
 				F67AA4E428FF793100E5A7C4 /* ArrayExtensions.swift in Sources */,
 				F6D4AAB729BEB5260044481B /* Log.swift in Sources */,
+				F612D8B429DB812C00D4DDEB /* RoundedRectangleView.swift in Sources */,
 				F67AA4DE28FF775700E5A7C4 /* FetchExtensions.swift in Sources */,
 				F64AD7B0266A816D00115E6B /* EmployeesView.swift in Sources */,
 				F67AA4E228FF788400E5A7C4 /* DateExtensions.swift in Sources */,

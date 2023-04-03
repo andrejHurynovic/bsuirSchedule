@@ -8,46 +8,22 @@
 import SwiftUI
 
 struct AuditoriumView: View {
-    
     var auditorium: Auditorium
-    var favorite: Bool = false
 
     var body: some View {
-        RoundedRectangle(cornerRadius: 16)
-//            .fill(.white)
-            .aspectRatio(contentMode: .fill)
-            .overlay {
-                HStack {
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text(auditorium.formattedName)
-                                .font(Font.system(size: 20, weight: .bold))
-                                .multilineTextAlignment(.leading)
-                                .minimumScaleFactor(0.01)
-                                .foregroundColor(.primary)
-                        }
-                        Spacer()
-                        HStack(alignment: .bottom) {
-                            VStack(alignment: .leading) {
-                                if let type = auditorium.type {
-                                    Text(type.abbreviation)
-                                        .foregroundColor(.primary)
-                                }
-                                if let department = auditorium.department {
-                                    Text(department.abbreviation)
-                                        .font(.headline)
-                                        .fontWeight(.regular)
-                                        .foregroundColor(.gray)
-                                        .lineLimit(2)
-                                }
-                            }
-                            Spacer()
-                        }
-                    }
-                    
-                }
-                .padding()
-            }
+        RoundedRectangleView(title: auditorium.formattedName,
+                    firstSubtitle: auditorium.type?.abbreviation,
+                    secondSubtitle: auditorium.department?.abbreviation)
+
     }
     
+}
+
+struct AuditoriumView_Previews: PreviewProvider {
+    static var previews: some View {
+        ForEach(Auditorium.getAll(), id: \.formattedName) { auditorium in
+            AuditoriumView(auditorium: auditorium)
+                .frame(width: 104, height: 104, alignment: .center)
+        }
+    }
 }

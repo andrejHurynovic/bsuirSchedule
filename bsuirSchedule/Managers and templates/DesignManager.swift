@@ -60,6 +60,7 @@ struct standardizedHeader: View {
     
     var body: some View {
         Text(title)
+//            .font(.system(.title2, design: .rounded, weight: .heavy))
             .font(.title2)
             .fontWeight(.heavy)
             .foregroundColor(.primary)

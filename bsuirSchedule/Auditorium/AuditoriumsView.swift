@@ -28,8 +28,6 @@ struct AuditoriumsView: View {
             ScrollView {
                 let sections = Array(auditoriums).sections(selectedSectionType)
                 AuditoriumsGridView(sections: sections)
-                    .padding()
-                
             }
             .navigationTitle("Аудитории")
             .toolbar { toolbar }
@@ -39,7 +37,7 @@ struct AuditoriumsView: View {
             .onChange(of: searchText) { newText in
                 auditoriums.nsPredicate = viewModel.calculatePredicate(selectedAuditoriumType, newText)
             }
-            
+            .background(Color(UIColor.systemGroupedBackground))
         }
     }
     
@@ -79,31 +77,9 @@ struct AuditoriumsView: View {
     }
 }
 
-private struct AuditoriumsGridView: View {
-    let sections: [AuditoriumSection]
-    
-    var body: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 256))], alignment: .leading, spacing: 8, pinnedViews: []) {
-            ForEach(sections, id: \.title) { section in
-                Section {
-                    ForEach(section.auditoriums) { auditorium in
-                        NavigationLink {
-                            AuditoriumDetailedView(auditorium: auditorium)
-                        } label: {
-                            AuditoriumView(auditorium: auditorium)
-                        }
-                    }
-                } header: {
-                    standardizedHeader(title: section.title)
-                }
-                
-            }
-        }
-    }
-}
-
 struct AuditoriumsView_Previews: PreviewProvider {
     static var previews: some View {
         AuditoriumsView()
+            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
     }
 }
