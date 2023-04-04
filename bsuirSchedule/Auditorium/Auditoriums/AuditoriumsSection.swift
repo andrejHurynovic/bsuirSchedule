@@ -5,25 +5,6 @@
 //  Created by Andrej Hurynovič on 7.10.22.
 //
 
-enum AuditoriumSectionType: CaseIterable {
-    case building
-    case buildingAndFloor
-    case department
-    
-    var description: String {
-        switch self {
-            case .building:
-                return "Здание"
-            case .buildingAndFloor:
-                return "Здание и этаж"
-            case .department:
-                return "Подразделение"
-        }
-    }
-}
-
-
-
 extension Array where Element == Auditorium {
     ///Returns array of auditoriums sections grouped by building and floor
     func sections(_ type: AuditoriumSectionType) -> [NSManagedObjectsSection<Auditorium>] {

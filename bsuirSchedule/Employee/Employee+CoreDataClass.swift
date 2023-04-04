@@ -60,15 +60,21 @@ extension Employee: DecoderUpdatable {
         if let urlID = try? container.decode(String.self, forKey: .urlID) {
             self.urlID = urlID
         } else {
-            self.urlID = ""
+            self.urlID = nil
         }
         self.firstName = try! container.decode(String.self, forKey: .firstName)
         self.middleName = try? container.decode(String.self, forKey: .middleName)
         self.lastName = try! container.decode(String.self, forKey: .lastName)
+        self.photoLink = try? container.decode(String.self, forKey: .photoLink)
         
         self.rank = try? container.decode(String.self, forKey: .rank)
-        self.degree = try? container.decode(String.self, forKey: .degree)
-        self.photoLink = try? container.decode(String.self, forKey: .photoLink)
+        if let degree = try? container.decode(String.self, forKey: .degree),
+           degree.isEmpty == false  {
+            self.degree = degree
+        } else {
+            self.degree = nil
+        }
+        
         
         if let departmentsAbbreviations = try? container.decode([String].self, forKey: .departments) {
             let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext

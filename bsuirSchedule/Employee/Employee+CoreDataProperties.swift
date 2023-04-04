@@ -6,10 +6,7 @@
 //
 //
 
-import Foundation
-import UIKit
 import CoreData
-
 
 extension Employee {
     
@@ -21,9 +18,9 @@ extension Employee {
     
     @NSManaged public var id: Int32
     @NSManaged public var urlID: String?
-    @NSManaged public var firstName: String!
-    @NSManaged public var middleName: String!
-    @NSManaged public var lastName: String!
+    @NSManaged public var firstName: String
+    @NSManaged public var middleName: String?
+    @NSManaged public var lastName: String
     
     @NSManaged public var rank: String?
     @NSManaged public var degree: String?
@@ -44,6 +41,7 @@ extension Employee {
 }
 
 //MARK: - Generated accessors for lessons
+
 extension Employee {
     
     @objc(addLessonsObject:)
@@ -77,6 +75,7 @@ extension Employee: EducationDated { }
 extension Employee: LessonsSectioned { }
 
 //MARK: - Request
+
 extension Employee {
     static func getAll(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Employee] {
         try! context.fetch(self.fetchRequest())
@@ -84,6 +83,7 @@ extension Employee {
 }
 
 //MARK: - Fetch
+
 extension Employee {
     static func fetchAll() async {
         let data = try! await URLSession.shared.data(from: FetchDataType.employees.rawValue)
@@ -122,6 +122,7 @@ extension Employee {
 }
 
 //MARK: - Update
+
 extension Employee {
     func update(decoder: JSONDecoder? = nil) async -> Employee? {
         guard let urlID = self.urlID,
@@ -178,8 +179,9 @@ extension Employee {
     
 }
 
+//MARK: - Photo
+
 extension Employee {
-    
     func fetchPhoto() async -> Data? {
         guard let photoLink = self.photoLink,
               let url = URL(string: photoLink) else {
@@ -200,6 +202,7 @@ extension Employee {
 }
 
 //MARK: - Accessors
+
 extension Employee {
     var groups: [Group] {
         guard let groups = self.lessons?.compactMap({ ($0 as! Lesson).groups?.allObjects as? [Group]}) else {
@@ -209,13 +212,20 @@ extension Employee {
         return Set(groups.map({ $0 }).joined()).sorted {$0.id! < $1.id!}
     }
     
+    var formattedName: String {
+        var formattedName = firstName
+        if let lastName = self.middleName {
+            formattedName.append(" \(lastName)")
+        }
+        return formattedName
+    }
+    
     var departmentsArray: [Department]? {
         guard let departments = departments?.allObjects as? [Department] else {
             return nil
         }
         return departments
     }
-    
     var departmentsAbbreviations: [String]? {
         guard let departments = departmentsArray else {
             return nil

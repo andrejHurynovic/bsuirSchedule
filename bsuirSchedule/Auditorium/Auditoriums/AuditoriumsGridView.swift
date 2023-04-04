@@ -18,7 +18,7 @@ struct AuditoriumsGridView: View {
                 AuditoriumView(auditorium: auditorium)
             }
         })
-        .padding()
+        .padding([.horizontal, .bottom])
     }
 }
 

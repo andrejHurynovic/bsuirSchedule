@@ -195,7 +195,7 @@ struct LessonView: View {
     @ViewBuilder var employees: some View {
         if showEmployee {
             if let employees = lesson.employees?.allObjects as? [Employee] {
-                ForEach(employees.sorted(by: {$0.lastName! < $1.lastName!}), id: \.self) { employee in
+                ForEach(employees.sorted(by: {$0.lastName < $1.lastName}), id: \.self) { employee in
                     
                     NavigationLink {
                         EmployeeDetailedView(viewModel: EmployeeViewModel(employee))
@@ -212,10 +212,10 @@ struct LessonView: View {
                                     .frame(width: 37.0, height: 37.0)
                             }
                             VStack(alignment: .leading) {
-                                Text(employee.lastName!)
+                                Text(employee.lastName)
                                     .font(.body)
                                     .fontWeight(.semibold)
-                                Text(employee.firstName! + " " + employee.middleName!)
+                                Text(employee.firstName + " " + (employee.middleName ?? ""))
                                     .lineLimit(1)
                             }
                         }

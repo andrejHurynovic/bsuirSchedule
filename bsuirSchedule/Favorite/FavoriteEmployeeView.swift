@@ -31,7 +31,7 @@ struct EmployeeFavoriteView: View {
                     Text(employee.lastName)
                         .font(.title)
                         .fontWeight(.bold)
-                    Text(employee.firstName! + " " + employee.middleName!)
+                    Text(employee.firstName + " " + (employee.middleName ?? ""))
                         .multilineTextAlignment(.leading)
                         .font(Font.system(size: 16))
                         .minimumScaleFactor(0.01)

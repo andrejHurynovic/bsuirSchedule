@@ -23,11 +23,14 @@ struct AuditoriumsView: View {
     @State var selectedSectionType: AuditoriumSectionType = .building
     @State var selectedAuditoriumType: AuditoriumType? = nil
     
+    //MARK: - Body
+    
     var body: some View {
         NavigationView {
             ScrollView {
                 let sections = Array(auditoriums).sections(selectedSectionType)
                 AuditoriumsGridView(sections: sections)
+                TotalFooterView(text: "Аудиторий", count: auditoriums.count)
             }
             .navigationTitle("Аудитории")
             .toolbar { toolbar }

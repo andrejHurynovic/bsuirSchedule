@@ -42,7 +42,7 @@ struct EmployeeDetailedView: View {
                 }
             }
         }
-        .navigationTitle(viewModel.employee.lastName!)
+        .navigationTitle(viewModel.employee.lastName)
     }
     
     @ViewBuilder var photo: some View {
@@ -66,7 +66,7 @@ struct EmployeeDetailedView: View {
     }
     
     var name: some View {
-        Text(viewModel.employee.firstName! + " " + viewModel.employee.middleName!)
+        Text(viewModel.employee.firstName + " " + (viewModel.employee.middleName ?? ""))
             .font(.title2)
             .fontWeight(.bold)
     }
@@ -78,8 +78,8 @@ struct EmployeeDetailedView: View {
                     Text("Кафедры: " + (departmentsAbbreviations.joined(separator: ", ")))
                 }
                 
-                if !viewModel.employee.degree!.isEmpty {
-                    Text("Научаная степень: " + viewModel.employee.degree!)
+                if let degree = viewModel.employee.degree  {
+                    Text("Научаная степень: " + degree)
                 }
                 if let rank = viewModel.employee.rank {
                     Text("Звание: " + rank)

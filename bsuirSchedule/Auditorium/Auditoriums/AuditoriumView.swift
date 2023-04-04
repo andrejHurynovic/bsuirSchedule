@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AuditoriumView: View {
-    var auditorium: Auditorium
+    @ObservedObject var auditorium: Auditorium
     
     var body: some View {
         SquareView(title: auditorium.formattedName,
