@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct EmployeesView: View {
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.lastName),
-                                    SortDescriptor(\.firstName),
-                                    SortDescriptor(\.middleName)],
+    @FetchRequest(sortDescriptors: [SortDescriptor(\Employee.lastName),
+                                    SortDescriptor(\Employee.firstName),
+                                    SortDescriptor(\Employee.middleName)],
                   animation: .spring())
     var employees: FetchedResults<Employee>
     

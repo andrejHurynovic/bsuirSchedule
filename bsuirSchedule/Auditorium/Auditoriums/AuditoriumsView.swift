@@ -9,12 +9,12 @@ import SwiftUI
 
 struct AuditoriumsView: View {
     @FetchRequest(sortDescriptors: [
-        SortDescriptor(\.building),
-        SortDescriptor(\.formattedName)],
+        SortDescriptor(\Auditorium.building),
+        SortDescriptor(\Auditorium.formattedName)],
                   animation: .spring())
     var auditoriums: FetchedResults<Auditorium>
     
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.id)])
+    @FetchRequest(sortDescriptors: [SortDescriptor(\AuditoriumType.id)])
     var auditoriumTypes: FetchedResults<AuditoriumType>
     
     @StateObject private var viewModel = AuditoriumsViewModel()
