@@ -27,7 +27,7 @@ public class Speciality: NSManagedObject {
     
 }
 
-//MARK: Update
+//MARK: - Update
 extension Speciality: DecoderUpdatable {
     func update(from decoder: Decoder) throws {
         let container = try! decoder.container(keyedBy: CodingKeys.self)

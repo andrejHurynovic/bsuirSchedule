@@ -24,7 +24,7 @@ extension AuditoriumType {
 
 }
 
-// MARK: Generated accessors for auditoriums
+//MARK: - Generated accessors for auditoriums
 extension AuditoriumType {
 
     @objc(addAuditoriumsObject:)

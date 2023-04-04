@@ -21,10 +21,9 @@ public class Group: NSManagedObject {
     
 }
 
-//MARK: Update
 
 extension Group: DecoderUpdatable {
-    //MARK: Update
+    //MARK: - Update
     func update(from decoder: Decoder) throws {
         let startTime = CFAbsoluteTimeGetCurrent()
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -87,7 +86,7 @@ extension Group: Decodable {
 
 
 
-//MARK: CodingUserInfoKey
+//MARK: - CodingUserInfoKey
 extension CodingUserInfoKey {
     ///A boolean value that indicates that container should be decoded as being received from a Group container. Required for Faculty and Speciality decoding.
     static let groupEmbeddedContainer = CodingUserInfoKey(rawValue: "groupEmbeddedContainer")!

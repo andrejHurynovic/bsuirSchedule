@@ -7,7 +7,7 @@
 
 import Foundation
 
-//MARK: Operators
+//MARK: - Operators
 ///Returns the date to which the components were added.
 func +(left: Date, right: DateComponents) -> Date {
     return Calendar.current.date(byAdding: right, to: left)!
@@ -20,7 +20,7 @@ func +=(left: inout Date, right: DateComponents) {
 
 
 
-//MARK: Time
+//MARK: - Time
 
 extension Date {
     ///Assigns hours, minutes and seconds  to Date from DateComponents.
@@ -61,7 +61,7 @@ extension Date {
     
 }
 
-//MARK: Ranges
+//MARK: - Ranges
 
 ///Returns stride of days.
 func datesBetween(_ dateA: Date?, _ dateB: Date?) -> [Date] {

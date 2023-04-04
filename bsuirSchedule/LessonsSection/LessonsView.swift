@@ -57,7 +57,7 @@ struct LessonsView: View {
         
     }
     
-    //MARK: Search field
+    //MARK: - Search field
     @ViewBuilder var searchField: some View {
         VStack {
             if viewModel.showSearchField {
@@ -97,7 +97,7 @@ struct LessonsView: View {
             
     }
     
-    //MARK: DatePicker
+    //MARK: - DatePicker
     @ViewBuilder var datePicker: some View {
         if viewModel.showDatePicker,
            let educationRange = viewModel.element.educationRange {
@@ -130,7 +130,7 @@ struct LessonsView: View {
         }
     }
     
-    //MARK: Toolbar
+    //MARK: - Toolbar
     @ViewBuilder var toolbar : some View {
         searchFieldToggle
         detailedViewNavigationLink

@@ -41,7 +41,7 @@ struct AuditoriumsView: View {
         }
     }
     
-    // MARK: - Toolbar
+    //MARK: - Toolbar
     
     @ViewBuilder var toolbar: some View {
         Menu {

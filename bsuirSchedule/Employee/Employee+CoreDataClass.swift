@@ -21,7 +21,7 @@ public class Employee: NSManagedObject {
     
 }
 
-//MARK: Update
+//MARK: - Update
 extension Employee: DecoderUpdatable {
     func update(from decoder: Decoder) throws {
         let startTime = CFAbsoluteTimeGetCurrent()

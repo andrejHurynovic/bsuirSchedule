@@ -80,7 +80,7 @@ struct FavoritesView: View {
         }
     }
     
-    //MARK: Grids
+    //MARK: - Grids
     
     @ViewBuilder var squareObjects: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 500))], alignment: .leading, spacing: 8, pinnedViews: [.sectionHeaders]) {
@@ -98,7 +98,7 @@ struct FavoritesView: View {
         .padding(.horizontal)
     }
     
-    //MARK: Objects
+    //MARK: - Objects
     
 //    @ViewBuilder var tasks: some View {
 //        if viewModel.tasks.isEmpty == false {

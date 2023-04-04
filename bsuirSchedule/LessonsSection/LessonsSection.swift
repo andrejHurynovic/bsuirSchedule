@@ -44,7 +44,7 @@ struct LessonsSection: Hashable {
         }
     }
     
-    //MARK: Title
+    //MARK: - Title
     var dateString: String? {
         guard let date = date else  {
             return nil
@@ -79,7 +79,7 @@ struct LessonsSection: Hashable {
         "\(weekday.description), \(week + 1)-ая неделя"
     }
         
-    //MARK: Other
+    //MARK: - Other
     func nearestLesson() -> Lesson? {
         let currentTime = Date().time
         
@@ -91,7 +91,7 @@ extension LessonsSection: Identifiable {
     var id: String { date?.formatted() ?? "\(week)-\(weekday)"}
 }
 
-//MARK: Description
+//MARK: - Description
 extension LessonsSection {
     func nextLessons(subgroup: Int? = nil) -> [Lesson] {
         var lessons = self.lessons

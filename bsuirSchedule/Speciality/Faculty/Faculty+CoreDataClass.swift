@@ -35,7 +35,7 @@ public class Faculty: NSManagedObject {
     
 }
 
-//MARK: Update
+//MARK: - Update
 extension Faculty: DecoderUpdatable {
     func update(from decoder: Decoder) throws {
         let container = try! decoder.container(keyedBy: CodingKeys.self)

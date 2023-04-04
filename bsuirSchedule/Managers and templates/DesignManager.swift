@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-//MARK: FORMS
+//MARK: - FORMS
 
 struct Form: View  {
     var name: String
@@ -29,7 +29,7 @@ struct Form: View  {
     }
 }
 
-//MARK: Buttons
+//MARK: - Buttons
 
 func FavoriteButton(_ favorite: Bool, circle: Bool = false, toggle: @escaping () -> Void) -> some View {
     Button {
@@ -44,7 +44,7 @@ func FavoriteButton(_ favorite: Bool, circle: Bool = false, toggle: @escaping ()
     
 }
 
-//MARK: Shadow
+//MARK: - Shadow
 
 extension View {
     func standardisedShadow() -> some View {
@@ -53,7 +53,7 @@ extension View {
     }
 }
 
-//MARK: Headers
+//MARK: - Headers
 
 struct standardizedHeader: View {
     var title: String

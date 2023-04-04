@@ -43,7 +43,7 @@ extension Employee {
     
 }
 
-// MARK: Generated accessors for lessons
+//MARK: - Generated accessors for lessons
 extension Employee {
     
     @objc(addLessonsObject:)
@@ -76,14 +76,14 @@ extension Employee: Identifiable { }
 extension Employee: EducationDated { }
 extension Employee: LessonsSectioned { }
 
-//MARK: Request
+//MARK: - Request
 extension Employee {
     static func getAll(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Employee] {
         try! context.fetch(self.fetchRequest())
     }
 }
 
-//MARK: Fetch
+//MARK: - Fetch
 extension Employee {
     static func fetchAll() async {
         let data = try! await URLSession.shared.data(from: FetchDataType.employees.rawValue)
@@ -121,7 +121,7 @@ extension Employee {
     
 }
 
-//MARK: Update
+//MARK: - Update
 extension Employee {
     func update(decoder: JSONDecoder? = nil) async -> Employee? {
         guard let urlID = self.urlID,
@@ -199,7 +199,7 @@ extension Employee {
     
 }
 
-//MARK: Accessors
+//MARK: - Accessors
 extension Employee {
     var groups: [Group] {
         guard let groups = self.lessons?.compactMap({ ($0 as! Lesson).groups?.allObjects as? [Group]}) else {

@@ -51,12 +51,12 @@ public class Auditorium: NSManagedObject {
     
 }
 
-//MARK: Update
+//MARK: - Update
 extension Auditorium: DecoderUpdatable {
     func update(from decoder: Decoder) throws {
         let container = try! decoder.container(keyedBy: CodingKeys.self)
         
-        //MARK: Building container
+        //MARK: - Building container
         let buildingContainer = try! container.nestedContainer(keyedBy: BuildingCodingKeys.self, forKey: .building)
         let buildingString = try! buildingContainer.decode(String.self, forKey: .name)
         let nameString = try! container.decode(String.self, forKey: .name)

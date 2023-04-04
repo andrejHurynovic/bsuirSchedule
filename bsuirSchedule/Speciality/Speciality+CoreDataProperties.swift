@@ -31,7 +31,7 @@ extension Speciality {
     
 }
 
-// MARK: Generated accessors for groups
+//MARK: - Generated accessors for groups
 extension Speciality {
     
     @objc(addGroupsObject:)
@@ -55,14 +55,14 @@ extension Speciality : Identifiable {
     }
 }
 
-//MARK: Request
+//MARK: - Request
 extension Speciality {
     static func getAll(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Speciality] {
         return try! context.fetch(self.fetchRequest())
     }
 }
 
-//MARK: Fetch
+//MARK: - Fetch
 extension Speciality {
     static func fetchAll() async {
         let data = try! await URLSession.shared.data(from: FetchDataType.specialities.rawValue)

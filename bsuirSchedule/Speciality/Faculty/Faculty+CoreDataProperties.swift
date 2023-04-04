@@ -26,7 +26,7 @@ extension Faculty {
     
 }
 
-//MARK: Generated accessors for specialities
+//MARK: - Generated accessors for specialities
 extension Faculty {
     
     @objc(addSpecialitiesObject:)
@@ -45,7 +45,7 @@ extension Faculty {
 
 extension Faculty : Identifiable {}
 
-//MARK: Request
+//MARK: - Request
 extension Faculty {
     static func getAll(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Faculty] {
         return try! context.fetch(self.fetchRequest())
@@ -53,7 +53,7 @@ extension Faculty {
     
 }
 
-//MARK: Fetch
+//MARK: - Fetch
 extension Faculty {
     static func fetchAll() async {
         let data = try! await URLSession.shared.data(from: FetchDataType.faculties.rawValue)

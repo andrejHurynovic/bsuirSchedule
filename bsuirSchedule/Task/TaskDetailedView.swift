@@ -61,7 +61,7 @@ struct TaskDetailedView: View {
         Divider()
     }
     
-    //MARK: Deadline
+    //MARK: - Deadline
     
     @ViewBuilder var deadline: some View {
 
@@ -86,7 +86,7 @@ struct TaskDetailedView: View {
         }
     }
     
-    //MARK: Description
+    //MARK: - Description
     
     @ViewBuilder var textEditor: some View {
         //        NewHeader(title: "Описание")
@@ -127,7 +127,7 @@ struct TaskDetailedView: View {
             .primaryBackground()
     }
     
-    //MARK: Photos
+    //MARK: - Photos
     
     @ViewBuilder var photos: some View {
         NewHeader(title: "Фотографии")
@@ -165,7 +165,7 @@ struct TaskDetailedView: View {
         }
     }
     
-    //MARK: Context menu buttons
+    //MARK: - Context menu buttons
     
     func removeImageButton(_ image: UIImage) -> some View {
         Button(role: .destructive) {
@@ -179,7 +179,7 @@ struct TaskDetailedView: View {
         }
     }
     
-    //MARK: Big buttons
+    //MARK: - Big buttons
     
     var addImageButton: some View {
         Button {

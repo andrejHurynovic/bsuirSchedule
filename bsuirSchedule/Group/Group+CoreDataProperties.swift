@@ -36,7 +36,7 @@ extension Group {
     }
 }
 
-//MARK: Generated accessors for lessons
+//MARK: - Generated accessors for lessons
 extension Group {
     @objc(addLessonsObject:)
     @NSManaged public func addToLessons(_ value: Lesson)
@@ -56,14 +56,14 @@ extension Group: Identifiable { }
 extension Group: EducationDated { }
 extension Group: LessonsSectioned { }
 
-//MARK: Request
+//MARK: - Request
 extension Group {
     static func getAll(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Group] {
         try! context.fetch(self.fetchRequest())
     }
 }
 
-//MARK: Fetch
+//MARK: - Fetch
 extension Group {
     static func fetchAll() async {
         let data = try! await URLSession.shared.data(from: FetchDataType.groups.rawValue)
@@ -100,7 +100,7 @@ extension Group {
     
 }
 
-//MARK: Update
+//MARK: - Update
 extension Group {
     func update() async -> Group? {
         guard let url = URL(string: FetchDataType.group.rawValue + self.id),
@@ -146,7 +146,7 @@ extension Group {
     
 }
 
-//MARK: Accessors
+//MARK: - Accessors
 extension Group {
     var employees: [Employee]? {
         guard let lessons = self.lessons?.allObjects as? [Lesson] else {
@@ -174,7 +174,7 @@ extension Group {
     
 }
 
-//MARK: Additional
+//MARK: - Additional
 extension Array where Element == Group {
     func description() -> String {
         guard self.isEmpty == false else {

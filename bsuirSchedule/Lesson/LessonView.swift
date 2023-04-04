@@ -67,7 +67,7 @@ struct LessonView: View {
         }
     }
     
-    //MARK: View
+    //MARK: - View
     var detailedHeader: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
@@ -110,7 +110,7 @@ struct LessonView: View {
     }
     
     
-    //MARK: Elements
+    //MARK: - Elements
     @ViewBuilder var subject: some View {
         let subject = showSubject ? lesson.subject : lesson.abbreviation
         if let subject = subject, subject.isEmpty == false {

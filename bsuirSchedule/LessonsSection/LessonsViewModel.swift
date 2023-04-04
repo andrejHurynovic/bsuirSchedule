@@ -88,7 +88,7 @@ class LessonsViewModel: ObservableObject {
         WeekDay(rawValue: Int16((Calendar(identifier: .iso8601).ordinality(of: .weekday, in: .weekOfYear, for: date)! - 1)))!
     }
     
-    //MARK: ScrollViewProxy
+    //MARK: - ScrollViewProxy
     func scrollToID(_ ID: String?, in proxy: ScrollViewProxy) {
         if let ID = ID {
             withAnimation {
@@ -108,7 +108,7 @@ class LessonsViewModel: ObservableObject {
         }
     }
     
-    //MARK: Sections
+    //MARK: - Sections
     func updateSections() async {
         
         let sections: [LessonsSection]
@@ -150,7 +150,7 @@ class LessonsViewModel: ObservableObject {
         }
     }
     
-    //MARK: SearchField
+    //MARK: - SearchField
     func searchFieldToggle() {
             if showSearchField {
                 searchText = ""
@@ -162,7 +162,7 @@ class LessonsViewModel: ObservableObject {
             showSearchField.toggle()
     }
     
-    //MARK: DatePicker
+    //MARK: - DatePicker
     func scrollToDate(_ date: Date) {
         let scrollTargetSection: LessonsSection?
         switch representationMode {
@@ -207,7 +207,7 @@ class LessonsViewModel: ObservableObject {
         }
     }
     
-    //MARK: Toolbar
+    //MARK: - Toolbar
     var toolbarDefaultCriteria: Bool {
         
         switch representationMode {

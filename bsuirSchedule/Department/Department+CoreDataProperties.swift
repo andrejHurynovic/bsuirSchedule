@@ -25,7 +25,7 @@ extension Department {
     
 }
 
-// MARK: Generated accessors for employees
+//MARK: - Generated accessors for employees
 extension Department {
     
     @objc(addAuditoriumsObject:)

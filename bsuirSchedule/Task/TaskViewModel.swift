@@ -63,7 +63,7 @@ class TaskViewModel: ObservableObject {
         return ""
     }
     
-    //MARK: Deadline
+    //MARK: - Deadline
     
     func lessonsPickerRange() -> ClosedRange<Int> {
         return 0...0

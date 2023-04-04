@@ -37,13 +37,13 @@ struct DecoderExtractor: Decodable {
     }
 }
 
-//MARK: DecoderUpdatable
+//MARK: - DecoderUpdatable
 protocol DecoderUpdatable {
     mutating func update(from decoder: Decoder) throws
     static func fetchAll() async
 }
 
-//MARK: DecodingFormat
+//MARK: - DecodingFormat
 extension DecodingFormat {
     func update<T: DecoderUpdatable>(_ value: inout T, from data: Data) throws {
         try value.update(from: decoder(for: data))

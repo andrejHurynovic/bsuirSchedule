@@ -19,7 +19,7 @@ protocol LessonsSectioned: NSManagedObject, EducationDated {
 }
 
 extension LessonsSectioned {
-    //MARK: Date-based
+    //MARK: - Date-based
     var dateBasedLessonsSections: [LessonsSection] {
         let lessons = self.lessons?.allObjects as! [Lesson]
         
@@ -63,7 +63,7 @@ extension LessonsSectioned {
         return dateBasedLessonsSections.first { Calendar.current.isDateInToday($0.date!)}
     }
     
-    //MARK: Week-based
+    //MARK: - Week-based
     var weekBasedLessonsSections: [LessonsSection] {
         let lessons = self.lessons?.allObjects as! [Lesson]
         

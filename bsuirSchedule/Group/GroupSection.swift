@@ -22,7 +22,7 @@ extension Array where Element == Group {
     func filtered(by faculty: Faculty?, _ educationType: EducationType?) -> [Group] {
         var groups = self
         if let faculty = faculty {
-            //MARK: FIX
+            //MARK: - FIX
             groups.removeAll { $0.speciality == nil || $0.speciality.faculty != faculty }
         }
         if let educationType = educationType {

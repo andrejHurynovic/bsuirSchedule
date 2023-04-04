@@ -36,7 +36,7 @@ extension Auditorium {
     
 }
 
-// MARK: Generated accessors for lessons
+//MARK: - Generated accessors for lessons
 extension Auditorium {
     
     @objc(addLessonsObject:)
@@ -84,14 +84,14 @@ extension Auditorium: EducationDated {
     
 }
 
-//MARK: Request
+//MARK: - Request
 extension Auditorium {
     static func getAll(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Auditorium] {
         try! context.fetch(self.fetchRequest())
     }
 }
 
-//MARK: Fetch
+//MARK: - Fetch
 extension Auditorium {
     static func fetchAll() async {
         let data = try! await URLSession.shared.data(from: FetchDataType.auditoriums.rawValue)
@@ -133,7 +133,7 @@ extension Auditorium {
     
 }
 
-//MARK: Accessors
+//MARK: - Accessors
 extension Auditorium {
     var groups: [Group]? {
         guard let lessons = lessons?.allObjects as? [Lesson], !lessons.isEmpty else {

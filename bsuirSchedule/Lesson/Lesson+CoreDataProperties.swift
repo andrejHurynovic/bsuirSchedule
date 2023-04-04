@@ -44,7 +44,7 @@ extension Lesson {
     
 }
 
-// MARK: Generated accessors for groups
+//MARK: - Generated accessors for groups
 extension Lesson {
 
     @objc(addGroupsObject:)
@@ -90,7 +90,7 @@ extension Lesson : Identifiable {
     }
 }
 
-//MARK: Dates
+//MARK: - Dates
 extension Lesson {
     ///Converts dateString to Date type
     var date: Date? {
@@ -128,7 +128,7 @@ extension Array where Element == Lesson {
     }
 }
 
-//MARK: Time
+//MARK: - Time
 
 extension Lesson {
     ///Date range in form timeStart to timeEnd
@@ -139,7 +139,7 @@ extension Lesson {
     
 }
 
-//MARK: Others
+//MARK: - Others
 extension Lesson {
     var weeksDescription: String? {
         guard self.weeks.isEmpty == false else {
