@@ -13,7 +13,8 @@ extension Auditorium {
     
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Auditorium> {
         let request = NSFetchRequest<Auditorium>(entityName: "Auditorium")
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \Auditorium.name, ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \Auditorium.building, ascending: true),
+                                   NSSortDescriptor(keyPath: \Auditorium.formattedName, ascending: true)]
         return request
     }
     
@@ -115,10 +116,10 @@ extension Auditorium {
             let buildingDictionary = dictionary["buildingNumber"] as! [String: Any]
             let buildingString = buildingDictionary["name"] as! String
             
-                        
+            
             if var auditorium = auditoriums.first (where: {
                 $0.formattedName == "\(name)-\(buildingString.first!)"
-               }) {
+            }) {
                 try! decoder.update(&auditorium, from: data)
             } else {
                 let _ = try? decoder.decode(Auditorium.self, from: data)

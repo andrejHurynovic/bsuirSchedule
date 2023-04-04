@@ -1,5 +1,5 @@
 //
-//  RoundedRectangleView.swift
+//  SquareView.swift
 //  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 03.04.23. (Дзень нараджэння Кірыла).
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RoundedRectangleView: View {
+struct SquareView: View {
     var title: String
     
     var firstSubtitle: String?
@@ -29,8 +29,8 @@ struct RoundedRectangleView: View {
         VStack(alignment: .leading) {
             titleText
             Spacer()
-            secondSubtitleText
             firstSubtitleText
+            secondSubtitleText
         }
         .padding()
         .foregroundColor(.primary)

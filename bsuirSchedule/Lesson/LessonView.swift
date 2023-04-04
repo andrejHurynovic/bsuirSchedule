@@ -257,10 +257,10 @@ struct LessonView: View {
     }
     
     @ViewBuilder var groupNavigationLink: some View {
-        if let linkGroup = linkGroup {
-            NavigationLink(destination: GroupDetailedView(viewModel: GroupViewModel(linkGroup)), isActive: $groupLinkActive) {
-                EmptyView()
-            }
+        if let _ = linkGroup {
+//            NavigationLink(destination: GroupDetailedView(viewModel: GroupViewModel(linkGroup)), isActive: $groupLinkActive) {
+//                EmptyView()
+//            }
         }
     }
     

@@ -19,6 +19,8 @@ struct AuditoriumDetailedView: View {
         .navigationTitle(auditorium.formattedName)
     }
     
+    
+    
     @ViewBuilder var information: some View {
         if auditorium.type != nil || auditorium.capacity != 0 {
             Section("Информация") {

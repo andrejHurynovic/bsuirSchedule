@@ -61,8 +61,8 @@ struct ImagesView: View {
                 Spacer()
                 Button {
 //                    guard let urlShare = URL(string: "https://developer.apple.com/xcode/swiftui/") else { return }
-                    let activityVC = UIActivityViewController(activityItems: [viewModel.selection!], applicationActivities: nil)
-                           UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+//                    let activityVC = UIActivityViewController(activityItems: [viewModel.selection!], applicationActivities: nil)
+//                           UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
                 } label: {
                     Circle()
                         .frame(width: 48, height: 48)

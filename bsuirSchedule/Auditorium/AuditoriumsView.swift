@@ -9,8 +9,8 @@ import SwiftUI
 
 struct AuditoriumsView: View {
     @FetchRequest(sortDescriptors: [
-        SortDescriptor(\.floor),
-        SortDescriptor(\.name)],
+        SortDescriptor(\.building),
+        SortDescriptor(\.formattedName)],
                   animation: .spring())
     var auditoriums: FetchedResults<Auditorium>
     
@@ -31,7 +31,7 @@ struct AuditoriumsView: View {
             }
             .navigationTitle("Аудитории")
             .toolbar { toolbar }
-            .refreshable { await viewModel.update()}
+            .refreshable { await viewModel.update() }
             
             .searchable(text: $searchText, prompt: "Номер, подразделение")
             .onChange(of: searchText) { newText in

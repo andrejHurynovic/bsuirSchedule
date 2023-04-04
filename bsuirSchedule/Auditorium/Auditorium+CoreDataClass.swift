@@ -45,7 +45,7 @@ public class Auditorium: NSManagedObject {
         try decodeBuilding(string: buildingString)
         try decodeName(string: nameString)
         self.formattedName = formateName()
-
+        
         Log.info("Auditorium \(string) is created from string.")
     }
     

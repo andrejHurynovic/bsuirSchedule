@@ -8,32 +8,23 @@
 import SwiftUI
 
 struct AuditoriumsGridView: View {
-    let sections: [AuditoriumSection]
+    var sections: [NSManagedObjectsSection<Auditorium>]
     
     var body: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 256))], alignment: .leading, spacing: 8, pinnedViews: []) {
-            ForEach(sections, id: \.title) { section in
-                Section {
-                    ForEach(section.auditoriums) { auditorium in
-                        NavigationLink {
-                            AuditoriumDetailedView(auditorium: auditorium)
-                        } label: {
-                            AuditoriumView(auditorium: auditorium)
-                        }
-                    }
-                } header: {
-                    standardizedHeader(title: section.title)
-                }
-                
+        SquareGrid(sections: sections, content: { auditorium in
+            NavigationLink {
+                AuditoriumDetailedView(auditorium: auditorium)
+            } label: {
+                AuditoriumView(auditorium: auditorium)
             }
-        }
+        })
         .padding()
     }
 }
 
 struct AuditoriumsGridView_Previews: PreviewProvider {
     static var previews: some View {
-        var auditoriums = Auditorium.getAll()
+        let auditoriums = Auditorium.getAll()
         
         ForEach(AuditoriumSectionType.allCases, id: \.self) { sectionType in
             ScrollView {

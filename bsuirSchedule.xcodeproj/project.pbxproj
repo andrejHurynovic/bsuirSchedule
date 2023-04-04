@@ -11,7 +11,9 @@
 		F601E5A52730B88F00773F02 /* CapturePhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F601E5A42730B88E00773F02 /* CapturePhotoView.swift */; };
 		F601E5A92731AA3900773F02 /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F601E5A82731AA3900773F02 /* TaskViewModel.swift */; };
 		F601E5AB2731E29600773F02 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F601E5AA2731E29600773F02 /* TaskView.swift */; };
-		F612D8B429DB812C00D4DDEB /* RoundedRectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F612D8B329DB812C00D4DDEB /* RoundedRectangleView.swift */; };
+		F60D44AF29DC68CC0008E4F4 /* SquareGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60D44AE29DC68CC0008E4F4 /* SquareGrid.swift */; };
+		F60D44B229DC693F0008E4F4 /* NSManagedObjectsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60D44B129DC693F0008E4F4 /* NSManagedObjectsSection.swift */; };
+		F612D8B429DB812C00D4DDEB /* SquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F612D8B329DB812C00D4DDEB /* SquareView.swift */; };
 		F612D8B629DB856A00D4DDEB /* AuditoriumsGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F612D8B529DB856A00D4DDEB /* AuditoriumsGridView.swift */; };
 		F614250C271B7EFF006C3CE1 /* AuditoriumDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F614250B271B7EFF006C3CE1 /* AuditoriumDetailedView.swift */; };
 		F61915B728465F2100A98101 /* GroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61915B628465F2100A98101 /* GroupViewModel.swift */; };
@@ -128,7 +130,9 @@
 		F601E5A42730B88E00773F02 /* CapturePhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapturePhotoView.swift; sourceTree = "<group>"; };
 		F601E5A82731AA3900773F02 /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
 		F601E5AA2731E29600773F02 /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
-		F612D8B329DB812C00D4DDEB /* RoundedRectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedRectangleView.swift; sourceTree = "<group>"; };
+		F60D44AE29DC68CC0008E4F4 /* SquareGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareGrid.swift; sourceTree = "<group>"; };
+		F60D44B129DC693F0008E4F4 /* NSManagedObjectsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedObjectsSection.swift; sourceTree = "<group>"; };
+		F612D8B329DB812C00D4DDEB /* SquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareView.swift; sourceTree = "<group>"; };
 		F612D8B529DB856A00D4DDEB /* AuditoriumsGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriumsGridView.swift; sourceTree = "<group>"; };
 		F614250B271B7EFF006C3CE1 /* AuditoriumDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriumDetailedView.swift; sourceTree = "<group>"; };
 		F61915B628465F2100A98101 /* GroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewModel.swift; sourceTree = "<group>"; };
@@ -257,10 +261,19 @@
 			path = "Managers and templates";
 			sourceTree = "<group>";
 		};
+		F60D44B029DC691A0008E4F4 /* Generics */ = {
+			isa = PBXGroup;
+			children = (
+				F60D44B129DC693F0008E4F4 /* NSManagedObjectsSection.swift */,
+			);
+			path = Generics;
+			sourceTree = "<group>";
+		};
 		F612D8B229DB811600D4DDEB /* View */ = {
 			isa = PBXGroup;
 			children = (
-				F612D8B329DB812C00D4DDEB /* RoundedRectangleView.swift */,
+				F612D8B329DB812C00D4DDEB /* SquareView.swift */,
+				F60D44AE29DC68CC0008E4F4 /* SquareGrid.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -310,6 +323,7 @@
 		F632DEEA26696CCB00E4C55F /* bsuirSchedule */ = {
 			isa = PBXGroup;
 			children = (
+				F60D44B029DC691A0008E4F4 /* Generics */,
 				F612D8B229DB811600D4DDEB /* View */,
 				F67AA4E528FF795A00E5A7C4 /* Extensions */,
 				F601E5A62731918400773F02 /* Images */,
@@ -327,11 +341,9 @@
 				F65F831F26E8F35500B8CC4E /* Employee */,
 				F6BCE3A626EFCF0A0067B5DA /* Lesson */,
 				F62B37002902DDF000FA2BE8 /* LessonsSection */,
-				F695AA3729D843600051A354 /* Department */,
 				F697BF7326FFA129008FA7A9 /* Auditorium */,
-				F695AA3629D835FF0051A354 /* AuditoriumType */,
+				F695AA3729D843600051A354 /* Department */,
 				F6F87818271A1F36005E3C41 /* Speciality */,
-				F68465F826FA52E8000F185E /* Faculty */,
 				F68B4CF62845393B00C8DBF6 /* Week */,
 				F667332B280F762C00194EAC /* Task */,
 				F632DEF126696CD300E4C55F /* Preview Content */,
@@ -464,6 +476,7 @@
 		F697BF7326FFA129008FA7A9 /* Auditorium */ = {
 			isa = PBXGroup;
 			children = (
+				F695AA3629D835FF0051A354 /* AuditoriumType */,
 				F697BF7826FFA1BA008FA7A9 /* Auditorium+CoreDataClass.swift */,
 				F697BF7926FFA1BA008FA7A9 /* Auditorium+CoreDataProperties.swift */,
 				F6857C7828F096CE00195388 /* AuditoriumsSection.swift */,
@@ -521,6 +534,7 @@
 		F6F87818271A1F36005E3C41 /* Speciality */ = {
 			isa = PBXGroup;
 			children = (
+				F68465F826FA52E8000F185E /* Faculty */,
 				F6F87810271A1ED7005E3C41 /* Speciality+CoreDataClass.swift */,
 				F6F87811271A1ED7005E3C41 /* Speciality+CoreDataProperties.swift */,
 				F6877A6728F81918003CAC11 /* EducationType.swift */,
@@ -633,6 +647,7 @@
 				F68465FB26FA5321000F185E /* Faculty+CoreDataClass.swift in Sources */,
 				F67AA4EB28FF7A0F00E5A7C4 /* UIApplicationExtensions.swift in Sources */,
 				F68465FC26FA5321000F185E /* Faculty+CoreDataProperties.swift in Sources */,
+				F60D44AF29DC68CC0008E4F4 /* SquareGrid.swift in Sources */,
 				F695AA3A29D8439D0051A354 /* Department+CoreDataClass.swift in Sources */,
 				F695AA3B29D8439D0051A354 /* Department+CoreDataProperties.swift in Sources */,
 				F697BF8526FFA960008FA7A9 /* AuditoriumsView.swift in Sources */,
@@ -692,11 +707,12 @@
 				F6AFC4622721EC43008CC065 /* DesignManager.swift in Sources */,
 				F67AA4E428FF793100E5A7C4 /* ArrayExtensions.swift in Sources */,
 				F6D4AAB729BEB5260044481B /* Log.swift in Sources */,
-				F612D8B429DB812C00D4DDEB /* RoundedRectangleView.swift in Sources */,
+				F612D8B429DB812C00D4DDEB /* SquareView.swift in Sources */,
 				F67AA4DE28FF775700E5A7C4 /* FetchExtensions.swift in Sources */,
 				F64AD7B0266A816D00115E6B /* EmployeesView.swift in Sources */,
 				F67AA4E228FF788400E5A7C4 /* DateExtensions.swift in Sources */,
 				F698C25928D4995000C24EFB /* EmployeeViewModel.swift in Sources */,
+				F60D44B229DC693F0008E4F4 /* NSManagedObjectsSection.swift in Sources */,
 				F601E5A92731AA3900773F02 /* TaskViewModel.swift in Sources */,
 				F601E5A32730760100773F02 /* ImagesViewModel.swift in Sources */,
 				F614250C271B7EFF006C3CE1 /* AuditoriumDetailedView.swift in Sources */,
