@@ -21,9 +21,9 @@ public class Lesson: NSManagedObject {
         
         decodeLesson(container)
         decodeDate(container)
+        decodeGroups(container, decoder, context)
         decodeAnnouncement(container)
         decodeEmployees(container, decoder, context)
-        decodeGroups(container, decoder, context)
         decodeAuditoriums(container, decoder, context)
     }
     
@@ -88,8 +88,13 @@ public class Lesson: NSManagedObject {
             //Announcement can be repeated every certain day of the week, the boundaries of which are defined by startLessonDate and endLessonDate.
             self.weeks = [0, 1, 2, 3]
             //Start and end time in announcementStart and announcementEnd fields can be different then time in timeStart and timeEnd.
-            self.timeStart = try! container.decode(String.self, forKey: .announcementStart)
-            self.timeEnd = try! container.decode(String.self, forKey: .announcementEnd)
+            //Depreciated?
+            if let announcementStart = try? container.decode(String.self, forKey: .announcementStart) {
+                self.timeStart = announcementStart
+            }
+            if let announcementEnd = try? container.decode(String.self, forKey: .announcementEnd) {
+                self.timeEnd = announcementEnd
+            }
         }
         
     }
