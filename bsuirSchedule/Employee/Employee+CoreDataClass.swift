@@ -59,9 +59,7 @@ extension Employee: DecoderUpdatable {
         self.id = (try! container.decode(Int32.self, forKey: .id))
         if let urlID = try? container.decode(String.self, forKey: .urlID) {
             self.urlID = urlID
-        } else {
-            self.urlID = nil
-        }
+        } 
         self.firstName = try! container.decode(String.self, forKey: .firstName)
         self.middleName = try? container.decode(String.self, forKey: .middleName)
         self.lastName = try! container.decode(String.self, forKey: .lastName)

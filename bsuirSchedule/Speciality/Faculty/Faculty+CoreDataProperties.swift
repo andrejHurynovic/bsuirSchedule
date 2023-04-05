@@ -50,7 +50,6 @@ extension Faculty {
     static func getAll(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Faculty] {
         return try! context.fetch(self.fetchRequest())
     }
-    
 }
 
 //MARK: - Fetch

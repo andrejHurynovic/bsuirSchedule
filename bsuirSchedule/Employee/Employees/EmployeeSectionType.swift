@@ -5,7 +5,7 @@
 //  Created by Andrej Hurynovič on 4.04.23.
 //
 
-enum EmployeeSectionType: CaseIterable {
+enum EmployeeSectionType: SectionType {
     case firstLetter
     case department
     case rank

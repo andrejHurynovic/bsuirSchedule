@@ -13,7 +13,9 @@ import CoreData
 extension Department {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Department> {
-        return NSFetchRequest<Department>(entityName: "Department")
+        let request = NSFetchRequest<Department>(entityName: "Department")
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \Department.abbreviation, ascending: true)]
+        return request
     }
 
     @NSManaged public var id: Int16
@@ -55,3 +57,10 @@ extension Department {
 }
 
 extension Department : Identifiable {}
+
+//MARK: - Request
+extension Department {
+    static func getAll(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Department] {
+        return try! context.fetch(self.fetchRequest())
+    }
+}

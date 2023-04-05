@@ -33,8 +33,9 @@ struct AuditoriumsView: View {
                 TotalFooterView(text: "Аудиторий", count: auditoriums.count)
             }
             .navigationTitle("Аудитории")
-            .toolbar { toolbar }
             .refreshable { await viewModel.update() }
+            
+            .toolbar { toolbar }
             
             .searchable(text: $searchText, prompt: "Номер, подразделение")
             .onChange(of: searchText) { newText in
@@ -47,11 +48,10 @@ struct AuditoriumsView: View {
     //MARK: - Toolbar
     
     @ViewBuilder var toolbar: some View {
-        Menu {
-            sectionTypeSelector
+        MenuView(defaultRules: [selectedSectionType == .building,
+                                selectedAuditoriumType == nil]) {
+            SortingPicker(value: $selectedSectionType)
             auditoriumTypeSelector
-        } label: {
-            Image(systemName: (selectedAuditoriumType == nil) ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
         }
     }
     
@@ -70,14 +70,7 @@ struct AuditoriumsView: View {
         
     }
     
-    @ViewBuilder var sectionTypeSelector: some View  {
-        Text("Сортировка:")
-        Picker("", selection: $selectedSectionType.animation(.spring())) {
-            ForEach(AuditoriumSectionType.allCases, id: \.self) { type in
-                Text(type.description)
-            }
-        }
-    }
+
 }
 
 struct AuditoriumsView_Previews: PreviewProvider {

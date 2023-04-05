@@ -17,28 +17,43 @@ struct EmployeesView: View {
     @StateObject private var viewModel = EmployeesViewModel()
     
     @State var searchText = ""
+    @State var selectedSectionType: EmployeeSectionType = .firstLetter
     
     //MARK: - Body
     
     var body: some View {
         NavigationView {
             ScrollView {
-                let sections = Array(employees).sections(.firstLetter)
+                let sections = Array(employees).sections(selectedSectionType)
                 EmployeesGridView(sections: sections)
                 TotalFooterView(text: "Преподавателей", count: employees.count)
             }
-            .background(Color(UIColor.systemGroupedBackground))
             .navigationTitle("Преподаватели")
             .refreshable { await viewModel.update() }
+            
+            .toolbar { toolbar }
             
             .searchable(text: $searchText, prompt: "Фамилия, имя, подраздедение")
             .onChange(of: searchText) { newText in
                 employees.nsPredicate = viewModel.calculatePredicate(searchText)
             }
+            
+            .background(Color(UIColor.systemGroupedBackground))
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
     
+    //MARK: - Toolbar
+    
+    @ViewBuilder var toolbar: some View {
+        MenuView(defaultRules: [selectedSectionType == .firstLetter]) {
+            sectionTypeSelector
+        }
+    }
+    
+    var sectionTypeSelector: some View {
+        SortingPicker(value: $selectedSectionType)
+    }
 }
 
 struct EmployeesView_Previews: PreviewProvider {

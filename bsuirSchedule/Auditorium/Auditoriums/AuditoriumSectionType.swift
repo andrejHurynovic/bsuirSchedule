@@ -5,7 +5,7 @@
 //  Created by Andrej Hurynovič on 4.04.23.
 //
 
-enum AuditoriumSectionType: CaseIterable {
+enum AuditoriumSectionType: SectionType {
     case building
     case buildingAndFloor
     case department

@@ -16,12 +16,13 @@ struct EmployeesGridView: View {
                   spacing: 8) {
             ForEach(sections, id: \.title) { section in
                 Section {
-                    ForEach(section.items, id: \.self) { employee in
+                    ForEach(section.items) { employee in
                         NavigationLink {
                             EmployeeDetailedView(viewModel: EmployeeViewModel(employee))
                         } label: {
                             EmployeeView(employee: employee)
                         }
+                        .id("\(section.title):\(employee.id)")
                     }
                 } header: {
                     standardizedHeader(title: section.title)
