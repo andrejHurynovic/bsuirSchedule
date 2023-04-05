@@ -29,7 +29,7 @@ struct EmployeesView: View {
                 TotalFooterView(text: "Преподавателей", count: employees.count)
             }
             .navigationTitle("Преподаватели")
-            .refreshable { await viewModel.update() }
+            .refreshable { await EmployeesViewModel.update()     }
             
             .toolbar { toolbar }
             

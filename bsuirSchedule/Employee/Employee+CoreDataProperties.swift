@@ -128,7 +128,7 @@ extension Employee {
         guard let urlID = self.urlID,
               let url = URL(string: FetchDataType.employee.rawValue + urlID),
               let (data, _) = try? await URLSession.shared.data(from: url) else {
-            Log.error("No data for employee (\(String(self.id)))")
+            Log.error("No data for employee (\(self.urlID ?? "no urlID"))")
             return nil
         }
         
@@ -137,7 +137,6 @@ extension Employee {
             return nil
         }
         
-        //
         let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
         backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
         let decoder = JSONDecoder()
@@ -164,7 +163,7 @@ extension Employee {
         return self
     }
     
-    static func updateEmployees(employees: [Employee]) async {
+    static func updateEmployees(employees: [Employee] = Employee.getAll()) async {
         let startTime = CFAbsoluteTimeGetCurrent()
         try! await withThrowingTaskGroup(of: Employee?.self) { taskGroup in
             for employee in employees {
@@ -184,12 +183,12 @@ extension Employee {
 extension Employee {
     func fetchPhoto() async -> Data? {
         guard let photoLink = self.photoLink,
-              let url = URL(string: photoLink) else {
+              let url = URL(string: photoLink),
+              let (data, _) = try? await URLSession.shared.data(from: url) else {
             Log.error("No data for employee photo (\(String(self.id)))")
             return nil
         }
         
-        let (data, _) = try! await URLSession.shared.data(from: url)
         guard data.count != 0 else {
             Log.warning("Empty data while updating employee photo \(self.urlID ?? "no urlID") (\(String(self.id)))")
             return nil

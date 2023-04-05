@@ -9,9 +9,9 @@ import SwiftUI
 
 class EmployeesViewModel: ObservableObject {
     
-    func update() async {
+    static func update() async {
         await Employee.fetchAll()
-        await Employee.updateEmployees(employees: Employee.getAll())
+        await Employee.updateEmployees()
     }
     
     ///This method calculates a predicate to filter the list of Employees based on a search query. It takes a search query as an argument and returns an NSPredicate object. The predicate is constructed based on the search query and it filters Employees by their last name, first name, department name or department abbreviation. If the search query is empty, the method returns nil, which means that no filtering is needed.

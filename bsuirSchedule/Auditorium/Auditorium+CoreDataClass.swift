@@ -79,7 +79,7 @@ extension Auditorium: DecoderUpdatable {
     ///Building container have "id" field, however there is no pattern between an id and building number, the more universal solution is to use the "name" filed.
     private func decodeBuilding(string: String) throws {
         guard let building = Int16(string.trimmingCharacters(in: CharacterSet.init([" ", "к", "."]))) else {
-            Log.warning("Non-educational building \(string)")
+            Log.warning("Non-educational building \(string).")
             throw AuditoriumError.nonEducationalBuilding
         }
         self.building = building
