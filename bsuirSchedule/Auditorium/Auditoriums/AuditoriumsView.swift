@@ -23,6 +23,9 @@ struct AuditoriumsView: View {
     @State var selectedSectionType: AuditoriumSectionType = .building
     @State var selectedAuditoriumType: AuditoriumType? = nil
     
+    var defaultRules: [Bool] { [selectedSectionType == .building,
+                                selectedAuditoriumType == nil] }
+    
     //MARK: - Body
     
     var body: some View {
@@ -48,8 +51,7 @@ struct AuditoriumsView: View {
     //MARK: - Toolbar
     
     @ViewBuilder var toolbar: some View {
-        MenuView(defaultRules: [selectedSectionType == .building,
-                                selectedAuditoriumType == nil]) {
+        MenuView(defaultRules: defaultRules) {
             SortingPicker(value: $selectedSectionType)
             auditoriumTypeSelector
         }

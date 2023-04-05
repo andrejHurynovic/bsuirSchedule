@@ -10,6 +10,8 @@ import SwiftUI
 struct EmployeesGridView: View {
     var sections: [NSManagedObjectsSection<Employee>]
     
+    var showDepartments: Bool
+    
     var body: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 256, maximum: 512))],
                   alignment: .leading,
@@ -20,7 +22,8 @@ struct EmployeesGridView: View {
                         NavigationLink {
                             EmployeeDetailedView(viewModel: EmployeeViewModel(employee))
                         } label: {
-                            EmployeeView(employee: employee)
+                            EmployeeView(employee: employee,
+                                         showDepartments: showDepartments)
                         }
                         .id("\(section.title):\(employee.id)")
                     }
@@ -40,7 +43,8 @@ struct EmployeesGridView_Previews: PreviewProvider {
         
         ForEach(EmployeeSectionType.allCases, id: \.self) { sectionType in
             ScrollView {
-                EmployeesGridView(sections: employees.sections(sectionType))
+                EmployeesGridView(sections: employees.sections(sectionType),
+                                  showDepartments: true)
             }
             .background(Color(UIColor.systemGroupedBackground))
         }

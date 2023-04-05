@@ -18,6 +18,7 @@ struct EmployeesView: View {
     
     @State var searchText = ""
     @State var selectedSectionType: EmployeeSectionType = .firstLetter
+    @State var showDepartments = false
     
     //MARK: - Body
     
@@ -25,7 +26,8 @@ struct EmployeesView: View {
         NavigationView {
             ScrollView {
                 let sections = Array(employees).sections(selectedSectionType)
-                EmployeesGridView(sections: sections)
+                EmployeesGridView(sections: sections,
+                                  showDepartments: showDepartments)
                 TotalFooterView(text: "Преподавателей", count: employees.count)
             }
             .navigationTitle("Преподаватели")
@@ -48,11 +50,18 @@ struct EmployeesView: View {
     @ViewBuilder var toolbar: some View {
         MenuView(defaultRules: [selectedSectionType == .firstLetter]) {
             sectionTypeSelector
+            showDepartmentsToggle
         }
     }
     
     var sectionTypeSelector: some View {
         SortingPicker(value: $selectedSectionType)
+    }
+    
+    var showDepartmentsToggle: some View {
+        Toggle(isOn: $showDepartments.animation()) {
+            Text("Отображать подразделения")
+        }
     }
 }
 

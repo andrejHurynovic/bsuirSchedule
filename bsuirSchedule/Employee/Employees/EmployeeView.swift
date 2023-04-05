@@ -10,7 +10,7 @@ import SwiftUI
 struct EmployeeView: View {
     @ObservedObject var employee: Employee
     
-    var showDepartments = false
+    var showDepartments: Bool
     var imageSize: CGFloat {
         let baseSize = 64.0
         let departmentsTextHeight = 20.0
@@ -24,6 +24,7 @@ struct EmployeeView: View {
             text
             Spacer()
             image
+                .transition(.scale.combined(with: .opacity))
         }
         .padding()
         .foregroundColor(.primary)

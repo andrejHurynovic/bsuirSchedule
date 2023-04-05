@@ -245,6 +245,24 @@
 			path = "Managers and templates";
 			sourceTree = "<group>";
 		};
+		F606AFB029DE36A3007180E6 /* Picker */ = {
+			isa = PBXGroup;
+			children = (
+				F65309E429DCE1DA001DEC29 /* SortingPicker.swift */,
+				F65309E629DCED12001DEC29 /* MenuView.swift */,
+			);
+			path = Picker;
+			sourceTree = "<group>";
+		};
+		F606AFB129DE36B2007180E6 /* Grid */ = {
+			isa = PBXGroup;
+			children = (
+				F60D44AE29DC68CC0008E4F4 /* SquareGrid.swift */,
+				F612D8B329DB812C00D4DDEB /* SquareView.swift */,
+			);
+			path = Grid;
+			sourceTree = "<group>";
+		};
 		F60D44B029DC691A0008E4F4 /* Generics */ = {
 			isa = PBXGroup;
 			children = (
@@ -283,11 +301,9 @@
 		F612D8B229DB811600D4DDEB /* View */ = {
 			isa = PBXGroup;
 			children = (
-				F60D44AE29DC68CC0008E4F4 /* SquareGrid.swift */,
-				F612D8B329DB812C00D4DDEB /* SquareView.swift */,
-				F65309E429DCE1DA001DEC29 /* SortingPicker.swift */,
+				F606AFB129DE36B2007180E6 /* Grid */,
+				F606AFB029DE36A3007180E6 /* Picker */,
 				F65333DF29DCC3D4004EEF8C /* TotalFooterView.swift */,
-				F65309E629DCED12001DEC29 /* MenuView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";

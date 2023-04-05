@@ -16,23 +16,7 @@ extension Array where Element == Employee {
                     .map { NSManagedObjectsSection(title: String($0.key),
                                                    items: $0.value) }
             case .department:
-                let departments = Department.getAll()
-                let sections: [NSManagedObjectsSection<Employee>] = departments.compactMap { department in
-                    
-                    let employees = self.filter { employee in
-                        if let departments = employee.departments, departments.contains(department) {
-                            return true
-                        } else {
-                            return false
-                        }
-                    }
-                    guard employees.isEmpty == false else { return nil }
-                    
-                    return NSManagedObjectsSection(title: department.abbreviation,
-                                                   items: employees)
-                }
-
-                return sections
+                return departmentSections()
             case .rank:
                 return self.sectioned(by: \.rank)
                     .sorted { $0.key ?? "" < $1.key ?? "" }
@@ -46,7 +30,25 @@ extension Array where Element == Employee {
         }
     }
     
-    
+    private func departmentSections() -> [NSManagedObjectsSection<Employee>] {
+        let departments = Department.getAll()
+        let sections: [NSManagedObjectsSection<Employee>] = departments.compactMap { department in
+            
+            let employees = self.filter { employee in
+                if let departments = employee.departments, departments.contains(department) {
+                    return true
+                } else {
+                    return false
+                }
+            }
+            guard employees.isEmpty == false else { return nil }
+            
+            return NSManagedObjectsSection(title: department.abbreviation,
+                                           items: employees)
+        }
+        
+        return sections
+    }
     
 }
 

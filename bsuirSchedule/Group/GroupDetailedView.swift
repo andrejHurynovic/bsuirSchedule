@@ -25,7 +25,7 @@ struct GroupDetailedView: View {
                 lastUpdate
                 statistics
             }
-
+            
         }
         .toolbar(content: {
             Button {
@@ -186,10 +186,11 @@ struct GroupDetailedView: View {
         if let employees = viewModel.group.employees {
             DisclosureGroup {
                 ForEach(employees) { employee in
-                    EmployeeView(employee: employee)
-                        .background(NavigationLink("", destination: {
-                            EmployeeDetailedView(viewModel: EmployeeViewModel(employee))
-                        }).opacity(0))
+                    EmployeeView(employee: employee,
+                                 showDepartments: false)
+                    .background(NavigationLink("", destination: {
+                        EmployeeDetailedView(viewModel: EmployeeViewModel(employee))
+                    }).opacity(0))
                 }
             } label: {
                 Label("Преподаватели", systemImage: "person.3")
