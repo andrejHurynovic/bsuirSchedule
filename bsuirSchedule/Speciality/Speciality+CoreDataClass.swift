@@ -13,8 +13,7 @@ import CoreData
 public class Speciality: NSManagedObject {
     
     required convenience public init(from decoder: Decoder) throws {
-        let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
-        self.init(entity: Speciality.entity(), insertInto: context)
+        self.init(context: decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext)
         
         //If init is called from a decoder that decodes a Group and cannot find the required specialty, a special method is called to process specific Group keys.
         if let groupContainer = decoder.userInfo[.groupEmbeddedContainer] as? Bool,
@@ -38,8 +37,12 @@ extension Speciality: DecoderUpdatable {
         
         self.code = try! container.decode(String.self, forKey: .code)
         
-        let educationTypeContainer = try! container.nestedContainer(keyedBy: EducationTypeCodingKeys.self, forKey: .educationTypeContainer)
-        self.educationTypeValue = try! educationTypeContainer.decode(Int16.self, forKey: .educationTypeId)
+        self.educationType = try! container.decode(EducationType.self, forKey: .educationTypeContainer)
+        
+        if let facultyID = try? container.decode(Int16.self, forKey: .facultyID),
+           let context = decoder.userInfo[.managedObjectContext] as? NSManagedObjectContext {
+            self.faculty =  Faculty(id: facultyID, context: context)
+        }
         
         Log.info("Speciality \(self.id) (\(self.abbreviation ?? "Empty name")) has been updated.")
     }

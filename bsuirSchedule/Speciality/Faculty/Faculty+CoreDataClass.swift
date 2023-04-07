@@ -14,7 +14,7 @@ public class Faculty: NSManagedObject {
  
     required convenience public init(from decoder: Decoder) throws {
         let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
-        self.init(entity: Faculty.entity(), insertInto: context)
+        self.init(context: context)
         
         //If init is called from a decoder that decodes a Group and cannot find the required specialty, a special method is called to process specific Group keys.
         if let groupContainer = decoder.userInfo[.groupEmbeddedContainer] as? Bool,

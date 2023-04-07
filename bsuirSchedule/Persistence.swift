@@ -56,3 +56,11 @@ struct PersistenceController {
         container.viewContext.automaticallyMergesChangesFromParent = true
     }
 }
+
+func newBackgroundContextWithDecoder() -> (NSManagedObjectContext, JSONDecoder) {
+    let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
+    backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+    let decoder = JSONDecoder()
+    decoder.userInfo[.managedObjectContext] = backgroundContext
+    return (backgroundContext, decoder)
+}

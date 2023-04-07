@@ -15,7 +15,7 @@ extension Speciality {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Speciality> {
         let request = NSFetchRequest<Speciality>(entityName: "Speciality")
         request.sortDescriptors = [NSSortDescriptor(keyPath: \Speciality.name, ascending: true),
-                                   NSSortDescriptor(keyPath: \Speciality.educationTypeValue, ascending: true)]
+                                   NSSortDescriptor(keyPath: \Speciality.educationType?.id, ascending: true)]
         return request
     }
     
@@ -23,7 +23,7 @@ extension Speciality {
     @NSManaged public var name: String!
     @NSManaged public var abbreviation: String!
     
-    @NSManaged public var educationTypeValue: Int16
+    @NSManaged public var educationType: EducationType?
     @NSManaged public var code: String?
     
     @NSManaged public var faculty: Faculty!
@@ -48,12 +48,7 @@ extension Speciality {
     
 }
 
-extension Speciality : Identifiable {
-    
-    var educationType: EducationType {
-        EducationType(rawValue: educationTypeValue)!
-    }
-}
+extension Speciality : Identifiable {}
 
 //MARK: - Request
 extension Speciality {
@@ -65,62 +60,26 @@ extension Speciality {
 //MARK: - Fetch
 extension Speciality {
     static func fetchAll() async {
-        let data = try! await URLSession.shared.data(from: FetchDataType.specialities.rawValue)
+        guard let data = try? await URLSession.shared.data(for: .specialities) else { return }
         let startTime = CFAbsoluteTimeGetCurrent()
         
-        guard let specialitiesDictionaries = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]] else {
-            Log.error("Can't create specialities dictionaries.")
+        let (backgroundContext, decoder) = newBackgroundContextWithDecoder()
+        
+        guard let specialities = try? decoder.decode([Speciality].self, from: data) else {
+            Log.error("Can't decode specialities.")
             return
         }
         
-        let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
-        backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
-        let decoder = JSONDecoder()
-        decoder.userInfo[.managedObjectContext] = backgroundContext
-        
-        let fetchedFaculties = Faculty.getAll(context: backgroundContext)
-        let fetchedSpecialities = Speciality.getAll(context: backgroundContext)
-        
-        //Сollecting a set of all faculty IDs from specialities information.
-        let facultyIDs = Set(specialitiesDictionaries.map { $0["facultyId"] as! Int16 })
-        //The Faculty with the corresponding identifier a is searched for.
-        let faculties = facultyIDs.map { facultyID in
-            if let faculty = fetchedFaculties.first(where: {$0.id == facultyID}) {
-                return faculty
-            } else {
-                //A new Faculty record is created for faculties that are missing in the database.
-                Log.warning("Can't find faculty (\(facultyID)), creating new faculty")
-                return Faculty(id: facultyID, context: backgroundContext)
-            }
-        }
-        
-        //The specialties are filtered by each faculty, after the specialties are created (if they are not presented in the database) and updated.
-        for faculty in faculties {
-            let facultiesSpecialitiesDictionaries = specialitiesDictionaries.filter { $0["facultyId"] as! Int16 == faculty.id }
-            
-            let specialities = facultiesSpecialitiesDictionaries.map { specialityDictionary in
-                let specialityData = try! JSONSerialization.data(withJSONObject: specialityDictionary)
-                let specialityID = specialityDictionary["id"] as! Int32
-                if var speciality = fetchedSpecialities.first(where: { $0.id == specialityID }) {
-                    try! decoder.update(&speciality, from: specialityData)
-                    return speciality
-                } else {
-                    return try! decoder.decode(Speciality.self, from: specialityData)
-                }
-            }
-            //All filtered specialties are added to the corresponding faculty.
-            faculty.addToSpecialities(NSSet(array: specialities))
-        }
         await backgroundContext.perform(schedule: .immediate, {
             try! backgroundContext.save()
-            Log.info("\(String(self.getAll(context: backgroundContext).count)) Specialities fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds.\n")
         })
+        Log.info("\(String(specialities.count)) Specialities fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds.\n")
     }
 }
 
 extension Speciality {
     ///Name + education type + faculty abbreviation
     public override var description: String {
-        "\(self.name!) (\(self.educationType.description), \(self.faculty?.abbreviation ?? "Неизвестный факультет"))"
+        "\(self.name!) (\(String(describing: self.educationType?.name)), \(self.faculty?.abbreviation ?? "Неизвестный факультет"))"
     }
 }

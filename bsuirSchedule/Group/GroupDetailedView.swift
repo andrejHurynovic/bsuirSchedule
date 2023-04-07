@@ -68,7 +68,7 @@ struct GroupDetailedView: View {
             if let code = viewModel.group.speciality.code {
                 FormView("Шифр", code)
             }
-            FormView("Форма обучения", viewModel.group.speciality.educationType.description)
+            FormView("Форма обучения", viewModel.group.speciality.educationType?.name ?? "No form")
             if viewModel.group.numberOfStudents != 0 {
                 FormView("Количество студентов", String(viewModel.group.numberOfStudents))
             }

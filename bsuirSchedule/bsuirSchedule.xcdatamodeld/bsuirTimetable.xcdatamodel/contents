@@ -44,6 +44,16 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
+    <entity name="EducationType" representedClassName="EducationType" syncable="YES">
+        <attribute name="id" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <relationship name="specialities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Speciality" inverseName="educationType" inverseEntity="Speciality"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
     <entity name="Employee" representedClassName="Employee" syncable="YES">
         <attribute name="degree" optional="YES" attributeType="String"/>
         <attribute name="degreeAbbreviation" optional="YES" attributeType="String"/>
@@ -146,6 +156,7 @@
         <attribute name="educationTypeValue" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
+        <relationship name="educationType" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationType" inverseName="specialities" inverseEntity="EducationType"/>
         <relationship name="faculty" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Faculty" inverseName="specialities" inverseEntity="Faculty"/>
         <relationship name="groups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="speciality" inverseEntity="Group"/>
         <uniquenessConstraints>

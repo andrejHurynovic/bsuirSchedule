@@ -19,11 +19,10 @@ public class Department: NSManagedObject {
     lazy var formattedName: String = self.name ?? self.abbreviation
 
     required public convenience init(from decoder: Decoder) throws {
-        let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
         guard let container = try? decoder.container(keyedBy: CodingKeys.self) else {
             throw DepartmentDecodingError.noKeys
         }
-        self.init(entity: Department.entity(), insertInto: context)
+        self.init(context: decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext)
         
         self.id = (try? container.decode(Int16.self, forKey: .id)) ?? (try? container.decode(Int16.self, forKey: .idInAuditoriumContainer))!
         self.name = try! container.decode(String.self, forKey: .name)

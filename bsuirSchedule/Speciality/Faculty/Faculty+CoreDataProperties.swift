@@ -55,32 +55,16 @@ extension Faculty {
 //MARK: - Fetch
 extension Faculty {
     static func fetchAll() async {
-        let data = try! await URLSession.shared.data(from: FetchDataType.faculties.rawValue)
+        guard let data = try? await URLSession.shared.data(for: .faculties) else { return }
         let startTime = CFAbsoluteTimeGetCurrent()
         
-        guard let facultiesDictionaries = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]] else {
-            Log.error("Can't create faculties dictionaries.")
+        let (backgroundContext, decoder) = newBackgroundContextWithDecoder()
+        
+        guard let faculties = try? decoder.decode([Faculty].self, from: data) else {
+            Log.error("Can't decode faculties.")
             return
         }
         
-        let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
-        backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
-        let decoder = JSONDecoder()
-        decoder.userInfo[.managedObjectContext] = backgroundContext
-        
-        let fetchedFaculties = Faculty.getAll(context: backgroundContext)
-        
-        let faculties = facultiesDictionaries.map { facultiesDictionary in
-            let facultyID = facultiesDictionary["id"] as! Int16
-            let facultyData = try! JSONSerialization.data(withJSONObject: facultiesDictionary)
-            if var faculty = fetchedFaculties.first(where: { $0.id == facultyID }) {
-                try! decoder.update(&faculty, from: facultyData)
-                return faculty
-            } else {
-                return try! decoder.decode(Faculty.self, from: facultyData)
-            }
-
-        }
         await backgroundContext.perform(schedule: .immediate, {
             try! backgroundContext.save()
         })

@@ -54,7 +54,7 @@ struct GroupsView: View {
                         Picker("", selection: $selectedEducationType) {
                             Text("все").tag(nil as EducationType?)
                             let educationTypes = Set(groups.compactMap ({ $0.speciality?.educationType }))
-                            ForEach(educationTypes.sorted(by: { $0.rawValue < $1.rawValue }), id: \.rawValue) { educationType in
+                            ForEach(educationTypes.sorted(by: { $0.id < $1.id }), id: \.id) { educationType in
                                 Text(educationType.description)
                                     .tag(educationType as EducationType?)
                             }

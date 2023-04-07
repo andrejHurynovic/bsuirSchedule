@@ -11,6 +11,7 @@ import CoreData
 struct DeveloperView: View {
     
     @FetchRequest(entity: Faculty.entity(), sortDescriptors: []) var faculties: FetchedResults<Faculty>
+    @FetchRequest(entity: EducationType.entity(), sortDescriptors: []) var educationTypes: FetchedResults<EducationType>
     @FetchRequest(entity: Speciality.entity(), sortDescriptors: []) var specialities: FetchedResults<Speciality>
     @FetchRequest(entity: Department.entity(), sortDescriptors: []) var departments: FetchedResults<Department>
     @FetchRequest(entity: Auditorium.entity(), sortDescriptors: []) var auditoriums: FetchedResults<Auditorium>
@@ -24,6 +25,7 @@ struct DeveloperView: View {
         List {
             Section("Удаление") {
                 DeveloperDeleteView(name: "факультеты", symbol: "graduationcap.circle", elements: faculties)
+                DeveloperDeleteView(name: "формы образования", symbol: "graduationcap.circle", elements: educationTypes)
                 DeveloperDeleteView(name: "специальности", symbol: "book.circle", elements: specialities)
                 DeveloperDeleteView(name: "подразделения", symbol: "book.circle", elements: departments)
                 DeveloperDeleteView(name: "аудитории", symbol: "building.columns.circle", elements: auditoriums)
