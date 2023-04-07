@@ -6,7 +6,6 @@
 //
 //
 
-import Foundation
 import CoreData
 
 extension Auditorium {
@@ -119,9 +118,13 @@ extension Auditorium: AbleToFetchAll {
             
             
             if var auditorium = auditoriums.first (where: {
-                $0.formattedName == "\(name)-\(buildingString.first!)"
+                if $0.outsideUniversity {
+                    return "\(name)-\(buildingString.first!)" == "\(name)-\(buildingString.first!)"
+                } else {
+                    return  $0.formattedName == "\(name)-\(buildingString.first!)"
+                }
             }) {
-                try! decoder.update(&auditorium, from: data)
+                try? decoder.update(&auditorium, from: data)
             } else {
                 let _ = try? decoder.decode(Auditorium.self, from: data)
             }

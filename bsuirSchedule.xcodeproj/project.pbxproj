@@ -542,9 +542,9 @@
 		F697BF7326FFA129008FA7A9 /* Auditorium */ = {
 			isa = PBXGroup;
 			children = (
-				F695AA3629D835FF0051A354 /* AuditoriumType */,
 				F697BF7826FFA1BA008FA7A9 /* Auditorium+CoreDataClass.swift */,
 				F697BF7926FFA1BA008FA7A9 /* Auditorium+CoreDataProperties.swift */,
+				F695AA3629D835FF0051A354 /* AuditoriumType */,
 				F60D44B329DC74A90008E4F4 /* Auditoriums */,
 				F614250B271B7EFF006C3CE1 /* AuditoriumDetailedView.swift */,
 			);

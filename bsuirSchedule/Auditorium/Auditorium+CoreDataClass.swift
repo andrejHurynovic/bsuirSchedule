@@ -28,8 +28,7 @@ public class Auditorium: NSManagedObject {
             throw AuditoriumError.nonEducationalBuilding
         }
         
-        let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
-        self.init(entity: Auditorium.entity(), insertInto: context)
+        self.init(context: decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext)
         
         try self.update(from: decoder)
     }
