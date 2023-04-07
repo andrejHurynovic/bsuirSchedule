@@ -33,7 +33,6 @@
 		F632DEEC26696CCB00E4C55F /* bsuirTimetableApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F632DEEB26696CCB00E4C55F /* bsuirTimetableApp.swift */; };
 		F632DEEE26696CCB00E4C55F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F632DEED26696CCB00E4C55F /* ContentView.swift */; };
 		F632DEF026696CD300E4C55F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F632DEEF26696CD300E4C55F /* Assets.xcassets */; };
-		F632DEF326696CD300E4C55F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F632DEF226696CD300E4C55F /* Preview Assets.xcassets */; };
 		F632DEF526696CD300E4C55F /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F632DEF426696CD300E4C55F /* Persistence.swift */; };
 		F632DEF826696CD300E4C55F /* bsuirSchedule.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F632DEF626696CD300E4C55F /* bsuirSchedule.xcdatamodeld */; };
 		F63FC6BD272F01EA00C9F410 /* TaskDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63FC6BC272F01E900C9F410 /* TaskDetailedView.swift */; };
@@ -150,7 +149,6 @@
 		F632DEEB26696CCB00E4C55F /* bsuirTimetableApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bsuirTimetableApp.swift; sourceTree = "<group>"; };
 		F632DEED26696CCB00E4C55F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F632DEEF26696CD300E4C55F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		F632DEF226696CD300E4C55F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F632DEF426696CD300E4C55F /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		F632DEF726696CD300E4C55F /* bsuirTimetable.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = bsuirTimetable.xcdatamodel; sourceTree = "<group>"; };
 		F632DEF926696CD300E4C55F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -191,7 +189,6 @@
 		F68B4CED284535C000C8DBF6 /* LessonsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsSection.swift; sourceTree = "<group>"; };
 		F68E9CDB2729B57300704EB0 /* AuditoriumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriumView.swift; sourceTree = "<group>"; };
 		F68E9CDD2729BB4100704EB0 /* FavoriteGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGroupView.swift; sourceTree = "<group>"; };
-		F68E9CE92729FFE600704EB0 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		F68E9CEB2729FFE600704EB0 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		F69009D326F6958000379A74 /* LessonsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsViewModel.swift; sourceTree = "<group>"; };
 		F691602D29001F290033AE14 /* LessonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsView.swift; sourceTree = "<group>"; };
@@ -254,6 +251,7 @@
 		F601E5A7273191C300773F02 /* Managers and templates */ = {
 			isa = PBXGroup;
 			children = (
+				F601E5A62731918400773F02 /* Images */,
 				F6AFC4612721EC43008CC065 /* DesignManager.swift */,
 			);
 			path = "Managers and templates";
@@ -367,9 +365,8 @@
 			isa = PBXGroup;
 			children = (
 				F60D44B029DC691A0008E4F4 /* Generics */,
-				F612D8B229DB811600D4DDEB /* View */,
 				F67AA4E528FF795A00E5A7C4 /* Extensions */,
-				F601E5A62731918400773F02 /* Images */,
+				F612D8B229DB811600D4DDEB /* View */,
 				F601E5A7273191C300773F02 /* Managers and templates */,
 				F632DEEB26696CCB00E4C55F /* bsuirTimetableApp.swift */,
 				F632DEF426696CD300E4C55F /* Persistence.swift */,
@@ -378,30 +375,12 @@
 				F6857C7628F06F4300195388 /* DeveloperView.swift */,
 				F6D4AAB629BEB5260044481B /* Log.swift */,
 				F67AA4E028FF779900E5A7C4 /* Fetch */,
-				F62B37012903198F00FA2BE8 /* Settings */,
-				F6F6B4F726FA5D2700814354 /* Favorite */,
-				F699F21826EA249E00747BE0 /* Group */,
-				F65F831F26E8F35500B8CC4E /* Employee */,
-				F6BCE3A626EFCF0A0067B5DA /* Lesson */,
-				F62B37002902DDF000FA2BE8 /* LessonsSection */,
-				F697BF7326FFA129008FA7A9 /* Auditorium */,
-				F695AA3729D843600051A354 /* Department */,
-				F6F87818271A1F36005E3C41 /* Speciality */,
+				F643072029E0CC7600B3A98A /* Main */,
 				F68B4CF62845393B00C8DBF6 /* Week */,
-				F667332B280F762C00194EAC /* Task */,
-				F632DEF126696CD300E4C55F /* Preview Content */,
 				F632DEEF26696CD300E4C55F /* Assets.xcassets */,
 				F632DEF926696CD300E4C55F /* Info.plist */,
 			);
 			path = bsuirSchedule;
-			sourceTree = "<group>";
-		};
-		F632DEF126696CD300E4C55F /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				F632DEF226696CD300E4C55F /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		F643070C29DF7DA300B3A98A /* Favorite */ = {
@@ -438,6 +417,23 @@
 				F643071C29E08DEA00B3A98A /* EducationType+CoreDataProperties.swift */,
 			);
 			path = EducationType;
+			sourceTree = "<group>";
+		};
+		F643072029E0CC7600B3A98A /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				F6F6B4F726FA5D2700814354 /* Favorite */,
+				F667332B280F762C00194EAC /* Task */,
+				F699F21826EA249E00747BE0 /* Group */,
+				F65F831F26E8F35500B8CC4E /* Employee */,
+				F6BCE3A626EFCF0A0067B5DA /* Lesson */,
+				F62B37002902DDF000FA2BE8 /* LessonsSection */,
+				F697BF7326FFA129008FA7A9 /* Auditorium */,
+				F695AA3729D843600051A354 /* Department */,
+				F6F87818271A1F36005E3C41 /* Speciality */,
+				F62B37012903198F00FA2BE8 /* Settings */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		F65F831F26E8F35500B8CC4E /* Employee */ = {
@@ -506,7 +502,6 @@
 		F68E9CE82729FFE600704EB0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F68E9CE92729FFE600704EB0 /* WidgetKit.framework */,
 				F68E9CEB2729FFE600704EB0 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
@@ -681,7 +676,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F632DEF326696CD300E4C55F /* Preview Assets.xcassets in Resources */,
 				F632DEF026696CD300E4C55F /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
