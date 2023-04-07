@@ -58,7 +58,8 @@ extension Speciality {
 }
 
 //MARK: - Fetch
-extension Speciality {
+
+extension Speciality: AbleToFetchAll {
     static func fetchAll() async {
         guard let data = try? await URLSession.shared.data(for: .specialities) else { return }
         let startTime = CFAbsoluteTimeGetCurrent()

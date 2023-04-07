@@ -65,7 +65,7 @@ extension Group {
 }
 
 //MARK: - Fetch
-extension Group {
+extension Group: AbleToFetchAll {
     static func fetchAll() async {
         let data = try! await URLSession.shared.data(from: FetchDataType.groups.rawValue)
         let startTime = CFAbsoluteTimeGetCurrent()

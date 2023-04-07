@@ -53,7 +53,7 @@ extension Faculty {
 }
 
 //MARK: - Fetch
-extension Faculty {
+extension Faculty: AbleToFetchAll {
     static func fetchAll() async {
         guard let data = try? await URLSession.shared.data(for: .faculties) else { return }
         let startTime = CFAbsoluteTimeGetCurrent()

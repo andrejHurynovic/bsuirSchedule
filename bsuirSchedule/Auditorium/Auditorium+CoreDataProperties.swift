@@ -93,7 +93,7 @@ extension Auditorium {
 }
 
 //MARK: - Fetch
-extension Auditorium {
+extension Auditorium: AbleToFetchAll {
     static func fetchAll() async {
         let data = try! await URLSession.shared.data(from: FetchDataType.auditoriums.rawValue)
         let startTime = CFAbsoluteTimeGetCurrent()

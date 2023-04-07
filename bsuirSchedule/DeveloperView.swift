@@ -27,7 +27,7 @@ struct DeveloperView: View {
                 DeveloperDeleteView(name: "факультеты", symbol: "graduationcap.circle", elements: faculties)
                 DeveloperDeleteView(name: "формы образования", symbol: "graduationcap.circle", elements: educationTypes)
                 DeveloperDeleteView(name: "специальности", symbol: "book.circle", elements: specialities)
-                DeveloperDeleteView(name: "подразделения", symbol: "book.circle", elements: departments)
+                DeveloperDeleteView(name: "подразделения", symbol: "person.2.circle", elements: departments)
                 DeveloperDeleteView(name: "аудитории", symbol: "building.columns.circle", elements: auditoriums)
                 DeveloperDeleteView(name: "типы аудиторий", symbol: "building.columns.circle", elements: auditoriumTypes)
                 DeveloperDeleteView(name: "группы", symbol: "person.2.circle", elements: groups)
@@ -39,6 +39,7 @@ struct DeveloperView: View {
             Section("Загрузка") {
                 DeveloperUpdateView<Faculty>(name: "факультеты", symbol: "graduationcap.circle")
                 DeveloperUpdateView<Speciality>(name: "специальности", symbol: "book.circle")
+                DeveloperUpdateView<Department>(name: "подразделения", symbol: "person.2.circle")
                 DeveloperUpdateView<Auditorium>(name: "аудитории", symbol: "building.columns.circle")
                 DeveloperUpdateView<Group>(name: "группы", symbol: "person.2.circle")
                 DeveloperUpdateView<Employee>(name: "преподаватели", symbol: "person.crop.circle")
@@ -112,7 +113,7 @@ struct DeveloperDeleteView<T: NSFetchRequestResult>: View {
     
 }
 
-struct DeveloperUpdateView<T: DecoderUpdatable>: View {
+struct DeveloperUpdateView<T: AbleToFetchAll>: View {
     
     var name: String
     var symbol: String

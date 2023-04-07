@@ -87,7 +87,7 @@ extension Employee {
 
 //MARK: - Fetch
 
-extension Employee {
+extension Employee: AbleToFetchAll {
     static func fetchAll() async {
         let data = try! await URLSession.shared.data(from: FetchDataType.employees.rawValue)
         let startTime = CFAbsoluteTimeGetCurrent()
