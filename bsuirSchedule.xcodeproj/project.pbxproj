@@ -340,6 +340,7 @@
 			children = (
 				F6DCD72226B30EF0003761B0 /* SettingsView.swift */,
 				F62B3702290319D200FA2BE8 /* SettingsViewModel.swift */,
+				F6857C7628F06F4300195388 /* DeveloperView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -364,19 +365,13 @@
 		F632DEEA26696CCB00E4C55F /* bsuirSchedule */ = {
 			isa = PBXGroup;
 			children = (
-				F60D44B029DC691A0008E4F4 /* Generics */,
-				F67AA4E528FF795A00E5A7C4 /* Extensions */,
-				F612D8B229DB811600D4DDEB /* View */,
-				F601E5A7273191C300773F02 /* Managers and templates */,
 				F632DEEB26696CCB00E4C55F /* bsuirTimetableApp.swift */,
 				F632DEF426696CD300E4C55F /* Persistence.swift */,
 				F632DEF626696CD300E4C55F /* bsuirSchedule.xcdatamodeld */,
 				F632DEED26696CCB00E4C55F /* ContentView.swift */,
-				F6857C7628F06F4300195388 /* DeveloperView.swift */,
 				F6D4AAB629BEB5260044481B /* Log.swift */,
-				F67AA4E028FF779900E5A7C4 /* Fetch */,
 				F643072029E0CC7600B3A98A /* Main */,
-				F68B4CF62845393B00C8DBF6 /* Week */,
+				F643072129E0CCDE00B3A98A /* Other */,
 				F632DEEF26696CD300E4C55F /* Assets.xcassets */,
 				F632DEF926696CD300E4C55F /* Info.plist */,
 			);
@@ -422,18 +417,32 @@
 		F643072029E0CC7600B3A98A /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				F6F6B4F726FA5D2700814354 /* Favorite */,
 				F667332B280F762C00194EAC /* Task */,
-				F699F21826EA249E00747BE0 /* Group */,
-				F65F831F26E8F35500B8CC4E /* Employee */,
 				F6BCE3A626EFCF0A0067B5DA /* Lesson */,
 				F62B37002902DDF000FA2BE8 /* LessonsSection */,
+				F699F21826EA249E00747BE0 /* Group */,
+				F65F831F26E8F35500B8CC4E /* Employee */,
 				F697BF7326FFA129008FA7A9 /* Auditorium */,
 				F695AA3729D843600051A354 /* Department */,
 				F6F87818271A1F36005E3C41 /* Speciality */,
-				F62B37012903198F00FA2BE8 /* Settings */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		F643072129E0CCDE00B3A98A /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				F6F6B4F726FA5D2700814354 /* Favorite */,
+				F62B37012903198F00FA2BE8 /* Settings */,
+				F61915B828465F4600A98101 /* LastUpdateDate.swift */,
+				F666CFD928FF5C71007F9F28 /* EducationWeek.swift */,
+				F60D44B029DC691A0008E4F4 /* Generics */,
+				F67AA4E528FF795A00E5A7C4 /* Extensions */,
+				F612D8B229DB811600D4DDEB /* View */,
+				F67AA4E028FF779900E5A7C4 /* Fetch */,
+				F601E5A7273191C300773F02 /* Managers and templates */,
+			);
+			path = Other;
 			sourceTree = "<group>";
 		};
 		F65F831F26E8F35500B8CC4E /* Employee */ = {
@@ -490,15 +499,6 @@
 			path = Faculty;
 			sourceTree = "<group>";
 		};
-		F68B4CF62845393B00C8DBF6 /* Week */ = {
-			isa = PBXGroup;
-			children = (
-				F61915B828465F4600A98101 /* LastUpdateDate.swift */,
-				F666CFD928FF5C71007F9F28 /* EducationWeek.swift */,
-			);
-			path = Week;
-			sourceTree = "<group>";
-		};
 		F68E9CE82729FFE600704EB0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -539,9 +539,9 @@
 			children = (
 				F697BF7826FFA1BA008FA7A9 /* Auditorium+CoreDataClass.swift */,
 				F697BF7926FFA1BA008FA7A9 /* Auditorium+CoreDataProperties.swift */,
+				F614250B271B7EFF006C3CE1 /* AuditoriumDetailedView.swift */,
 				F695AA3629D835FF0051A354 /* AuditoriumType */,
 				F60D44B329DC74A90008E4F4 /* Auditoriums */,
-				F614250B271B7EFF006C3CE1 /* AuditoriumDetailedView.swift */,
 			);
 			path = Auditorium;
 			sourceTree = "<group>";

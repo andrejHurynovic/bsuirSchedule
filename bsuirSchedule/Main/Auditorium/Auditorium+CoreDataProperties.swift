@@ -94,7 +94,7 @@ extension Auditorium {
 //MARK: - Fetch
 extension Auditorium: AbleToFetchAll {
     static func fetchAll() async {
-        let data = try! await URLSession.shared.data(from: FetchDataType.auditoriums.rawValue)
+        guard let data = try? await URLSession.shared.data(for: .auditoriums) else { return }
         let startTime = CFAbsoluteTimeGetCurrent()
         
         guard let dictionaries = try! JSONSerialization.jsonObject(with: data) as? [[String: Any]] else {
