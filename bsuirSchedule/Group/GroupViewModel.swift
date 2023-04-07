@@ -58,7 +58,7 @@ class GroupViewModel: ObservableObject {
         if let date = try? JSONDecoder().decode(LastUpdateDate.self, from: data) {
             await MainActor.run {
                 withAnimation {
-                    self.lastUpdateDate = date.lastUpdateDate
+                    self.lastUpdateDate = date.date
                 }
             }
         }

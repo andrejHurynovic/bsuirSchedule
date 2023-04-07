@@ -163,7 +163,7 @@ struct LessonsView: View {
             }
             
             if let employee = viewModel.element as? Employee {
-                EmployeeDetailedView(viewModel: EmployeeViewModel(employee))
+                EmployeeDetailedView(employee: employee)
             }
             
             if let auditorium = viewModel.element as? Auditorium {

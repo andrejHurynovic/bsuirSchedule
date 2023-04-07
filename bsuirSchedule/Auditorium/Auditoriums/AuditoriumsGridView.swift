@@ -17,6 +17,9 @@ struct AuditoriumsGridView: View {
             } label: {
                 AuditoriumView(auditorium: auditorium)
             }
+            .contextMenu {
+                FavoriteButton(item: auditorium)
+            }
         })
         .padding([.horizontal, .bottom])
     }

@@ -19,6 +19,11 @@ extension Array where Element == Employee {
                 return departmentSections()
             case .rank:
                 return self.sectioned(by: \.rank)
+//                    .sorted {
+//                        if $1.key == nil && $0.key != nil { return true }
+//                        if $0.key == nil && $1.key != nil { return false }
+//                        return $0.key! < $1.key!
+//                    }
                     .sorted { $0.key ?? "" < $1.key ?? "" }
                     .map { NSManagedObjectsSection(title: $0.key ?? "Без ранга",
                                                    items: $0.value) }
@@ -32,7 +37,7 @@ extension Array where Element == Employee {
     
     private func departmentSections() -> [NSManagedObjectsSection<Employee>] {
         let departments = Department.getAll()
-        let sections: [NSManagedObjectsSection<Employee>] = departments.compactMap { department in
+        var sections: [NSManagedObjectsSection<Employee>] = departments.compactMap { department in
             
             let employees = self.filter { employee in
                 if let departments = employee.departments, departments.contains(department) {
@@ -47,15 +52,15 @@ extension Array where Element == Employee {
                                            items: employees)
         }
         
+        
+        let noDepartmentsEmployees = self.filter( { $0.departmentsArray == nil } )
+        if noDepartmentsEmployees.isEmpty == false {
+            sections.append( NSManagedObjectsSection(title: "Без подразделения",
+                                                     items: noDepartmentsEmployees))
+        }
+        
         return sections
     }
     
 }
 
-
-extension Sequence {
-    func sectioned<ObjectType: Hashable>(by keyPath: KeyPath<Element, ObjectType>) -> [ObjectType : [Self.Element]] {
-        let dictionary = Dictionary(grouping: self) { $0[keyPath: keyPath] }
-        return dictionary
-    }
-}

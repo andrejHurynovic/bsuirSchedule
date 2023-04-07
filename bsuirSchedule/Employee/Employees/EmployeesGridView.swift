@@ -20,12 +20,18 @@ struct EmployeesGridView: View {
                 Section {
                     ForEach(section.items) { employee in
                         NavigationLink {
-                            EmployeeDetailedView(viewModel: EmployeeViewModel(employee))
+                            EmployeeDetailedView(employee: employee)
                         } label: {
                             EmployeeView(employee: employee,
                                          showDepartments: showDepartments)
+                            .padding()
+                            .background(RoundedRectangle(cornerRadius: 16)
+                                .fill(Color(uiColor: .secondarySystemGroupedBackground)))
                         }
                         .id("\(section.title):\(employee.id)")
+                        .contextMenu {
+                            FavoriteButton(item: employee)
+                        }
                     }
                 } header: {
                     standardizedHeader(title: section.title)

@@ -10,6 +10,7 @@ import SwiftUI
 struct EmployeeView: View {
     @ObservedObject var employee: Employee
     
+    var showTitle: Bool = true
     var showDepartments: Bool
     var imageSize: CGFloat {
         let baseSize = 64.0
@@ -26,10 +27,7 @@ struct EmployeeView: View {
             image
                 .transition(.scale.combined(with: .opacity))
         }
-        .padding()
         .foregroundColor(.primary)
-        .background(RoundedRectangle(cornerRadius: 16)
-            .fill(Color(uiColor: .secondarySystemGroupedBackground)))
     }
     
     //MARK: - Text
@@ -44,12 +42,14 @@ struct EmployeeView: View {
         .minimumScaleFactor(0.25)
     }
     
-    var title: some View {
-        VStack(alignment: .leading) {
-            Text(employee.lastName)
-                .font(.system(.title3,
-                              design: .rounded,
-                              weight: .bold))
+    @ViewBuilder var title: some View {
+        if showTitle {
+            VStack(alignment: .leading) {
+                Text(employee.lastName)
+                    .font(.system(.title3,
+                                  design: .rounded,
+                                  weight: .bold))
+            }
         }
     }
     var firstSubtitle: some View {

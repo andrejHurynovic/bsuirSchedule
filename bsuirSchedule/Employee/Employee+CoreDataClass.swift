@@ -28,24 +28,9 @@ extension Employee: DecoderUpdatable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         decodeEmployee(decoder)
+        decodeDegree(container)
         decodeEducationDates(decoder)
-        
-        var lessons = [Lesson]()
-        
-        if let lessonsDictionary = try? container.decode([String:[Lesson]].self, forKey: .lessons) {
-            let mappedLessons = Set(lessonsDictionary
-                .map{ $1 }
-                .joined())
-            lessons.append(contentsOf: mappedLessons)
-        }
-        if let exams = try? container.decode([Lesson].self, forKey: .exams) {
-            lessons.append(contentsOf: exams)
-        }
-
-        for lesson in lessons {
-            lesson.employeesIDs = [self.id]
-        }
-        self.addToLessons(NSSet(array: lessons))
+        decodeLessons(container)
         
         Log.info("Employee \(self.urlID ?? "no urlID") (\(String(self.id))) has been updated, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds")
     }
@@ -63,23 +48,63 @@ extension Employee: DecoderUpdatable {
         self.firstName = try! container.decode(String.self, forKey: .firstName)
         self.middleName = try? container.decode(String.self, forKey: .middleName)
         self.lastName = try! container.decode(String.self, forKey: .lastName)
+        
         self.photoLink = try? container.decode(String.self, forKey: .photoLink)
-        
+
         self.rank = try? container.decode(String.self, forKey: .rank)
-        if let degree = try? container.decode(String.self, forKey: .degree),
-           degree.isEmpty == false  {
-            self.degree = degree
-        } else {
-            self.degree = nil
-        }
-        
         
         if let departmentsAbbreviations = try? container.decode([String].self, forKey: .departments) {
             let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
             self.addToDepartments(NSSet(array: departmentsAbbreviations.compactMap { try? Department(from: $0, in: context) }))
         }
-        
     }
+    
+    private func decodeLessons(_ container: KeyedDecodingContainer<Employee.CodingKeys>) {
+        var lessons = [Lesson]()
+        
+        if let lessonsDictionary = try? container.decode([String:[Lesson]].self, forKey: .lessons) {
+            let mappedLessons = Set(lessonsDictionary
+                .map{ $1 }
+                .joined())
+            lessons.append(contentsOf: mappedLessons)
+        }
+        if let exams = try? container.decode([Lesson].self, forKey: .exams) {
+            lessons.append(contentsOf: exams)
+        }
+        
+        for lesson in lessons {
+            lesson.employeesIDs = [self.id]
+        }
+        
+        if lessons.isEmpty == false {
+            lessonsUpdateDate = Date()
+        }
+        
+        self.addToLessons(NSSet(array: lessons))
+    }
+    
+    private func decodeDegree(_ container: KeyedDecodingContainer<Employee.CodingKeys>) {
+        if let degreeString = try? container.decode(String.self, forKey: .degree),
+           degreeString.isEmpty == false  {
+            //Add comments here
+            if degreeString.count < 10 {
+                self.degreeAbbreviation = degreeString
+            } else {
+                self.degree = degreeString
+            }
+        } else {
+//            self.degree = nil
+        }
+
+        if let degreeAbbreviationString = try? container.decode(String.self, forKey: .degreeAbbreviation),
+           degreeAbbreviationString.isEmpty == false {
+            self.degreeAbbreviation = degreeAbbreviationString
+        } else {
+//            self.degreeAbbreviation = nil
+        }
+       
+    }
+    
 }
 
 extension Employee: Decodable {
@@ -93,6 +118,7 @@ extension Employee: Decodable {
         case departments = "academicDepartment"
         case rank
         case degree
+        case degreeAbbreviation = "degreeAbbrev"
         
         case photoLink
         

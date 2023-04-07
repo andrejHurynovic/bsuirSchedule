@@ -15,9 +15,7 @@ struct GroupView: View {
             Text(group.id)
         }
         .contextMenu {
-            FavoriteButton(group.favourite) {
-                group.favourite.toggle()
-            }
+            FavoriteButton(item: group)
         }
     }
 }

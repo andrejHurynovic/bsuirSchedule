@@ -53,8 +53,9 @@ extension Auditorium {
     
 }
 
-extension Auditorium: LessonsSectioned {}
 extension Auditorium: Identifiable {}
+extension Auditorium: Favoritable {}
+extension Auditorium: LessonsSectioned {}
 
 extension Auditorium: EducationDated {
     var educationStart: Date? {

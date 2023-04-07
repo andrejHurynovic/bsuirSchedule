@@ -7,43 +7,6 @@
 
 import SwiftUI
 
-//MARK: - FORMS
-
-struct Form: View  {
-    var name: String
-    var parameter: String
-    
-    init(_ name: String, _ parameter: String) {
-        self.name = name
-        self.parameter = parameter
-    }
-    
-    var body: some View {
-        HStack {
-            Text(name)
-                .foregroundColor(.primary)
-            Spacer()
-            Text(parameter)
-                .foregroundColor(.secondary)
-        }
-    }
-}
-
-//MARK: - Buttons
-
-func FavoriteButton(_ favorite: Bool, circle: Bool = false, toggle: @escaping () -> Void) -> some View {
-    Button {
-        withAnimation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.9)) {
-            toggle()
-            try! PersistenceController.shared.container.viewContext.save()
-        }
-    } label: {
-        Label(favorite ? "Убрать из избранных" : "Добавить в избранные",
-              systemImage: favorite ? (circle ? "star.circle" : "star.slash") : (circle ? "star.circle.fill" : "star.fill"))
-    }
-    
-}
-
 //MARK: - Shadow
 
 extension View {

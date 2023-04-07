@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import SwiftUI
 
 extension Employee {
     
@@ -24,9 +25,10 @@ extension Employee {
     
     @NSManaged public var rank: String?
     @NSManaged public var degree: String?
+    @NSManaged public var degreeAbbreviation: String?
     @NSManaged public var departments: NSSet?
     @NSManaged public var favourite: Bool
-    @NSManaged public var updateDate: Date?
+    @NSManaged public var lessonsUpdateDate: Date?
     
     @NSManaged public var educationStart: Date?
     @NSManaged public var educationEnd: Date?
@@ -71,6 +73,7 @@ extension Employee {
 }
 
 extension Employee: Identifiable { }
+extension Employee: Favoritable { }
 extension Employee: EducationDated { }
 extension Employee: LessonsSectioned { }
 

@@ -31,10 +31,8 @@ extension Group: DecoderUpdatable {
         decodeGroup(decoder)
         decodeEducationDates(decoder)
         decodeSpeciality(decoder)
+        decodeLessons(container)
         
-        let _ = try? container.decode([String:[Lesson]].self, forKey: .lessons)
-        let _ = try? container.decode([Lesson].self, forKey: .exams)
-
         Log.info("Group (\(String(self.id))) has been updated, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds")
     }
     
@@ -65,6 +63,15 @@ extension Group: DecoderUpdatable {
         self.speciality = try! Speciality(from: decoder)
         Log.info("The speciality (\(String(self.speciality.id)) - \(self.speciality.abbreviation!)) is created and assigned to group \(String(self.id))")
         
+    }
+    
+    private func decodeLessons(_ container: KeyedDecodingContainer<Group.CodingKeys>) {
+        let lessons = try? container.decode([String:[Lesson]].self, forKey: .lessons)
+        let exams = try? container.decode([Lesson].self, forKey: .exams)
+        
+        if lessons != nil || exams != nil {
+            self.lessonsUpdateDate = lessonsUpdateDate
+        }
     }
     
 }

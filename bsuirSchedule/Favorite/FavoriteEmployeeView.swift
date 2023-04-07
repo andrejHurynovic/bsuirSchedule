@@ -14,7 +14,7 @@ struct EmployeeFavoriteView: View {
     
     var body: some View {
         NavigationLink {
-            EmployeeDetailedView(viewModel: EmployeeViewModel(employee))
+//            EmployeeDetailedView(viewModel: EmployeeViewModel(employee))
         } label: {
             HStack {
                 if let photo = employee.photo {

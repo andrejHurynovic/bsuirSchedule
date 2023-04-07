@@ -140,9 +140,7 @@ struct FavoritesView: View {
                         FavoriteGroupView(group: group)
                     }
                     .contextMenu {
-                        FavoriteButton(group.favourite) {
-                            group.favourite.toggle()
-                        }
+                        FavoriteButton(item: group)
                     }
                     
                 }
@@ -164,9 +162,7 @@ struct FavoritesView: View {
                         EmployeeFavoriteView(employee: employee)
                     }
                     .contextMenu {
-                        FavoriteButton(employee.favourite) {
-                            employee.favourite.toggle()
-                        }
+                        FavoriteButton(item: employee)
                     }
                     
                 }
@@ -186,9 +182,7 @@ struct FavoritesView: View {
                         AuditoriumView(auditorium: auditorium)
                     }
                     .contextMenu {
-                        FavoriteButton(auditorium.favourite) {
-                            auditorium.favourite.toggle()
-                        }
+                        FavoriteButton(item: auditorium)
                     }
 
                 }

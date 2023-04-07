@@ -8,12 +8,12 @@
 import Foundation
 
 struct LastUpdateDate {
-    var lastUpdateDate: Date!
+    var date: Date!
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         if let dateString = try? container.decode(String.self, forKey: .date) {
-            self.lastUpdateDate = DateFormatters.shared.get(.shortDate).date(from: dateString)!
+            self.date = DateFormatters.shared.get(.shortDate).date(from: dateString)!
         }
     }
 

@@ -142,9 +142,7 @@ struct LessonView: View {
                                 .foregroundColor(Color.primary)
                         }
                         .contextMenu {
-                            FavoriteButton(auditorium.favourite) {
-                                auditorium.favourite.toggle()
-                            }
+                            FavoriteButton(item: auditorium)
                         }
                         
                     }
@@ -198,7 +196,7 @@ struct LessonView: View {
                 ForEach(employees.sorted(by: {$0.lastName < $1.lastName}), id: \.self) { employee in
                     
                     NavigationLink {
-                        EmployeeDetailedView(viewModel: EmployeeViewModel(employee))
+//                        EmployeeDetailedView(viewModel: EmployeeViewModel(employee))
                     } label: {
                         HStack {
                             if let photo = employee.photo {
@@ -222,9 +220,7 @@ struct LessonView: View {
                         .foregroundColor(Color.primary)
                     }
                     .contextMenu {
-                        FavoriteButton(employee.favourite) {
-                            employee.favourite.toggle()
-                        }
+                        FavoriteButton(item: employee)
                     }
                     
                 }

@@ -16,7 +16,7 @@ extension Group {
     @NSManaged public var educationDegreeValue: Int16
     @NSManaged public var course: Int16
     @NSManaged public var favourite: Bool
-    @NSManaged public var updateDate: Date?
+    @NSManaged public var lessonsUpdateDate: Date?
     
     @NSManaged public var nickname: String?
     
@@ -53,6 +53,7 @@ extension Group {
 }
 
 extension Group: Identifiable { }
+extension Group: Favoritable {}
 extension Group: EducationDated { }
 extension Group: LessonsSectioned { }
 

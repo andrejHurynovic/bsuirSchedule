@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AuditoriumDetailedView: View {
-    var auditorium: Auditorium
+    @ObservedObject var auditorium: Auditorium
     
     var body: some View {
         List {
@@ -17,9 +17,13 @@ struct AuditoriumDetailedView: View {
             groups
         }
         .navigationTitle(auditorium.formattedName)
+        
+        .toolbar {
+                FavoriteButton(item: auditorium, circle: true)
+        }
     }
     
-    
+    //MARK: - Information
     
     @ViewBuilder var information: some View {
         if auditorium.type != nil || auditorium.capacity != 0 {
@@ -29,21 +33,19 @@ struct AuditoriumDetailedView: View {
             }
         }
     }
-    
     @ViewBuilder var type: some View {
         if let type = auditorium.type {
-            Form("Тип", type.name)
+            FormView("Тип", type.name)
         }
     }
-    
     @ViewBuilder var capacity: some View {
         let capacity = auditorium.capacity
         if capacity != 0 {
-            Form("Вместительность", String(capacity))
+            FormView("Вместительность", String(capacity))
         }
     }
     
-    
+    //MARK: - Links
     
     @ViewBuilder var links: some View {
         if auditorium.groups != nil || auditorium.department != nil {
@@ -53,17 +55,16 @@ struct AuditoriumDetailedView: View {
             }
         }
     }
-    
     @ViewBuilder var department: some View {
-        if let departmentName = auditorium.department?.name {
+        if let department = auditorium.department {
             NavigationLink {
                 //                DepartmentDetailedView()
             } label: {
-                Label(departmentName, systemImage: "person.2.fill")
+                Label(department.formattedName,
+                      systemImage: "person.2.fill")
             }
         }
     }
-    
     @ViewBuilder var scheduleButton: some View {
         if auditorium.lessons?.allObjects.isEmpty == false {
             NavigationLink {
@@ -74,7 +75,7 @@ struct AuditoriumDetailedView: View {
         }
     }
     
-    
+
     
     @ViewBuilder var groups: some View {
         if let groups = auditorium.groups, !groups.isEmpty {
@@ -82,4 +83,15 @@ struct AuditoriumDetailedView: View {
         }
     }
     
+}
+
+struct AuditoriumDetailedView_Previews: PreviewProvider {
+    static var previews: some View {
+        let auditoriums = Auditorium.getAll()
+        ForEach(auditoriums) { auditorium in
+            NavigationView {
+                AuditoriumDetailedView(auditorium: auditorium)
+            }
+        }
+    }
 }

@@ -19,7 +19,7 @@ struct DeveloperView: View {
     @FetchRequest(entity: Employee.entity(), sortDescriptors: []) var employees: FetchedResults<Employee>
     @FetchRequest(entity: Lesson.entity(), sortDescriptors: []) var lessons: FetchedResults<Lesson>
     @FetchRequest(entity: Hometask.entity(), sortDescriptors: []) var tasks: FetchedResults<Hometask>
-
+    
     var body: some View {
         List {
             Section("Удаление") {
@@ -48,7 +48,40 @@ struct DeveloperView: View {
                 } label: {
                     Label("Количество студентов", systemImage: "person.crop.circle")
                 }
-
+                Button {
+                    let employeesWithLessons = employees.filter { employee in
+                        if let lessons = employee.lessons?.allObjects as? [Lesson], lessons.isEmpty == false {
+                            return true
+                        } else {
+                            return false
+                        }
+                    }
+                    
+                    let sortedEmployees = employeesWithLessons.sorted {
+                        ($0.lessons?.allObjects as! [Lesson]).count > ($1.lessons?.allObjects as! [Lesson]).count
+                    }
+                    if let employee = sortedEmployees.first {
+                        Log.info("Employee with the biggest number of lessons: \(employee.lastName), lessons: \((employee.lessons?.allObjects as! [Lesson]).count)")
+                    }
+                } label: {
+                    Label("Больше всего занятий у преподавателя", systemImage: "person.crop.circle")
+                }
+                
+                Button {
+                    var sortedEmployees = employees.sorted {
+                        $0.groups.count > $1.groups.count
+                    }
+                    
+                    for _ in 0..<5 {
+                        let employee = sortedEmployees.removeFirst()
+                        Log.info("Employee with the biggest number of groups: \(employee.lastName), lessons: \((employee.groups).count), students: \(employee.groups.map({ $0.numberOfStudents }).reduce(0, +))")
+                        
+                    }
+                    
+                } label: {
+                    Label("Больше всего групп у преподавателя", systemImage: "person.crop.circle")
+                }
+                
             }
             
         }
@@ -90,7 +123,7 @@ struct DeveloperUpdateView<T: DecoderUpdatable>: View {
                     try! PersistenceController.shared.container.viewContext.save()
                 }
             }
-           
+            
         } label: {
             Label("Загрузить \(name)", systemImage: symbol)
         }

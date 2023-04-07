@@ -37,6 +37,12 @@
 		F632DEF526696CD300E4C55F /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F632DEF426696CD300E4C55F /* Persistence.swift */; };
 		F632DEF826696CD300E4C55F /* bsuirSchedule.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F632DEF626696CD300E4C55F /* bsuirSchedule.xcdatamodeld */; };
 		F63FC6BD272F01EA00C9F410 /* TaskDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63FC6BC272F01E900C9F410 /* TaskDetailedView.swift */; };
+		F643070929DF7D6800B3A98A /* FavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F643070829DF7D6800B3A98A /* FavoriteButton.swift */; };
+		F643070B29DF7D8500B3A98A /* Favoritable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F643070A29DF7D8500B3A98A /* Favoritable.swift */; };
+		F643071129DF843000B3A98A /* EducationDatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F643071029DF843000B3A98A /* EducationDatedView.swift */; };
+		F643071329DFABF700B3A98A /* SequenceSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = F643071229DFABF700B3A98A /* SequenceSections.swift */; };
+		F643071529E06D5700B3A98A /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F643071429E06D5700B3A98A /* FormView.swift */; };
+		F643071729E06F0300B3A98A /* FormViewWithAlternativeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F643071629E06F0300B3A98A /* FormViewWithAlternativeText.swift */; };
 		F64AD7B0266A816D00115E6B /* EmployeesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64AD7AF266A816D00115E6B /* EmployeesView.swift */; };
 		F64BEDDA26E9072900C7AD09 /* EmployeeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64BEDD926E9072900C7AD09 /* EmployeeView.swift */; };
 		F65309E529DCE1DA001DEC29 /* SortingPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65309E429DCE1DA001DEC29 /* SortingPicker.swift */; };
@@ -148,6 +154,12 @@
 		F632DEF726696CD300E4C55F /* bsuirTimetable.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = bsuirTimetable.xcdatamodel; sourceTree = "<group>"; };
 		F632DEF926696CD300E4C55F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F63FC6BC272F01E900C9F410 /* TaskDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailedView.swift; sourceTree = "<group>"; };
+		F643070829DF7D6800B3A98A /* FavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteButton.swift; sourceTree = "<group>"; };
+		F643070A29DF7D8500B3A98A /* Favoritable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favoritable.swift; sourceTree = "<group>"; };
+		F643071029DF843000B3A98A /* EducationDatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationDatedView.swift; sourceTree = "<group>"; };
+		F643071229DFABF700B3A98A /* SequenceSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceSections.swift; sourceTree = "<group>"; };
+		F643071429E06D5700B3A98A /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
+		F643071629E06F0300B3A98A /* FormViewWithAlternativeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewWithAlternativeText.swift; sourceTree = "<group>"; };
 		F64AD7AF266A816D00115E6B /* EmployeesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeesView.swift; sourceTree = "<group>"; };
 		F64BEDD926E9072900C7AD09 /* EmployeeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeView.swift; sourceTree = "<group>"; };
 		F65309E429DCE1DA001DEC29 /* SortingPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingPicker.swift; sourceTree = "<group>"; };
@@ -268,6 +280,7 @@
 			children = (
 				F60D44B129DC693F0008E4F4 /* NSManagedObjectsSection.swift */,
 				F613E17529DCD8C60054C93E /* SectionType.swift */,
+				F643071229DFABF700B3A98A /* SequenceSections.swift */,
 			);
 			path = Generics;
 			sourceTree = "<group>";
@@ -288,8 +301,6 @@
 		F60D44B429DC74DB0008E4F4 /* Employees */ = {
 			isa = PBXGroup;
 			children = (
-				F60D44B929DC75710008E4F4 /* EmployeeSectionType.swift */,
-				F60D44B529DC74F50008E4F4 /* EmployeesSections.swift */,
 				F65F832026E8F37800B8CC4E /* EmployeesViewModel.swift */,
 				F64AD7AF266A816D00115E6B /* EmployeesView.swift */,
 				F613E17329DCCC900054C93E /* EmployeesGridView.swift */,
@@ -301,9 +312,11 @@
 		F612D8B229DB811600D4DDEB /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F65333DF29DCC3D4004EEF8C /* TotalFooterView.swift */,
+				F643071829E06F0900B3A98A /* Form */,
 				F606AFB129DE36B2007180E6 /* Grid */,
 				F606AFB029DE36A3007180E6 /* Picker */,
-				F65333DF29DCC3D4004EEF8C /* TotalFooterView.swift */,
+				F643070C29DF7DA300B3A98A /* Favorite */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -389,14 +402,41 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		F643070C29DF7DA300B3A98A /* Favorite */ = {
+			isa = PBXGroup;
+			children = (
+				F643070829DF7D6800B3A98A /* FavoriteButton.swift */,
+				F643070A29DF7D8500B3A98A /* Favoritable.swift */,
+			);
+			path = Favorite;
+			sourceTree = "<group>";
+		};
+		F643070D29DF841100B3A98A /* EducationDated */ = {
+			isa = PBXGroup;
+			children = (
+				F6748DF028DFA2EE0072FB04 /* EducationDated.swift */,
+				F643071029DF843000B3A98A /* EducationDatedView.swift */,
+			);
+			path = EducationDated;
+			sourceTree = "<group>";
+		};
+		F643071829E06F0900B3A98A /* Form */ = {
+			isa = PBXGroup;
+			children = (
+				F643071429E06D5700B3A98A /* FormView.swift */,
+				F643071629E06F0300B3A98A /* FormViewWithAlternativeText.swift */,
+			);
+			path = Form;
+			sourceTree = "<group>";
+		};
 		F65F831F26E8F35500B8CC4E /* Employee */ = {
 			isa = PBXGroup;
 			children = (
 				F67DF3B3266AA56000D96417 /* Employee+CoreDataClass.swift */,
 				F67DF3B4266AA56000D96417 /* Employee+CoreDataProperties.swift */,
+				F6C0810A29DF180B00A1B539 /* Sections */,
 				F60D44B429DC74DB0008E4F4 /* Employees */,
-				F698C25828D4995000C24EFB /* EmployeeViewModel.swift */,
-				F69C463626E91B430036D6A1 /* EmployeeDetailedView.swift */,
+				F6C0810929DF17F800A1B539 /* Employee */,
 			);
 			path = Employee;
 			sourceTree = "<group>";
@@ -524,9 +564,27 @@
 				F6D3C10228E0BA550055B800 /* LessonType.swift */,
 				F6D3C10428E0BAB40055B800 /* WeekDay.swift */,
 				F6CB615626F000EE00D29807 /* LessonView.swift */,
-				F6748DF028DFA2EE0072FB04 /* EducationDated.swift */,
+				F643070D29DF841100B3A98A /* EducationDated */,
 			);
 			path = Lesson;
+			sourceTree = "<group>";
+		};
+		F6C0810929DF17F800A1B539 /* Employee */ = {
+			isa = PBXGroup;
+			children = (
+				F698C25828D4995000C24EFB /* EmployeeViewModel.swift */,
+				F69C463626E91B430036D6A1 /* EmployeeDetailedView.swift */,
+			);
+			path = Employee;
+			sourceTree = "<group>";
+		};
+		F6C0810A29DF180B00A1B539 /* Sections */ = {
+			isa = PBXGroup;
+			children = (
+				F60D44B929DC75710008E4F4 /* EmployeeSectionType.swift */,
+				F60D44B529DC74F50008E4F4 /* EmployeesSections.swift */,
+			);
+			path = Sections;
 			sourceTree = "<group>";
 		};
 		F6F6B4F726FA5D2700814354 /* Favorite */ = {
@@ -645,8 +703,10 @@
 				F632DEEE26696CCB00E4C55F /* ContentView.swift in Sources */,
 				F62B3703290319D200FA2BE8 /* SettingsViewModel.swift in Sources */,
 				F61C524026E64619002CF234 /* Group+CoreDataClass.swift in Sources */,
+				F643070B29DF7D8500B3A98A /* Favoritable.swift in Sources */,
 				F666CFDA28FF5C71007F9F28 /* EducationWeek.swift in Sources */,
 				F697BF7D26FFA1BA008FA7A9 /* Auditorium+CoreDataProperties.swift in Sources */,
+				F643071529E06D5700B3A98A /* FormView.swift in Sources */,
 				F65309E529DCE1DA001DEC29 /* SortingPicker.swift in Sources */,
 				F613E17429DCCC900054C93E /* EmployeesGridView.swift in Sources */,
 				F624A3452913B85500E8CB5B /* GroupView.swift in Sources */,
@@ -687,6 +747,7 @@
 				F612D8B629DB856A00D4DDEB /* AuditoriumsGridView.swift in Sources */,
 				F695AA3529D835C80051A354 /* AuditoriumType+CoreDataProperties.swift in Sources */,
 				F6DCD72326B30EF0003761B0 /* SettingsView.swift in Sources */,
+				F643071329DFABF700B3A98A /* SequenceSections.swift in Sources */,
 				F6AA210F26EC83BB006218F8 /* GroupsViewModel.swift in Sources */,
 				F694249E292623EF006FF042 /* FavoriteSectionView.swift in Sources */,
 				F6AFC4622721EC43008CC065 /* DesignManager.swift in Sources */,
@@ -698,6 +759,7 @@
 				F64AD7B0266A816D00115E6B /* EmployeesView.swift in Sources */,
 				F67AA4E228FF788400E5A7C4 /* DateExtensions.swift in Sources */,
 				F698C25928D4995000C24EFB /* EmployeeViewModel.swift in Sources */,
+				F643071729E06F0300B3A98A /* FormViewWithAlternativeText.swift in Sources */,
 				F60D44B229DC693F0008E4F4 /* NSManagedObjectsSection.swift in Sources */,
 				F601E5A92731AA3900773F02 /* TaskViewModel.swift in Sources */,
 				F601E5A32730760100773F02 /* ImagesViewModel.swift in Sources */,
@@ -709,12 +771,14 @@
 				F632DEEC26696CCB00E4C55F /* bsuirTimetableApp.swift in Sources */,
 				F67AA4E928FF79F200E5A7C4 /* ViewExtensions.swift in Sources */,
 				F64BEDDA26E9072900C7AD09 /* EmployeeView.swift in Sources */,
+				F643071129DF843000B3A98A /* EducationDatedView.swift in Sources */,
 				F67AA4ED28FF7A3500E5A7C4 /* StringExtensions.swift in Sources */,
 				F68E9CDE2729BB4100704EB0 /* FavoriteGroupView.swift in Sources */,
 				F601E5AB2731E29600773F02 /* TaskView.swift in Sources */,
 				F613E17629DCD8C60054C93E /* SectionType.swift in Sources */,
 				F65333E029DCC3D4004EEF8C /* TotalFooterView.swift in Sources */,
 				F632DEF826696CD300E4C55F /* bsuirSchedule.xcdatamodeld in Sources */,
+				F643070929DF7D6800B3A98A /* FavoriteButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

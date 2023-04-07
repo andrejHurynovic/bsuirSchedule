@@ -15,6 +15,8 @@ private enum DepartmentDecodingError: Error {
 
 @objc(Department)
 public class Department: NSManagedObject {
+    
+    lazy var formattedName: String = self.name ?? self.abbreviation
 
     required public convenience init(from decoder: Decoder) throws {
         let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext

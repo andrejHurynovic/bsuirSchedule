@@ -46,6 +46,7 @@
     </entity>
     <entity name="Employee" representedClassName="Employee" syncable="YES">
         <attribute name="degree" optional="YES" attributeType="String"/>
+        <attribute name="degreeAbbreviation" optional="YES" attributeType="String"/>
         <attribute name="educationEnd" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="educationStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="examsEnd" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -54,11 +55,11 @@
         <attribute name="firstName" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="Integer 32" usesScalarValueType="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String"/>
+        <attribute name="lessonsUpdateDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="middleName" optional="YES" attributeType="String"/>
         <attribute name="photo" optional="YES" attributeType="Binary" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="UIImage"/>
         <attribute name="photoLink" optional="YES" attributeType="String"/>
         <attribute name="rank" optional="YES" attributeType="String"/>
-        <attribute name="updateDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="urlID" optional="YES" attributeType="String"/>
         <relationship name="departments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Department" inverseName="employees" inverseEntity="Department"/>
         <relationship name="lessons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lesson" inverseName="employees" inverseEntity="Lesson"/>
@@ -88,9 +89,9 @@
         <attribute name="examsStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="favourite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="id" attributeType="String"/>
+        <attribute name="lessonsUpdateDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="nickname" optional="YES" attributeType="String"/>
         <attribute name="numberOfStudents" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="updateDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="lessons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lesson" inverseName="groups" inverseEntity="Lesson"/>
         <relationship name="speciality" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Speciality" inverseName="groups" inverseEntity="Speciality"/>
         <uniquenessConstraints>

@@ -21,7 +21,7 @@ struct GroupDetailedView: View {
                 employees
             }
             Section("Дополнительная информация") {
-                educationDates
+                EducationDatesView(item: viewModel.group)
                 lastUpdate
                 statistics
             }
@@ -46,9 +46,9 @@ struct GroupDetailedView: View {
     
     @ViewBuilder var information: some View {
         Section(viewModel.group.speciality.name) {
-            Form("Аббревиатура", viewModel.group.speciality.abbreviation)
+            FormView("Аббревиатура", viewModel.group.speciality.abbreviation)
             if let facultyAbbreviation = viewModel.group.speciality.faculty.abbreviation {
-                Form("Факультет", facultyAbbreviation)
+                FormView("Факультет", facultyAbbreviation)
             }
             
             if viewModel.group.favourite {
@@ -66,14 +66,14 @@ struct GroupDetailedView: View {
             }
             
             if let code = viewModel.group.speciality.code {
-                Form("Шифр", code)
+                FormView("Шифр", code)
             }
-            Form("Форма обучения", viewModel.group.speciality.educationType.description)
+            FormView("Форма обучения", viewModel.group.speciality.educationType.description)
             if viewModel.group.numberOfStudents != 0 {
-                Form("Количество студентов", String(viewModel.group.numberOfStudents))
+                FormView("Количество студентов", String(viewModel.group.numberOfStudents))
             }
-            if let date = viewModel.group.updateDate {
-                Form("Последние обновление", DateFormatters.shared.shortDate.string(from: date))
+            if let date = viewModel.group.lessonsUpdateDate {
+                FormView("Последние обновление", DateFormatters.shared.shortDate.string(from: date))
             }
             
         }
@@ -89,28 +89,6 @@ struct GroupDetailedView: View {
         }
     }
     
-    @ViewBuilder var educationDates: some View {
-        if viewModel.group.educationStart != nil || viewModel.group.examsStart != nil {
-            if let educationStart = viewModel.group.educationStart, let educationEnd = viewModel.group.educationEnd {
-                Button {
-                    withAnimation {
-                        viewModel.showEducationDuration.toggle()
-                    }
-                } label: {
-                    Form("Семестр", viewModel.showEducationDuration ? "\((educationStart...educationEnd).numberOfDaysBetween()) дней" : "\(DateFormatters.shared.get(.longDate).string(from: educationStart)) – \(DateFormatters.shared.get(.longDate).string(from: educationEnd))")
-                }
-            }
-            if let examsStart = viewModel.group.examsStart, let examsEnd = viewModel.group.examsEnd {
-                Button {
-                    withAnimation {
-                        viewModel.showExamsDuration.toggle()
-                    }
-                } label: {
-                    Form("Сессия", viewModel.showExamsDuration ? "\((examsStart...examsEnd).numberOfDaysBetween()) дней" : "\(DateFormatters.shared.get(.longDate).string(from: examsStart)) – \(DateFormatters.shared.get(.longDate).string(from: examsEnd))")
-                }
-            }
-        }
-    }
     @ViewBuilder var lastUpdate: some View {
         HStack {
             Text("Последнее обновление в ИИС")
@@ -143,18 +121,18 @@ struct GroupDetailedView: View {
                             let lessonTypeLessons = subjectLessons.filter { $0.lessonType == lessonType }
                             var subgroups = Set(lessonTypeLessons.map { $0.subgroup }).sorted()
                             if subgroups.count == 1 {
-                                Form(lessonType.abbreviation, String(lessonTypeLessons.count))
+                                FormView(lessonType.abbreviation, String(lessonTypeLessons.count))
                             } else {
                                 DisclosureGroup {
                                     let subgroupp = subgroups.removeFirst()
                                     let subgroupLessons = lessonTypeLessons.filter { $0.subgroup == subgroupp }
-                                    Form("Общие", String(subgroupLessons.count))
+                                    FormView("Общие", String(subgroupLessons.count))
                                     ForEach(subgroups, id: \.self) { subgroup in
                                         let subgroupLessons = lessonTypeLessons.filter { $0.subgroup == subgroup }
-                                        Form("\(subgroup)-ая подгруппа", "\(subgroupLessons.count)")
+                                        FormView("\(subgroup)-ая подгруппа", "\(subgroupLessons.count)")
                                     }
                                 } label: {
-                                    Form(lessonType.abbreviation, String(lessonTypeLessons.count))
+                                    FormView(lessonType.abbreviation, String(lessonTypeLessons.count))
                                 }
                             }
                         }
@@ -189,7 +167,7 @@ struct GroupDetailedView: View {
                     EmployeeView(employee: employee,
                                  showDepartments: false)
                     .background(NavigationLink("", destination: {
-                        EmployeeDetailedView(viewModel: EmployeeViewModel(employee))
+//                        EmployeeDetailedView(viewModel: EmployeeViewModel(employee))
                     }).opacity(0))
                 }
             } label: {
