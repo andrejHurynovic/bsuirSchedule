@@ -159,7 +159,7 @@ struct LessonsView: View {
     var detailedViewNavigationLink: some View {
         NavigationLink {
             if let group = viewModel.element as? Group {
-                GroupDetailedView(viewModel: GroupViewModel(group))
+                GroupDetailedView(group: group)
             }
             
             if let employee = viewModel.element as? Employee {

@@ -23,10 +23,10 @@ extension Array where Element == Group {
         var groups = self
         if let faculty = faculty {
             //MARK: - FIX
-            groups.removeAll { $0.speciality == nil || $0.speciality.faculty != faculty }
+            groups.removeAll { $0.speciality == nil || $0.speciality!.faculty != faculty }
         }
         if let educationType = educationType {
-            groups.removeAll { $0.speciality.educationType != educationType }
+            groups.removeAll { $0.speciality!.educationType != educationType }
         }
         return groups
     }

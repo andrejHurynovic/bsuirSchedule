@@ -11,7 +11,7 @@ import CoreData
 
 extension Group {
     
-    @NSManaged public var id: String!
+    @NSManaged public var id: String
     @NSManaged public var numberOfStudents: Int16
     @NSManaged public var educationDegreeValue: Int16
     @NSManaged public var course: Int16
@@ -20,7 +20,7 @@ extension Group {
     
     @NSManaged public var nickname: String?
     
-    @NSManaged public var speciality: Speciality!
+    @NSManaged public var speciality: Speciality?
     
     @NSManaged public var educationStart: Date?
     @NSManaged public var educationEnd: Date?
@@ -147,30 +147,32 @@ extension Group {
     
 }
 
+//MARK: - Employee
+
+extension Employee {
+    var groups: [Group]? {
+        guard let lessons = self.lessons?.allObjects as? [Lesson] else { return nil }
+        
+        let groups = Set(lessons.compactMap { $0.groups?.allObjects as? [Group] }
+            .flatMap { $0 })
+            .sorted { $0.id < $1.id }
+        
+        guard groups.isEmpty == false else { return nil }
+        return groups
+    }
+}
+
+
 //MARK: - Accessors
 extension Group {
-    var employees: [Employee]? {
-        guard let lessons = self.lessons?.allObjects as? [Lesson] else {
-            return nil
-        }
-        let employees = Array(lessons.compactMap {($0.employees?.allObjects as! [Employee])}.joined())
-        let sortedEmployees = Set(employees).sorted { $0.lastName < $1.lastName }
-        guard sortedEmployees.isEmpty == false else {
-            return nil
-        }
-        return sortedEmployees
-    }
-    
     var flow: [Group]? {
-        guard var flow = self.speciality?.groups?.allObjects as? [Group] else {
-            return nil
-        }
+        guard var flow = self.speciality?.groups?.allObjects as? [Group] else { return nil }
         flow.removeAll { $0.course != self.course || $0 == self }
 
         guard flow.isEmpty == false else {
             return nil
         }
-        return flow.sorted { $0.id! < $1.id }
+        return flow.sorted { $0.id < $1.id }
     }
     
 }
@@ -186,7 +188,7 @@ extension Array where Element == Group {
             return self.first!.id
         }
         
-        var groups = self.map { $0.id! }.sorted()
+        var groups = self.map { $0.id }.sorted()
             var nearGroups: [String] = []
             var finalGroups: [String] = []
             

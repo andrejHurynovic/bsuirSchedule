@@ -6,7 +6,6 @@
 //
 //
 
-import Foundation
 import CoreData
 
 
@@ -20,13 +19,13 @@ extension Speciality {
     }
     
     @NSManaged public var id: Int32
-    @NSManaged public var name: String!
-    @NSManaged public var abbreviation: String!
+    @NSManaged public var name: String
+    @NSManaged public var abbreviation: String
     
     @NSManaged public var educationType: EducationType?
     @NSManaged public var code: String?
     
-    @NSManaged public var faculty: Faculty!
+    @NSManaged public var faculty: Faculty?
     @NSManaged public var groups: NSSet?
     
 }
@@ -81,6 +80,6 @@ extension Speciality: AbleToFetchAll {
 extension Speciality {
     ///Name + education type + faculty abbreviation
     public override var description: String {
-        "\(self.name!) (\(String(describing: self.educationType?.name)), \(self.faculty?.abbreviation ?? "Неизвестный факультет"))"
+        "\(self.name) (\(String(describing: self.educationType?.name)), \(self.faculty?.abbreviation ?? "Неизвестный факультет"))"
     }
 }

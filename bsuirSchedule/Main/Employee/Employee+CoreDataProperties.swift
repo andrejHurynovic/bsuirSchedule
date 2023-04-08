@@ -127,7 +127,7 @@ extension Employee: AbleToFetchAll {
 //MARK: - Update
 
 extension Employee {
-    func update(decoder: JSONDecoder? = nil) async -> Employee? {
+    func update() async -> Employee? {
         guard let urlID = self.urlID,
               let url = URL(string: FetchDataType.employee.rawValue + urlID),
               let (data, _) = try? await URLSession.shared.data(from: url) else {
@@ -203,16 +203,25 @@ extension Employee {
     
 }
 
+//MARK: - Group
+
+extension Group {
+    var employees: [Employee]? {
+        guard let lessons = self.lessons?.allObjects as? [Lesson] else { return nil }
+        
+        let employees = Set(lessons.compactMap { $0.employees?.allObjects as? [Employee] }
+            .flatMap { $0 })
+        .sorted { $0.lastName < $1.lastName }
+        
+        guard employees.isEmpty == false else { return nil }
+        return employees
+    }
+    
+}
+
 //MARK: - Accessors
 
-extension Employee {
-    var groups: [Group] {
-        guard let groups = self.lessons?.compactMap({ ($0 as! Lesson).groups?.allObjects as? [Group]}) else {
-            return []
-        }
-        
-        return Set(groups.map({ $0 }).joined()).sorted {$0.id! < $1.id!}
-    }
+    extension Employee {
     
     var formattedName: String {
         var formattedName = firstName

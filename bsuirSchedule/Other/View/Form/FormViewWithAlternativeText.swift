@@ -9,26 +9,28 @@ import SwiftUI
 
 struct FormViewWithAlternativeText: View {
     var title: String
-    var text: String
+    var text: String?
     var alternativeText: String?
     
     @State var showAlternativeText = false
     
-    init(_ name: String, _ parameter: String, _ alternativeText: String?) {
+    init(_ name: String, _ parameter: String?, _ alternativeText: String?) {
         self.title = name
         self.text = parameter
         self.alternativeText = alternativeText
     }
     
     var body: some View {
-        if let alternativeText = alternativeText {
-            Button {
-                withAnimation { showAlternativeText.toggle() }
-            } label: {
-                FormView(title, showAlternativeText ? alternativeText : text)
+        if let text = text {
+            if let alternativeText = alternativeText {
+                Button {
+                    withAnimation { showAlternativeText.toggle() }
+                } label: {
+                    FormView(title, showAlternativeText ? alternativeText : text)
+                }
+            } else {
+                FormView(title, text)
             }
-        } else {
-            FormView(title, text)
         }
     }
 }

@@ -13,8 +13,7 @@ import CoreData
 public class Group: NSManagedObject {
     
     required public convenience init(from decoder: Decoder) throws {
-        let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
-        self.init(entity: Group.entity(), insertInto: context)
+        self.init(context: decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext)
         try! self.update(from: decoder)
         Log.info("Group (\(String(self.id))) has been created.")
     }
@@ -61,7 +60,7 @@ extension Group: DecoderUpdatable {
         ?? (try! decoder.container(keyedBy: CodingKeys.self))
         guard let _ = try? container.decode(Int32.self, forKey: .specialityID) else { return }
         self.speciality = try! Speciality(from: decoder)
-        Log.info("The speciality (\(String(self.speciality.id)) - \(self.speciality.abbreviation!)) is created and assigned to group \(String(self.id))")
+        Log.info("The speciality (\(String(describing: self.speciality?.id)) - \(String(describing: self.speciality?.abbreviation))) is created and assigned to group \(String(self.id))")
         
     }
     

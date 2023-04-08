@@ -11,7 +11,7 @@ struct GroupView: View {
     @State var group: Group
     
     var body: some View {
-        NavigationLink(destination: GroupDetailedView(viewModel: GroupViewModel(group))){
+        NavigationLink(destination: GroupDetailedView(group: group)){
             Text(group.id)
         }
         .contextMenu {

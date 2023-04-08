@@ -10,7 +10,6 @@ import SwiftUI
 struct EmployeeDetailedView: View {
     
     @ObservedObject var employee: Employee
-    @StateObject var viewModel: EmployeeViewModel = EmployeeViewModel()
     
     var body: some View {
         Form {
@@ -21,16 +20,14 @@ struct EmployeeDetailedView: View {
         }
         .animation(.default, value: employee.lessonsUpdateDate)
 
-        .refreshable {
-            let _ = await employee.update()
-        }
+        .refreshable { let _ = await employee.update() }
         
         .navigationTitle(employee.lastName)
         
         .toolbar { FavoriteButton(item: employee, circle: true) }
         
         .task {
-            if employee.lessonsUpdateDate == nil {
+            if employee.lessonsUpdateDate == nil || employee.lessons == nil {
                 let _ = await employee.update()
             }
         }
@@ -71,7 +68,7 @@ struct EmployeeDetailedView: View {
                 FormView("Звание", rank)
             }
             EducationDatesView(item: employee)
-            lastUpdate
+            LessonsUpdateDateView(item: employee)
         }
     }
     
@@ -125,28 +122,7 @@ struct EmployeeDetailedView: View {
             NavigationLink {
                 LessonsView(viewModel: LessonsViewModel(employee))
             } label: {
-                Label("Расписание преподавателя", systemImage: "calendar")
-            }
-        }
-    }
-    
-    //MARK: - Last update
-    
-    @ViewBuilder var lastUpdate: some View {
-        HStack {
-            Text("Последнее обновление")
-            Spacer()
-            if let date = viewModel.lastUpdateDate {
-                Text(date.formatted(date: .numeric, time: .omitted))
-                    .foregroundColor(.secondary)
-            } else {
-                ProgressView()
-                    .task {
-                        if viewModel.lastUpdateDate == nil {
-                            await viewModel.fetchLastUpdateDate(employee: employee)
-                        }
-                    }
-                    .progressViewStyle(CircularProgressViewStyle(tint: .gray))
+                Label("Расписание", systemImage: "calendar")
             }
         }
     }
@@ -154,8 +130,7 @@ struct EmployeeDetailedView: View {
     //MARK: - Groups
     
     @ViewBuilder var groups: some View {
-        let groups = employee.groups
-        if groups.isEmpty == false {
+        if let groups = employee.groups {
             GroupsSectionsView(sections: groups.sections(), groupsCount: groups.count)
         }
     }

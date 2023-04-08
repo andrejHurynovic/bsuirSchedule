@@ -9,20 +9,22 @@ import SwiftUI
 
 struct FormView: View  {
     var title: String
-    var text: String
+    var text: String?
     
-    init(_ name: String, _ parameter: String) {
-        self.title = name
-        self.text = parameter
+    init(_ title: String, _ text: String?) {
+        self.title = title
+        self.text = text
     }
     
-    var body: some View {
-        HStack {
-            Text(title)
-                .foregroundColor(.primary)
-            Spacer()
-            Text(text)
-                .foregroundColor(.secondary)
+    @ViewBuilder var body: some View {
+        if let text = text {
+            HStack {
+                Text(title)
+                    .foregroundColor(.primary)
+                Spacer()
+                Text(text)
+                    .foregroundColor(.secondary)
+            }
         }
     }
 }

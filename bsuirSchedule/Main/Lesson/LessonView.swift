@@ -180,7 +180,7 @@ struct LessonView: View {
                                 Button {
                                     navigateToGroup(group: group)
                                 } label: {
-                                    Label("\(group.id!), \(group.speciality.abbreviation), \(group.speciality.faculty.abbreviation ?? "")", systemImage: "person.2.circle")
+                                    Label("\(group.id), \(group.speciality!.abbreviation), \(group.speciality!.faculty!.abbreviation ?? "")", systemImage: "person.2.circle")
                                 }
                             }
                         }

@@ -72,12 +72,12 @@ struct DeveloperView: View {
                 
                 Button {
                     var sortedEmployees = employees.sorted {
-                        $0.groups.count > $1.groups.count
+                        $0.groups?.count ?? 0 > $1.groups?.count ?? 0
                     }
                     
                     for _ in 0..<5 {
                         let employee = sortedEmployees.removeFirst()
-                        Log.info("Employee with the biggest number of groups: \(employee.lastName), lessons: \((employee.groups).count), students: \(employee.groups.map({ $0.numberOfStudents }).reduce(0, +))")
+                        Log.info("Employee with the biggest number of groups: \(employee.lastName), lessons: \((employee.groups)!.count), students: \(employee.groups!.map({ $0.numberOfStudents }).reduce(0, +))")
                         
                     }
                     
