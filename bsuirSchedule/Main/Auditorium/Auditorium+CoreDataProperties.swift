@@ -119,7 +119,7 @@ extension Auditorium: AbleToFetchAll {
             
             if var auditorium = auditoriums.first (where: {
                 if $0.outsideUniversity {
-                    return "\(name)-\(buildingString.first!)" == "\(name)-\(buildingString.first!)"
+                    return "\($0.name)-\($0.building)" == "\(name)-\(buildingString.first!)"
                 } else {
                     return  $0.formattedName == "\(name)-\(buildingString.first!)"
                 }

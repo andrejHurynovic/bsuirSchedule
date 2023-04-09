@@ -60,9 +60,13 @@ extension Array where Element == Auditorium {
     }
     
     private func departmentBasedSections() -> [NSManagedObjectsSection<Auditorium>] {
-        //Group the auditoriums by department and sort the resulting dictionary by department abbreviation
-        return Dictionary(grouping: self) { $0.department }
-            .sorted(by: { $0.key?.abbreviation ?? "Я" < $1.key?.abbreviation ?? "Я" })
+        return self.sectioned(by: \.department)
+            .sorted(by: {
+                if $1.key == nil && $0.key != nil { return true }
+                if $0.key == nil && $1.key != nil { return false }
+                if $0.key == nil && $1.key != nil { return false }
+                return $0.key!.abbreviation < $1.key!.abbreviation
+            })
             .map { NSManagedObjectsSection(title: $0.key?.abbreviation ?? "Без подразделения",
                                            items: $0.value) }
     }
