@@ -13,7 +13,7 @@ struct ContentView: View {
         TabView {
             FavoritesView()
                 .tabItem { Label("Избранные", systemImage: "star.fill") }
-            GroupsView()
+            OldGroupsView()
                 .tabItem { Label("Расписание", systemImage: "calendar") }
             EmployeesView()
                 .tabItem { Label("Преподаватели", systemImage: "person.3") }

@@ -5,7 +5,7 @@
 //  Created by Andrej Hurynovič on 7.10.22.
 //
 
-extension Array where Element == Auditorium {
+extension Sequence where Element == Auditorium {
     ///Returns array of auditoriums sections grouped by building and floor
     func sections(_ type: AuditoriumSectionType) -> [NSManagedObjectsSection<Auditorium>] {
         switch type {

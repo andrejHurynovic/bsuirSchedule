@@ -31,8 +31,7 @@ struct AuditoriumsView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                let sections = Array(auditoriums).sections(selectedSectionType)
-                AuditoriumsGridView(sections: sections)
+                AuditoriumsGridView(sections: auditoriums.sections(selectedSectionType))
                 TotalFooterView(text: "Аудиторий", count: auditoriums.count)
             }
             .navigationTitle("Аудитории")

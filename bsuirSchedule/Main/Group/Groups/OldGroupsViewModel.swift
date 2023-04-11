@@ -1,13 +1,13 @@
 //
-//  GroupsViewModel.swift
-//  GroupsViewModel
+//  OldGroupsViewModel.swift
+//  OldGroupsViewModel
 //
 //  Created by Andrej Hurynovič on 11.09.21.
 //
 
 import SwiftUI
 
-class GroupsViewModel: ObservableObject {
+class OldGroupsViewModel: ObservableObject {
 
     func update() async {
         await Group.fetchAll()

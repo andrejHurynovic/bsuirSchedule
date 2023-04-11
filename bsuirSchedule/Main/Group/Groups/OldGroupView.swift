@@ -1,5 +1,5 @@
 //
-//  GroupView.swift
+//  OldGroupView.swift
 //  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 3.11.22.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GroupView: View {
+struct OldGroupView: View {
     @State var group: Group
     
     var body: some View {

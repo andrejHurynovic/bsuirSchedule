@@ -1,5 +1,5 @@
 //
-//  GroupsSectionsView.swift
+//  OldGroupsSectionsView.swift
 //  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 7.10.22.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GroupsSectionsView: View {
+struct OldGroupsSectionsView: View {
     
     var sections: [GroupSection]
     var groupsCount: Int
@@ -20,7 +20,7 @@ struct GroupsSectionsView: View {
         ForEach(sections, id: \.self) { section in
             Section(section.title) {
                 ForEach(section.groups, id: \.id, content: { group in
-                    GroupView(group: group)
+                    OldGroupView(group: group)
                 })
             }
         }
@@ -28,7 +28,7 @@ struct GroupsSectionsView: View {
         if let section = lastSection {
             Section {
                 ForEach(section.groups, id: \.id, content: { group in
-                    GroupView(group: group)
+                    OldGroupView(group: group)
                 })
             } header: {
                 Text(section.title)

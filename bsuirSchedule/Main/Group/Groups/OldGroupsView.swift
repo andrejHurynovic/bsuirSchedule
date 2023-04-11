@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-struct GroupsView: View {
+struct OldGroupsView: View {
     @FetchRequest(entity: Group.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Group.id, ascending: true)]) var groups: FetchedResults<Group>
     
-    @StateObject private var viewModel = GroupsViewModel()
+    @StateObject private var viewModel = OldGroupsViewModel()
     
     @State var searchText = ""
     @State var selectedFaculty: Faculty? = nil
     @State var selectedEducationType: EducationType? = nil
-    @State var sortedBy: GroupSortingType = .speciality
+    @State var sortedBy: OldGroupSortingType = .speciality
     
     var body: some View {
         NavigationView {
@@ -28,7 +28,7 @@ struct GroupsView: View {
             let sections = filteredGroups.sections(by: sortedBy)
             
             List {
-                GroupsSectionsView(sections: sections, groupsCount: filteredGroups.count)
+                OldGroupsSectionsView(sections: sections, groupsCount: filteredGroups.count)
                 
 //                Text(filteredGroups.isEmpty == false ?
 //                     "Всего групп: \(filteredGroups.count)" :
@@ -39,8 +39,8 @@ struct GroupsView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Menu {
                         Picker("", selection: $sortedBy) {
-                            Text("номер").tag(GroupSortingType.number)
-                            Text("специальность").tag(GroupSortingType.speciality)
+                            Text("номер").tag(OldGroupSortingType.number)
+                            Text("специальность").tag(OldGroupSortingType.speciality)
                         }
                         Text("Факультеты:")
                         Picker("", selection: $selectedFaculty) {
@@ -78,6 +78,6 @@ struct GroupsView: View {
 
 struct GroupsListView_Previews: PreviewProvider {
     static var previews: some View {
-        GroupsView()
+        OldGroupsView()
     }
 }

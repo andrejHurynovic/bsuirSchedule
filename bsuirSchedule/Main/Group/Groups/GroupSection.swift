@@ -12,9 +12,9 @@ struct GroupSection: Hashable {
     var groups: [Group]
 }
 
-enum GroupSortingType: Equatable, CaseIterable {
-    case number
+enum OldGroupSortingType: Equatable, CaseIterable {
     case speciality
+    case number
 }
 
 extension Array where Element == Group {
@@ -32,7 +32,7 @@ extension Array where Element == Group {
     }
     
     ///Returns array of group sections sorted by speciality or number
-    func sections(by sortingType: GroupSortingType = .speciality) -> [GroupSection] {
+    func sections(by sortingType: OldGroupSortingType = .speciality) -> [GroupSection] {
         var sections: [GroupSection] = []
         
         switch sortingType {
