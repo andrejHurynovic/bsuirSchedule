@@ -24,38 +24,29 @@ extension Array where Element == Auditorium {
     ///If floorSectioned is false, the sections will be grouped by building only.
     private func buildingBasedSections(floorSectioned: Bool) -> [NSManagedObjectsSection<Auditorium>] {
         var sections: [NSManagedObjectsSection<Auditorium>] = []
-        var auditoriums = self
-        let outsideUniversitySection = auditoriums.removeOutsideUniversity()
+        let outsideUniversitySections = self.sectioned(by: \.outsideUniversity)
         
-        //Group the Auditoriums by building and sort the resulting dictionary by building number.
-        let buildingSectionedDictionaries = Dictionary(grouping: auditoriums) { $0.building }
-            .sorted { $0.key < $1.key }
-        
-        if floorSectioned {
-            let buildingAndFloorSections = buildingSectionedDictionaries
-                .map { buildingSectionedDictionary in
-                    //Group the Auditoriums in each building, sectioned by floor and sort the resulting dictionary by floor number.
-                    let dictionaries = Dictionary(grouping: buildingSectionedDictionary.value) { $0.floor }
-                        .sorted(by: { $0.key < $1.key })
-                    let sections = dictionaries.map {
-                        NSManagedObjectsSection(title: "\(buildingSectionedDictionary.key)-ый корпус, \($0.key == 0 ? "0-ой этаж" : "\($0.key)-ый этаж")",
-                                                items: $0.value) }
-                    return sections
+        if let insideUniversityAuditoriums = outsideUniversitySections[false] {
+            let buildingAuditoriumsDictionaries = insideUniversityAuditoriums.sectioned(by: \.building)
+                .sorted(by: { $0.key < $1.key })
+            if floorSectioned {
+                sections.append(contentsOf: buildingAuditoriumsDictionaries.map { buildingDictionary in
+                    buildingDictionary.value.sectioned(by: \.floor)
+                        .sorted { $0.key < $1.key }
+                        .map { NSManagedObjectsSection(title: "\(buildingDictionary.key)-ый корпус, \($0.key == 0 ? "0-ой этаж" : "\($0.key)-ый этаж")",
+                                                       items: $0.value) }
                 }
-            sections.append(contentsOf: buildingAndFloorSections.joined())
-        } else {
-            let buildingSections = buildingSectionedDictionaries.map {
-                NSManagedObjectsSection(title: "\($0.key)-ый корпус",
-                                        items: $0.value)
+                    .flatMap { $0 }
+                )
+            } else {
+                sections.append(contentsOf: buildingAuditoriumsDictionaries.map( { NSManagedObjectsSection(title: "\($0.key)-ый корпус",
+                                                                                                           items: $0.value) }))
             }
-            sections.append(contentsOf: buildingSections)
         }
-        
-        //This section should be at the end of the list.
-        if let section = outsideUniversitySection {
-            sections.append(section)
+        if let outsideUniversityAuditoriums = outsideUniversitySections[true] {
+            sections.append(NSManagedObjectsSection(title: "Без подразделения",
+                                                    items: outsideUniversityAuditoriums))
         }
-        
         return sections
     }
     
@@ -64,24 +55,10 @@ extension Array where Element == Auditorium {
             .sorted(by: {
                 if $1.key == nil && $0.key != nil { return true }
                 if $0.key == nil && $1.key != nil { return false }
-                if $0.key == nil && $1.key != nil { return false }
                 return $0.key!.abbreviation < $1.key!.abbreviation
             })
             .map { NSManagedObjectsSection(title: $0.key?.abbreviation ?? "Без подразделения",
                                            items: $0.value) }
-    }
-    
-    ///Removes all Auditories located outside the university, returns AuditoriumSection with such auditories.
-    private mutating func removeOutsideUniversity() -> NSManagedObjectsSection<Auditorium>? {
-        let auditoriumsOutsideUniversity = self.filter { $0.outsideUniversity }
-        ///If there are no such Audiences, empty section is unnecessary, so nil is returned.
-        guard auditoriumsOutsideUniversity.isEmpty == false else {
-            return nil
-        }
-        
-        self.removeAll{ $0.outsideUniversity }
-        return NSManagedObjectsSection(title: "Вне университета",
-                                       items: auditoriumsOutsideUniversity)
     }
     
 }
