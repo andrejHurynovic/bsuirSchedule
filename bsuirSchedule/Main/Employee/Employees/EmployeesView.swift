@@ -25,8 +25,7 @@ struct EmployeesView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                let sections = Array(employees).sections(selectedSectionType)
-                EmployeesGridView(sections: sections,
+                EmployeesGridView(sections: employees.sections(selectedSectionType),
                                   showDepartments: showDepartments)
                 TotalFooterView(text: "Преподавателей", count: employees.count)
             }

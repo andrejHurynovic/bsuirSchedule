@@ -32,9 +32,3 @@ struct MenuView<Content: View>: View {
         
     }
 }
-
-//struct MenuView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MenuView()
-//    }
-//}

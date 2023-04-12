@@ -76,10 +76,3 @@ extension Speciality: AbleToFetchAll {
         Log.info("\(String(specialities.count)) Specialities fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds.\n")
     }
 }
-
-extension Speciality {
-    ///Name + education type + faculty abbreviation
-    public override var description: String {
-        "\(self.name) (\(String(describing: self.educationType?.name)), \(self.faculty?.abbreviation ?? "Неизвестный факультет"))"
-    }
-}

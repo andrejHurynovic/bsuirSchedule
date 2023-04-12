@@ -78,8 +78,8 @@ struct AuditoriumDetailedView: View {
 
     
     @ViewBuilder var groups: some View {
-        if let groups = auditorium.groups, !groups.isEmpty {
-            OldGroupsSectionsView(sections: groups.sections(), groupsCount: groups.count)
+        if let groups = auditorium.groups {
+            ListGroupsView(groups: groups)
         }
     }
     

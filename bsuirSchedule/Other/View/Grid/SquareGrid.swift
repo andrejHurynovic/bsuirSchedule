@@ -18,7 +18,7 @@ struct SquareGrid<ItemType: NSManagedObject, Content: View>: View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 96, maximum: 128))],
                   alignment: .leading,
                   spacing: 8) {
-            ForEach(sections, id: \.title) { section in
+            ForEach(sections, id: \.id) { section in
                 Section {
                     ForEach(section.items, id: \.self) { item in
                         content(item)

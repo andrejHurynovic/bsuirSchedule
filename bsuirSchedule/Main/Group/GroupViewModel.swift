@@ -14,7 +14,11 @@ class GroupViewModel: ObservableObject {
         let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
         let backgroundGroup = backgroundContext.object(with: group.objectID) as! Group
         
-        backgroundGroup.nickname = nicknameString
+        if nicknameString.isEmpty {
+            backgroundGroup.nickname = nil
+        } else {
+            backgroundGroup.nickname = nicknameString
+        }
         
         try! backgroundContext.save()
     }

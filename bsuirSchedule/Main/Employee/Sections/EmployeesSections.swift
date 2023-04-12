@@ -7,7 +7,7 @@
 
 import CoreData
 
-extension Array where Element == Employee {
+extension Sequence where Element == Employee {
     func sections(_ type: EmployeeSectionType) -> [NSManagedObjectsSection<Employee>] {
         switch type {
             case .firstLetter:

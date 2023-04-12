@@ -131,7 +131,7 @@ struct EmployeeDetailedView: View {
     
     @ViewBuilder var groups: some View {
         if let groups = employee.groups {
-            OldGroupsSectionsView(sections: groups.sections(), groupsCount: groups.count)
+//            OldGroupsSectionsView(sections: groups.sections(), groupsCount: groups.count)
         }
     }
 }

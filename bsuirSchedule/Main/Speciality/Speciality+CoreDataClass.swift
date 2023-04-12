@@ -44,7 +44,7 @@ extension Speciality: DecoderUpdatable {
             self.faculty =  Faculty(id: facultyID, context: context)
         }
         
-        Log.info("Speciality \(self.id) (\(self.abbreviation ?? "Empty name")) has been updated.")
+        Log.info("Speciality \(self.id) (\(self.abbreviation)) has been updated.")
     }
     
     func updateFromGroupDecoder(_ decoder: Decoder) throws {
