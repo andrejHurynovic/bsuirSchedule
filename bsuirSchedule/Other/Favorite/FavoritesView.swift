@@ -123,7 +123,7 @@ struct FavoritesView: View {
 //
 //                }
 //            } header: {
-//                standardizedHeader(title: "Задания")
+//                HeaderView("Задания")
 //                    .transition(.scale)
 //            }
 //        }
@@ -145,7 +145,7 @@ struct FavoritesView: View {
                     
                 }
             } header: {
-                standardizedHeader(title: "Группы")
+                HeaderView("Группы")
                     .transition(.scale)
             }
         }
@@ -167,7 +167,7 @@ struct FavoritesView: View {
                     
                 }
             } header: {
-                standardizedHeader(title: "Преподаватели")
+                HeaderView("Преподаватели")
                     .transition(.scale)
             }
         }
@@ -187,7 +187,7 @@ struct FavoritesView: View {
 
                 }
             } header: {
-                standardizedHeader(title: "Аудитории")
+                HeaderView("Аудитории")
                     .transition(.scale)
             }
         }

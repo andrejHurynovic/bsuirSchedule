@@ -21,7 +21,7 @@ struct FavoriteSectionView: View {
         
         VStack(alignment: .leading) {
             HStack {
-                standardizedHeader(title: viewModel.title)
+                HeaderView(viewModel.title)
                 Spacer()
             }
             .padding(.bottom, -4)

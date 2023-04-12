@@ -33,7 +33,7 @@ struct LessonsSectionView: View {
                 }
             } label: {
                 VStack(alignment: .leading) {
-                    standardizedHeader(title: section.title)
+                    HeaderView(section.title)
                 }
             }
         }

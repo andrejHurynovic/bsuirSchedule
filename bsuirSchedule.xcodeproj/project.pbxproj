@@ -55,6 +55,7 @@
 		F65F832126E8F37800B8CC4E /* EmployeesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65F832026E8F37800B8CC4E /* EmployeesViewModel.swift */; };
 		F6606FD826F93A89002E0B3E /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6606FD726F93A89002E0B3E /* FavoritesView.swift */; };
 		F666CFDA28FF5C71007F9F28 /* EducationWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = F666CFD928FF5C71007F9F28 /* EducationWeek.swift */; };
+		F671F15629E7489F0086681E /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F671F15529E7489F0086681E /* HeaderView.swift */; };
 		F6748DF128DFA2EE0072FB04 /* EducationDated.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6748DF028DFA2EE0072FB04 /* EducationDated.swift */; };
 		F6748DF328DFB7C80072FB04 /* LessonsSectioned.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6748DF228DFB7C80072FB04 /* LessonsSectioned.swift */; };
 		F67AA4DE28FF775700E5A7C4 /* FetchExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67AA4DD28FF775700E5A7C4 /* FetchExtensions.swift */; };
@@ -180,6 +181,7 @@
 		F65F832026E8F37800B8CC4E /* EmployeesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeesViewModel.swift; sourceTree = "<group>"; };
 		F6606FD726F93A89002E0B3E /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		F666CFD928FF5C71007F9F28 /* EducationWeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationWeek.swift; sourceTree = "<group>"; };
+		F671F15529E7489F0086681E /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		F6748DF028DFA2EE0072FB04 /* EducationDated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationDated.swift; sourceTree = "<group>"; };
 		F6748DF228DFB7C80072FB04 /* LessonsSectioned.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsSectioned.swift; sourceTree = "<group>"; };
 		F67AA4DD28FF775700E5A7C4 /* FetchExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchExtensions.swift; sourceTree = "<group>"; };
@@ -327,6 +329,7 @@
 			isa = PBXGroup;
 			children = (
 				F65333DF29DCC3D4004EEF8C /* TotalFooterView.swift */,
+				F671F15529E7489F0086681E /* HeaderView.swift */,
 				F643071829E06F0900B3A98A /* Form */,
 				F606AFB129DE36B2007180E6 /* Grid */,
 				F606AFB029DE36A3007180E6 /* Picker */,
@@ -843,6 +846,7 @@
 				F64BEDDA26E9072900C7AD09 /* EmployeeView.swift in Sources */,
 				F643071129DF843000B3A98A /* EducationDatedView.swift in Sources */,
 				F67AA4ED28FF7A3500E5A7C4 /* StringExtensions.swift in Sources */,
+				F671F15629E7489F0086681E /* HeaderView.swift in Sources */,
 				F68E9CDE2729BB4100704EB0 /* FavoriteGroupView.swift in Sources */,
 				F601E5AB2731E29600773F02 /* TaskView.swift in Sources */,
 				F613E17629DCD8C60054C93E /* SectionType.swift in Sources */,

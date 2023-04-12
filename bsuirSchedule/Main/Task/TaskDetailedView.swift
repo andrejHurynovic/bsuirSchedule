@@ -30,7 +30,7 @@ struct TaskDetailedView: View {
                 textEditor
                 photos
                 endButton
-                    .standardisedShadow()
+//                    .standardisedShadow()
             }
             .padding(.horizontal)
         }
@@ -82,7 +82,8 @@ struct TaskDetailedView: View {
             }
             .onChange(of: viewModel.showDatePicker) { newValue in viewModel.onShowDatePickerChange(newValue) }
         } label: {
-            NewHeader(title: viewModel.showDeadline ? "Срок" : viewModel.deadlineDescription(), divider: false)
+            EmptyView()
+//            NewHeader(title: viewModel.showDeadline ? "Срок" : viewModel.deadlineDescription(), divider: false)
         }
     }
     
@@ -130,7 +131,7 @@ struct TaskDetailedView: View {
     //MARK: - Photos
     
     @ViewBuilder var photos: some View {
-        NewHeader(title: "Фотографии")
+//        NewHeader(title: "Фотографии")
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 500))], alignment: .leading, spacing: 8, pinnedViews: []) {
             ForEach(viewModel.images, id: \.self) { image in
                 imageView(image)

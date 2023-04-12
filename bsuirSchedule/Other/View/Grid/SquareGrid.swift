@@ -24,7 +24,7 @@ struct SquareGrid<ItemType: NSManagedObject, Content: View>: View {
                         content(item)
                     }
                 } header: {
-                    standardizedHeader(title: section.title)
+                    HeaderView(section.title)
                 }
             }
         }

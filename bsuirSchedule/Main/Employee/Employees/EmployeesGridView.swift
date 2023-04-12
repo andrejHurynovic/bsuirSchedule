@@ -34,7 +34,7 @@ struct EmployeesGridView: View {
                         }
                     }
                 } header: {
-                    standardizedHeader(title: section.title)
+                    HeaderView(section.title)
                 }
             }
             
