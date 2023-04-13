@@ -43,7 +43,7 @@ struct AuditoriumsView: View {
             .onChange(of: searchText) { newText in
                 auditoriums.nsPredicate = viewModel.calculatePredicate(selectedAuditoriumType, newText)
             }
-            .background(Color(UIColor.systemGroupedBackground))
+            .baseBackground()
         }
     }
     

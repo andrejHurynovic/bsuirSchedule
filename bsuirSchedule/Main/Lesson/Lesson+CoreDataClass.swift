@@ -21,8 +21,8 @@ public class Lesson: NSManagedObject {
         
         decodeLesson(container)
         decodeDate(container)
-        decodeGroups(container, decoder, context)
         decodeAnnouncement(container)
+        decodeGroups(container, decoder, context)
         decodeEmployees(container, decoder, context)
         decodeAuditoriums(container, decoder, context)
     }

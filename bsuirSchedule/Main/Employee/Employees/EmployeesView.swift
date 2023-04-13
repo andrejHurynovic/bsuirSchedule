@@ -39,7 +39,7 @@ struct EmployeesView: View {
                 employees.nsPredicate = viewModel.calculatePredicate(searchText)
             }
             
-            .background(Color(UIColor.systemGroupedBackground))
+            .baseBackground()
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }

@@ -21,9 +21,7 @@ extension URLSession {
         let (data, urlResponse) = try await URLSession.shared.data(from: url)
         
         guard data.isEmpty == false else {
-            Log.error("Can't get data from \(dataType), argument: \(String(describing: argument))")
-
-//            Log.error("Can't get data from \(dataType), argument: \(String(describing: argument)), urlResponse: \(urlResponse)")
+            Log.error("Can't get data from \(dataType), argument: \(String(describing: argument)), urlResponse: \(urlResponse)")
             return nil
         }
         

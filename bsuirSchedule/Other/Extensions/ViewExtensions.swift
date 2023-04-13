@@ -14,23 +14,3 @@ extension View {
     }
     
 }
-
-
-struct mainBackgroundViewModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 16))
-    }
-}
-
-extension View {
-    func primaryMaterial() -> Material {
-        .regular
-    }
-}
-
-extension View {
-    func primaryBackground() -> some View {
-        modifier(mainBackgroundViewModifier())
-    }
-}

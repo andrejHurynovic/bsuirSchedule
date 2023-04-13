@@ -11,11 +11,11 @@ struct EmployeeView: View {
     @ObservedObject var employee: Employee
     
     var showTitle: Bool = true
-    var showDepartments: Bool
+    var showDepartments: Bool = false
     var imageSize: CGFloat {
-        let baseSize = 64.0
+        let baseSize = 44.0
         let departmentsTextHeight = 20.0
-        return showDepartments ? baseSize : (baseSize - departmentsTextHeight)
+        return showDepartments ? (baseSize + departmentsTextHeight) : baseSize
     }
     
     //MARK: - Body

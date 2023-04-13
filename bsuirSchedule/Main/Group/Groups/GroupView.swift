@@ -24,7 +24,7 @@ struct GroupView_Previews: PreviewProvider {
         if let group = groups.first(where: { $0.id == "950502" }) {
             GroupView(group: group)
                 .frame(width: 104, height: 104, alignment: .center)
-                .background(Color(UIColor.systemGroupedBackground))
+                .baseBackground()
         }
     }
 }

@@ -38,7 +38,7 @@ struct GroupsView: View {
                 groups.nsPredicate = viewModel.calculatePredicate()
             }
             
-            .background(Color(UIColor.systemGroupedBackground))
+            .baseBackground()
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }

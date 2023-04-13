@@ -20,27 +20,27 @@ extension Lesson {
     }
     
     @NSManaged public var subject: String?
-    @NSManaged public var abbreviation: String!
+    @NSManaged public var abbreviation: String
     @NSManaged public var lessonTypeValue: Int16
     @NSManaged public var note: String?
     
     
-    @NSManaged public var dateString: String!
+    @NSManaged public var dateString: String
     @NSManaged public var weekday: Int16
     @NSManaged public var weeks: [Int]!
     @NSManaged public var startLessonDate: Date?
-    @NSManaged public var startLessonDateString: String!
+    @NSManaged public var startLessonDateString: String
     @NSManaged public var endLessonDate: Date?
-    @NSManaged public var timeStart: String!
-    @NSManaged public var timeEnd: String!
+    @NSManaged public var timeStart: String
+    @NSManaged public var timeEnd: String
     
     
     @NSManaged public var groups: NSSet?
     @NSManaged public var subgroup: Int16
     @NSManaged public var auditoriums:  NSSet?
-    @NSManaged public var auditoriumsNames: [String]!
+    @NSManaged public var auditoriumsNames: [String]
     @NSManaged public var employees: NSSet?
-    @NSManaged public var employeesIDs: [Int32]!
+    @NSManaged public var employeesIDs: [Int32]
     
 }
 
@@ -86,7 +86,7 @@ extension Lesson {
 
 extension Lesson : Identifiable {
     func id(sectionID: String? = nil) -> String {
-        return "\(sectionID ?? "")-\(abbreviation!)-\(timeStart!)-\(subgroup)-\(auditoriumsNames ?? [])-\(String(describing: employeesIDs))"
+        return "\(sectionID ?? "")-\(abbreviation)-\(timeStart)-\(subgroup)-\(auditoriumsNames)-\(String(describing: employeesIDs))"
     }
 }
 

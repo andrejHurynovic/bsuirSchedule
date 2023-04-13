@@ -12,7 +12,7 @@ struct TaskView: View {
     
     var body: some View {
         RoundedRectangle(cornerRadius: 16)
-            .fill(primaryMaterial())
+//            .fill(primaryMaterial())
             .aspectRatio(contentMode: .fill)
             .overlay {
                 HStack {

@@ -33,6 +33,7 @@
 		F62F764629E201C800959225 /* EducationDegree.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62F764529E201C800959225 /* EducationDegree.swift */; };
 		F62F764829E21A6400959225 /* LessonsUpdateDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62F764729E21A6400959225 /* LessonsUpdateDateView.swift */; };
 		F62F764A29E21A9400959225 /* LessonsUpdateDateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62F764929E21A9400959225 /* LessonsUpdateDateExtensions.swift */; };
+		F62FC6A129E8217300F6B941 /* Backgrounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62FC6A029E8217300F6B941 /* Backgrounds.swift */; };
 		F632DEEC26696CCB00E4C55F /* bsuirTimetableApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F632DEEB26696CCB00E4C55F /* bsuirTimetableApp.swift */; };
 		F632DEEE26696CCB00E4C55F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F632DEED26696CCB00E4C55F /* ContentView.swift */; };
 		F632DEF026696CD300E4C55F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F632DEEF26696CD300E4C55F /* Assets.xcassets */; };
@@ -157,6 +158,7 @@
 		F62F764529E201C800959225 /* EducationDegree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationDegree.swift; sourceTree = "<group>"; };
 		F62F764729E21A6400959225 /* LessonsUpdateDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsUpdateDateView.swift; sourceTree = "<group>"; };
 		F62F764929E21A9400959225 /* LessonsUpdateDateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsUpdateDateExtensions.swift; sourceTree = "<group>"; };
+		F62FC6A029E8217300F6B941 /* Backgrounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Backgrounds.swift; sourceTree = "<group>"; };
 		F632DEE826696CCB00E4C55F /* bsuirSchedule.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bsuirSchedule.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F632DEEB26696CCB00E4C55F /* bsuirTimetableApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bsuirTimetableApp.swift; sourceTree = "<group>"; };
 		F632DEED26696CCB00E4C55F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -328,8 +330,9 @@
 		F612D8B229DB811600D4DDEB /* View */ = {
 			isa = PBXGroup;
 			children = (
-				F65333DF29DCC3D4004EEF8C /* TotalFooterView.swift */,
 				F671F15529E7489F0086681E /* HeaderView.swift */,
+				F65333DF29DCC3D4004EEF8C /* TotalFooterView.swift */,
+				F62FC6A029E8217300F6B941 /* Backgrounds.swift */,
 				F643071829E06F0900B3A98A /* Form */,
 				F606AFB129DE36B2007180E6 /* Grid */,
 				F606AFB029DE36A3007180E6 /* Picker */,
@@ -765,6 +768,7 @@
 				F6D3C10528E0BAB40055B800 /* WeekDay.swift in Sources */,
 				F632DEF526696CD300E4C55F /* Persistence.swift in Sources */,
 				F67E177D29E5E15F00864712 /* GroupsViewModel.swift in Sources */,
+				F62FC6A129E8217300F6B941 /* Backgrounds.swift in Sources */,
 				F6857C7928F096CE00195388 /* AuditoriumsSection.swift in Sources */,
 				F632DEEE26696CCB00E4C55F /* ContentView.swift in Sources */,
 				F62B3703290319D200FA2BE8 /* SettingsViewModel.swift in Sources */,

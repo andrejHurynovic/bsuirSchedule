@@ -25,8 +25,7 @@ struct EmployeesGridView: View {
                             EmployeeView(employee: employee,
                                          showDepartments: showDepartments)
                             .padding()
-                            .background(RoundedRectangle(cornerRadius: 16)
-                                .fill(Color(uiColor: .secondarySystemGroupedBackground)))
+                            .baseRoundedRectangle()
                         }
                         .id("\(section.title):\(employee.id)")
                         .contextMenu {
@@ -52,7 +51,7 @@ struct EmployeesGridView_Previews: PreviewProvider {
                 EmployeesGridView(sections: employees.sections(sectionType),
                                   showDepartments: true)
             }
-            .background(Color(UIColor.systemGroupedBackground))
+            .baseBackground()
         }
     }
 }

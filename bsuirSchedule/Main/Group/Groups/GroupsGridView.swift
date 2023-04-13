@@ -33,7 +33,7 @@ struct GroupsGridView_Previews: PreviewProvider {
             ScrollView {
                 GroupsGridView(sections: groups.sections(sectionType))
             }
-            .background(Color(UIColor.systemGroupedBackground))
+            .baseBackground()
         }
     }
 }

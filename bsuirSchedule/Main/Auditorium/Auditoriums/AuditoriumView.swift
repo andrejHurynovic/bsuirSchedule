@@ -23,7 +23,7 @@ struct AuditoriumView_Previews: PreviewProvider {
         ForEach(Auditorium.getAll(), id: \.formattedName) { auditorium in
             AuditoriumView(auditorium: auditorium)
                 .frame(width: 104, height: 104, alignment: .center)
-                .background(Color(UIColor.systemGroupedBackground))
+                .baseBackground()
         }
     }
 }

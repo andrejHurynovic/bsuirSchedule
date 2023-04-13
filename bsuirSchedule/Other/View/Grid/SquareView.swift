@@ -14,33 +14,25 @@ struct SquareView: View {
     var secondSubtitle: String?
     
     var body: some View {
-        RoundedRectangle(cornerRadius: 16)
-            .fill(Color(uiColor: .secondarySystemGroupedBackground))
-            .aspectRatio(contentMode: .fill)
-            .overlay(
-                overlay
-                , alignment: .topLeading
-            )
-    }
-    
-    
-    
-    var overlay: some View {
-        VStack(alignment: .leading) {
-            titleText
-            Spacer()
-            firstSubtitleText
-            secondSubtitleText
+        HStack {
+            VStack(alignment: .leading) {
+                titleText
+                Spacer()
+                firstSubtitleText
+                secondSubtitleText
+            }
+            .lineLimit(2)
+            .minimumScaleFactor(0.5)
+            .multilineTextAlignment(.leading)
+            .foregroundColor(.primary)
+            
+            Spacer(minLength: 0)
         }
         .padding()
-        .foregroundColor(.primary)
-        
-        .lineLimit(2)
-        .minimumScaleFactor(0.5)
-        .multilineTextAlignment(.leading)
+        .baseRoundedRectangle()
+        .aspectRatio(1.0, contentMode: .fit)
+
     }
-    
-    
     
     var titleText: some View {
         Text(title)

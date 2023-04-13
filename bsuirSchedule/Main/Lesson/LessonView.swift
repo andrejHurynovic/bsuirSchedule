@@ -8,18 +8,15 @@
 import SwiftUI
 
 struct LessonView: View {
-    var lesson: Lesson
+    @ObservedObject var lesson: Lesson
     
     var showEmployee: Bool
     var showGroups: Bool
     var showWeeks: Bool
+    var showFullSubjectName: Bool = false
     
     var today: Bool
-    var passedLesson: Bool {
-        return today && lesson.timeRange.upperBound < Date().time
-    }
-    
-    var showSubject: Bool = false
+    var passedLesson: Bool { today && lesson.timeRange.upperBound < Date().time }
     
     @AppStorage("lectureColor") var lectureColor: Color!
     @AppStorage("practiceColor") var practiceColor: Color!
@@ -27,7 +24,7 @@ struct LessonView: View {
     @AppStorage("consultationColor") var consultationColor: Color!
     @AppStorage("examColor") var examColor: Color!
     
-    var color: Color {
+    var lessonTypeColor: Color {
         switch lesson.lessonType {
         case .lecture, .remoteLecture:
             return lectureColor
@@ -48,27 +45,27 @@ struct LessonView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            if showSubject {
-                detailedHeader
+            if showFullSubjectName {
+                fullTitle
             } else {
-                minimisedHeader
+                shortTitle
             }
                 footer
         }
-        .padding(.all)
-        .primaryBackground()
+        .padding()
+        .baseRoundedRectangle()
         .opacity(passedLesson ? 0.5 : 1.0)
 
-        
         .contextMenu {
             Text("Добавить задание")
         } preview: {
-            LessonView(lesson: lesson, showEmployee: true, showGroups: true, showWeeks: true, today: false, showSubject: true)
+            LessonView(lesson: lesson, showEmployee: true, showGroups: true, showWeeks: true, showFullSubjectName: true, today: false)
         }
     }
     
-    //MARK: - View
-    var detailedHeader: some View {
+    //MARK: - Title
+    
+    var fullTitle: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
                 subject
@@ -84,8 +81,7 @@ struct LessonView: View {
             }
         }
     }
-    
-    var minimisedHeader: some View {
+    var shortTitle: some View {
         HStack(alignment: .top) {
             subject
             subgroup
@@ -95,6 +91,8 @@ struct LessonView: View {
             lessonType
         }
     }
+    
+    //MARK: -
     
     var footer: some View {
         HStack(alignment: .bottom) {
@@ -112,20 +110,20 @@ struct LessonView: View {
     
     //MARK: - Elements
     @ViewBuilder var subject: some View {
-        let subject = showSubject ? lesson.subject : lesson.abbreviation
+        let subject = showFullSubjectName ? lesson.subject : lesson.abbreviation
         if let subject = subject, subject.isEmpty == false {
             Text(subject)
-                .font(.title2)
-                .fontWeight(.bold)
-                .foregroundColor(color)
+                .font(.system(.title2,
+                              design: .rounded,
+                              weight: .bold))
+                .foregroundColor(lessonTypeColor)
         }
     }
-    
     @ViewBuilder var subgroup: some View {
         if (lesson.subgroup != 0) {
             Image(systemName: String(lesson.subgroup) + ".circle.fill")
                 .font(.title2.bold())
-                .foregroundColor(color)
+                .foregroundColor(lessonTypeColor)
         }
     }
     
@@ -139,6 +137,7 @@ struct LessonView: View {
                             AuditoriumDetailedView(auditorium: auditorium)
                         } label: {
                             Text(auditorium.formattedName)
+                                .font(.system(.body, design: .rounded))
                                 .foregroundColor(Color.primary)
                         }
                         .contextMenu {
@@ -153,16 +152,20 @@ struct LessonView: View {
     
     @ViewBuilder var lessonType: some View {
         let lessonType = lesson.lessonType
-        let lessonTypeString = showSubject ? lessonType.description : lessonType.abbreviation
+        let lessonTypeString = showFullSubjectName ? lessonType.description : lessonType.abbreviation
         
-        if showSubject {
+        if showFullSubjectName {
             Text(lessonTypeString)
-                .fontWeight(.medium)
+                .font(.system(.body,
+                              design: .rounded,
+                              weight: .medium))
         } else {
             if lesson.lessonType != .none {
                 Text(lessonTypeString)
-                    .fontWeight(.medium)
-                    .foregroundColor(color)
+                    .font(.system(.body,
+                                  design: .rounded,
+                                  weight: .medium))
+                    .foregroundColor(lessonTypeColor)
             }
         }
         
@@ -194,9 +197,8 @@ struct LessonView: View {
         if showEmployee {
             if let employees = lesson.employees?.allObjects as? [Employee] {
                 ForEach(employees.sorted(by: {$0.lastName < $1.lastName}), id: \.self) { employee in
-                    
                     NavigationLink {
-//                        EmployeeDetailedView(viewModel: EmployeeViewModel(employee))
+                        EmployeeDetailedView(employee: employee)
                     } label: {
                         HStack {
                             if let photo = employee.photo {
@@ -211,9 +213,10 @@ struct LessonView: View {
                             }
                             VStack(alignment: .leading) {
                                 Text(employee.lastName)
-                                    .font(.body)
-                                    .fontWeight(.semibold)
-                                Text(employee.firstName + " " + (employee.middleName ?? ""))
+                                    .font(.system(.body,
+                                                  design: .rounded,
+                                                  weight: .semibold))
+                                Text(employee.formattedName)
                                     .lineLimit(1)
                             }
                         }
@@ -273,10 +276,15 @@ struct LessonView: View {
 struct LessonView_Previews: PreviewProvider {
     static var previews: some View {
         let groups = Group.getAll()
-        if let testGroup = groups.first(where: { $0.id == "950502" }), let lessons = testGroup.lessons?.allObjects as? [Lesson] {
+        if let group = groups.first(where: { $0.id == "950502" }), let lessons = group.lessons?.allObjects as? [Lesson] {
             
             ForEach(lessons) { lesson in
-                LessonView(lesson: lesson, showEmployee: true, showGroups: true, showWeeks: true, today: true, showSubject: true)
+                LessonView(lesson: lesson,
+                           showEmployee: true,
+                           showGroups: true,
+                           showWeeks: true,
+                           showFullSubjectName: true,
+                           today: true)
                     .padding()
             }
             

@@ -34,8 +34,8 @@ struct LessonsView: View {
                     searchField
                 }
             }
+            .baseBackground()
             
-        
         .toolbar { toolbar }
         .navigationTitle(viewModel.navigationViewTitle)
     }

@@ -33,7 +33,7 @@ struct AuditoriumsGridView_Previews: PreviewProvider {
             ScrollView {
                 AuditoriumsGridView(sections: auditoriums.sections(sectionType))
             }
-            .background(Color(UIColor.systemGroupedBackground))
+            .baseBackground()
         }
     }
 }
