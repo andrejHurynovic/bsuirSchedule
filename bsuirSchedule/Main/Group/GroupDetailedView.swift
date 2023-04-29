@@ -26,7 +26,7 @@ struct GroupDetailedView: View {
         }
         .refreshable { let _ = await group.update() }
         
-        .animation(.default, value: group.favourite)
+        .animation(.default, value: group.favroite)
         .animation(.default, value: group.lessonsUpdateDate)
         .animation(.default, value: group.lessons)
         
@@ -72,7 +72,7 @@ struct GroupDetailedView: View {
     //MARK: - Nickname
     
     @ViewBuilder var nickname: some View {
-        if group.favourite {
+        if group.favroite {
             Section("Псевдоним") {
                 TextField("Ввести псевдоним группы", text: $viewModel.nicknameString)
                     .foregroundColor(viewModel.nicknameString.isEmpty ? .secondary : .primary)

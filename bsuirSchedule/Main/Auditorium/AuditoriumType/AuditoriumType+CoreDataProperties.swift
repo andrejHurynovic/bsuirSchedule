@@ -20,24 +20,24 @@ extension AuditoriumType {
     @NSManaged public var name: String
     @NSManaged public var abbreviation: String
     
-    @NSManaged public var auditoriums: NSSet?
+    @NSManaged public var auditories: NSSet?
 
 }
 
-//MARK: - Generated accessors for auditoriums
+//MARK: - Generated accessors for auditories
 extension AuditoriumType {
 
-    @objc(addAuditoriumsObject:)
-    @NSManaged public func addToAuditoriums(_ value: Auditorium)
+    @objc(addAuditoriesObject:)
+    @NSManaged public func addToAuditories(_ value: Auditorium)
 
-    @objc(removeAuditoriumsObject:)
-    @NSManaged public func removeFromAuditoriums(_ value: Auditorium)
+    @objc(removeAuditoriesObject:)
+    @NSManaged public func removeFromAuditories(_ value: Auditorium)
 
-    @objc(addAuditoriums:)
-    @NSManaged public func addToAuditoriums(_ values: NSSet)
+    @objc(addAuditories:)
+    @NSManaged public func addToAuditories(_ values: NSSet)
 
-    @objc(removeAuditoriums:)
-    @NSManaged public func removeFromAuditoriums(_ values: NSSet)
+    @objc(removeAuditories:)
+    @NSManaged public func removeFromAuditories(_ values: NSSet)
 
 }
 

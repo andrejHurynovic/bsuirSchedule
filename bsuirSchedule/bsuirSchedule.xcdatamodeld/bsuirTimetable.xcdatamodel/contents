@@ -10,9 +10,9 @@
         <attribute name="note" optional="YES" attributeType="String"/>
         <attribute name="outsideUniversity" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="typeValue" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="department" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Department" inverseName="auditoriums" inverseEntity="Department"/>
-        <relationship name="lessons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lesson" inverseName="auditoriums" inverseEntity="Lesson"/>
-        <relationship name="type" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AuditoriumType" inverseName="auditoriums" inverseEntity="AuditoriumType"/>
+        <relationship name="department" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Department" inverseName="auditories" inverseEntity="Department"/>
+        <relationship name="lessons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lesson" inverseName="auditories" inverseEntity="Lesson"/>
+        <relationship name="type" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AuditoriumType" inverseName="auditories" inverseEntity="AuditoriumType"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="building"/>
@@ -25,7 +25,7 @@
         <attribute name="abbreviation" attributeType="String"/>
         <attribute name="id" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
-        <relationship name="auditoriums" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Auditorium" inverseName="type" inverseEntity="Auditorium"/>
+        <relationship name="auditories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Auditorium" inverseName="type" inverseEntity="Auditorium"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -36,7 +36,7 @@
         <attribute name="abbreviation" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="auditoriums" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Auditorium" inverseName="department" inverseEntity="Auditorium"/>
+        <relationship name="auditories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Auditorium" inverseName="department" inverseEntity="Auditorium"/>
         <relationship name="employees" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Employee" inverseName="departments" inverseEntity="Employee"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -120,7 +120,7 @@
     </entity>
     <entity name="Lesson" representedClassName="Lesson" syncable="YES">
         <attribute name="abbreviation" attributeType="String"/>
-        <attribute name="auditoriumsNames" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[String]"/>
+        <attribute name="auditoriesNames" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[String]"/>
         <attribute name="dateString" attributeType="String"/>
         <attribute name="employeesIDs" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[Int32]"/>
         <attribute name="endLessonDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -134,13 +134,13 @@
         <attribute name="timeStart" attributeType="String"/>
         <attribute name="weekday" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="weeks" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[Int]"/>
-        <relationship name="auditoriums" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Auditorium" inverseName="lessons" inverseEntity="Auditorium"/>
+        <relationship name="auditories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Auditorium" inverseName="lessons" inverseEntity="Auditorium"/>
         <relationship name="employees" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Employee" inverseName="lessons" inverseEntity="Employee"/>
         <relationship name="groups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="lessons" inverseEntity="Group"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="abbreviation"/>
-                <constraint value="auditoriumsNames"/>
+                <constraint value="auditoriesNames"/>
                 <constraint value="employeesIDs"/>
                 <constraint value="startLessonDateString"/>
                 <constraint value="dateString"/>

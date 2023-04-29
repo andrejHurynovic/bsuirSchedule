@@ -17,7 +17,7 @@
 		F60D44B829DC753B0008E4F4 /* AuditoriumSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60D44B729DC753B0008E4F4 /* AuditoriumSectionType.swift */; };
 		F60D44BA29DC75710008E4F4 /* EmployeeSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60D44B929DC75710008E4F4 /* EmployeeSectionType.swift */; };
 		F612D8B429DB812C00D4DDEB /* SquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F612D8B329DB812C00D4DDEB /* SquareView.swift */; };
-		F612D8B629DB856A00D4DDEB /* AuditoriumsGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F612D8B529DB856A00D4DDEB /* AuditoriumsGridView.swift */; };
+		F612D8B629DB856A00D4DDEB /* AuditoriesGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F612D8B529DB856A00D4DDEB /* AuditoriesGridView.swift */; };
 		F613E17429DCCC900054C93E /* EmployeesGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F613E17329DCCC900054C93E /* EmployeesGridView.swift */; };
 		F613E17629DCD8C60054C93E /* SectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F613E17529DCD8C60054C93E /* SectionType.swift */; };
 		F614250C271B7EFF006C3CE1 /* AuditoriumDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F614250B271B7EFF006C3CE1 /* AuditoriumDetailedView.swift */; };
@@ -57,6 +57,7 @@
 		F671F15629E7489F0086681E /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F671F15529E7489F0086681E /* HeaderView.swift */; };
 		F6748DF128DFA2EE0072FB04 /* EducationDated.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6748DF028DFA2EE0072FB04 /* EducationDated.swift */; };
 		F6748DF328DFB7C80072FB04 /* Scheduled.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6748DF228DFB7C80072FB04 /* Scheduled.swift */; };
+		F6794E8929FDBB6D00BEE44A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6794E8829FDBB6D00BEE44A /* HomeView.swift */; };
 		F67AA4DE28FF775700E5A7C4 /* FetchExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67AA4DD28FF775700E5A7C4 /* FetchExtensions.swift */; };
 		F67AA4E228FF788400E5A7C4 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67AA4E128FF788400E5A7C4 /* DateExtensions.swift */; };
 		F67AA4E928FF79F200E5A7C4 /* onLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67AA4E828FF79F200E5A7C4 /* onLoad.swift */; };
@@ -67,7 +68,7 @@
 		F68465FB26FA5321000F185E /* Faculty+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68465F926FA5321000F185E /* Faculty+CoreDataClass.swift */; };
 		F68465FC26FA5321000F185E /* Faculty+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68465FA26FA5321000F185E /* Faculty+CoreDataProperties.swift */; };
 		F6857C7728F06F4300195388 /* DeveloperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6857C7628F06F4300195388 /* DeveloperView.swift */; };
-		F6857C7928F096CE00195388 /* AuditoriumsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6857C7828F096CE00195388 /* AuditoriumsSection.swift */; };
+		F6857C7928F096CE00195388 /* AuditoriesSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6857C7828F096CE00195388 /* AuditoriesSection.swift */; };
 		F6857C7B28F0B5F800195388 /* FromGroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6857C7A28F0B5F800195388 /* FromGroupsView.swift */; };
 		F68B4CEE284535C000C8DBF6 /* ScheduleSection .swift in Sources */ = {isa = PBXBuildFile; fileRef = F68B4CED284535C000C8DBF6 /* ScheduleSection .swift */; };
 		F68E9CDC2729B57400704EB0 /* AuditoriumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68E9CDB2729B57300704EB0 /* AuditoriumView.swift */; };
@@ -83,8 +84,8 @@
 		F695AA3B29D8439D0051A354 /* Department+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F695AA3929D8439D0051A354 /* Department+CoreDataProperties.swift */; };
 		F697BF7C26FFA1BA008FA7A9 /* Auditorium+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697BF7826FFA1BA008FA7A9 /* Auditorium+CoreDataClass.swift */; };
 		F697BF7D26FFA1BA008FA7A9 /* Auditorium+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697BF7926FFA1BA008FA7A9 /* Auditorium+CoreDataProperties.swift */; };
-		F697BF8526FFA960008FA7A9 /* AuditoriumsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697BF8426FFA960008FA7A9 /* AuditoriumsView.swift */; };
-		F697BF8726FFAA02008FA7A9 /* AuditoriumsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697BF8626FFAA02008FA7A9 /* AuditoriumsViewModel.swift */; };
+		F697BF8526FFA960008FA7A9 /* AuditoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697BF8426FFA960008FA7A9 /* AuditoriesView.swift */; };
+		F697BF8726FFAA02008FA7A9 /* AuditoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F697BF8626FFAA02008FA7A9 /* AuditoriesViewModel.swift */; };
 		F698C25928D4995000C24EFB /* LessonsRefreshable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F698C25828D4995000C24EFB /* LessonsRefreshable.swift */; };
 		F69C463726E91B430036D6A1 /* EmployeeDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69C463626E91B430036D6A1 /* EmployeeDetailedView.swift */; };
 		F6A1084729E5BB11004BA71F /* GroupExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A1084629E5BB11004BA71F /* GroupExtensions.swift */; };
@@ -140,7 +141,7 @@
 		F60D44B729DC753B0008E4F4 /* AuditoriumSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriumSectionType.swift; sourceTree = "<group>"; };
 		F60D44B929DC75710008E4F4 /* EmployeeSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeSectionType.swift; sourceTree = "<group>"; };
 		F612D8B329DB812C00D4DDEB /* SquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareView.swift; sourceTree = "<group>"; };
-		F612D8B529DB856A00D4DDEB /* AuditoriumsGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriumsGridView.swift; sourceTree = "<group>"; };
+		F612D8B529DB856A00D4DDEB /* AuditoriesGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriesGridView.swift; sourceTree = "<group>"; };
 		F613E17329DCCC900054C93E /* EmployeesGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeesGridView.swift; sourceTree = "<group>"; };
 		F613E17529DCD8C60054C93E /* SectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionType.swift; sourceTree = "<group>"; };
 		F614250B271B7EFF006C3CE1 /* AuditoriumDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriumDetailedView.swift; sourceTree = "<group>"; };
@@ -182,6 +183,7 @@
 		F671F15529E7489F0086681E /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		F6748DF028DFA2EE0072FB04 /* EducationDated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationDated.swift; sourceTree = "<group>"; };
 		F6748DF228DFB7C80072FB04 /* Scheduled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scheduled.swift; sourceTree = "<group>"; };
+		F6794E8829FDBB6D00BEE44A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		F67AA4DD28FF775700E5A7C4 /* FetchExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchExtensions.swift; sourceTree = "<group>"; };
 		F67AA4E128FF788400E5A7C4 /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		F67AA4E828FF79F200E5A7C4 /* onLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onLoad.swift; sourceTree = "<group>"; };
@@ -192,7 +194,7 @@
 		F68465F926FA5321000F185E /* Faculty+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Faculty+CoreDataClass.swift"; sourceTree = "<group>"; };
 		F68465FA26FA5321000F185E /* Faculty+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Faculty+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F6857C7628F06F4300195388 /* DeveloperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperView.swift; sourceTree = "<group>"; };
-		F6857C7828F096CE00195388 /* AuditoriumsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriumsSection.swift; sourceTree = "<group>"; };
+		F6857C7828F096CE00195388 /* AuditoriesSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriesSection.swift; sourceTree = "<group>"; };
 		F6857C7A28F0B5F800195388 /* FromGroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FromGroupsView.swift; sourceTree = "<group>"; };
 		F68B4CED284535C000C8DBF6 /* ScheduleSection .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduleSection .swift"; sourceTree = "<group>"; };
 		F68E9CDB2729B57300704EB0 /* AuditoriumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriumView.swift; sourceTree = "<group>"; };
@@ -209,8 +211,8 @@
 		F695AA3929D8439D0051A354 /* Department+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Department+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F697BF7826FFA1BA008FA7A9 /* Auditorium+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Auditorium+CoreDataClass.swift"; sourceTree = "<group>"; };
 		F697BF7926FFA1BA008FA7A9 /* Auditorium+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Auditorium+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		F697BF8426FFA960008FA7A9 /* AuditoriumsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriumsView.swift; sourceTree = "<group>"; };
-		F697BF8626FFAA02008FA7A9 /* AuditoriumsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriumsViewModel.swift; sourceTree = "<group>"; };
+		F697BF8426FFA960008FA7A9 /* AuditoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriesView.swift; sourceTree = "<group>"; };
+		F697BF8626FFAA02008FA7A9 /* AuditoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriesViewModel.swift; sourceTree = "<group>"; };
 		F698C25828D4995000C24EFB /* LessonsRefreshable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsRefreshable.swift; sourceTree = "<group>"; };
 		F69C463626E91B430036D6A1 /* EmployeeDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeDetailedView.swift; sourceTree = "<group>"; };
 		F6A1084629E5BB11004BA71F /* GroupExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupExtensions.swift; sourceTree = "<group>"; };
@@ -304,9 +306,9 @@
 		F60D44B329DC74A90008E4F4 /* Auditoriums */ = {
 			isa = PBXGroup;
 			children = (
-				F697BF8626FFAA02008FA7A9 /* AuditoriumsViewModel.swift */,
-				F697BF8426FFA960008FA7A9 /* AuditoriumsView.swift */,
-				F612D8B529DB856A00D4DDEB /* AuditoriumsGridView.swift */,
+				F697BF8626FFAA02008FA7A9 /* AuditoriesViewModel.swift */,
+				F697BF8426FFA960008FA7A9 /* AuditoriesView.swift */,
+				F612D8B529DB856A00D4DDEB /* AuditoriesGridView.swift */,
 				F68E9CDB2729B57300704EB0 /* AuditoriumView.swift */,
 			);
 			path = Auditoriums;
@@ -443,6 +445,7 @@
 		F643072029E0CC7600B3A98A /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				F6794E8529FDBB4700BEE44A /* Home */,
 				F667332B280F762C00194EAC /* Task */,
 				F62FC6A229E83C6100F6B941 /* Schedule */,
 				F6BCE3A626EFCF0A0067B5DA /* Lesson */,
@@ -491,6 +494,14 @@
 				F601E5A82731AA3900773F02 /* TaskViewModel.swift */,
 			);
 			path = Task;
+			sourceTree = "<group>";
+		};
+		F6794E8529FDBB4700BEE44A /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				F6794E8829FDBB6D00BEE44A /* HomeView.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 		F67AA4E028FF779900E5A7C4 /* Fetch */ = {
@@ -602,7 +613,7 @@
 		F6A1084B29E5BEBD004BA71F /* Sections */ = {
 			isa = PBXGroup;
 			children = (
-				F6857C7828F096CE00195388 /* AuditoriumsSection.swift */,
+				F6857C7828F096CE00195388 /* AuditoriesSection.swift */,
 				F60D44B729DC753B0008E4F4 /* AuditoriumSectionType.swift */,
 			);
 			path = Sections;
@@ -784,7 +795,7 @@
 				F65309E729DCED12001DEC29 /* MenuView.swift in Sources */,
 				F6F9AC1329F71B930069DD18 /* LessonViewSettings.swift in Sources */,
 				F695AA3B29D8439D0051A354 /* Department+CoreDataProperties.swift in Sources */,
-				F697BF8526FFA960008FA7A9 /* AuditoriumsView.swift in Sources */,
+				F697BF8526FFA960008FA7A9 /* AuditoriesView.swift in Sources */,
 				F6D588D228E4685B00CB58AC /* FetchError.swift in Sources */,
 				F6857C7B28F0B5F800195388 /* FromGroupsView.swift in Sources */,
 				F6F87816271A1ED7005E3C41 /* Speciality+CoreDataClass.swift in Sources */,
@@ -795,7 +806,7 @@
 				F632DEF526696CD300E4C55F /* Persistence.swift in Sources */,
 				F67E177D29E5E15F00864712 /* GroupsViewModel.swift in Sources */,
 				F62FC6A129E8217300F6B941 /* Backgrounds.swift in Sources */,
-				F6857C7928F096CE00195388 /* AuditoriumsSection.swift in Sources */,
+				F6857C7928F096CE00195388 /* AuditoriesSection.swift in Sources */,
 				F632DEEE26696CCB00E4C55F /* ContentView.swift in Sources */,
 				F6B838E729F8717E006BAA23 /* roundTo.swift in Sources */,
 				F62B3703290319D200FA2BE8 /* SettingsViewModel.swift in Sources */,
@@ -821,7 +832,7 @@
 				F6748DF128DFA2EE0072FB04 /* EducationDated.swift in Sources */,
 				F6BC18A72811E8FE00BA549D /* GroupDetailedView.swift in Sources */,
 				F61915B728465F2100A98101 /* GroupViewModel.swift in Sources */,
-				F697BF8726FFAA02008FA7A9 /* AuditoriumsViewModel.swift in Sources */,
+				F697BF8726FFAA02008FA7A9 /* AuditoriesViewModel.swift in Sources */,
 				F61C524126E64619002CF234 /* Group+CoreDataProperties.swift in Sources */,
 				F65F832126E8F37800B8CC4E /* EmployeesViewModel.swift in Sources */,
 				F6A1084D29E5BEE5004BA71F /* GroupsGridView.swift in Sources */,
@@ -844,7 +855,7 @@
 				F6A1085429E5CEA7004BA71F /* GroupsView.swift in Sources */,
 				F69C463726E91B430036D6A1 /* EmployeeDetailedView.swift in Sources */,
 				F6748DF328DFB7C80072FB04 /* Scheduled.swift in Sources */,
-				F612D8B629DB856A00D4DDEB /* AuditoriumsGridView.swift in Sources */,
+				F612D8B629DB856A00D4DDEB /* AuditoriesGridView.swift in Sources */,
 				F695AA3529D835C80051A354 /* AuditoriumType+CoreDataProperties.swift in Sources */,
 				F6DCD72326B30EF0003761B0 /* SettingsView.swift in Sources */,
 				F643071329DFABF700B3A98A /* SequenceSections.swift in Sources */,
@@ -859,6 +870,7 @@
 				F67AA4E228FF788400E5A7C4 /* DateExtensions.swift in Sources */,
 				F698C25928D4995000C24EFB /* LessonsRefreshable.swift in Sources */,
 				F643071729E06F0300B3A98A /* FormViewWithAlternativeText.swift in Sources */,
+				F6794E8929FDBB6D00BEE44A /* HomeView.swift in Sources */,
 				F60D44B229DC693F0008E4F4 /* NSManagedObjectsSection.swift in Sources */,
 				F6A1085029E5C123004BA71F /* GroupSectionType.swift in Sources */,
 				F601E5A92731AA3900773F02 /* TaskViewModel.swift in Sources */,

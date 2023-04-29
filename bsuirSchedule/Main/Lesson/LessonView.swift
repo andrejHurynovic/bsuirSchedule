@@ -82,7 +82,7 @@ struct LessonView: View {
                 lessonType
                 Spacer()
                 weeks
-                auditoriums
+                auditories
             }
         }
     }
@@ -91,7 +91,7 @@ struct LessonView: View {
             subjectLabel
             Spacer()
             weeks
-            auditoriums
+            auditories
             lessonType
         }
     }
@@ -140,12 +140,12 @@ struct LessonView: View {
         }
     }
     
-    @ViewBuilder var auditoriums: some View {
-        if let auditoriums = lesson.auditoriums?.allObjects as? [Auditorium], auditoriums.isEmpty == false {
+    @ViewBuilder var auditories: some View {
+        if let auditories = lesson.auditories?.allObjects as? [Auditorium], auditories.isEmpty == false {
             HStack(alignment: .top) {
                 Image(systemName: "mappin")
                 VStack(alignment: .leading) {
-                    ForEach(auditoriums.sorted(by: {$0.name < $1.name}), id: \.self) { auditorium in
+                    ForEach(auditories.sorted(by: {$0.name < $1.name}), id: \.self) { auditorium in
                         NavigationLink {
                             AuditoriumDetailedView(auditorium: auditorium)
                         } label: {

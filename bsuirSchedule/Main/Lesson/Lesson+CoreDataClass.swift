@@ -24,7 +24,7 @@ public class Lesson: NSManagedObject {
         decodeAnnouncement(container)
         decodeGroups(container, decoder, context)
         decodeEmployees(container, decoder, context)
-        decodeAuditoriums(container, decoder, context)
+        decodeAuditories(container, decoder, context)
     }
     
     private func decodeLesson(_ container: KeyedDecodingContainer<Lesson.CodingKeys>) {
@@ -99,13 +99,13 @@ public class Lesson: NSManagedObject {
         
     }
     
-    private func decodeAuditoriums(_ container: KeyedDecodingContainer<Lesson.CodingKeys>, _ decoder: Decoder, _ context: NSManagedObjectContext) {
+    private func decodeAuditories(_ container: KeyedDecodingContainer<Lesson.CodingKeys>, _ decoder: Decoder, _ context: NSManagedObjectContext) {
         if let auditoriumNames = try? container.decode([String].self, forKey: .auditorium) {
-            let auditoriums = auditoriumNames.map { (try! Auditorium(from: $0, in: context)) }
-            self.addToAuditoriums(NSSet(array: auditoriums))
-            self.auditoriumsNames = auditoriums.map { "\($0.floor)\(String(describing: $0.name))-\($0.building)" }.sorted()
+            let auditories = auditoriumNames.map { (try! Auditorium(from: $0, in: context)) }
+            self.addToAuditories(NSSet(array: auditories))
+            self.auditoriesNames = auditories.map { "\($0.floor)\(String(describing: $0.name))-\($0.building)" }.sorted()
         } else {
-            self.auditoriumsNames = []
+            self.auditoriesNames = []
         }
         
     }

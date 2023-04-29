@@ -9,5 +9,5 @@ import SwiftUI
 import CoreData
 
 protocol Favored: ObservableObject, NSManagedObject {
-    var favourite: Bool { get set }
+    var favroite: Bool { get set }
 }

@@ -14,7 +14,7 @@ struct DeveloperView: View {
     @FetchRequest(entity: EducationType.entity(), sortDescriptors: []) var educationTypes: FetchedResults<EducationType>
     @FetchRequest(entity: Speciality.entity(), sortDescriptors: []) var specialities: FetchedResults<Speciality>
     @FetchRequest(entity: Department.entity(), sortDescriptors: []) var departments: FetchedResults<Department>
-    @FetchRequest(entity: Auditorium.entity(), sortDescriptors: []) var auditoriums: FetchedResults<Auditorium>
+    @FetchRequest(entity: Auditorium.entity(), sortDescriptors: []) var auditories: FetchedResults<Auditorium>
     @FetchRequest(entity: AuditoriumType.entity(), sortDescriptors: []) var auditoriumTypes: FetchedResults<AuditoriumType>
     @FetchRequest(entity: Group.entity(), sortDescriptors: []) var groups: FetchedResults<Group>
     @FetchRequest(entity: Employee.entity(), sortDescriptors: []) var employees: FetchedResults<Employee>
@@ -28,7 +28,7 @@ struct DeveloperView: View {
                 DeveloperDeleteView(name: "формы образования", symbol: "graduationcap.circle", elements: educationTypes)
                 DeveloperDeleteView(name: "специальности", symbol: "book.circle", elements: specialities)
                 DeveloperDeleteView(name: "подразделения", symbol: "person.2.circle", elements: departments)
-                DeveloperDeleteView(name: "аудитории", symbol: "building.columns.circle", elements: auditoriums)
+                DeveloperDeleteView(name: "аудитории", symbol: "building.columns.circle", elements: auditories)
                 DeveloperDeleteView(name: "типы аудиторий", symbol: "building.columns.circle", elements: auditoriumTypes)
                 DeveloperDeleteView(name: "группы", symbol: "person.2.circle", elements: groups)
                 DeveloperDeleteView(name: "преподаватели", symbol: "person.crop.circle", elements: employees)
@@ -86,7 +86,7 @@ struct DeveloperView: View {
                 }
                 
                 Button {
-                    var sortedAuditories = auditoriums.sorted {
+                    var sortedAuditories = auditories.sorted {
                         $0.lessons?.allObjects.count ?? 0 > $1.lessons?.allObjects.count ?? 0
                     }
                     

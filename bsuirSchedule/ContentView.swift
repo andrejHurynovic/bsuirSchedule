@@ -17,7 +17,7 @@ struct ContentView: View {
                 .tabItem { Label("Расписание", systemImage: "calendar") }
             EmployeesView()
                 .tabItem { Label("Преподаватели", systemImage: "person.3") }
-            AuditoriumsView()
+            AuditoriesView()
                 .tabItem { Label("Аудитории", systemImage: "mappin") }
             SettingsView()
                 .tabItem { Label("Настройки", systemImage: "gearshape") }

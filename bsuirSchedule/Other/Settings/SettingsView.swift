@@ -15,14 +15,14 @@ struct SettingsView: View {
         entity: Group.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Group.name, ascending: true)],
         predicate:
-            NSPredicate(format: "favourite = true"))
+            NSPredicate(format: "favroite = true"))
     var favouriteGroups: FetchedResults<Group>
     @FetchRequest(
         entity: Employee.entity(),
         sortDescriptors: [
             NSSortDescriptor(keyPath: \Employee.lastName, ascending: true),
             NSSortDescriptor(keyPath: \Employee.firstName, ascending: true)],
-        predicate: NSPredicate(format: "favourite = true"))
+        predicate: NSPredicate(format: "favroite = true"))
     var favouriteEmployees: FetchedResults<Employee>
     @FetchRequest(
         entity: Auditorium.entity(),
@@ -31,8 +31,8 @@ struct SettingsView: View {
                           NSSortDescriptor(keyPath: \Auditorium.floor, ascending: true),
                           NSSortDescriptor(keyPath: \Auditorium.name, ascending: true)],
         predicate:
-            NSPredicate(format: "favourite = true"))
-    var favouriteAuditoriums: FetchedResults<Auditorium>
+            NSPredicate(format: "favroite = true"))
+    var favouriteAuditories: FetchedResults<Auditorium>
     
     var body: some View {
         NavigationView {
@@ -91,7 +91,7 @@ struct SettingsView: View {
     @ViewBuilder var primaryAuditoriumPicker: some View {
             Picker(selection: $viewModel.primaryAuditorium, label: Text("Выбор")) {
                 Text("Нет").tag(nil as String?)
-                ForEach(favouriteAuditoriums) { auditorium in
+                ForEach(favouriteAuditories) { auditorium in
                     Text(auditorium.formattedName).tag(auditorium.formattedName as String?)
                 }
             }

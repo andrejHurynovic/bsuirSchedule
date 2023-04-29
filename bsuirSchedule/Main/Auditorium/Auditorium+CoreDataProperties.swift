@@ -22,7 +22,7 @@ extension Auditorium {
     @NSManaged public var formattedName: String
     ///Used for constraints and effective search when decoding Lessons.
     @NSManaged public var note: String?
-    @NSManaged public var favourite: Bool
+    @NSManaged public var favroite: Bool
     
     @NSManaged public var outsideUniversity: Bool
     @NSManaged public var building: Int16
@@ -96,11 +96,11 @@ extension Auditorium {
 //MARK: - Fetch
 extension Auditorium: AbleToFetchAll {
     static func fetchAll() async {
-        guard let data = try? await URLSession.shared.data(for: .auditoriums) else { return }
+        guard let data = try? await URLSession.shared.data(for: .auditories) else { return }
         let startTime = CFAbsoluteTimeGetCurrent()
         
         guard let dictionaries = try! JSONSerialization.jsonObject(with: data) as? [[String: Any]] else {
-            Log.error("Can't create auditoriums dictionaries.")
+            Log.error("Can't create auditories dictionaries.")
             return
         }
         
@@ -109,7 +109,7 @@ extension Auditorium: AbleToFetchAll {
         let decoder = JSONDecoder()
         decoder.userInfo[.managedObjectContext] = backgroundContext
         
-        let auditoriums = getAll(context: backgroundContext)
+        let auditories = getAll(context: backgroundContext)
         //This is required because decoder actually can throw an error here, so we can't decode whole array instantly.
         for dictionary in dictionaries {
             let data = try! JSONSerialization.data(withJSONObject: dictionary)
@@ -119,7 +119,7 @@ extension Auditorium: AbleToFetchAll {
             let buildingString = buildingDictionary["name"] as! String
             
             
-            if var auditorium = auditoriums.first (where: {
+            if var auditorium = auditories.first (where: {
                 if $0.outsideUniversity {
                     return "\($0.name)-\($0.building)" == "\(name)-\(buildingString.first!)"
                 } else {
@@ -133,7 +133,7 @@ extension Auditorium: AbleToFetchAll {
         }
         await backgroundContext.perform(schedule: .immediate, {
             try! backgroundContext.save()
-            Log.info("\(String(self.getAll(context: backgroundContext).count)) Auditoriums fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds.\n")
+            Log.info("\(String(self.getAll(context: backgroundContext).count)) Auditories fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds.\n")
         })
     }
     

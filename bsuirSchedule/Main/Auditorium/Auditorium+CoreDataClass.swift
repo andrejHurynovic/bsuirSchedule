@@ -22,7 +22,7 @@ public class Auditorium: NSManagedObject {
         let buildingContainer = try! container.nestedContainer(keyedBy: BuildingCodingKeys.self, forKey: .building)
         let buildingString = try! buildingContainer.decode(String.self, forKey: .name)
         
-        //This code does not allow the creation of Auditoriums in non-educational buildings. The description of the Algorithm is provided in decodeBuilding() method.
+        //This code does not allow the creation of Auditories in non-educational buildings. The description of the Algorithm is provided in decodeBuilding() method.
         guard let _ = Int16(buildingString.trimmingCharacters(in: CharacterSet.init([" ", "к", "."]))) else {
             Log.warning("Fetched non-educational building, (\((try? container.decode(String.self, forKey: .name)) ?? "No name")-\(buildingString)).")
             throw AuditoriumError.nonEducationalBuilding
@@ -74,7 +74,7 @@ extension Auditorium: DecoderUpdatable {
     ///Decodes string to Int16 building number or, in the case of non-educational building, throws an error.
     ///
     ///Generally a string is ["1 к.", "2 к.", "3 к.", "4 к.", "5 к.", "6 к.", "7 к.", "8 к."], but in some cases it may be ["Общежитие №4", "Филиал «Минский радиотехнический колледж»"].
-    ///In order not to create unnecessary Auditoriums, the " к." part is removed from a string, making string able to cast into Int16. If string is not casted to Int16, then building is non-educational.
+    ///In order not to create unnecessary Auditories, the " к." part is removed from a string, making string able to cast into Int16. If string is not casted to Int16, then building is non-educational.
     ///Building container have "id" field, however there is no pattern between an id and building number, the more universal solution is to use the "name" filed.
     private func decodeBuilding(string: String) throws {
         guard let building = Int16(string.trimmingCharacters(in: CharacterSet.init([" ", "к", "."]))) else {
@@ -111,7 +111,7 @@ extension Auditorium: DecoderUpdatable {
             throw AuditoriumError.incorrectName(name: string)
         }
         
-        //If number is less then 100 and first character is not "0", then these are Auditoriums with names such as ["34", "69"].
+        //If number is less then 100 and first character is not "0", then these are Auditories with names such as ["34", "69"].
         //Floor is specified as 0. Name is specified as full string (with first character).
         //Example: "34" -> floor == 0, name == "34".
         if number < 100, string.first != "0" {
@@ -120,7 +120,7 @@ extension Auditorium: DecoderUpdatable {
             return
         }
         
-        //If number is greater then 100, then these are Auditoriums on higher floors with names such as [100, 234, 325].
+        //If number is greater then 100, then these are Auditories on higher floors with names such as [100, 234, 325].
         //First character of string is floor number, it is casted to Int16.
         let floor = Int16(String(string.first!))!
         //Name is assigned as string without first character (which represents floor).

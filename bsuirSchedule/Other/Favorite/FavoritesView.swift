@@ -24,14 +24,14 @@ struct FavoritesView: View {
         entity: Group.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Group.name, ascending: true)],
         predicate:
-            NSPredicate(format: "favourite = true"))
+            NSPredicate(format: "favroite = true"))
     var favouriteGroups: FetchedResults<Group>
     @FetchRequest(
         entity: Employee.entity(),
         sortDescriptors: [
             NSSortDescriptor(keyPath: \Employee.lastName, ascending: true),
             NSSortDescriptor(keyPath: \Employee.firstName, ascending: true)],
-        predicate: NSPredicate(format: "favourite = true"))
+        predicate: NSPredicate(format: "favroite = true"))
     var favouriteEmployees: FetchedResults<Employee>
     @FetchRequest(
         entity: Auditorium.entity(),
@@ -40,8 +40,8 @@ struct FavoritesView: View {
                           NSSortDescriptor(keyPath: \Auditorium.floor, ascending: true),
                           NSSortDescriptor(keyPath: \Auditorium.name, ascending: true)],
         predicate:
-            NSPredicate(format: "favourite = true"))
-    var favouriteAuditoriums: FetchedResults<Auditorium>
+            NSPredicate(format: "favroite = true"))
+    var favouriteAuditories: FetchedResults<Auditorium>
     
     var body: some View {
         NavigationView {
@@ -75,7 +75,7 @@ struct FavoritesView: View {
 //        }
 //    
 //    @ViewBuilder var primaryAuditorium: some View {
-//        if let primaryAuditoriumID = viewModel.primaryAuditoriumID, let auditorium = favouriteAuditoriums.first(where: { $0.formattedName == primaryAuditoriumID }) {
+//        if let primaryAuditoriumID = viewModel.primaryAuditoriumID, let auditorium = favouriteAuditories.first(where: { $0.formattedName == primaryAuditoriumID }) {
 //            FavoriteSectionView(viewModel: FavoriteSectionViewModel(lessonsSectioned: auditorium))
 //        }
 //    }
@@ -86,7 +86,7 @@ struct FavoritesView: View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 104, maximum: 500))], alignment: .leading, spacing: 8, pinnedViews: [.sectionHeaders]) {
 //            tasks
             groups
-            auditoriums
+            auditories
         }
         .padding([.leading, .horizontal, .top])
     }
@@ -172,10 +172,10 @@ struct FavoritesView: View {
             }
         }
     }
-    @ViewBuilder var auditoriums: some View {
-        if favouriteAuditoriums.isEmpty == false {
+    @ViewBuilder var auditories: some View {
+        if favouriteAuditories.isEmpty == false {
             Section {
-                ForEach(favouriteAuditoriums) { auditorium in
+                ForEach(favouriteAuditories) { auditorium in
                     NavigationLink {
                         AuditoriumDetailedView(auditorium: auditorium)
                     } label: {

@@ -37,8 +37,8 @@ extension Lesson {
     
     @NSManaged public var groups: NSSet?
     @NSManaged public var subgroup: Int16
-    @NSManaged public var auditoriums:  NSSet?
-    @NSManaged public var auditoriumsNames: [String]
+    @NSManaged public var auditories:  NSSet?
+    @NSManaged public var auditoriesNames: [String]
     @NSManaged public var employees: NSSet?
     @NSManaged public var employeesIDs: [Int32]
     
@@ -71,22 +71,22 @@ extension Lesson {
     @objc(removeEmployees:)
     @NSManaged public func removeFromEmployees(_ values: NSSet)
     
-    @objc(addAuditoriumsObject:)
-    @NSManaged public func addToAuditoriums(_ value: Auditorium)
+    @objc(addAuditoriesObject:)
+    @NSManaged public func addToAuditories(_ value: Auditorium)
 
-    @objc(removeAuditoriumsObject:)
-    @NSManaged public func removeFromAuditoriums(_ value: Auditorium)
+    @objc(removeAuditoriesObject:)
+    @NSManaged public func removeFromAuditories(_ value: Auditorium)
 
-    @objc(addAuditoriums:)
-    @NSManaged public func addToAuditoriums(_ values: NSSet)
+    @objc(addAuditories:)
+    @NSManaged public func addToAuditories(_ values: NSSet)
 
-    @objc(removeAuditoriums:)
-    @NSManaged public func removeFromAuditoriums(_ values: NSSet)
+    @objc(removeAuditories:)
+    @NSManaged public func removeFromAuditories(_ values: NSSet)
 }
 
 extension Lesson : Identifiable {
     func id(sectionID: String? = nil) -> String {
-        return "\(sectionID ?? "")-\(abbreviation)-\(timeStart)-\(subgroup)-\(auditoriumsNames)-\(String(describing: employeesIDs))"
+        return "\(sectionID ?? "")-\(abbreviation)-\(timeStart)-\(subgroup)-\(auditoriesNames)-\(String(describing: employeesIDs))"
     }
 }
 

@@ -14,10 +14,10 @@ struct FavoriteButton<FavoritableType: Favored>: View {
     
     
     var labelString: String {
-        item.favourite ? "Убрать из избранных" : "Добавить в избранные"
+        item.favroite ? "Убрать из избранных" : "Добавить в избранные"
     }
     var imageString: String {
-        item.favourite ?
+        item.favroite ?
         (circle ? "star.circle.fill" : "star.slash") :
         (circle ? "star.circle" : "star.fill")
     }
@@ -36,7 +36,7 @@ struct FavoriteButton<FavoritableType: Favored>: View {
         let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
         
         if let backgroundItem = backgroundContext.object(with: item.objectID) as? FavoritableType {
-            backgroundItem.favourite.toggle()
+            backgroundItem.favroite.toggle()
             
             backgroundContext.perform {
                 try! backgroundContext.save()
@@ -47,9 +47,9 @@ struct FavoriteButton<FavoritableType: Favored>: View {
 
 struct FavoriteButton_Previews: PreviewProvider {
     static var previews: some View {
-        let auditoriums = Auditorium.getAll()
+        let auditories = Auditorium.getAll()
         
-        if let auditorium = auditoriums.first {
+        if let auditorium = auditories.first {
             FavoriteButton(item: auditorium, circle: false)
             FavoriteButton(item: auditorium, circle: true)
         }
