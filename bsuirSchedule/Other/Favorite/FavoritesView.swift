@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class FavouriteViewModel: ObservableObject {
+class favroiteViewModel: ObservableObject {
     @AppStorage("primaryGroup") var primaryGroupID: String?
     @State var groupSection: ScheduleSection?
     @AppStorage("primaryEmployee") var primaryEmployeeID: Int?
@@ -18,21 +18,21 @@ class FavouriteViewModel: ObservableObject {
 
 struct FavoritesView: View {
     
-    @ObservedObject var viewModel = FavouriteViewModel()
+    @ObservedObject var viewModel = favroiteViewModel()
     
     @FetchRequest(
         entity: Group.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Group.name, ascending: true)],
         predicate:
             NSPredicate(format: "favroite = true"))
-    var favouriteGroups: FetchedResults<Group>
+    var favroiteGroups: FetchedResults<Group>
     @FetchRequest(
         entity: Employee.entity(),
         sortDescriptors: [
             NSSortDescriptor(keyPath: \Employee.lastName, ascending: true),
             NSSortDescriptor(keyPath: \Employee.firstName, ascending: true)],
         predicate: NSPredicate(format: "favroite = true"))
-    var favouriteEmployees: FetchedResults<Employee>
+    var favroiteEmployees: FetchedResults<Employee>
     @FetchRequest(
         entity: Auditorium.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Auditorium.outsideUniversity, ascending: true),
@@ -41,7 +41,7 @@ struct FavoritesView: View {
                           NSSortDescriptor(keyPath: \Auditorium.name, ascending: true)],
         predicate:
             NSPredicate(format: "favroite = true"))
-    var favouriteAuditories: FetchedResults<Auditorium>
+    var favroiteAuditories: FetchedResults<Auditorium>
     
     var body: some View {
         NavigationView {
@@ -62,20 +62,20 @@ struct FavoritesView: View {
     }
     
 //    @ViewBuilder var primaryGroup: some View {
-//        if let primaryGroupID = viewModel.primaryGroupID, let group = favouriteGroups.first(where: { $0.id == primaryGroupID }) {
+//        if let primaryGroupID = viewModel.primaryGroupID, let group = favroiteGroups.first(where: { $0.id == primaryGroupID }) {
 //            VStack(alignment: .leading) {
 //                FavoriteSectionView(viewModel: FavoriteSectionViewModel(lessonsSectioned: group))
 //            }
 //        }
 //    }
 //    @ViewBuilder var primaryEmployee: some View {
-//        if let primaryEmployeeID = viewModel.primaryEmployeeID, let employee = favouriteEmployees.first(where: { $0.id == primaryEmployeeID }) {
+//        if let primaryEmployeeID = viewModel.primaryEmployeeID, let employee = favroiteEmployees.first(where: { $0.id == primaryEmployeeID }) {
 //            FavoriteSectionView(viewModel: FavoriteSectionViewModel(lessonsSectioned: employee))
 //            }
 //        }
 //    
 //    @ViewBuilder var primaryAuditorium: some View {
-//        if let primaryAuditoriumID = viewModel.primaryAuditoriumID, let auditorium = favouriteAuditories.first(where: { $0.formattedName == primaryAuditoriumID }) {
+//        if let primaryAuditoriumID = viewModel.primaryAuditoriumID, let auditorium = favroiteAuditories.first(where: { $0.formattedName == primaryAuditoriumID }) {
 //            FavoriteSectionView(viewModel: FavoriteSectionViewModel(lessonsSectioned: auditorium))
 //        }
 //    }
@@ -131,9 +131,9 @@ struct FavoritesView: View {
 //    }
     
     @ViewBuilder var groups: some View {
-        if favouriteGroups.isEmpty == false {
+        if favroiteGroups.isEmpty == false {
             Section {
-                ForEach(favouriteGroups) { group in
+                ForEach(favroiteGroups) { group in
                     NavigationLink {
                         ScheduleView(scheduled: group)
                     } label: {
@@ -153,9 +153,9 @@ struct FavoritesView: View {
     }
     
     @ViewBuilder var employees: some View {
-        if favouriteEmployees.isEmpty == false {
+        if favroiteEmployees.isEmpty == false {
             Section {
-                ForEach(favouriteEmployees) { employee in
+                ForEach(favroiteEmployees) { employee in
                     NavigationLink {
                         ScheduleView(scheduled: employee)
                     } label: {
@@ -173,9 +173,9 @@ struct FavoritesView: View {
         }
     }
     @ViewBuilder var auditories: some View {
-        if favouriteAuditories.isEmpty == false {
+        if favroiteAuditories.isEmpty == false {
             Section {
-                ForEach(favouriteAuditories) { auditorium in
+                ForEach(favroiteAuditories) { auditorium in
                     NavigationLink {
                         AuditoriumDetailedView(auditorium: auditorium)
                     } label: {
