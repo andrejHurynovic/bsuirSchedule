@@ -192,11 +192,11 @@ struct LessonView: View {
                     Image(systemName: "person.2.circle")
                     Text(groups.description())
                         .contextMenu {
-                            ForEach(groups.sorted(by: { String($0.id) < String($1.id) })) { group in
+                            ForEach(groups.sorted(by: { String($0.name) < String($1.name) })) { group in
                                 Button {
                                     navigateToGroup(group: group)
                                 } label: {
-                                    Label("\(group.id), \(group.speciality!.abbreviation), \(group.speciality!.faculty!.abbreviation ?? "")", systemImage: "person.2.circle")
+                                    Label("\(group.name), \(group.speciality!.abbreviation), \(group.speciality!.faculty!.abbreviation ?? "")", systemImage: "person.2.circle")
                                 }
                             }
                         }
@@ -289,7 +289,7 @@ struct LessonView: View {
 struct LessonView_Previews: PreviewProvider {
     static var previews: some View {
         let groups = Group.getAll()
-        if let group = groups.first(where: { $0.id == "950502" }), let lessons = group.lessons?.allObjects as? [Lesson] {
+        if let group = groups.first(where: { $0.name == "950502" }), let lessons = group.lessons?.allObjects as? [Lesson] {
             
             ForEach(lessons) { lesson in
                 LessonView(lesson: lesson,

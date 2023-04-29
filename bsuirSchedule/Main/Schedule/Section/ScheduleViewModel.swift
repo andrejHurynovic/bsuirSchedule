@@ -71,44 +71,48 @@ class ScheduleViewModel: ObservableObject {
     func updateSections(_ lessons: [Lesson]?) async {
         guard let lessons = lessons else { return }
         
-        //        if let dividedEducationDates = lessons.dividedEducationDates {
-        //            if let nextDates = dividedEducationDates.nextDates {
-        //                let nextSections = await lessons
-        //                    .sections(selectedSectionType, educationDates: nextDates)
-        //                await MainActor.run {
-        //                    self.sections = nextSections
-        //                    self.filteredSections = nextSections.filtered(abbreviation: self.searchText, subgroup: self.selectedSubgroup)
-        //                }
-        //            }
-        
-        //            if let previousDates = dividedEducationDates.previousDates {
-        //                let previousSections = await lessons
-        //                    .sections(selectedSectionType, educationDates: previousDates)
-        //                await MainActor.run {
-        //                    scrollWithAnimation = false
-        //                    targetSection = self.sections?.first
-        //                    if self.sections != nil {
-        //                        self.sections?.insert(contentsOf: previousSections, at: .zero)
-        //                        self.filteredSections?.insert(contentsOf: previousSections
-        //                            .filtered(abbreviation: self.searchText, subgroup: self.selectedSubgroup), at: .zero)
-        //                    } else {
-        //                        self.sections = previousSections
-        //                        self.filteredSections = previousSections.filtered(abbreviation: self.searchText, subgroup: self.selectedSubgroup)
-        //                    }
-        //                }
-        //            }
-        //            }
+//        if let dividedEducationDates = lessons.dividedEducationDates {
+//            if let nextDates = dividedEducationDates.nextDates {
+//                let nextSections = await lessons
+//                    .sections(selectedSectionType, educationDates: nextDates)
+//                await MainActor.run {
+//                    self.sections = nextSections
+//                    self.filteredSections = nextSections.filtered(abbreviation: self.searchText, subgroup: self.selectedSubgroup)
+//                }
+//            }
+//
+//            if let previousDates = dividedEducationDates.previousDates {
+//                let previousSections = await lessons
+//                    .sections(selectedSectionType, educationDates: previousDates)
+//                await MainActor.run {
+//                    scrollWithAnimation = false
+//                    targetSection = self.sections?.first
+//                    if self.sections != nil {
+//                        self.sections?.insert(contentsOf: previousSections, at: .zero)
+//                        self.filteredSections?.insert(contentsOf: previousSections
+//                            .filtered(abbreviation: self.searchText, subgroup: self.selectedSubgroup), at: .zero)
+//                    } else {
+//                        self.sections = previousSections
+//                        self.filteredSections = previousSections.filtered(abbreviation: self.searchText, subgroup: self.selectedSubgroup)
+//                    }
+//
+//                                withAnimation(.linear(duration: 0.1)) {
+//                                    showScrollView = true
+//                                }
+//                }
+//            }
+//        }
         
         let sections = await lessons.sections(selectedSectionType)
         let closestSection = await sections.closest(to: .now, type: selectedSectionType)
-        
+
         await MainActor.run {
             self.sections = sections
             self.filteredSections = sections.filtered(abbreviation: self.searchText, subgroup: self.selectedSubgroup)
-            
+
             scrollWithAnimation = true
             targetSection = closestSection
-            
+
             withAnimation(.linear(duration: 0.1)) {
                 showScrollView = true
             }

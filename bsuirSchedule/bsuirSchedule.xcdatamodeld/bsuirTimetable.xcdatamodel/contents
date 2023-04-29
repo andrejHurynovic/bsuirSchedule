@@ -98,15 +98,15 @@
         <attribute name="examsEnd" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="examsStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="favourite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="id" attributeType="String"/>
         <attribute name="lessonsUpdateDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
         <attribute name="nickname" optional="YES" attributeType="String"/>
         <attribute name="numberOfStudents" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="lessons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lesson" inverseName="groups" inverseEntity="Lesson"/>
         <relationship name="speciality" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Speciality" inverseName="groups" inverseEntity="Speciality"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
-                <constraint value="id"/>
+                <constraint value="name"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>

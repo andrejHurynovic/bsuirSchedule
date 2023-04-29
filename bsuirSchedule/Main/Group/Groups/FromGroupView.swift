@@ -12,7 +12,7 @@ struct FromGroupView: View {
     
     var body: some View {
         NavigationLink(destination: GroupDetailedView(group: group)){
-            Text(group.id)
+            Text(group.name)
         }
         .contextMenu {
             FavoriteButton(item: group)

@@ -13,7 +13,7 @@ struct SettingsView: View {
     
     @FetchRequest(
         entity: Group.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \Group.id, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Group.name, ascending: true)],
         predicate:
             NSPredicate(format: "favourite = true"))
     var favouriteGroups: FetchedResults<Group>
@@ -71,7 +71,7 @@ struct SettingsView: View {
             Picker(selection: $viewModel.primaryGroup, label: Text("Выбор")) {
                 Text("Нет").tag(nil as String?)
                 ForEach(favouriteGroups) { group in
-                    Text(group.id).tag(group.id as String?)
+                    Text(group.name).tag(group.name as String?)
                 }
             }
             Picker(selection: $viewModel.primaryGroupSubgroup, label: Text("Подгруппа")) {

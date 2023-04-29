@@ -43,7 +43,7 @@ class GroupsViewModel: ObservableObject {
         }
         
         if searchText.isEmpty == false {
-            predicates.append(NSCompoundPredicate(orPredicateWithSubpredicates: [NSPredicate(format: "id BEGINSWITH %@", searchText),
+            predicates.append(NSCompoundPredicate(orPredicateWithSubpredicates: [NSPredicate(format: "name BEGINSWITH %@", searchText),
                                                                                  NSPredicate(format: "speciality.abbreviation BEGINSWITH[c] %@", searchText),
                                                                                  NSPredicate(format: "speciality.name BEGINSWITH[c] %@", searchText)]))
         }

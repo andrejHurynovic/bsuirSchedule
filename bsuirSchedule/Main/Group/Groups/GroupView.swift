@@ -11,7 +11,7 @@ struct GroupView: View {
     @ObservedObject var group: Group
     
     var body: some View {
-        SquareView(title: group.id,
+        SquareView(title: group.name,
                    firstSubtitle: group.nickname ?? group.speciality?.faculty?.abbreviation,
                    secondSubtitle: group.speciality?.abbreviation)
     }
@@ -21,7 +21,7 @@ struct GroupView_Previews: PreviewProvider {
     static var previews: some View {
         let groups = Group.getAll()
         
-        if let group = groups.first(where: { $0.id == "950502" }) {
+        if let group = groups.first(where: { $0.name == "950502" }) {
             GroupView(group: group)
                 .frame(width: 104, height: 104, alignment: .center)
                 .baseBackground()

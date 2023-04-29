@@ -45,10 +45,10 @@ extension Array where Element == Group {
             }
         
         guard self.count > 1 else {
-            return self.first!.id
+            return self.first!.name
         }
         
-        var groups = self.map { $0.id }.sorted()
+        var groups = self.map { $0.name }.sorted()
             var nearGroups: [String] = []
             var finalGroups: [String] = []
             

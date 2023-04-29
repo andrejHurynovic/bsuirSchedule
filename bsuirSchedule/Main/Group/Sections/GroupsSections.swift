@@ -37,7 +37,7 @@ extension Sequence where Element == Group {
     }
     
     private func flowSections() -> [NSManagedObjectsSection<Group>] {
-        Dictionary(grouping: self, by: { String($0.id.prefix(4)) })
+        Dictionary(grouping: self, by: { String($0.name.prefix(4)) })
             .sorted { $0.key < $1.key }
             .map { NSManagedObjectsSection(title: $0.key ,
                                            items: $0.value)}

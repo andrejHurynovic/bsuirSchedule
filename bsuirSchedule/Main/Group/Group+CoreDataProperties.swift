@@ -10,7 +10,7 @@ import CoreData
 
 extension Group {
     
-    @NSManaged public var id: String
+    @NSManaged public var name: String
     @NSManaged public var numberOfStudents: Int16
     @NSManaged public var educationDegreeValue: Int16
     @NSManaged public var course: Int16
@@ -30,7 +30,7 @@ extension Group {
     
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Group> {
         let request = NSFetchRequest<Group>(entityName: "Group")
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \Group.id, ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \Group.name, ascending: true)]
         return request
     }
 }
@@ -55,7 +55,7 @@ extension Group: Identifiable { }
 extension Group: Favored {}
 extension Group: EducationDated { }
 extension Group: Scheduled {
-    var title: String { self.id }
+    var title: String { self.name }
 }
 
 //MARK: - Request
@@ -86,7 +86,7 @@ extension Group: AbleToFetchAll {
         for dictionary in dictionaries {
             let data = try! JSONSerialization.data(withJSONObject: dictionary)
             
-            if var group = groups.first (where: { $0.id == dictionary["name"] as? String }) {
+            if var group = groups.first (where: { $0.name == dictionary["name"] as? String }) {
                 try! decoder.update(&group, from: data)
             } else {
                 let group = try! decoder.decode(Group.self, from: data)
@@ -105,14 +105,14 @@ extension Group: AbleToFetchAll {
 //MARK: - Update
 extension Group {
     func update() async -> Group? {
-        guard let url = URL(string: FetchDataType.group.rawValue + self.id),
+        guard let url = URL(string: FetchDataType.group.rawValue + self.name),
               let (data, _) = try? await URLSession.shared.data(from: url) else {
-            Log.error("No data for group (\(String(self.id)))")
+            Log.error("No data for group (\(String(self.name)))")
             return nil
         }
         
         guard data.count != 0 else {
-            Log.warning("Empty data while updating group (\(String(self.id)))")
+            Log.warning("Empty data while updating group (\(String(self.name)))")
             return nil
         }
         

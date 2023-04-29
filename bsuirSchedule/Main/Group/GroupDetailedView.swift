@@ -19,7 +19,7 @@ struct GroupDetailedView: View {
             nickname
             links
         }
-        .navigationTitle(group.id)
+        .navigationTitle(group.name)
         .toolbar {
             FavoriteButton(item: group,
                            circle: true)
@@ -109,7 +109,7 @@ struct GroupDetailedView: View {
             DisclosureGroup {
                 ForEach(flow) { group in
                     NavigationLink(destination: GroupDetailedView(group: group)){
-                        Text(group.id)
+                        Text(group.name)
                     }
                 }
             } label: {
@@ -140,7 +140,7 @@ struct GroupDetailedView_Previews: PreviewProvider {
     static var previews: some View {
         let groups = Group.getAll()
         
-        if let group = groups.first(where: { $0.id == "950503" }) {
+        if let group = groups.first(where: { $0.name == "950503" }) {
             NavigationView {
                 GroupDetailedView(group: group)
             }

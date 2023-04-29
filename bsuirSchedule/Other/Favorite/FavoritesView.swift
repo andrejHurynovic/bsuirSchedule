@@ -22,7 +22,7 @@ struct FavoritesView: View {
     
     @FetchRequest(
         entity: Group.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \Group.id, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Group.name, ascending: true)],
         predicate:
             NSPredicate(format: "favourite = true"))
     var favouriteGroups: FetchedResults<Group>

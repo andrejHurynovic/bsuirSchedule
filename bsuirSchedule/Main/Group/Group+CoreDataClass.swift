@@ -14,7 +14,7 @@ public class Group: NSManagedObject {
     required public convenience init(from decoder: Decoder) throws {
         self.init(context: decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext)
         try! self.update(from: decoder)
-        Log.info("Group (\(String(self.id))) has been created.")
+        Log.info("Group (\(String(self.name))) has been created.")
     }
     
 }
@@ -31,7 +31,7 @@ extension Group: DecoderUpdatable {
         decodeSpeciality(decoder)
         decodeLessons(container)
         
-        Log.info("Group (\(String(self.id))) has been updated, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds")
+        Log.info("Group (\(String(self.name))) has been updated, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds")
     }
     
     private func decodeGroup(_ decoder: Decoder) {
@@ -40,7 +40,7 @@ extension Group: DecoderUpdatable {
             .nestedContainer(keyedBy: CodingKeys.self, forKey: .groupNestedContainer))
         ?? (try! decoder.container(keyedBy: CodingKeys.self))
         
-        self.id = try! container.decode(String.self, forKey: .id)
+        self.name = try! container.decode(String.self, forKey: .id)
         if let course = try? container.decode(Int16.self, forKey: .course) {
             self.course = course
             }
@@ -59,7 +59,7 @@ extension Group: DecoderUpdatable {
         ?? (try! decoder.container(keyedBy: CodingKeys.self))
         guard let _ = try? container.decode(Int32.self, forKey: .specialityID) else { return }
         self.speciality = try! Speciality(from: decoder)
-        Log.info("The speciality (\(String(describing: self.speciality?.id)) - \(String(describing: self.speciality?.abbreviation))) is created and assigned to group \(String(self.id))")
+        Log.info("The speciality (\(String(describing: self.speciality?.id)) - \(String(describing: self.speciality?.abbreviation))) is created and assigned to group \(String(self.name))")
         
     }
     

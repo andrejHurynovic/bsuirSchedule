@@ -16,7 +16,7 @@ struct FavoriteGroupView: View {
             .aspectRatio(contentMode: .fill)
             .overlay {
                 VStack(alignment: .leading) {
-                    Text(group.id)
+                    Text(group.name)
                         .font(Font.system(size: 20, weight: .bold))
                         .multilineTextAlignment(.leading)
                         .foregroundColor(Color.primary)

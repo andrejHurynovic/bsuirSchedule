@@ -22,7 +22,7 @@
 //    init(lessonsSectioned: LessonsSectioned) {
 //        self.lessonsSectioned = lessonsSectioned
 //        if let group = lessonsSectioned as? Group {
-//            titleBase = group.id
+//            titleBase = group.name
 //        }
 //        if let employee = lessonsSectioned as? Employee {
 //            titleBase = employee.lastName

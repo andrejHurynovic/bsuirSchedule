@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GroupsView: View {
-    @FetchRequest(sortDescriptors: [SortDescriptor(\Group.id)],
+    @FetchRequest(sortDescriptors: [SortDescriptor(\Group.name)],
                   animation: .spring())
     var groups: FetchedResults<Group>
     @FetchRequest(sortDescriptors: [SortDescriptor(\Faculty.abbreviation)],

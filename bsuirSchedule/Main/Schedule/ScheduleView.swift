@@ -242,7 +242,7 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
 struct LessonsView_Previews: PreviewProvider {
     static var previews: some View {
         let groups = Group.getAll()
-        if let testGroup = groups.first(where: { $0.id == "050502" }) {
+        if let testGroup = groups.first(where: { $0.name == "050502" }) {
             NavigationView {
                 ScheduleView(scheduled: testGroup)
             }
