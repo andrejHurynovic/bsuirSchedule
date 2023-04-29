@@ -13,9 +13,9 @@ enum AuditoriumSectionType: SectionType {
     var description: String {
         switch self {
             case .building:
-                return "Здание"
+                return "Корпус"
             case .buildingAndFloor:
-                return "Здание и этаж"
+                return "Корпус и этаж"
             case .department:
                 return "Подразделение"
         }

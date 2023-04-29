@@ -44,7 +44,7 @@ extension Sequence where Element == Auditorium {
             }
         }
         if let outsideUniversityAuditoriums = outsideUniversitySections[true] {
-            sections.append(NSManagedObjectsSection(title: "Без подразделения",
+            sections.append(NSManagedObjectsSection(title: "Без корпуса",
                                                     items: outsideUniversityAuditoriums))
         }
         return sections

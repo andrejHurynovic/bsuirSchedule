@@ -85,6 +85,21 @@ struct DeveloperView: View {
                     Label("Больше всего групп у преподавателя", systemImage: "person.crop.circle")
                 }
                 
+                Button {
+                    var sortedAuditories = auditoriums.sorted {
+                        $0.lessons?.allObjects.count ?? 0 > $1.lessons?.allObjects.count ?? 0
+                    }
+                    
+                    for _ in 0..<5 {
+                        let auditorium = sortedAuditories.removeFirst()
+                        Log.info("Auditorium with the biggest number of lessons: \(auditorium.formattedName), lessons: \(auditorium.lessons!.allObjects.count)")
+                        
+                    }
+                    
+                } label: {
+                    Label("Больше всего занятий у кабинета", systemImage: "person.crop.circle")
+                }
+                
             }
             
         }
