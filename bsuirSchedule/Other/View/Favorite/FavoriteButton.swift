@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FavoriteButton<FavoritableType: Favoritable>: View {
+struct FavoriteButton<FavoritableType: Favored>: View {
     @ObservedObject var item: FavoritableType
     
     var circle: Bool = false

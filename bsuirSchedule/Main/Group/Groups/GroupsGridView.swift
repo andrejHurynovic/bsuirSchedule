@@ -13,7 +13,8 @@ struct GroupsGridView: View {
     var body: some View {
         SquareGrid(sections: sections, content: { group in
             NavigationLink {
-                GroupDetailedView(group: group)
+                ScheduleView(scheduled: group)
+//                GroupDetailedView(group: group)
             } label: {
                 GroupView(group: group)
             }

@@ -19,19 +19,12 @@ struct AuditoriumsView: View {
     
     @StateObject private var viewModel = AuditoriumsViewModel()
     
-    @State var searchText = ""
-    @State var selectedSectionType: AuditoriumSectionType = .building
-    @State var selectedAuditoriumType: AuditoriumType? = nil
-    
-    var menuDefaultRules: [Bool] { [selectedSectionType == .building,
-                                    selectedAuditoriumType == nil] }
-    
     //MARK: - Body
     
     var body: some View {
         NavigationView {
             ScrollView {
-                AuditoriumsGridView(sections: auditoriums.sections(selectedSectionType))
+                AuditoriumsGridView(sections: auditoriums.sections(viewModel.selectedSectionType))
                 TotalFooterView(text: "Аудиторий", count: auditoriums.count)
             }
             .navigationTitle("Аудитории")
@@ -39,10 +32,8 @@ struct AuditoriumsView: View {
             
             .toolbar { toolbar }
             
-            .searchable(text: $searchText, prompt: "Номер, подразделение")
-            .onChange(of: searchText) { newText in
-                auditoriums.nsPredicate = viewModel.calculatePredicate(selectedAuditoriumType, newText)
-            }
+            .searchable(text: $viewModel.searchText, prompt: "Номер, подразделение")
+            .onChange(of: viewModel.searchText) { _ in auditoriums.nsPredicate = viewModel.calculatePredicate() }
             .baseBackground()
         }
     }
@@ -50,24 +41,22 @@ struct AuditoriumsView: View {
     //MARK: - Toolbar
     
     @ViewBuilder var toolbar: some View {
-        MenuView(defaultRules: menuDefaultRules) {
-            SortingPicker(value: $selectedSectionType)
+        MenuView(defaultRules: viewModel.menuDefaultRules) {
+            SectionTypePicker(value: $viewModel.selectedSectionType)
             auditoriumTypeSelector
         }
     }
     
     @ViewBuilder var auditoriumTypeSelector: some View  {
         Text("Тип:")
-        Picker("", selection: $selectedAuditoriumType) {
+        Picker("", selection: $viewModel.selectedAuditoriumType) {
             Text("Любой").tag(nil as AuditoriumType?)
             ForEach(auditoriumTypes, id: \.self) { type in
                 Text(type.abbreviation)
                     .tag(type.self as AuditoriumType?)
             }
         }
-        .onChange(of: selectedAuditoriumType) { newType in
-            auditoriums.nsPredicate = viewModel.calculatePredicate(newType, searchText)
-        }
+        .onChange(of: viewModel.selectedAuditoriumType) { _ in auditoriums.nsPredicate = viewModel.calculatePredicate() }
         
     }
     

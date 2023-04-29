@@ -27,7 +27,7 @@ extension Lesson {
     
     @NSManaged public var dateString: String
     @NSManaged public var weekday: Int16
-    @NSManaged public var weeks: [Int]!
+    @NSManaged public var weeks: [Int]
     @NSManaged public var startLessonDate: Date?
     @NSManaged public var startLessonDateString: String
     @NSManaged public var endLessonDate: Date?
@@ -111,20 +111,18 @@ extension Lesson {
     
 }
 
-extension Array where Element == Lesson {
-    mutating func filter(abbreviation: String) {
-        guard !abbreviation.isEmpty else {
-            return
-        }
-        self.removeAll { $0.abbreviation.localizedStandardContains(abbreviation) == false }
+extension Sequence where Element == Lesson {
+    func filtered(abbreviation: String) -> any Sequence<Lesson> {
+        guard !abbreviation.isEmpty else { return self }
+        return self.filter { $0.abbreviation.localizedStandardContains(abbreviation) }
     }
     
-    mutating func filter(subgroup: Int?) {
+    func filtered(subgroup: Int?) -> any Sequence<Lesson> {
         guard let subgroup = subgroup else {
-            return
+            return self
         }
         let allowedSubgroups: [Int16] = [0, Int16(subgroup)]
-        self.removeAll { allowedSubgroups.contains($0.subgroup) == false }
+        return self.filter { allowedSubgroups.contains($0.subgroup)  }
     }
 }
 

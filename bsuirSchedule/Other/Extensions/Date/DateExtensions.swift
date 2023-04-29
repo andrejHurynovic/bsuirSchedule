@@ -47,17 +47,13 @@ extension Date {
         return Calendar.current.dateComponents([.hour, .minute, .second], from: self)
     }
     
-    mutating func removeTime() {
-        self = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: self)!
-    }
+//    mutating func removeTime() {
+//        self = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: self)!
+//    }
     ///Returns Date with hours, minutes, seconds and nanoseconds assigned to zero.
-    func removedTime() -> Date {
-        return Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: self)!
-    }
-    
-    func dateComponentsTo(_ anotherDate: Date, _ dateComponent: Calendar.Component) -> Int {
-        return Calendar.current.dateComponents([dateComponent], from: self, to: anotherDate).value(for: dateComponent)!
-    }
+//    func removedTime() -> Date {
+//        return Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: self)!
+//    }
     
 }
 

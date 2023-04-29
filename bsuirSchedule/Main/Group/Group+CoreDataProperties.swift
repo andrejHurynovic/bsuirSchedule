@@ -52,9 +52,11 @@ extension Group {
 }
 
 extension Group: Identifiable { }
-extension Group: Favoritable {}
+extension Group: Favored {}
 extension Group: EducationDated { }
-extension Group: LessonsSectioned { }
+extension Group: Scheduled {
+    var title: String { self.id }
+}
 
 //MARK: - Request
 extension Group {

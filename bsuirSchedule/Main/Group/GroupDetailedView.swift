@@ -19,35 +19,34 @@ struct GroupDetailedView: View {
             nickname
             links
         }
-        .animation(.default, value: group.favourite)
-        .animation(.default, value: group.lessonsUpdateDate)
-        .animation(.default, value: group.lessons)
-        
-        .refreshable { let _ = await group.update() }
-        
         .navigationTitle(group.id)
-        
         .toolbar {
             FavoriteButton(item: group,
                            circle: true)
         }
+        .refreshable { let _ = await group.update() }
+        
+        .animation(.default, value: group.favourite)
+        .animation(.default, value: group.lessonsUpdateDate)
+        .animation(.default, value: group.lessons)
         
         .task {
-            if group.lessonsUpdateDate == nil || group.lessons == nil {
-                let _ = await group.update()
-            }
+            let _ = await group.checkForLessonsUpdates()
         }
+        
     }
     
     @ViewBuilder var specialitySection: some View {
-        Section(group.speciality?.name ?? "") {
-            FormView("Аббревиатура", group.speciality?.abbreviation)
-            FormViewWithAlternativeText("Факультет",
-                                        group.speciality?.faculty?.abbreviation,
-                                        group.speciality?.faculty?.name)
-            FormView("Степень", group.educationDegree?.description)
-            FormView("Форма обучения", group.speciality?.educationType?.name)
-            FormView("Шифр", group.speciality?.code)
+        if let speciality = group.speciality {
+            Section(speciality.name) {
+                FormView("Аббревиатура", speciality.abbreviation)
+                FormViewWithAlternativeText("Факультет",
+                                            speciality.faculty?.abbreviation,
+                                            speciality.faculty?.name)
+                FormView("Степень", group.educationDegree?.description)
+                FormView("Форма обучения", speciality.educationType?.name)
+                FormView("Шифр", speciality.code)
+            }
         }
         
         
@@ -60,7 +59,7 @@ struct GroupDetailedView: View {
             FormView("Курс", String(group.course))
             numberOfStudents
             EducationDatesView(item: group)
-            LessonsUpdateDateView(item: group )
+            LessonsRefreshableView(item: group )
         }
     }
     
@@ -100,7 +99,7 @@ struct GroupDetailedView: View {
     }
     @ViewBuilder var lessons: some View {
         NavigationLink {
-            LessonsView(viewModel: LessonsViewModel(group))
+            ScheduleView(scheduled: group)
         } label: {
             Label("Расписание", systemImage: "calendar")
         }

@@ -68,7 +68,7 @@ extension Group: DecoderUpdatable {
         let exams = try? container.decode([Lesson].self, forKey: .exams)
         
         if lessons != nil || exams != nil {
-            self.lessonsUpdateDate = lessonsUpdateDate
+            self.lessonsUpdateDate = Date()
         }
     }
     

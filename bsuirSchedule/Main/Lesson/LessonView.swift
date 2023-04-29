@@ -9,11 +9,7 @@ import SwiftUI
 
 struct LessonView: View {
     @ObservedObject var lesson: Lesson
-    
-    var showEmployee: Bool
-    var showGroups: Bool
-    var showWeeks: Bool
-    var showFullSubjectName: Bool = false
+    @ObservedObject var settings: LessonViewSettings
     
     var today: Bool
     var passedLesson: Bool { today && lesson.timeRange.upperBound < Date().time }
@@ -45,33 +41,42 @@ struct LessonView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            if showFullSubjectName {
-                fullTitle
-            } else {
+            if settings.showAbbreviation {
                 shortTitle
+            } else {
+                fullTitle
             }
-                footer
+                mainBody
         }
         .padding()
-        .baseRoundedRectangle()
+        .roundedRectangleBackground()
         .opacity(passedLesson ? 0.5 : 1.0)
 
         .contextMenu {
             Text("Добавить задание")
+            Button("Удалить занятие") {
+                PersistenceController.shared.container.viewContext.delete(lesson)
+                try! PersistenceController.shared.container.viewContext.save()
+            }
         } preview: {
-            LessonView(lesson: lesson, showEmployee: true, showGroups: true, showWeeks: true, showFullSubjectName: true, today: false)
+            LessonView(lesson: lesson,
+                       settings: LessonViewSettings(showAbbreviation: false,
+                                                    showGroups: true,
+                                                    showEmployees: true,
+                                                    showWeeks: true,
+                                                    showDates: true,
+                                                    showDate: true),
+                       today: false)
         }
+        
+       
     }
     
     //MARK: - Title
     
     var fullTitle: some View {
         VStack(alignment: .leading) {
-            HStack(alignment: .top) {
-                subject
-                Spacer()
-                subgroup
-            }
+            subjectLabel
             Divider()
             HStack(alignment:.top) {
                 lessonType
@@ -83,8 +88,7 @@ struct LessonView: View {
     }
     var shortTitle: some View {
         HStack(alignment: .top) {
-            subject
-            subgroup
+            subjectLabel
             Spacer()
             weeks
             auditoriums
@@ -92,9 +96,9 @@ struct LessonView: View {
         }
     }
     
-    //MARK: -
+    //MARK: - mainBody
     
-    var footer: some View {
+    var mainBody: some View {
         HStack(alignment: .bottom) {
             VStack(alignment: .leading) {
                 Spacer()
@@ -107,23 +111,32 @@ struct LessonView: View {
         }
     }
     
+    //MARK: - subjectLabel
     
-    //MARK: - Elements
+    @ViewBuilder var subjectLabel: some View {
+        HStack(alignment: .top) {
+            subject
+            if settings.showAbbreviation == false {
+                Spacer(minLength: 0)
+            }
+            subgroup
+        }
+        .font(.system(.title2,
+                      design: .rounded,
+                      weight: .bold))
+        .foregroundColor(lessonTypeColor)
+    }
+    
     @ViewBuilder var subject: some View {
-        let subject = showFullSubjectName ? lesson.subject : lesson.abbreviation
-        if let subject = subject, subject.isEmpty == false {
+        let subjectText = settings.showAbbreviation ? lesson.abbreviation : lesson.subject
+        if let subject = subjectText, subject.isEmpty == false {
             Text(subject)
-                .font(.system(.title2,
-                              design: .rounded,
-                              weight: .bold))
-                .foregroundColor(lessonTypeColor)
         }
     }
+    
     @ViewBuilder var subgroup: some View {
         if (lesson.subgroup != 0) {
             Image(systemName: String(lesson.subgroup) + ".circle.fill")
-                .font(.title2.bold())
-                .foregroundColor(lessonTypeColor)
         }
     }
     
@@ -152,14 +165,9 @@ struct LessonView: View {
     
     @ViewBuilder var lessonType: some View {
         let lessonType = lesson.lessonType
-        let lessonTypeString = showFullSubjectName ? lessonType.description : lessonType.abbreviation
+        let lessonTypeString = settings.showAbbreviation ? lessonType.abbreviation : lessonType.description
         
-        if showFullSubjectName {
-            Text(lessonTypeString)
-                .font(.system(.body,
-                              design: .rounded,
-                              weight: .medium))
-        } else {
+        if settings.showAbbreviation {
             if lesson.lessonType != .none {
                 Text(lessonTypeString)
                     .font(.system(.body,
@@ -167,13 +175,18 @@ struct LessonView: View {
                                   weight: .medium))
                     .foregroundColor(lessonTypeColor)
             }
+        } else {
+            Text(lessonTypeString)
+                .font(.system(.body,
+                              design: .rounded,
+                              weight: .medium))
         }
         
         
     }
     
     @ViewBuilder var groups: some View {
-        if showGroups {
+        if settings.showGroups {
             if let groups = self.lesson.groups?.allObjects as? [Group], groups.isEmpty == false {
                 HStack(alignment: .top) {
                     Image(systemName: "person.2.circle")
@@ -194,7 +207,7 @@ struct LessonView: View {
     }
     
     @ViewBuilder var employees: some View {
-        if showEmployee {
+        if settings.showEmployees {
             if let employees = lesson.employees?.allObjects as? [Employee] {
                 ForEach(employees.sorted(by: {$0.lastName < $1.lastName}), id: \.self) { employee in
                     NavigationLink {
@@ -232,7 +245,7 @@ struct LessonView: View {
     }
     
     @ViewBuilder var weeks: some View {
-        if showWeeks, let weeksString = lesson.weeksDescription {
+        if settings.showWeeks, let weeksString = lesson.weeksDescription {
             Label(weeksString, systemImage: "calendar")
         }
     }
@@ -280,10 +293,7 @@ struct LessonView_Previews: PreviewProvider {
             
             ForEach(lessons) { lesson in
                 LessonView(lesson: lesson,
-                           showEmployee: true,
-                           showGroups: true,
-                           showWeeks: true,
-                           showFullSubjectName: true,
+                           settings: Group.defaultLessonSettings(),
                            today: true)
                     .padding()
             }

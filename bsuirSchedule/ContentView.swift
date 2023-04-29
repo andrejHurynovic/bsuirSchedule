@@ -11,8 +11,8 @@ struct ContentView: View {
     
     var body: some View {
         TabView {
-            FavoritesView()
-                .tabItem { Label("Избранные", systemImage: "star.fill") }
+//            FavoritesView()
+//                .tabItem { Label("Избранные", systemImage: "star.fill") }
             GroupsView()
                 .tabItem { Label("Расписание", systemImage: "calendar") }
             EmployeesView()

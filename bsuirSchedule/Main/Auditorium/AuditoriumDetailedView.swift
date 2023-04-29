@@ -68,7 +68,7 @@ struct AuditoriumDetailedView: View {
     @ViewBuilder var scheduleButton: some View {
         if auditorium.lessons?.allObjects.isEmpty == false {
             NavigationLink {
-                LessonsView(viewModel: LessonsViewModel(auditorium))
+                ScheduleView(scheduled: auditorium)
             } label: {
                 Label("Расписание аудитории", systemImage: "calendar")
             }
@@ -79,7 +79,7 @@ struct AuditoriumDetailedView: View {
     
     @ViewBuilder var groups: some View {
         if let groups = auditorium.groups {
-            ListGroupsView(groups: groups)
+            FromGroupsView(groups: groups)
         }
     }
     

@@ -1,5 +1,5 @@
 //
-//  LessonsUpdateDateView.swift
+//  LessonsRefreshableView.swift
 //  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 9.04.23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LessonsUpdateDateView<ObjectType: LessonsUpdateDateable>: View {
+struct LessonsRefreshableView<ObjectType: LessonsRefreshable>: View {
     
     @ObservedObject var item: ObjectType
     
@@ -38,10 +38,10 @@ struct LessonsUpdateDateView<ObjectType: LessonsUpdateDateable>: View {
                 item.lessonsUpdateDate = fetchedLastUpdateDate
             }
         }
-        if let itemLastUpdateDate = item.lessonsUpdateDate,
-           itemLastUpdateDate < fetchedLastUpdateDate {
-            let _ = await item.update()
-        }
+//        if let itemLastUpdateDate = item.lessonsUpdateDate,
+//           itemLastUpdateDate < fetchedLastUpdateDate {
+//            let _ = await item.update()
+//        }
     }
 }
 
@@ -50,7 +50,7 @@ struct LessonsUpdateDateView_Previews: PreviewProvider {
     static var previews: some View {
         let employees = Employee.getAll()
         if let employee = employees.randomElement() {
-            LessonsUpdateDateView(item: employee)
+            LessonsRefreshableView(item: employee)
         }
     }
 }

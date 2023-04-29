@@ -48,13 +48,9 @@ struct EmployeesView: View {
     
     @ViewBuilder var toolbar: some View {
         MenuView(defaultRules: [selectedSectionType == .firstLetter]) {
-            sectionTypeSelector
+            SectionTypePicker(value: $selectedSectionType)
             showDepartmentsToggle
         }
-    }
-    
-    var sectionTypeSelector: some View {
-        SortingPicker(value: $selectedSectionType)
     }
     
     var showDepartmentsToggle: some View {

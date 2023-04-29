@@ -53,8 +53,10 @@ extension Auditorium {
 }
 
 extension Auditorium: Identifiable {}
-extension Auditorium: Favoritable {}
-extension Auditorium: LessonsSectioned {}
+extension Auditorium: Favored {}
+extension Auditorium: Scheduled {
+    var title: String { self.formattedName }
+}
 
 extension Auditorium: EducationDated {
     var educationStart: Date? {

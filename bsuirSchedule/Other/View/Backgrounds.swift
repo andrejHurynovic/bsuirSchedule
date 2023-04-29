@@ -7,23 +7,14 @@
 
 import SwiftUI
 
-//MARK: - baseRoundedRectangle
+//MARK: - roundedRectangleBackground
 
-extension View {
-    func baseRoundedRectangle() -> some View {
-        modifier(baseRoundedRectangleViewModifier())
-    }
-}
-
-struct baseRoundedRectangleViewModifier: ViewModifier {
+struct baseBackgroundViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .background(Color(uiColor: .secondarySystemGroupedBackground),
-                        in: RoundedRectangle(cornerRadius: 16))
+            .background(Color(UIColor.systemGroupedBackground))
     }
 }
-
-//MARK: - baseBackground
 
 extension View {
     func baseBackground() -> some View {
@@ -31,9 +22,19 @@ extension View {
     }
 }
 
-struct baseBackgroundViewModifier: ViewModifier {
+
+//MARK: - baseBackground
+
+struct roundedRectangleBackgroundViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .background(Color(UIColor.systemGroupedBackground))
+            .background(Color(uiColor: .secondarySystemGroupedBackground),
+                        in: RoundedRectangle(cornerRadius: 16))
+    }
+}
+
+extension View {
+    func roundedRectangleBackground() -> some View {
+        modifier(roundedRectangleBackgroundViewModifier())
     }
 }

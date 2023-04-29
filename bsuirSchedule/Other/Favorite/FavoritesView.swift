@@ -9,11 +9,11 @@ import SwiftUI
 
 class FavouriteViewModel: ObservableObject {
     @AppStorage("primaryGroup") var primaryGroupID: String?
-    @State var groupSection: LessonsSection?
+    @State var groupSection: ScheduleSection?
     @AppStorage("primaryEmployee") var primaryEmployeeID: Int?
-    @State var employeeSection: LessonsSection?
+    @State var employeeSection: ScheduleSection?
     @AppStorage("primaryAuditorium") var primaryAuditoriumID: String?
-    @State var auditoriumSection: LessonsSection?
+    @State var auditoriumSection: ScheduleSection?
 }
 
 struct FavoritesView: View {
@@ -47,9 +47,9 @@ struct FavoritesView: View {
         NavigationView {
             ScrollView {
                 VStack {
-                    primaryGroup
-                    primaryEmployee
-                    primaryAuditorium
+//                    primaryGroup
+//                    primaryEmployee
+//                    primaryAuditorium
                 }
                 .padding(.horizontal)
                 .transition(.move(edge: .leading))
@@ -61,24 +61,24 @@ struct FavoritesView: View {
         .navigationViewStyle(.automatic)
     }
     
-    @ViewBuilder var primaryGroup: some View {
-        if let primaryGroupID = viewModel.primaryGroupID, let group = favouriteGroups.first(where: { $0.id == primaryGroupID }) {
-            VStack(alignment: .leading) {
-                FavoriteSectionView(viewModel: FavoriteSectionViewModel(lessonsSectioned: group))
-            }
-        }
-    }
-    @ViewBuilder var primaryEmployee: some View {
-        if let primaryEmployeeID = viewModel.primaryEmployeeID, let employee = favouriteEmployees.first(where: { $0.id == primaryEmployeeID }) {
-            FavoriteSectionView(viewModel: FavoriteSectionViewModel(lessonsSectioned: employee))
-            }
-        }
-    
-    @ViewBuilder var primaryAuditorium: some View {
-        if let primaryAuditoriumID = viewModel.primaryAuditoriumID, let auditorium = favouriteAuditoriums.first(where: { $0.formattedName == primaryAuditoriumID }) {
-            FavoriteSectionView(viewModel: FavoriteSectionViewModel(lessonsSectioned: auditorium))
-        }
-    }
+//    @ViewBuilder var primaryGroup: some View {
+//        if let primaryGroupID = viewModel.primaryGroupID, let group = favouriteGroups.first(where: { $0.id == primaryGroupID }) {
+//            VStack(alignment: .leading) {
+//                FavoriteSectionView(viewModel: FavoriteSectionViewModel(lessonsSectioned: group))
+//            }
+//        }
+//    }
+//    @ViewBuilder var primaryEmployee: some View {
+//        if let primaryEmployeeID = viewModel.primaryEmployeeID, let employee = favouriteEmployees.first(where: { $0.id == primaryEmployeeID }) {
+//            FavoriteSectionView(viewModel: FavoriteSectionViewModel(lessonsSectioned: employee))
+//            }
+//        }
+//    
+//    @ViewBuilder var primaryAuditorium: some View {
+//        if let primaryAuditoriumID = viewModel.primaryAuditoriumID, let auditorium = favouriteAuditoriums.first(where: { $0.formattedName == primaryAuditoriumID }) {
+//            FavoriteSectionView(viewModel: FavoriteSectionViewModel(lessonsSectioned: auditorium))
+//        }
+//    }
     
     //MARK: - Grids
     
@@ -135,7 +135,7 @@ struct FavoritesView: View {
             Section {
                 ForEach(favouriteGroups) { group in
                     NavigationLink {
-                        LessonsView(viewModel: LessonsViewModel(group))
+                        ScheduleView(scheduled: group)
                     } label: {
                         FavoriteGroupView(group: group)
                     }
@@ -157,7 +157,7 @@ struct FavoritesView: View {
             Section {
                 ForEach(favouriteEmployees) { employee in
                     NavigationLink {
-                        LessonsView(viewModel: LessonsViewModel(employee))
+                        ScheduleView(scheduled: employee)
                     } label: {
                         EmployeeFavoriteView(employee: employee)
                     }
@@ -201,7 +201,7 @@ struct FavoritesView: View {
 //        EmptyView()
 //        if let primaryGroup = primaryGroup {
 //            if let group = viewModel.groups.first(where: {$0.id == primaryGroup}) {
-//                NavigationLink(destination: LessonsView(viewModel: LessonsViewModel(group)), isActive: $primaryGroupPresented) {
+//                NavigationLink(destination: ScheduleView(viewModel: ScheduleViewModel(group)), isActive: $primaryGroupPresented) {
 //                    EmptyView()
 //                }
 //                .hidden()

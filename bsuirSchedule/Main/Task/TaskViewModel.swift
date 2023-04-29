@@ -11,7 +11,7 @@ class TaskViewModel: ObservableObject {
     
     
     var lesson: Lesson?
-//    var nextSections: [LessonsSection] = []
+//    var nextSections: [ScheduleSection] = []
     
     var task: Hometask?
     
@@ -26,7 +26,7 @@ class TaskViewModel: ObservableObject {
     
     @Published var images: [UIImage] = []
     
-//    func likeInit(lesson: Lesson, dateLessonsSections: [LessonsSection]) {
+//    func likeInit(lesson: Lesson, dateLessonsSections: [ScheduleSection]) {
 ////        self.nextSections = lessonsSections
 //        self.lesson = lesson
 //        

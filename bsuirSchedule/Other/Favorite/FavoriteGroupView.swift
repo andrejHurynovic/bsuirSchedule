@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FavoriteGroupView: View {
-    var group: Group
+    @ObservedObject var group: Group
     
     var body: some View {
         RoundedRectangle(cornerRadius: 16)

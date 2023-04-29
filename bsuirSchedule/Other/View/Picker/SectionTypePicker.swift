@@ -1,5 +1,5 @@
 //
-//  SortingPicker.swift
+//  SectionTypePicker.swift
 //  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 5.04.23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SortingPicker<SectionEnum: SectionType>: View {
+struct SectionTypePicker<SectionEnum: SectionType>: View {
     @Binding var value: SectionEnum
     
     var body: some View {
@@ -24,6 +24,6 @@ struct SortingPicker<SectionEnum: SectionType>: View {
 struct SortingPicker_Previews: PreviewProvider {
     static var previews: some View {
         @State var selectedAuditoriumType = AuditoriumSectionType.building
-        SortingPicker(value: $selectedAuditoriumType)
+        SectionTypePicker(value: $selectedAuditoriumType)
     }
 }

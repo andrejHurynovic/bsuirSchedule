@@ -47,7 +47,7 @@ struct GroupsView: View {
     
     @ViewBuilder var toolbar: some View {
         MenuView(defaultRules: viewModel.menuDefaultRules) {
-            SortingPicker(value: $viewModel.selectedSectionType)
+            SectionTypePicker(value: $viewModel.selectedSectionType)
             facultySelector
             specialtyEducationTypeSelector
             educationDegreeSelector

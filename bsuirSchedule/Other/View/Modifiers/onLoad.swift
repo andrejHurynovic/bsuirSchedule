@@ -1,5 +1,5 @@
 //
-//  ViewDidLoadModifier.swift
+//  onLoad.swift
 //  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 19.10.22.
@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-struct ViewDidLoadModifier: ViewModifier {
-    
+
+struct OnLoadModifier: ViewModifier {
     @State private var didLoad = false
+    
     private let action: (() -> Void)?
     
     init(perform action: (() -> Void)? = nil) {
@@ -25,4 +26,10 @@ struct ViewDidLoadModifier: ViewModifier {
         }
     }
     
+}
+
+extension View {
+    func onLoad(perform action: (() -> Void)? = nil) -> some View {
+        modifier(OnLoadModifier(perform: action))
+    }
 }

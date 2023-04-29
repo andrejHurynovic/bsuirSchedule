@@ -7,25 +7,24 @@
 
 import SwiftUI
 
-struct LessonsSectionView: View {
+struct ScheduleSectionView: View {
     
-    var section: LessonsSection
-    var showWeeks: Bool
-    var showEmployees: Bool
-    var showGroups: Bool
+    @ObservedObject var section: ScheduleSection
+    @ObservedObject var lessonViewSettings: LessonViewSettings
     
-    var today: Bool
+    var today: Bool = false
     
     @Binding var showDatePicker: Bool
     
     var body: some View {
         Section {
-            LessonsGroupView(lessons: section.lessons,
-                             showEmployees: showEmployees,
-                             showGroups: showGroups,
-                             showWeeks: showWeeks,
-                             sectionID: section.id,
-                             today: today)
+            ForEach(section.lessons) { lesson in
+                LessonView(lesson: lesson,
+                           settings: lessonViewSettings,
+                           today: today
+                )
+                .id(lesson.id(sectionID: section.id))
+            }
         } header: {
             Button {
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.9)) {

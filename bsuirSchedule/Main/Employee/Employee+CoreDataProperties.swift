@@ -73,9 +73,11 @@ extension Employee {
 }
 
 extension Employee: Identifiable { }
-extension Employee: Favoritable { }
+extension Employee: Favored { }
 extension Employee: EducationDated { }
-extension Employee: LessonsSectioned { }
+extension Employee: Scheduled {
+    var title: String { self.lastName }
+}
 
 //MARK: - Request
 

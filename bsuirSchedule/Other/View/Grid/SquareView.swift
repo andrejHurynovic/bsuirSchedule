@@ -29,7 +29,7 @@ struct SquareView: View {
             Spacer(minLength: 0)
         }
         .padding()
-        .baseRoundedRectangle()
+        .roundedRectangleBackground()
         .aspectRatio(1.0, contentMode: .fit)
 
     }

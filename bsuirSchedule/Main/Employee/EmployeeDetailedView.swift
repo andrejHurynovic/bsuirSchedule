@@ -18,18 +18,14 @@ struct EmployeeDetailedView: View {
             links
             groups
         }
-        .animation(.default, value: employee.lessonsUpdateDate)
-
+        .navigationTitle(employee.lastName)
+        .toolbar { FavoriteButton(item: employee, circle: true) }
         .refreshable { let _ = await employee.update() }
         
-        .navigationTitle(employee.lastName)
-        
-        .toolbar { FavoriteButton(item: employee, circle: true) }
+        .animation(.default, value: employee.lessonsUpdateDate)
         
         .task {
-            if employee.lessonsUpdateDate == nil || employee.lessons == nil {
-                let _ = await employee.update()
-            }
+            let _ = await employee.checkForLessonsUpdates()
         }
     }
     
@@ -68,7 +64,7 @@ struct EmployeeDetailedView: View {
                 FormView("Звание", rank)
             }
             EducationDatesView(item: employee)
-            LessonsUpdateDateView(item: employee)
+            LessonsRefreshableView(item: employee)
         }
     }
     
@@ -120,7 +116,7 @@ struct EmployeeDetailedView: View {
     @ViewBuilder var lessons: some View {
         if let lessons = employee.lessons?.allObjects as? [Lesson], lessons.isEmpty == false {
             NavigationLink {
-                LessonsView(viewModel: LessonsViewModel(employee))
+                ScheduleView(scheduled: employee)
             } label: {
                 Label("Расписание", systemImage: "calendar")
             }
@@ -131,7 +127,7 @@ struct EmployeeDetailedView: View {
     
     @ViewBuilder var groups: some View {
         if let groups = employee.groups {
-            ListGroupsView(groups: groups)
+            FromGroupsView(groups: groups)
         }
     }
 }
