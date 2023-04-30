@@ -17,10 +17,8 @@ extension Auditorium: Scheduled {
 
 extension Auditorium {
     var groups: [Group]? {
-        guard let lessons = lessons?.allObjects as? [Lesson], !lessons.isEmpty else {
-            return nil
-        }
-        let groups = Array(lessons.compactMap {($0.groups?.allObjects as! [Group])}.joined())
+        guard let lessons = lessons?.allObjects as? [Lesson], !lessons.isEmpty else { return nil }
+        let groups = lessons.compactMap { $0.groups?.allObjects as? [Group] }.flatMap { $0 }
         return Set(groups).sorted { $0.id < $1.id }
     }
 }
