@@ -12,14 +12,7 @@ struct AuditoriesGridView: View {
     
     var body: some View {
         SquareGrid(sections: sections, content: { auditorium in
-            NavigationLink {
-                AuditoriumDetailedView(auditorium: auditorium)
-            } label: {
-                AuditoriumView(auditorium: auditorium)
-            }
-            .contextMenu {
-                FavoriteButton(item: auditorium)
-            }
+            AuditoriumNavigationLink(auditorium: auditorium)
         })
         .padding([.horizontal, .bottom])
     }

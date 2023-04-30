@@ -22,20 +22,18 @@ struct AuditoriesView: View {
     //MARK: - Body
     
     var body: some View {
-        NavigationView {
-            ScrollView {
-                AuditoriesGridView(sections: auditories.sections(viewModel.selectedSectionType))
-                TotalFooterView(text: "Аудиторий", count: auditories.count)
-            }
-            .navigationTitle("Аудитории")
-            .refreshable { await viewModel.update() }
-            
-            .toolbar { toolbar }
-            
-            .searchable(text: $viewModel.searchText, prompt: "Номер, подразделение")
-            .onChange(of: viewModel.searchText) { _ in auditories.nsPredicate = viewModel.calculatePredicate() }
-            .baseBackground()
+        ScrollView {
+            AuditoriesGridView(sections: auditories.sections(viewModel.selectedSectionType))
+            TotalFooterView(text: "Аудиторий", count: auditories.count)
         }
+        .navigationTitle("Аудитории")
+        .refreshable { await viewModel.update() }
+        
+        .toolbar { toolbar }
+        
+        .searchable(text: $viewModel.searchText, prompt: "Номер, подразделение")
+        .onChange(of: viewModel.searchText) { _ in auditories.nsPredicate = viewModel.calculatePredicate() }
+        .baseBackground()
     }
     
     //MARK: - Toolbar

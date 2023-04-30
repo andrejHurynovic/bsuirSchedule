@@ -96,3 +96,7 @@ struct EmployeeView_Previews: PreviewProvider {
             .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
     }
 }
+
+extension EmployeeView {
+    static var gridItem = GridItem(.adaptive(minimum: 256, maximum: 512))
+}

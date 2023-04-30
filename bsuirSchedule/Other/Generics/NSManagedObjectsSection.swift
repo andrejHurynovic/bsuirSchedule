@@ -10,7 +10,7 @@ import CoreData
 class NSManagedObjectsSection<ObjectType: NSManagedObject> {
     var title: String
     var id: String?
-    var items: [ObjectType]
+    @Published var items: [ObjectType]
     
     init(title: String, id: String? = nil, items: [ObjectType]) {
         self.title = title

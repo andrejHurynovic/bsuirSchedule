@@ -54,3 +54,7 @@ struct SquareView: View {
     }
     
 }
+
+extension SquareView {
+    static var gridItem = GridItem(.adaptive(minimum: 96, maximum: 128))
+}

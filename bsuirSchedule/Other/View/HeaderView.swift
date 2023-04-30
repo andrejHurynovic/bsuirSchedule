@@ -17,15 +17,16 @@ struct HeaderView: View {
     }
     
     var body: some View {
-        HStack {
+        HStack(spacing: 0) {
             Text(title)
-                .fontWeight(.heavy)
                 .foregroundColor(.primary)
             if withArrow {
+                Spacer()
                 Text(Image(systemName: "chevron.right"))
                     .foregroundColor(.gray)
             }
         }
+        .fontWeight(.heavy)
         .font(.title2)
         .padding(.top)
     }

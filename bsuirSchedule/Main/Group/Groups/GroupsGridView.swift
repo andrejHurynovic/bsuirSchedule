@@ -12,14 +12,7 @@ struct GroupsGridView: View {
     
     var body: some View {
         SquareGrid(sections: sections, content: { group in
-            NavigationLink {
-                ScheduleView(scheduled: group)
-            } label: {
-                GroupView(group: group)
-            }
-            .contextMenu {
-                FavoriteButton(item: group)
-            }
+            GroupNavigationLink(group: group)
         })
         .padding([.horizontal, .bottom])
     }

@@ -35,14 +35,13 @@ struct SettingsView: View {
     var favroiteAuditories: FetchedResults<Auditorium>
     
     var body: some View {
-        NavigationView {
-            List {
-                primaryTypePicker
-                colors
-                developer
-            }
-            .navigationTitle("Настройки")
-        }.navigationViewStyle(StackNavigationViewStyle())
+        List {
+            primaryTypePicker
+            colors
+            developer
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
+        .navigationTitle("Настройки")
     }
     
     var primaryTypePicker: some View {
@@ -58,43 +57,43 @@ struct SettingsView: View {
     
     @ViewBuilder var primaryPickers: some View {
         switch viewModel.primaryType {
-        case .group:
-            primaryGroupPicker
-        case .employee:
-            primaryEmployeePicker
-        case .auditorium:
-            primaryAuditoriumPicker
+            case .group:
+                primaryGroupPicker
+            case .employee:
+                primaryEmployeePicker
+            case .auditorium:
+                primaryAuditoriumPicker
         }
     }
     
     @ViewBuilder var primaryGroupPicker: some View {
-            Picker(selection: $viewModel.primaryGroup, label: Text("Выбор")) {
-                Text("Нет").tag(nil as String?)
-                ForEach(favroiteGroups) { group in
-                    Text(group.name).tag(group.name as String?)
-                }
+        Picker(selection: $viewModel.primaryGroup, label: Text("Выбор")) {
+            Text("Нет").tag(nil as String?)
+            ForEach(favroiteGroups) { group in
+                Text(group.name).tag(group.name as String?)
             }
-            Picker(selection: $viewModel.primaryGroupSubgroup, label: Text("Подгруппа")) {
-                Text("Любая").tag(nil as Int?)
-                Text("Первая").tag(1 as Int?)
-                Text("Вторая").tag(2 as Int?)
-            }
+        }
+        Picker(selection: $viewModel.primaryGroupSubgroup, label: Text("Подгруппа")) {
+            Text("Любая").tag(nil as Int?)
+            Text("Первая").tag(1 as Int?)
+            Text("Вторая").tag(2 as Int?)
+        }
     }
     @ViewBuilder var primaryEmployeePicker: some View {
-            Picker(selection: $viewModel.primaryEmployee, label: Text("Выбор")) {
-                Text("Нет").tag(nil as Int?)
-                ForEach(favroiteEmployees) { employee in
-                    Text(employee.lastName).tag(Int(employee.id) as Int?)
-                }
+        Picker(selection: $viewModel.primaryEmployee, label: Text("Выбор")) {
+            Text("Нет").tag(nil as Int?)
+            ForEach(favroiteEmployees) { employee in
+                Text(employee.lastName).tag(Int(employee.id) as Int?)
             }
+        }
     }
     @ViewBuilder var primaryAuditoriumPicker: some View {
-            Picker(selection: $viewModel.primaryAuditorium, label: Text("Выбор")) {
-                Text("Нет").tag(nil as String?)
-                ForEach(favroiteAuditories) { auditorium in
-                    Text(auditorium.formattedName).tag(auditorium.formattedName as String?)
-                }
+        Picker(selection: $viewModel.primaryAuditorium, label: Text("Выбор")) {
+            Text("Нет").tag(nil as String?)
+            ForEach(favroiteAuditories) { auditorium in
+                Text(auditorium.formattedName).tag(auditorium.formattedName as String?)
             }
+        }
     }
     
     @ViewBuilder var colors: some View {
@@ -136,7 +135,9 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
-            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+        NavigationView {
+            SettingsView()
+                .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+        }
     }
 }

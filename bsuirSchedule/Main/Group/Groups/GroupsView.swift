@@ -23,7 +23,6 @@ struct GroupsView: View {
     //MARK: - Body
     
     var body: some View {
-        NavigationView {
             ScrollView {
                 GroupsGridView(sections: groups.sections(viewModel.selectedSectionType))
                 TotalFooterView(text: "Групп", count: groups.count)
@@ -37,10 +36,9 @@ struct GroupsView: View {
             .onChange(of: viewModel.searchText) { newText in
                 groups.nsPredicate = viewModel.calculatePredicate()
             }
+            .navigationViewStyle(StackNavigationViewStyle())
             
             .baseBackground()
-        }
-        .navigationViewStyle(StackNavigationViewStyle())
     }
     
     //    MARK: - Toolbar
@@ -113,8 +111,10 @@ struct GroupsView: View {
 
 struct GroupsView_Previews: PreviewProvider {
     static var previews: some View {
-        GroupsView()
-            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+        NavigationView {
+            GroupsView()
+                .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+        }
     }
     
 }

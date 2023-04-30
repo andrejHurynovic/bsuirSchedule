@@ -23,7 +23,6 @@ struct EmployeesView: View {
     //MARK: - Body
     
     var body: some View {
-        NavigationView {
             ScrollView {
                 EmployeesGridView(sections: employees.sections(selectedSectionType),
                                   showDepartments: showDepartments)
@@ -38,10 +37,9 @@ struct EmployeesView: View {
             .onChange(of: searchText) { newText in
                 employees.nsPredicate = viewModel.calculatePredicate(searchText)
             }
+            .navigationViewStyle(StackNavigationViewStyle())
             
             .baseBackground()
-        }
-        .navigationViewStyle(StackNavigationViewStyle())
     }
     
     //MARK: - Toolbar
@@ -62,8 +60,10 @@ struct EmployeesView: View {
 
 struct EmployeesView_Previews: PreviewProvider {
     static var previews: some View {
-        EmployeesView()
-            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+        NavigationView {
+            EmployeesView()
+                .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+        }
     }
     
 }

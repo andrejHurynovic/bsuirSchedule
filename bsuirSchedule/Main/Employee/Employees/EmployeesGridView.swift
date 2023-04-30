@@ -13,25 +13,15 @@ struct EmployeesGridView: View {
     var showDepartments: Bool
     
     var body: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 256, maximum: 512))],
+        LazyVGrid(columns: [EmployeeView.gridItem],
                   alignment: .leading,
                   spacing: 8) {
             ForEach(sections, id: \.title) { section in
                 Section {
                     ForEach(section.items) { employee in
-                        NavigationLink {
-                            ScheduleView(scheduled: employee)
-//                            EmployeeDetailedView(employee: employee)
-                        } label: {
-                            EmployeeView(employee: employee,
-                                         showDepartments: showDepartments)
-                            .padding()
-                            .roundedRectangleBackground()
-                        }
+                        EmployeeNavigationLink(employee: employee,
+                                               showDepartments: showDepartments)
                         .id("\(section.title):\(employee.id)")
-                        .contextMenu {
-                            FavoriteButton(item: employee)
-                        }
                     }
                 } header: {
                     HeaderView(section.title)
