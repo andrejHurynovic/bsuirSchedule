@@ -18,7 +18,8 @@ struct HomeView: View {
                   predicate: NSPredicate(format: "favroite = true"),
                   animation: .spring())
     var employees: FetchedResults<Employee>
-    @FetchRequest(sortDescriptors: [SortDescriptor(\Auditorium.formattedName)],
+    @FetchRequest(sortDescriptors: [SortDescriptor(\Auditorium.building),
+                                    SortDescriptor(\Auditorium.formattedName)],
                   predicate: NSPredicate(format: "favroite = true"),
                   animation: .spring())
     var auditories: FetchedResults<Auditorium>

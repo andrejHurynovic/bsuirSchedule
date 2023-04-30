@@ -58,7 +58,7 @@ struct GroupDetailedView: View {
         Section("Группа") {
             FormView("Курс", String(group.course))
             numberOfStudents
-            EducationDatesView(item: group)
+            EducationBoundedView(item: group)
             LessonsRefreshableView(item: group )
         }
     }

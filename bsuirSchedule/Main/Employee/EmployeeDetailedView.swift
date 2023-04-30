@@ -63,7 +63,7 @@ struct EmployeeDetailedView: View {
             if let rank = employee.rank {
                 FormView("Звание", rank)
             }
-            EducationDatesView(item: employee)
+            EducationBoundedView(item: employee)
             LessonsRefreshableView(item: employee)
         }
     }

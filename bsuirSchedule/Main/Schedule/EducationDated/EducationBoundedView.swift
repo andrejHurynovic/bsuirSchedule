@@ -1,5 +1,5 @@
 //
-//  EducationDatedView.swift
+//  EducationBoundedView.swift
 //  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 7.04.23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct EducationDatesView<EducationDatedType: EducationDated>: View where EducationDatedType: ObservableObject {
+struct EducationBoundedView<EducationDatedType: EducationBounded>: View where EducationDatedType: ObservableObject {
     @ObservedObject var item: EducationDatedType
     
     var body: some View {
@@ -51,7 +51,7 @@ struct EducationDatedView_Previews: PreviewProvider {
         if let employee = employees.first(where: {
             [$0.educationStart, $0.educationEnd, $0.examsStart, $0.examsEnd].allSatisfy { $0 != nil }
         }) {
-            EducationDatesView(item: employee)
+            EducationBoundedView(item: employee)
         }
     }
 }

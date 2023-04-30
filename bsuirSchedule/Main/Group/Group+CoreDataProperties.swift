@@ -53,7 +53,8 @@ extension Group {
 
 extension Group: Identifiable { }
 extension Group: Favored {}
-extension Group: EducationDated { }
+extension Group: EducationBounded { }
+extension Group: EducationRanged { }
 extension Group: Scheduled {
     var title: String { self.name }
 }

@@ -9,7 +9,6 @@
         <attribute name="name" attributeType="String"/>
         <attribute name="note" optional="YES" attributeType="String"/>
         <attribute name="outsideUniversity" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="typeValue" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="department" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Department" inverseName="auditories" inverseEntity="Department"/>
         <relationship name="lessons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lesson" inverseName="auditories" inverseEntity="Lesson"/>
         <relationship name="type" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AuditoriumType" inverseName="auditories" inverseEntity="AuditoriumType"/>

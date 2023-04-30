@@ -74,7 +74,9 @@ extension Employee {
 
 extension Employee: Identifiable { }
 extension Employee: Favored { }
-extension Employee: EducationDated { }
+extension Employee: EducationBounded { }
+extension Employee: EducationRanged { }
+
 extension Employee: Scheduled {
     var title: String { self.lastName }
 }

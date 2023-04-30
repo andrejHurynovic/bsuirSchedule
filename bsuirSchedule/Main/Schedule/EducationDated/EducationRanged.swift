@@ -7,50 +7,41 @@
 
 import Foundation
 
-protocol EducationDated {
-    /// Education start date if provided by the API
-    var educationStart: Date? { get set }
-    /// Education end date if provided by the API
-    var educationEnd: Date? { get set }
-    /// Exams start date if provided by the API
-    var examsStart: Date? { get set }
-    /// Exams end date if provided by the API
-    var examsEnd: Date? { get set }
-    
+protocol EducationRanged {
     ///Ordered dates created from education start and end dates
-    var lessonsDates: [Date] { get }
-    ///Ordered dates created from exams start and end dates and mapped from all exams lessons
-    var examsDates: [Date] { get }
-    ///Range between the first and the last from education and exams dates
     var educationRange: ClosedRange<Date>? { get }
     ///Ordered dates created from educationRange
     var educationDates: [Date] { get }
+    
+    var lessons: NSSet? { get }
 }
 
-//MARK: - EducationDated Extensions
+//MARK: - EducationRanged Extensions
 
-extension EducationDated {
-    ///Dates between educationStart and educationEnd inclusive
-    var lessonsDates: [Date] {
-        datesBetween(educationStart, educationEnd)
-    }
-    ///Dates between examsStart and examsEnd inclusive
-    var examsDates: [Date] {
-        datesBetween(examsStart, examsEnd)
-    }
+extension EducationRanged {
     ///Range between the earliest and the latest dates among educationStart, educationEnd, examsStart, examsEnd
     var educationRange: ClosedRange<Date>? {
-        let dates = [educationStart, educationEnd, examsStart, examsEnd].compactMap {$0}.sorted()
-        guard dates.isEmpty == false else {
-            return nil
+        if let educationDatesDecodable = self as? any EducationBounded {
+            let dates = [educationDatesDecodable.educationStart,
+                         educationDatesDecodable.educationEnd,
+                         educationDatesDecodable.examsStart,
+                         educationDatesDecodable.examsEnd].compactMap {$0}.sorted()
+            guard dates.isEmpty == false else { return nil }
+            return dates.first!...dates.last!
+        } else {
+            guard let lessons = lessons?.allObjects as? [Lesson],
+                  lessons.isEmpty == false else { return nil }
+            let allDates = [lessons.compactMap { $0.startLessonDate },
+                            lessons.compactMap { $0.endLessonDate },
+                            lessons.compactMap { $0.date }].flatMap { $0 }
+            guard allDates.isEmpty == false else { return nil}
+            
+            return allDates.first!...allDates.last!
         }
-        return dates.first!...dates.last!
     }
     ///Dates between lower and upper bound of educationRange
     var educationDates: [Date] {
-        guard let range = educationRange else {
-            return []
-        }
+        guard let range = educationRange else { return [] }
         return datesBetween(range.lowerBound, range.upperBound)
     }
 }
