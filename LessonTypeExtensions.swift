@@ -11,22 +11,22 @@ import SwiftUI
 extension LessonType {
 	static func initDefaultLessonTypes() async {
 		let context = PersistenceController.shared.container.newBackgroundContext()
-		context.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+		context.mergePolicy = NSMergePolicy(merge: .overwriteMergePolicyType)
 		context.automaticallyMergesChangesFromParent = true
 		
 		let rawData:
 		[(id: String, 				name: String, 						abbreviation: String, 	color: Color)] =
-		[("ЛК", 					"Лекция", 							"ЛК", 					Color(red: -4.06846e-06, green: 0.631373, blue: 0.847059)),
-		 ("УЛк", 					"Удалённая лекция", 				"УЛК", 					Color(red: -4.06846e-06, green: 0.631373, blue: 0.847059)),
-		 ("ПЗ", 					"Практическое занятие", 			"ПЗ", 					Color(red: 1, green: 0.415686, blue: 9.62615e-08)),
-		 ("УПз", 					"Удалённое практическое занятие", 	"УПз", 					Color(red: 1, green: 0.415686, blue: 9.62615e-08)),
-		 ("ЛР", 					"Лабораторная работа", 				"ЛР", 					Color(red: 0.745098, green: 0.219608, blue: 0.952942)),
-		 ("УЛР", 					"Удалённая лабораторная работа", 	"УЛР", 					Color(red: 0.745098, green: 0.219608, blue: 0.952942)),
-		 ("Консультация", 			"Консультация", 					"Конс", 				Color(red: 0.156956, green: 0.374282, blue: 0.959858)),
-		 ("Зачет", 					"Зачёт", 							"Зачет", 				Color(red: 0.280348, green: 0.14247, blue: 0.671006)),
-		 ("Кандидатский зачет", 	"Кандидатский зачёт", 				"Канд. зч", 			Color(red: 0.280348, green: 0.14247, blue: 0.671006)),
-		 ("Экзамен", 				"Экзамен", 							"Экз", 					Color(red: 0.280348, green: 0.14247, blue: 0.671006)),
-		 ("Кандидатский экзамен", 	"Кандидатский экзамен", 			"Канд. экз",		 	Color(red: 0.280348, green: 0.14247, blue: 0.671006))]
+		[("ЛК", 					"Лекция", 							"ЛК", 					Color.green),
+		 ("УЛк", 					"Удалённая лекция", 				"УЛК", 					Color.green),
+		 ("ПЗ", 					"Практическое занятие", 			"ПЗ", 					Color.red),
+		 ("УПз", 					"Удалённое практическое занятие", 	"УПз", 					Color.red),
+		 ("ЛР", 					"Лабораторная работа", 				"ЛР", 					Color.blue),
+		 ("УЛР", 					"Удалённая лабораторная работа", 	"УЛР", 					Color.blue),
+		 ("Консультация", 			"Консультация", 					"Конс", 				Color.secondary),
+		 ("Зачет", 					"Зачёт", 							"Зачёт", 				Color.primary),
+		 ("Кандидатский зачет", 	"Кандидатский зачёт", 				"Канд. зч", 			Color.primary),
+		 ("Экзамен", 				"Экзамен", 							"Экз", 					Color.primary),
+		 ("Кандидатский экзамен", 	"Кандидатский экзамен", 			"Канд. экз",		 	Color.primary)]
 		
 		let _ = rawData.map { (id, name, abbreviation, color) in
 			LessonType(id: id,

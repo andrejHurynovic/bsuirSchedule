@@ -100,7 +100,7 @@ struct SettingsView: View {
         NavigationLink {
             LessonTypesView()
         } label: {
-            Label("Типы занятий", systemImage: "lock.open.laptopcomputer")
+            Label("Типы занятий", systemImage: "tray.circle")
                 .foregroundColor(.accentColor)
         }
     }
