@@ -22,7 +22,7 @@ extension Auditorium: AbleToFetchAll {
         let decoder = JSONDecoder()
         decoder.userInfo[.managedObjectContext] = backgroundContext
         
-        let auditories = getAll(context: backgroundContext)
+        let auditories: [Auditorium] = getAll(from: backgroundContext)
         //This is required because decoder actually can throw an error here, so we can't decode whole array instantly.
         for dictionary in dictionaries {
             let data = try! JSONSerialization.data(withJSONObject: dictionary)
@@ -46,7 +46,7 @@ extension Auditorium: AbleToFetchAll {
         }
         await backgroundContext.perform(schedule: .immediate, {
             try! backgroundContext.save()
-            Log.info("\(String(self.getAll(context: backgroundContext).count)) Auditories fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds.\n")
+            Log.info("\(String((self.getAll(from: backgroundContext) as [Auditorium]).count)) Auditories fetched, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds.\n")
         })
     }
     

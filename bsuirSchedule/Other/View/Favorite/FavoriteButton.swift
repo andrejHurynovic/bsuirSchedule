@@ -7,11 +7,9 @@
 
 import SwiftUI
 
-struct FavoriteButton<FavoritableType: Favored>: View {
-    @ObservedObject var item: FavoritableType
-    
+struct FavoriteButton<FavoredType: Favored>: View {
+    @ObservedObject var item: FavoredType
     var circle: Bool = false
-    
     
     var labelString: String {
         item.favroite ? "Убрать из избранных" : "Добавить в избранные"
@@ -35,7 +33,7 @@ struct FavoriteButton<FavoritableType: Favored>: View {
     func toggle() {
         let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
         
-        if let backgroundItem = backgroundContext.object(with: item.objectID) as? FavoritableType {
+        if let backgroundItem = backgroundContext.object(with: item.objectID) as? FavoredType {
             backgroundItem.favroite.toggle()
             
             backgroundContext.perform {
@@ -47,7 +45,7 @@ struct FavoriteButton<FavoritableType: Favored>: View {
 
 struct FavoriteButton_Previews: PreviewProvider {
     static var previews: some View {
-        let auditories = Auditorium.getAll()
+        let auditories: [Auditorium] = Auditorium.getAll()
         
         if let auditorium = auditories.first {
             FavoriteButton(item: auditorium, circle: false)

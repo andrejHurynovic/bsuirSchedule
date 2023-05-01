@@ -46,7 +46,7 @@ struct LessonTypeConfigurationView: View {
 
 struct LessonTypeConfigurationView_Previews: PreviewProvider {
     static var previews: some View {
-        let lessonTypes = LessonType.getAll()
+        let lessonTypes: [LessonType] = LessonType.getAll()
         
         Form {
             ForEach(lessonTypes, id: \.self) { lessonType in

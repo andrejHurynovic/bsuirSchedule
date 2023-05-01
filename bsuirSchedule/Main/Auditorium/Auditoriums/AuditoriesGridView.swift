@@ -20,7 +20,7 @@ struct AuditoriesGridView: View {
 
 struct AuditoriesGridView_Previews: PreviewProvider {
     static var previews: some View {
-        let auditories = Auditorium.getAll()
+        let auditories: [Auditorium] = Auditorium.getAll()
         
         ForEach(AuditoriumSectionType.allCases, id: \.self) { sectionType in
             ScrollView {

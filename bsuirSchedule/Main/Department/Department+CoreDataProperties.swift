@@ -58,14 +58,6 @@ extension Department {
 
 extension Department : Identifiable {}
 
-//MARK: - Request
-
-extension Department {
-    static func getAll(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Department] {
-        return try! context.fetch(self.fetchRequest())
-    }
-}
-
 //MARK: - Fetch
 
 extension Department: AbleToFetchAll {

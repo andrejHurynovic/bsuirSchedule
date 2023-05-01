@@ -35,7 +35,7 @@ struct EmployeesGridView: View {
 
 struct EmployeesGridView_Previews: PreviewProvider {
     static var previews: some View {
-        let employees = Employee.getAll()
+        let employees: [Employee] = Employee.getAll()
         
         ForEach(EmployeeSectionType.allCases, id: \.self) { sectionType in
             ScrollView {

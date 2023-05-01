@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LessonView: View {
     @ObservedObject var lesson: Lesson
-    @ObservedObject var settings: LessonViewSettings
+    @ObservedObject var configuration: LessonViewConfiguration
     
     var today: Bool
     var passedLesson: Bool { today && lesson.timeRange.upperBound < Date().time }
@@ -21,7 +21,7 @@ struct LessonView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            if settings.showAbbreviation {
+            if configuration.showAbbreviation {
                 shortTitle
             } else {
                 fullTitle
@@ -40,7 +40,7 @@ struct LessonView: View {
             }
         } preview: {
             LessonView(lesson: lesson,
-                       settings: LessonViewSettings(showAbbreviation: false,
+                       configuration: LessonViewConfiguration(showAbbreviation: false,
                                                     showGroups: true,
                                                     showEmployees: true,
                                                     showWeeks: true,
@@ -96,7 +96,7 @@ struct LessonView: View {
     @ViewBuilder var subjectLabel: some View {
         HStack(alignment: .top) {
             subject
-            if settings.showAbbreviation == false {
+            if configuration.showAbbreviation == false {
                 Spacer(minLength: 0)
             }
             subgroup
@@ -108,7 +108,7 @@ struct LessonView: View {
     }
     
     @ViewBuilder var subject: some View {
-        let subjectText = settings.showAbbreviation ? lesson.abbreviation : lesson.subject
+        let subjectText = configuration.showAbbreviation ? lesson.abbreviation : lesson.subject
         if let subject = subjectText, subject.isEmpty == false {
             Text(subject)
         }
@@ -147,7 +147,7 @@ struct LessonView: View {
         if let type = lesson.type {
             
             ZStack {
-                if settings.showAbbreviation {
+                if configuration.showAbbreviation {
                     Text(type.formattedName(abbreviated: true))
                         .foregroundColor(lessonTypeColor)
                 } else {
@@ -161,7 +161,7 @@ struct LessonView: View {
     }
     
     @ViewBuilder var groups: some View {
-        if settings.showGroups {
+        if configuration.showGroups {
             if let groups = self.lesson.groups?.allObjects as? [Group], groups.isEmpty == false {
                 HStack(alignment: .top) {
                     Image(systemName: "person.2.circle")
@@ -182,7 +182,7 @@ struct LessonView: View {
     }
     
     @ViewBuilder var employees: some View {
-        if settings.showEmployees {
+        if configuration.showEmployees {
             if let employees = lesson.employees?.allObjects as? [Employee] {
                 ForEach(employees.sorted(by: {$0.lastName < $1.lastName}), id: \.self) { employee in
                     NavigationLink {
@@ -220,7 +220,7 @@ struct LessonView: View {
     }
     
     @ViewBuilder var weeks: some View {
-        if settings.showWeeks, let weeksString = lesson.weeksDescription {
+        if configuration.showWeeks, let weeksString = lesson.weeksDescription {
             Label(weeksString, systemImage: "calendar")
         }
     }
@@ -263,12 +263,12 @@ struct LessonView: View {
 
 struct LessonView_Previews: PreviewProvider {
     static var previews: some View {
-        let groups = Group.getAll()
+        let groups: [Group] = Group.getAll()
         if let group = groups.first(where: { $0.name == "950502" }), let lessons = group.lessons?.allObjects as? [Lesson] {
             
             ForEach(lessons) { lesson in
                 LessonView(lesson: lesson,
-                           settings: Group.defaultLessonSettings(),
+                           configuration: Group.defaultLessonSettings(),
                            today: true)
                     .padding()
             }

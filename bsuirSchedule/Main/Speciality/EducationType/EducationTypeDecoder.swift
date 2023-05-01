@@ -1,12 +1,11 @@
 //
-//  EducationType+CoreDataClass.swift
+//  EducationTypeDecoder.swift
 //  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 7.04.23.
 //
 //
 
-import Foundation
 import CoreData
 
 @objc(EducationType)

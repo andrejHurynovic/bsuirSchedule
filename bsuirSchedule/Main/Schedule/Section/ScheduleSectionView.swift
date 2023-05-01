@@ -10,7 +10,7 @@ import SwiftUI
 struct ScheduleSectionView: View {
     
     @ObservedObject var section: ScheduleSection
-    @ObservedObject var lessonViewSettings: LessonViewSettings
+    @ObservedObject var lessonViewConfiguration: LessonViewConfiguration
     
     var today: Bool = false
     
@@ -20,7 +20,7 @@ struct ScheduleSectionView: View {
         Section {
             ForEach(section.lessons) { lesson in
                 LessonView(lesson: lesson,
-                           settings: lessonViewSettings,
+                           configuration: lessonViewConfiguration,
                            today: today
                 )
                 .id(lesson.id(sectionID: section.id))

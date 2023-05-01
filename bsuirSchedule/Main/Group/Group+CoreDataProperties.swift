@@ -59,13 +59,6 @@ extension Group: Scheduled {
     var title: String { self.name }
 }
 
-//MARK: - Request
-extension Group {
-    static func getAll(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Group] {
-        try! context.fetch(self.fetchRequest())
-    }
-}
-
 //MARK: - Fetch
 extension Group: AbleToFetchAll {
     static func fetchAll() async {
@@ -82,7 +75,7 @@ extension Group: AbleToFetchAll {
         decoder.userInfo[.managedObjectContext] = backgroundContext
         decoder.userInfo[.groupEmbeddedContainer] = true
 
-        var groups = getAll(context: backgroundContext)
+        var groups: [Group] = getAll(from: backgroundContext)
         
         for dictionary in dictionaries {
             let data = try! JSONSerialization.data(withJSONObject: dictionary)

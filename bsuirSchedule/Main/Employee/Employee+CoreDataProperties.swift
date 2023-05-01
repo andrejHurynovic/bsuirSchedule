@@ -81,14 +81,6 @@ extension Employee: Scheduled {
     var title: String { self.lastName }
 }
 
-//MARK: - Request
-
-extension Employee {
-    static func getAll(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Employee] {
-        try! context.fetch(self.fetchRequest())
-    }
-}
-
 //MARK: - Fetch
 
 extension Employee: AbleToFetchAll {
@@ -106,7 +98,7 @@ extension Employee: AbleToFetchAll {
         decoder.userInfo[.managedObjectContext] = backgroundContext
         decoder.userInfo[.groupEmbeddedContainer] = true
         
-        var employees = getAll(context: backgroundContext)
+        var employees: [Employee] = getAll(from: backgroundContext)
         
         for dictionary in dictionaries {
             let data = try! JSONSerialization.data(withJSONObject: dictionary)

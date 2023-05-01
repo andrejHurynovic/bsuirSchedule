@@ -45,13 +45,6 @@ extension Faculty {
 
 extension Faculty : Identifiable {}
 
-//MARK: - Request
-extension Faculty {
-    static func getAll(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Faculty] {
-        return try! context.fetch(self.fetchRequest())
-    }
-}
-
 //MARK: - Fetch
 extension Faculty: AbleToFetchAll {
     static func fetchAll() async {

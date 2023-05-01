@@ -57,6 +57,11 @@ struct PersistenceController {
     }
 }
 
+extension CodingUserInfoKey {
+    ///NSManagedObjectContext that will be used in decoding process.
+    static let managedObjectContext = CodingUserInfoKey(rawValue: "managedObjectContext")!
+}
+
 func newBackgroundContextWithDecoder() -> (NSManagedObjectContext, JSONDecoder) {
     let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
     backgroundContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy

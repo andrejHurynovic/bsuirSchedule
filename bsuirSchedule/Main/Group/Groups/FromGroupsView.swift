@@ -40,7 +40,7 @@ struct FromGroupsView: View {
 
 struct FormGroupsView_Previews: PreviewProvider {
     static var previews: some View {
-        let groups = Group.getAll()
+        let groups: [Group] = Group.getAll()
         
         NavigationView {
             Form {

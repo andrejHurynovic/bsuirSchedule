@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct OnLoadModifier: ViewModifier {
     @State private var didLoad = false
     

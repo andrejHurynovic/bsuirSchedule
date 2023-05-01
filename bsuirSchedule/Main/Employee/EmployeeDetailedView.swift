@@ -134,7 +134,7 @@ struct EmployeeDetailedView: View {
 
 struct EmployeeDetailedView_Previews: PreviewProvider {
     static var previews: some View {
-        let employees = Employee.getAll()
+        let employees: [Employee] = Employee.getAll()
         if let employee = employees.first(where: {
             $0.departmentsArray != nil &&
             $0.degreeAbbreviation != nil &&

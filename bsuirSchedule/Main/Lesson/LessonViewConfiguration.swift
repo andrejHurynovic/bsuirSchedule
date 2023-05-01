@@ -1,5 +1,5 @@
 //
-//  LessonViewSettings.swift
+//  LessonViewConfiguration.swift
 //  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 24.04.23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class LessonViewSettings: ObservableObject {
+class LessonViewConfiguration: ObservableObject {
     @Published var showAbbreviation: Bool
     
     @Published var showGroups: Bool
@@ -37,8 +37,8 @@ class LessonViewSettings: ObservableObject {
 
 //MARK: Equatable
 
-extension LessonViewSettings: Equatable {
-    static func == (lhs: LessonViewSettings, rhs: LessonViewSettings) -> Bool {
+extension LessonViewConfiguration: Equatable {
+    static func == (lhs: LessonViewConfiguration, rhs: LessonViewConfiguration) -> Bool {
         return lhs.showAbbreviation == rhs.showAbbreviation &&
         lhs.showGroups == rhs.showGroups &&
         lhs.showEmployees == rhs.showEmployees &&
@@ -51,26 +51,26 @@ extension LessonViewSettings: Equatable {
 //MARK: Protocol
 
 protocol DefaultLessonViewSettings {
-    static func defaultLessonSettings() -> LessonViewSettings
+    static func defaultLessonSettings() -> LessonViewConfiguration
 }
 
 //MARK: Extensions
 
 extension Group {
-    static func defaultLessonSettings() -> LessonViewSettings {
-        LessonViewSettings(showGroups: false,
+    static func defaultLessonSettings() -> LessonViewConfiguration {
+        LessonViewConfiguration(showGroups: false,
                            showEmployees: true)
     }
 }
 extension Employee {
-    static func defaultLessonSettings() -> LessonViewSettings {
-        LessonViewSettings(showGroups: true,
+    static func defaultLessonSettings() -> LessonViewConfiguration {
+        LessonViewConfiguration(showGroups: true,
                            showEmployees: false)
     }
 }
 extension Auditorium {
-    static func defaultLessonSettings() -> LessonViewSettings {
-        LessonViewSettings(showGroups: true,
+    static func defaultLessonSettings() -> LessonViewConfiguration {
+        LessonViewConfiguration(showGroups: true,
                            showEmployees: true)
     }
 }

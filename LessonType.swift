@@ -15,10 +15,6 @@ extension LessonType {
         request.sortDescriptors = [NSSortDescriptor(keyPath: \LessonType.id, ascending: true)]
         return request
     }
-    
-    static func getAll(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [LessonType] {
-        try! context.fetch(self.fetchRequest())
-    }
 
     @NSManaged public var id: String
     

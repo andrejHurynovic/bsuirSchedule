@@ -47,14 +47,6 @@ extension Date {
         return Calendar.current.dateComponents([.hour, .minute, .second], from: self)
     }
     
-//    mutating func removeTime() {
-//        self = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: self)!
-//    }
-    ///Returns Date with hours, minutes, seconds and nanoseconds assigned to zero.
-//    func removedTime() -> Date {
-//        return Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: self)!
-//    }
-    
 }
 
 //MARK: - Ranges
@@ -67,7 +59,6 @@ func datesBetween(_ dateA: Date?, _ dateB: Date?) -> [Date] {
     
     let dayDurationInSeconds: TimeInterval = 60 * 60 * 24
     var dates: [Date] = []
-    
     for date in stride(from: dateA, to: dateB, by: dayDurationInSeconds) {
         dates.append(date)
     }

@@ -14,14 +14,6 @@ extension JSONDecoder: DecodingFormat {
     }
 }
 
-//extension Decoder: DecodingFormat {
-//    func decoder(for data: Data) -> Decoder {
-//        // Can try! here because DecoderExtractor's init(from: Decoder) never throws
-//        return try! decode(DecoderExtractor.self, from: data).decoder
-//    }
-//}
-
-
 extension PropertyListDecoder: DecodingFormat {
     func decoder(for data: Data) -> Decoder {
         // Can try! here because DecoderExtractor's init(from: Decoder) never throws

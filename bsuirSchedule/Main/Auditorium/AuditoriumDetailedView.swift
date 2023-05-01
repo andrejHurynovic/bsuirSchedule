@@ -87,7 +87,7 @@ struct AuditoriumDetailedView: View {
 
 struct AuditoriumDetailedView_Previews: PreviewProvider {
     static var previews: some View {
-        let auditories = Auditorium.getAll()
+        let auditories: [Auditorium] = Auditorium.getAll()
         ForEach(auditories) { auditorium in
             NavigationView {
                 AuditoriumDetailedView(auditorium: auditorium)

@@ -12,7 +12,7 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
     @ObservedObject var scheduled: ScheduledType
     
     @StateObject var viewModel = ScheduleViewModel()
-    @StateObject var lessonViewSettings = ScheduledType.defaultLessonSettings()
+    @StateObject var lessonViewConfiguration = ScheduledType.defaultLessonSettings()
     
     @FocusState var searchFieldFocused: Bool
     
@@ -84,7 +84,7 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 240, maximum: 500))], alignment: .leading, spacing: 8, pinnedViews: []) {
                 ForEach(sections) { section in
                     ScheduleSectionView(section: section,
-                                        lessonViewSettings: lessonViewSettings,
+                                        lessonViewConfiguration: lessonViewConfiguration,
                                         showDatePicker: $viewModel.showDatePicker)
                 }
             }
@@ -181,7 +181,7 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
     @ViewBuilder var toolbar : some View {
         searchFieldToggle
         detailedViewNavigationLink
-        MenuView(defaultRules: [lessonViewSettings == ScheduledType.defaultLessonSettings(),
+        MenuView(defaultRules: [lessonViewConfiguration == ScheduledType.defaultLessonSettings(),
                                 viewModel.defaultRules]) {
             FavoriteButton(item: scheduled)
             SectionTypePicker(value: $viewModel.selectedSectionType)
@@ -229,19 +229,19 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
     }
     @ViewBuilder var lessonSettings: some View {
         Text("Отображать:")
-        Toggle("Аббревиатуру", isOn: $lessonViewSettings.showAbbreviation.animation())
-        Toggle("Группы", isOn: $lessonViewSettings.showGroups.animation())
-        Toggle("Преподавателей", isOn: $lessonViewSettings.showEmployees.animation())
-        Toggle("Недели", isOn: $lessonViewSettings.showWeeks.animation())
-        Toggle("Период", isOn: $lessonViewSettings.showDates.animation())
-        Toggle("Дату", isOn: $lessonViewSettings.showDate.animation())
+        Toggle("Аббревиатуру", isOn: $lessonViewConfiguration.showAbbreviation.animation())
+        Toggle("Группы", isOn: $lessonViewConfiguration.showGroups.animation())
+        Toggle("Преподавателей", isOn: $lessonViewConfiguration.showEmployees.animation())
+        Toggle("Недели", isOn: $lessonViewConfiguration.showWeeks.animation())
+        Toggle("Период", isOn: $lessonViewConfiguration.showDates.animation())
+        Toggle("Дату", isOn: $lessonViewConfiguration.showDate.animation())
     }
     
 }
 
 struct LessonsView_Previews: PreviewProvider {
     static var previews: some View {
-        let groups = Group.getAll()
+        let groups: [Group] = Group.getAll()
         if let testGroup = groups.first(where: { $0.name == "050502" }) {
             NavigationView {
                 ScheduleView(scheduled: testGroup)

@@ -20,7 +20,7 @@ struct GroupsGridView: View {
 
 struct GroupsGridView_Previews: PreviewProvider {
     static var previews: some View {
-        let groups = Group.getAll()
+        let groups: [Group] = Group.getAll()
         
         ForEach(GroupSectionType.allCases, id: \.self) { sectionType in
             ScrollView {

@@ -20,7 +20,7 @@ struct AuditoriumView: View {
 
 struct AuditoriumView_Previews: PreviewProvider {
     static var previews: some View {
-        ForEach(Auditorium.getAll(), id: \.formattedName) { auditorium in
+        ForEach(Auditorium.getAll() as [Auditorium], id: \.formattedName) { auditorium in
             AuditoriumView(auditorium: auditorium)
                 .frame(width: 104, height: 104, alignment: .center)
                 .baseBackground()

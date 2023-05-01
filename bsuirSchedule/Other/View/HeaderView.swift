@@ -35,8 +35,8 @@ struct HeaderView: View {
 struct HeaderView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            HeaderView("ВМСиС", withArrow: false)
             HeaderView("ВМСиС", withArrow: true)
+            HeaderView("ВМСиС", withArrow: false)
         }
     }
 }

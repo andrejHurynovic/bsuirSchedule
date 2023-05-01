@@ -17,10 +17,6 @@ extension Auditorium {
         return request
     }
     
-    static func getAll(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) -> [Auditorium] {
-        try! context.fetch(self.fetchRequest())
-    }
-    
     @NSManaged public var floor: Int16
     @NSManaged public var name: String
     @NSManaged public var formattedName: String

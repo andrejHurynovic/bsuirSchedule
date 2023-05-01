@@ -47,7 +47,7 @@ private struct EducationDatesSubview: View {
 
 struct EducationDatedView_Previews: PreviewProvider {
     static var previews: some View {
-        let employees = Employee.getAll()
+        let employees: [Employee] = Employee.getAll()
         if let employee = employees.first(where: {
             [$0.educationStart, $0.educationEnd, $0.examsStart, $0.examsEnd].allSatisfy { $0 != nil }
         }) {

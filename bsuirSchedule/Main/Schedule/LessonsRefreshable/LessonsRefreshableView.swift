@@ -48,7 +48,7 @@ struct LessonsRefreshableView<ObjectType: LessonsRefreshable>: View {
 
 struct LessonsUpdateDateView_Previews: PreviewProvider {
     static var previews: some View {
-        let employees = Employee.getAll()
+        let employees: [Employee] = Employee.getAll()
         if let employee = employees.randomElement() {
             LessonsRefreshableView(item: employee)
         }

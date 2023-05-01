@@ -19,7 +19,7 @@ struct GroupView: View {
 
 struct GroupView_Previews: PreviewProvider {
     static var previews: some View {
-        let groups = Group.getAll()
+        let groups: [Group] = Group.getAll()
         
         if let group = groups.first(where: { $0.name == "950502" }) {
             GroupView(group: group)

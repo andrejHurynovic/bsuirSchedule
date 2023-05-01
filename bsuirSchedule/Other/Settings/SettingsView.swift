@@ -46,7 +46,7 @@ struct SettingsView: View {
     
     var primaryTypePicker: some View {
         Section("Основное расписание") {
-            Picker(selection: viewModel.$primaryTypeValue, label: Text("Select Gender")) {
+            Picker(selection: viewModel.$primaryTypeValue, label: Text("")) {
                 ForEach(PrimaryType.allCases, id: \.self) { type in
                     Text(type.description).tag(type.rawValue)
                 }

@@ -1,12 +1,10 @@
 //
-//  Speciality+CoreDataClass.swift
+//  SpecialityDecoder.swift
 //  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 15.10.21.
 //
-//
 
-import Foundation
 import CoreData
 
 @objc(Speciality)
@@ -62,6 +60,8 @@ extension Speciality: DecoderUpdatable {
     }
 }
 
+//MARK: - CodingKeys
+
 extension Speciality: Decodable {
     private enum CodingKeys: String, CodingKey {
         case id
@@ -87,4 +87,3 @@ extension Speciality: Decodable {
         case educationTypeId = "id"
     }
 }
-
