@@ -14,30 +14,10 @@ struct LessonView: View {
     var today: Bool
     var passedLesson: Bool { today && lesson.timeRange.upperBound < Date().time }
     
-    @AppStorage("lectureColor") var lectureColor: Color!
-    @AppStorage("practiceColor") var practiceColor: Color!
-    @AppStorage("laboratoryColor") var laboratoryColor: Color!
-    @AppStorage("consultationColor") var consultationColor: Color!
-    @AppStorage("examColor") var examColor: Color!
-    
     var lessonTypeColor: Color {
-        switch lesson.lessonType {
-        case .lecture, .remoteLecture:
-            return lectureColor
-        case .practice, .remotePractice:
-            return practiceColor
-        case .laboratory, .remoteLaboratory:
-            return laboratoryColor
-        case .consultation:
-            return consultationColor
-        case .exam, .candidateCredit, .candidateExam:
-            return examColor
-        case .none:
-            return .gray
-        }
+        guard let color = lesson.type?.color else { return .primary }
+        return color
     }
-    
-    
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -164,25 +144,20 @@ struct LessonView: View {
     }
     
     @ViewBuilder var lessonType: some View {
-        let lessonType = lesson.lessonType
-        let lessonTypeString = settings.showAbbreviation ? lessonType.abbreviation : lessonType.description
-        
-        if settings.showAbbreviation {
-            if lesson.lessonType != .none {
-                Text(lessonTypeString)
-                    .font(.system(.body,
-                                  design: .rounded,
-                                  weight: .medium))
-                    .foregroundColor(lessonTypeColor)
+        if let type = lesson.type {
+            
+            ZStack {
+                if settings.showAbbreviation {
+                    Text(type.formattedName(abbreviated: true))
+                        .foregroundColor(lessonTypeColor)
+                } else {
+                    Text(type.formattedName(abbreviated: false))
+                }
             }
-        } else {
-            Text(lessonTypeString)
                 .font(.system(.body,
                               design: .rounded,
                               weight: .medium))
         }
-        
-        
     }
     
     @ViewBuilder var groups: some View {

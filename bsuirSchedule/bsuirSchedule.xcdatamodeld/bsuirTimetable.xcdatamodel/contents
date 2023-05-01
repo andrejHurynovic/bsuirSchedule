@@ -123,7 +123,6 @@
         <attribute name="dateString" attributeType="String"/>
         <attribute name="employeesIDs" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[Int32]"/>
         <attribute name="endLessonDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="lessonTypeValue" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="note" optional="YES" attributeType="String"/>
         <attribute name="startLessonDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="startLessonDateString" optional="YES" attributeType="String"/>
@@ -136,6 +135,7 @@
         <relationship name="auditories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Auditorium" inverseName="lessons" inverseEntity="Auditorium"/>
         <relationship name="employees" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Employee" inverseName="lessons" inverseEntity="Employee"/>
         <relationship name="groups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="lessons" inverseEntity="Group"/>
+        <relationship name="type" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LessonType" inverseName="lessons" inverseEntity="LessonType"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="abbreviation"/>
@@ -146,6 +146,18 @@
                 <constraint value="weekday"/>
                 <constraint value="weeks"/>
                 <constraint value="timeStart"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="LessonType" representedClassName="LessonType" syncable="YES">
+        <attribute name="abbreviation" optional="YES" attributeType="String"/>
+        <attribute name="colorData" optional="YES" attributeType="Binary"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="lessons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lesson" inverseName="type" inverseEntity="Lesson"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>

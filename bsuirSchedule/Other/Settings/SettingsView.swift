@@ -37,7 +37,6 @@ struct SettingsView: View {
     var body: some View {
         List {
             primaryTypePicker
-            colors
             developer
         }
         .navigationViewStyle(StackNavigationViewStyle())
@@ -96,29 +95,6 @@ struct SettingsView: View {
         }
     }
     
-    @ViewBuilder var colors: some View {
-        Section("Цвета") {
-            ColorPicker("Основной", selection: $viewModel.mainColor)
-            ColorPicker("Лекции", selection: $viewModel.lectureColor)
-            ColorPicker("Практические занятия", selection: $viewModel.practiceColor)
-            ColorPicker("Лабораторные работы", selection: $viewModel.laboratoryColor)
-            ColorPicker("Косультации", selection: $viewModel.consultationColor)
-            ColorPicker("Экзамены", selection: $viewModel.examColor)
-            
-            Button {
-                viewModel.showingRestoreDefaultColorsAlert = true
-            } label: {
-                Label("Сбросить цвета", systemImage: "arrow.uturn.left.circle")
-                    .foregroundColor(.red)
-            }.alert("Вы уверены?", isPresented: $viewModel.showingRestoreDefaultColorsAlert) {
-                Button ("Сбросить", role: .destructive) {
-                    viewModel.restoreDefaultColors()
-                }
-                Button ("Отмена", role: .cancel) {}
-            }
-            
-        }
-    }
     
     @ViewBuilder var developer: some View {
         Section("Разработчик") {

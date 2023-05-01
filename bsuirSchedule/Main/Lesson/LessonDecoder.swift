@@ -6,7 +6,6 @@
 //
 //
 
-import Foundation
 import CoreData
 import SwiftUI
 
@@ -19,7 +18,7 @@ public class Lesson: NSManagedObject {
         
         let container = try! decoder.container(keyedBy: CodingKeys.self)
         
-        decodeLesson(container)
+        decodeLesson(container, context)
         decodeDate(container)
         decodeAnnouncement(container)
         decodeGroups(container, decoder, context)
@@ -27,7 +26,7 @@ public class Lesson: NSManagedObject {
         decodeAuditories(container, decoder, context)
     }
     
-    private func decodeLesson(_ container: KeyedDecodingContainer<Lesson.CodingKeys>) {
+    private func decodeLesson(_ container: KeyedDecodingContainer<Lesson.CodingKeys>, _ context: NSManagedObjectContext) {
         self.subject = try? container.decode(String.self, forKey: .subject)
         //Abbreviation cannot be optional, because it is used as constraint
         self.abbreviation = (try? container.decode(String.self, forKey: .abbreviation)) ?? ""
@@ -35,7 +34,9 @@ public class Lesson: NSManagedObject {
         self.note = try? container.decode(String.self, forKey: .note)
         self.subgroup = Int16(try! container.decode(Int.self, forKey: .subgroup))
         
-        lessonType = LessonType(from: try? container.decode(String.self, forKey: .lessonTypeValue))
+        if let lessonTypeID = try? container.decode(String.self, forKey: .lessonTypeValue) {
+            self.type = LessonType(id: lessonTypeID, context: context)
+        }
     }
     
     private func decodeDate(_ container: KeyedDecodingContainer<Lesson.CodingKeys>) {

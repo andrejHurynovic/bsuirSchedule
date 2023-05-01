@@ -19,6 +19,7 @@ struct DeveloperView: View {
     @FetchRequest(entity: Group.entity(), sortDescriptors: []) var groups: FetchedResults<Group>
     @FetchRequest(entity: Employee.entity(), sortDescriptors: []) var employees: FetchedResults<Employee>
     @FetchRequest(entity: Lesson.entity(), sortDescriptors: []) var lessons: FetchedResults<Lesson>
+    @FetchRequest(entity: LessonType.entity(), sortDescriptors: []) var lessonTypes: FetchedResults<LessonType>
     @FetchRequest(entity: Hometask.entity(), sortDescriptors: []) var tasks: FetchedResults<Hometask>
     
     var body: some View {
@@ -33,7 +34,8 @@ struct DeveloperView: View {
                 DeveloperDeleteView(name: "группы", symbol: "person.2.circle", elements: groups)
                 DeveloperDeleteView(name: "преподаватели", symbol: "person.crop.circle", elements: employees)
                 DeveloperDeleteView(name: "занятия", symbol: "books.vertical.circle", elements: lessons)
-                DeveloperDeleteView(name: "задания", symbol: "house.circle", elements: tasks)
+                DeveloperDeleteView(name: "типы занятий", symbol: "books.vertical.circle", elements: lessonTypes)
+//                DeveloperDeleteView(name: "задания", symbol: "house.circle", elements: tasks)
             }
             
             Section("Загрузка") {
@@ -43,6 +45,13 @@ struct DeveloperView: View {
                 DeveloperUpdateView<Auditorium>(name: "аудитории", symbol: "building.columns.circle")
                 DeveloperUpdateView<Group>(name: "группы", symbol: "person.2.circle")
                 DeveloperUpdateView<Employee>(name: "преподаватели", symbol: "person.crop.circle")
+                Button {
+                    Task {
+                        await LessonType.initDefaultLessonTypes()
+                    }
+                } label: {
+                    Label("Инициализировать стандартные типы занятий", systemImage: "person.crop.circle")
+                }
             }
             
             Section("Дополнительно") {

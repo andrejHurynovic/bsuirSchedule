@@ -23,8 +23,8 @@
 		F614250C271B7EFF006C3CE1 /* AuditoriumDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F614250B271B7EFF006C3CE1 /* AuditoriumDetailedView.swift */; };
 		F61915B728465F2100A98101 /* GroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61915B628465F2100A98101 /* GroupViewModel.swift */; };
 		F61915B928465F4600A98101 /* LastUpdateDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61915B828465F4600A98101 /* LastUpdateDate.swift */; };
-		F61C523E26E64619002CF234 /* Lesson+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61C523A26E64619002CF234 /* Lesson+CoreDataClass.swift */; };
-		F61C523F26E64619002CF234 /* Lesson+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61C523B26E64619002CF234 /* Lesson+CoreDataProperties.swift */; };
+		F61C523E26E64619002CF234 /* LessonDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61C523A26E64619002CF234 /* LessonDecoder.swift */; };
+		F61C523F26E64619002CF234 /* Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61C523B26E64619002CF234 /* Lesson.swift */; };
 		F61C524026E64619002CF234 /* Group+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61C523C26E64619002CF234 /* Group+CoreDataClass.swift */; };
 		F61C524126E64619002CF234 /* Group+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61C523D26E64619002CF234 /* Group+CoreDataProperties.swift */; };
 		F624A3452913B85500E8CB5B /* FromGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F624A3442913B85500E8CB5B /* FromGroupView.swift */; };
@@ -46,6 +46,10 @@
 		F643071729E06F0300B3A98A /* FormViewWithAlternativeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F643071629E06F0300B3A98A /* FormViewWithAlternativeText.swift */; };
 		F643071D29E08DEA00B3A98A /* EducationType+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F643071B29E08DEA00B3A98A /* EducationType+CoreDataClass.swift */; };
 		F643071E29E08DEA00B3A98A /* EducationType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F643071C29E08DEA00B3A98A /* EducationType+CoreDataProperties.swift */; };
+		F646714D29FF11F6004E2953 /* LessonTypeDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F646714B29FF11F6004E2953 /* LessonTypeDecoder.swift */; };
+		F646714E29FF11F6004E2953 /* LessonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F646714C29FF11F6004E2953 /* LessonType.swift */; };
+		F646715129FF1313004E2953 /* LessonTypeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F646715029FF1313004E2953 /* LessonTypeExtensions.swift */; };
+		F646715329FF1B93004E2953 /* LessonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F646715229FF1B93004E2953 /* LessonExtensions.swift */; };
 		F64AD7B0266A816D00115E6B /* EmployeesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64AD7AF266A816D00115E6B /* EmployeesView.swift */; };
 		F64BEDDA26E9072900C7AD09 /* EmployeeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64BEDD926E9072900C7AD09 /* EmployeeView.swift */; };
 		F65309E529DCE1DA001DEC29 /* SectionTypePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65309E429DCE1DA001DEC29 /* SectionTypePicker.swift */; };
@@ -102,7 +106,7 @@
 		F6A1085229E5C6B5004BA71F /* GroupsSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A1085129E5C6B5004BA71F /* GroupsSections.swift */; };
 		F6A1085429E5CEA7004BA71F /* GroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A1085329E5CEA6004BA71F /* GroupsView.swift */; };
 		F6A1085629E5D328004BA71F /* SpecialityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A1085529E5D328004BA71F /* SpecialityExtensions.swift */; };
-		F6AFC4622721EC43008CC065 /* DesignManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AFC4612721EC43008CC065 /* DesignManager.swift */; };
+		F6AFC4622721EC43008CC065 /* ColorRawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AFC4612721EC43008CC065 /* ColorRawRepresentable.swift */; };
 		F6B838E729F8717E006BAA23 /* roundTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B838E629F8717E006BAA23 /* roundTo.swift */; };
 		F6BC18A52811D4A100BA549D /* DateFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BC18A42811D4A100BA549D /* DateFormatters.swift */; };
 		F6BC18A72811E8FE00BA549D /* GroupDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BC18A62811E8FD00BA549D /* GroupDetailedView.swift */; };
@@ -113,7 +117,6 @@
 		F6CAAA4829F9C96F00836230 /* EducationBounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CAAA4729F9C96F00836230 /* EducationBounded.swift */; };
 		F6CB615726F000EE00D29807 /* LessonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CB615626F000EE00D29807 /* LessonView.swift */; };
 		F6CF52F528EEBB3B00522C89 /* DecoderUpdatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CF52F428EEBB3B00522C89 /* DecoderUpdatable.swift */; };
-		F6D3C10328E0BA550055B800 /* LessonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D3C10228E0BA550055B800 /* LessonType.swift */; };
 		F6D3C10528E0BAB40055B800 /* WeekDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D3C10428E0BAB40055B800 /* WeekDay.swift */; };
 		F6D4AAB729BEB5260044481B /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D4AAB629BEB5260044481B /* Log.swift */; };
 		F6D588D128E4685B00CB58AC /* FetchDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D588CF28E4685B00CB58AC /* FetchDataType.swift */; };
@@ -154,8 +157,8 @@
 		F614250B271B7EFF006C3CE1 /* AuditoriumDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriumDetailedView.swift; sourceTree = "<group>"; };
 		F61915B628465F2100A98101 /* GroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewModel.swift; sourceTree = "<group>"; };
 		F61915B828465F4600A98101 /* LastUpdateDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastUpdateDate.swift; sourceTree = "<group>"; };
-		F61C523A26E64619002CF234 /* Lesson+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Lesson+CoreDataClass.swift"; sourceTree = "<group>"; };
-		F61C523B26E64619002CF234 /* Lesson+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Lesson+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F61C523A26E64619002CF234 /* LessonDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDecoder.swift; sourceTree = "<group>"; };
+		F61C523B26E64619002CF234 /* Lesson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson.swift; sourceTree = "<group>"; };
 		F61C523C26E64619002CF234 /* Group+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Group+CoreDataClass.swift"; sourceTree = "<group>"; };
 		F61C523D26E64619002CF234 /* Group+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Group+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F624A3442913B85500E8CB5B /* FromGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FromGroupView.swift; sourceTree = "<group>"; };
@@ -179,6 +182,10 @@
 		F643071629E06F0300B3A98A /* FormViewWithAlternativeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewWithAlternativeText.swift; sourceTree = "<group>"; };
 		F643071B29E08DEA00B3A98A /* EducationType+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EducationType+CoreDataClass.swift"; sourceTree = "<group>"; };
 		F643071C29E08DEA00B3A98A /* EducationType+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EducationType+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F646714B29FF11F6004E2953 /* LessonTypeDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonTypeDecoder.swift; sourceTree = "<group>"; };
+		F646714C29FF11F6004E2953 /* LessonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonType.swift; sourceTree = "<group>"; };
+		F646715029FF1313004E2953 /* LessonTypeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonTypeExtensions.swift; sourceTree = "<group>"; usesTabs = 1; };
+		F646715229FF1B93004E2953 /* LessonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonExtensions.swift; sourceTree = "<group>"; };
 		F64AD7AF266A816D00115E6B /* EmployeesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeesView.swift; sourceTree = "<group>"; };
 		F64BEDD926E9072900C7AD09 /* EmployeeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeView.swift; sourceTree = "<group>"; };
 		F65309E429DCE1DA001DEC29 /* SectionTypePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionTypePicker.swift; sourceTree = "<group>"; };
@@ -236,18 +243,18 @@
 		F6A1085129E5C6B5004BA71F /* GroupsSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsSections.swift; sourceTree = "<group>"; };
 		F6A1085329E5CEA6004BA71F /* GroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsView.swift; sourceTree = "<group>"; };
 		F6A1085529E5D328004BA71F /* SpecialityExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialityExtensions.swift; sourceTree = "<group>"; };
-		F6AFC4612721EC43008CC065 /* DesignManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignManager.swift; sourceTree = "<group>"; };
+		F6AFC4612721EC43008CC065 /* ColorRawRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorRawRepresentable.swift; sourceTree = "<group>"; };
 		F6B838E629F8717E006BAA23 /* roundTo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = roundTo.swift; sourceTree = "<group>"; };
 		F6BC18A42811D4A100BA549D /* DateFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatters.swift; sourceTree = "<group>"; };
 		F6BC18A62811E8FD00BA549D /* GroupDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailedView.swift; sourceTree = "<group>"; };
 		F6BF7239272F311900D18ADD /* PhotoPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerView.swift; sourceTree = "<group>"; };
 		F6BF723B272F4F4C00D18ADD /* ImagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesView.swift; sourceTree = "<group>"; };
+		F6C0FC9329FF07BB005F2810 /* Playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Playground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F6C1A33B272AE2E600AD38E1 /* FavoriteEmployeeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteEmployeeView.swift; sourceTree = "<group>"; };
 		F6CAAA4529F9C6A700836230 /* ScheduleSectionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleSectionType.swift; sourceTree = "<group>"; };
 		F6CAAA4729F9C96F00836230 /* EducationBounded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationBounded.swift; sourceTree = "<group>"; };
 		F6CB615626F000EE00D29807 /* LessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonView.swift; sourceTree = "<group>"; };
 		F6CF52F428EEBB3B00522C89 /* DecoderUpdatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoderUpdatable.swift; sourceTree = "<group>"; };
-		F6D3C10228E0BA550055B800 /* LessonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonType.swift; sourceTree = "<group>"; };
 		F6D3C10428E0BAB40055B800 /* WeekDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDay.swift; sourceTree = "<group>"; };
 		F6D4AAB629BEB5260044481B /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		F6D588CF28E4685B00CB58AC /* FetchDataType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchDataType.swift; sourceTree = "<group>"; };
@@ -284,7 +291,6 @@
 			isa = PBXGroup;
 			children = (
 				F601E5A62731918400773F02 /* Images */,
-				F6AFC4612721EC43008CC065 /* DesignManager.swift */,
 			);
 			path = "Managers and templates";
 			sourceTree = "<group>";
@@ -344,6 +350,7 @@
 		F612D8B229DB811600D4DDEB /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F6AFC4612721EC43008CC065 /* ColorRawRepresentable.swift */,
 				F671F15529E7489F0086681E /* HeaderView.swift */,
 				F65333DF29DCC3D4004EEF8C /* TotalFooterView.swift */,
 				F62FC6A029E8217300F6B941 /* Backgrounds.swift */,
@@ -409,6 +416,7 @@
 		F632DEEA26696CCB00E4C55F /* bsuirSchedule */ = {
 			isa = PBXGroup;
 			children = (
+				F6C0FC9329FF07BB005F2810 /* Playground.playground */,
 				F632DEEB26696CCB00E4C55F /* bsuirTimetableApp.swift */,
 				F632DEF426696CD300E4C55F /* Persistence.swift */,
 				F632DEF626696CD300E4C55F /* bsuirSchedule.xcdatamodeld */,
@@ -486,10 +494,20 @@
 				F67AA4E528FF795A00E5A7C4 /* Extensions */,
 				F612D8B229DB811600D4DDEB /* View */,
 				F67AA4E028FF779900E5A7C4 /* Fetch */,
-				F6B61E4329F405A100DC3D33 /* Protocols */,
 				F601E5A7273191C300773F02 /* Managers and templates */,
 			);
 			path = Other;
+			sourceTree = "<group>";
+		};
+		F646714F29FF122A004E2953 /* LessonType */ = {
+			isa = PBXGroup;
+			children = (
+				F646714C29FF11F6004E2953 /* LessonType.swift */,
+				F646714B29FF11F6004E2953 /* LessonTypeDecoder.swift */,
+				F646715029FF1313004E2953 /* LessonTypeExtensions.swift */,
+			);
+			name = LessonType;
+			path = ../../..;
 			sourceTree = "<group>";
 		};
 		F65F831F26E8F35500B8CC4E /* Employee */ = {
@@ -649,13 +667,6 @@
 			path = Sections;
 			sourceTree = "<group>";
 		};
-		F6B61E4329F405A100DC3D33 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Protocols;
-			sourceTree = "<group>";
-		};
 		F6B838E329F8709D006BAA23 /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
@@ -683,12 +694,13 @@
 		F6BCE3A626EFCF0A0067B5DA /* Lesson */ = {
 			isa = PBXGroup;
 			children = (
-				F61C523A26E64619002CF234 /* Lesson+CoreDataClass.swift */,
-				F61C523B26E64619002CF234 /* Lesson+CoreDataProperties.swift */,
-				F6D3C10228E0BA550055B800 /* LessonType.swift */,
+				F61C523B26E64619002CF234 /* Lesson.swift */,
+				F61C523A26E64619002CF234 /* LessonDecoder.swift */,
+				F646715229FF1B93004E2953 /* LessonExtensions.swift */,
 				F6D3C10428E0BAB40055B800 /* WeekDay.swift */,
 				F6F9AC1229F71B930069DD18 /* LessonViewSettings.swift */,
 				F6CB615626F000EE00D29807 /* LessonView.swift */,
+				F646714F29FF122A004E2953 /* LessonType */,
 			);
 			path = Lesson;
 			sourceTree = "<group>";
@@ -820,6 +832,7 @@
 				F6D588D228E4685B00CB58AC /* FetchError.swift in Sources */,
 				F6857C7B28F0B5F800195388 /* FromGroupsView.swift in Sources */,
 				F6F87816271A1ED7005E3C41 /* Speciality+CoreDataClass.swift in Sources */,
+				F646714D29FF11F6004E2953 /* LessonTypeDecoder.swift in Sources */,
 				F60D44B629DC74F50008E4F4 /* EmployeesSections.swift in Sources */,
 				F62F764629E201C800959225 /* EducationDegree.swift in Sources */,
 				F601E5A52730B88F00773F02 /* CapturePhotoView.swift in Sources */,
@@ -848,10 +861,9 @@
 				F6CB615726F000EE00D29807 /* LessonView.swift in Sources */,
 				F68E9CDC2729B57400704EB0 /* AuditoriumView.swift in Sources */,
 				F63FC6BD272F01EA00C9F410 /* TaskDetailedView.swift in Sources */,
-				F61C523F26E64619002CF234 /* Lesson+CoreDataProperties.swift in Sources */,
+				F61C523F26E64619002CF234 /* Lesson.swift in Sources */,
 				F6BC18A52811D4A100BA549D /* DateFormatters.swift in Sources */,
 				F6CF52F528EEBB3B00522C89 /* DecoderUpdatable.swift in Sources */,
-				F6D3C10328E0BA550055B800 /* LessonType.swift in Sources */,
 				F67DF3B5266AA56000D96417 /* Employee+CoreDataClass.swift in Sources */,
 				F6748DF128DFA2EE0072FB04 /* EducationRanged.swift in Sources */,
 				F6BC18A72811E8FE00BA549D /* GroupDetailedView.swift in Sources */,
@@ -871,7 +883,7 @@
 				F6F87817271A1ED7005E3C41 /* Speciality+CoreDataProperties.swift in Sources */,
 				F68B4CEE284535C000C8DBF6 /* ScheduleSection .swift in Sources */,
 				F6CAAA4629F9C6A700836230 /* ScheduleSectionType.swift in Sources */,
-				F61C523E26E64619002CF234 /* Lesson+CoreDataClass.swift in Sources */,
+				F61C523E26E64619002CF234 /* LessonDecoder.swift in Sources */,
 				F69009D426F6958100379A74 /* ScheduleViewModel.swift in Sources */,
 				F6A1085229E5C6B5004BA71F /* GroupsSections.swift in Sources */,
 				F69424A029262426006FF042 /* FavoriteSectionViewModel.swift in Sources */,
@@ -881,11 +893,13 @@
 				F69C463726E91B430036D6A1 /* EmployeeDetailedView.swift in Sources */,
 				F6748DF328DFB7C80072FB04 /* Scheduled.swift in Sources */,
 				F612D8B629DB856A00D4DDEB /* AuditoriesGridView.swift in Sources */,
+				F646715129FF1313004E2953 /* LessonTypeExtensions.swift in Sources */,
 				F695AA3529D835C80051A354 /* AuditoriumType+CoreDataProperties.swift in Sources */,
 				F6DCD72326B30EF0003761B0 /* SettingsView.swift in Sources */,
+				F646715329FF1B93004E2953 /* LessonExtensions.swift in Sources */,
 				F643071329DFABF700B3A98A /* SequenceSections.swift in Sources */,
 				F694249E292623EF006FF042 /* FavoriteSectionView.swift in Sources */,
-				F6AFC4622721EC43008CC065 /* DesignManager.swift in Sources */,
+				F6AFC4622721EC43008CC065 /* ColorRawRepresentable.swift in Sources */,
 				F6A1084A29E5BB47004BA71F /* GroupView.swift in Sources */,
 				F6D4AAB729BEB5260044481B /* Log.swift in Sources */,
 				F612D8B429DB812C00D4DDEB /* SquareView.swift in Sources */,
@@ -913,6 +927,7 @@
 				F67AA4E928FF79F200E5A7C4 /* onLoad.swift in Sources */,
 				F64BEDDA26E9072900C7AD09 /* EmployeeView.swift in Sources */,
 				F643071129DF843000B3A98A /* EducationBoundedView.swift in Sources */,
+				F646714E29FF11F6004E2953 /* LessonType.swift in Sources */,
 				F67AA4ED28FF7A3500E5A7C4 /* capitalizingFirstLetter.swift in Sources */,
 				F671F15629E7489F0086681E /* HeaderView.swift in Sources */,
 				F68E9CDE2729BB4100704EB0 /* FavoriteGroupView.swift in Sources */,

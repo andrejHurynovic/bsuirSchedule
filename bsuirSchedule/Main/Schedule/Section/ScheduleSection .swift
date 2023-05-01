@@ -178,7 +178,7 @@ extension ScheduleSection {
 
 extension Lesson {
     public override var description: String {
-        return "\(abbreviation) (\(lessonType.abbreviation)) \(timeStart)-\(timeEnd), groups: \((groups?.allObjects as? [Group])?.description() ?? "no groups") employees: \(employeesIDs)"
+        return "\(abbreviation) (\(type?.abbreviation ?? type?.id ?? "no type")) \(timeStart)-\(timeEnd), groups: \((groups?.allObjects as? [Group])?.description() ?? "no groups") employees: \(employeesIDs)"
     }
 }
 
