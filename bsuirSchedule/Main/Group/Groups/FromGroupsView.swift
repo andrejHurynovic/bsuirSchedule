@@ -38,7 +38,7 @@ struct FromGroupsView: View {
     
 }
 
-struct ListGroupsView_Previews: PreviewProvider {
+struct FormGroupsView_Previews: PreviewProvider {
     static var previews: some View {
         let groups = Group.getAll()
         

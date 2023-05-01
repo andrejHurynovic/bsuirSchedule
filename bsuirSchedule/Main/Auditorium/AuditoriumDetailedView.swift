@@ -11,7 +11,7 @@ struct AuditoriumDetailedView: View {
     @ObservedObject var auditorium: Auditorium
     
     var body: some View {
-        List {
+        Form {
             information
             links
             groups
@@ -19,7 +19,7 @@ struct AuditoriumDetailedView: View {
         .navigationTitle(auditorium.formattedName)
         
         .toolbar {
-                FavoriteButton(item: auditorium, circle: true)
+            FavoriteButton(item: auditorium, circle: true)
         }
     }
     
@@ -75,7 +75,7 @@ struct AuditoriumDetailedView: View {
         }
     }
     
-
+    
     
     @ViewBuilder var groups: some View {
         if let groups = auditorium.groups {

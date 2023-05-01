@@ -13,7 +13,7 @@ struct GroupDetailedView: View {
     @StateObject var viewModel = GroupViewModel()
     
     var body: some View {
-        List {
+        Form {
             specialitySection
             groupSection
             nickname

@@ -35,8 +35,9 @@ struct SettingsView: View {
     var favroiteAuditories: FetchedResults<Auditorium>
     
     var body: some View {
-        List {
+        Form {
             primaryTypePicker
+            lessonTypes
             developer
         }
         .navigationViewStyle(StackNavigationViewStyle())
@@ -95,8 +96,16 @@ struct SettingsView: View {
         }
     }
     
+    var lessonTypes: some View {
+        NavigationLink {
+            LessonTypesView()
+        } label: {
+            Label("Типы занятий", systemImage: "lock.open.laptopcomputer")
+                .foregroundColor(.accentColor)
+        }
+    }
     
-    @ViewBuilder var developer: some View {
+    var developer: some View {
         Section("Разработчик") {
             NavigationLink {
                 DeveloperView()

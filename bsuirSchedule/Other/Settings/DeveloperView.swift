@@ -23,7 +23,7 @@ struct DeveloperView: View {
     @FetchRequest(entity: Hometask.entity(), sortDescriptors: []) var tasks: FetchedResults<Hometask>
     
     var body: some View {
-        List {
+        Form {
             Section("Удаление") {
                 DeveloperDeleteView(name: "факультеты", symbol: "graduationcap.circle", elements: faculties)
                 DeveloperDeleteView(name: "формы образования", symbol: "graduationcap.circle", elements: educationTypes)
@@ -161,5 +161,6 @@ struct DeveloperUpdateView<T: AbleToFetchAll>: View {
 struct DeveloperView_Previews: PreviewProvider {
     static var previews: some View {
         DeveloperView()
+            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
     }
 }
