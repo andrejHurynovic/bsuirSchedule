@@ -6,12 +6,7 @@
 //
 //
 
-import Foundation
 import CoreData
-
-private enum DepartmentDecodingError: Error {
-    case noKeys
-}
 
 @objc(Department)
 public class Department: NSManagedObject {
