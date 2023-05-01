@@ -1,5 +1,5 @@
 //
-//  Department+CoreDataClass.swift
+//  DepartmentDecoder.swift
 //  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 1.04.23.

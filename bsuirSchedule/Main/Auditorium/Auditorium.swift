@@ -1,15 +1,13 @@
 //
-//  Auditorium+CoreDataProperties.swift
+//  Auditorium.swift
 //  Auditorium
 //
 //  Created by Andrej Hurynovič on 25.09.21.
-//
 //
 
 import CoreData
 
 extension Auditorium {
-    
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Auditorium> {
         let request = NSFetchRequest<Auditorium>(entityName: "Auditorium")
         request.sortDescriptors = [NSSortDescriptor(keyPath: \Auditorium.building, ascending: true),

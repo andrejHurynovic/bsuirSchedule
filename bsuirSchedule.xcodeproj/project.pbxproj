@@ -67,6 +67,7 @@
 		F670BEF12A001D5600D76D70 /* DepartmentFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F670BEF02A001D5600D76D70 /* DepartmentFetch.swift */; };
 		F670BEF32A001D6200D76D70 /* DepartmentExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F670BEF22A001D6200D76D70 /* DepartmentExtensions.swift */; };
 		F670BEF52A001DD000D76D70 /* DepartmentDecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F670BEF42A001DD000D76D70 /* DepartmentDecodingError.swift */; };
+		F670BEF72A001E5400D76D70 /* AuditoriumDecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F670BEF62A001E5400D76D70 /* AuditoriumDecodingError.swift */; };
 		F671F15629E7489F0086681E /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F671F15529E7489F0086681E /* HeaderView.swift */; };
 		F6748DF128DFA2EE0072FB04 /* EducationRanged.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6748DF028DFA2EE0072FB04 /* EducationRanged.swift */; };
 		F6748DF328DFB7C80072FB04 /* Scheduled.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6748DF228DFB7C80072FB04 /* Scheduled.swift */; };
@@ -210,6 +211,7 @@
 		F670BEF02A001D5600D76D70 /* DepartmentFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentFetch.swift; sourceTree = "<group>"; };
 		F670BEF22A001D6200D76D70 /* DepartmentExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentExtensions.swift; sourceTree = "<group>"; };
 		F670BEF42A001DD000D76D70 /* DepartmentDecodingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentDecodingError.swift; sourceTree = "<group>"; };
+		F670BEF62A001E5400D76D70 /* AuditoriumDecodingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriumDecodingError.swift; sourceTree = "<group>"; };
 		F671F15529E7489F0086681E /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		F6748DF028DFA2EE0072FB04 /* EducationRanged.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationRanged.swift; sourceTree = "<group>"; };
 		F6748DF228DFB7C80072FB04 /* Scheduled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scheduled.swift; sourceTree = "<group>"; };
@@ -647,6 +649,7 @@
 			children = (
 				F697BF7926FFA1BA008FA7A9 /* Auditorium.swift */,
 				F697BF7826FFA1BA008FA7A9 /* AuditoriumDecoder.swift */,
+				F670BEF62A001E5400D76D70 /* AuditoriumDecodingError.swift */,
 				F687043429FEE38B00A3CF0C /* AuditoriumFetch.swift */,
 				F687043229FEE35E00A3CF0C /* AuditoriumExtensions.swift */,
 				F614250B271B7EFF006C3CE1 /* AuditoriumDetailedView.swift */,
@@ -902,6 +905,7 @@
 				F6CB615726F000EE00D29807 /* LessonView.swift in Sources */,
 				F68E9CDC2729B57400704EB0 /* AuditoriumView.swift in Sources */,
 				F63FC6BD272F01EA00C9F410 /* TaskDetailedView.swift in Sources */,
+				F670BEF72A001E5400D76D70 /* AuditoriumDecodingError.swift in Sources */,
 				F61C523F26E64619002CF234 /* Lesson.swift in Sources */,
 				F6BC18A52811D4A100BA549D /* DateFormatters.swift in Sources */,
 				F6CF52F528EEBB3B00522C89 /* DecoderUpdatable.swift in Sources */,

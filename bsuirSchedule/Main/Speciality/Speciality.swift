@@ -1,16 +1,13 @@
 //
-//  Speciality+CoreDataProperties.swift
+//  Speciality.swift
 //  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 15.10.21.
 //
-//
 
 import CoreData
 
-
 extension Speciality {
-    
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Speciality> {
         let request = NSFetchRequest<Speciality>(entityName: "Speciality")
         request.sortDescriptors = [NSSortDescriptor(keyPath: \Speciality.name, ascending: true),

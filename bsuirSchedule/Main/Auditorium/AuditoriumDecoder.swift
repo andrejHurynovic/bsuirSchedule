@@ -1,5 +1,5 @@
 //
-//  Auditorium+CoreDataClass.swift
+//  AuditoriumDecoder.swift
 //  Auditorium
 //
 //  Created by Andrej Hurynovič on 25.09.21.
@@ -7,11 +7,6 @@
 //
 
 import CoreData
-
-enum AuditoriumError: Error {
-    case incorrectName(name: String)
-    case nonEducationalBuilding
-}
 
 @objc(Auditorium)
 public class Auditorium: NSManagedObject {
@@ -25,7 +20,7 @@ public class Auditorium: NSManagedObject {
         //This code does not allow the creation of Auditories in non-educational buildings. The description of the Algorithm is provided in decodeBuilding() method.
         guard let _ = Int16(buildingString.trimmingCharacters(in: CharacterSet.init([" ", "к", "."]))) else {
             Log.warning("Fetched non-educational building, (\((try? container.decode(String.self, forKey: .name)) ?? "No name")-\(buildingString)).")
-            throw AuditoriumError.nonEducationalBuilding
+            throw AuditoriumDecodingError.nonEducationalBuilding
         }
         
         self.init(context: decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext)
@@ -79,7 +74,7 @@ extension Auditorium: DecoderUpdatable {
     private func decodeBuilding(string: String) throws {
         guard let building = Int16(string.trimmingCharacters(in: CharacterSet.init([" ", "к", "."]))) else {
             Log.warning("Non-educational building \(string).")
-            throw AuditoriumError.nonEducationalBuilding
+            throw AuditoriumDecodingError.nonEducationalBuilding
         }
         self.building = building
     }
@@ -108,7 +103,7 @@ extension Auditorium: DecoderUpdatable {
         //
         guard let number = Int(string.prefix(3)) ?? Int(string.prefix(2)) else {
             Log.warning("Can't create name for Auditorium \(string)")
-            throw AuditoriumError.incorrectName(name: string)
+            throw AuditoriumDecodingError.incorrectName(name: string)
         }
         
         //If number is less then 100 and first character is not "0", then these are Auditories with names such as ["34", "69"].

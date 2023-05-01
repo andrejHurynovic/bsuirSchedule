@@ -1,5 +1,5 @@
 //
-//  Department+CoreDataProperties.swift
+//  Department.swift
 //  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 1.04.23.
@@ -8,7 +8,6 @@
 import CoreData
 
 extension Department {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Department> {
         let request = NSFetchRequest<Department>(entityName: "Department")
         request.sortDescriptors = [NSSortDescriptor(keyPath: \Department.abbreviation, ascending: true)]
