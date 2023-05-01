@@ -1,27 +1,24 @@
 //
-//  Employee+CoreDataClass.swift
+//  EmployeeDecoder.swift
 //  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 4.06.21.
 //
-//
 
-import Foundation
 import CoreData
 
 @objc(Employee)
 public class Employee: NSManagedObject {
-    
     required public convenience init(from decoder: Decoder) throws {
         let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
         self.init(entity: Employee.entity(), insertInto: context)
         try! self.update(from: decoder)
         Log.info("Employee \(self.urlID ?? "no urlID") (\(String(self.id))) has been created.")
     }
-    
 }
 
 //MARK: - Update
+
 extension Employee: DecoderUpdatable {
     func update(from decoder: Decoder) throws {
         let startTime = CFAbsoluteTimeGetCurrent()
@@ -50,7 +47,7 @@ extension Employee: DecoderUpdatable {
         self.lastName = try! container.decode(String.self, forKey: .lastName)
         
         self.photoLink = try? container.decode(String.self, forKey: .photoLink)
-
+        
         self.rank = try? container.decode(String.self, forKey: .rank)
         
         if let departmentsAbbreviations = try? container.decode([String].self, forKey: .departments) {
@@ -93,19 +90,21 @@ extension Employee: DecoderUpdatable {
                 self.degree = degreeString
             }
         } else {
-//            self.degree = nil
+            //            self.degree = nil
         }
-
+        
         if let degreeAbbreviationString = try? container.decode(String.self, forKey: .degreeAbbreviation),
            degreeAbbreviationString.isEmpty == false {
             self.degreeAbbreviation = degreeAbbreviationString
         } else {
-//            self.degreeAbbreviation = nil
+            //            self.degreeAbbreviation = nil
         }
-       
+        
     }
     
 }
+
+//MARK: - CodingKeys
 
 extension Employee: Decodable {
     private enum CodingKeys: String, CodingKey {

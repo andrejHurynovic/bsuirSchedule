@@ -1,27 +1,24 @@
 //
-//  Group+CoreDataClass.swift
+//  GroupDecoder.swift
 //  Group
 //
 //  Created by Andrej Hurynovič on 6.09.21.
-//
 //
 
 import CoreData
 
 @objc(Group)
 public class Group: NSManagedObject {
-    
     required public convenience init(from decoder: Decoder) throws {
         self.init(context: decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext)
         try! self.update(from: decoder)
         Log.info("Group (\(String(self.name))) has been created.")
     }
-    
 }
 
+//MARK: - Update
 
 extension Group: DecoderUpdatable {
-    //MARK: - Update
     func update(from decoder: Decoder) throws {
         let startTime = CFAbsoluteTimeGetCurrent()
         let container = try decoder.container(keyedBy: CodingKeys.self)

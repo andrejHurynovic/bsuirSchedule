@@ -1,87 +1,11 @@
 //
-//  Employee+CoreDataProperties.swift
-//  Employee
+//  EmployeeFetch.swift
+//  bsuirSchedule
 //
-//  Created by Andrej Hurynovič on 7.09.21.
-//
+//  Created by Andrej Hurynovič on 1.05.23.
 //
 
 import CoreData
-import SwiftUI
-
-extension Employee {
-    
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Employee> {
-        let request = NSFetchRequest<Employee>(entityName: "Employee")
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \Employee.lastName, ascending: true)]
-        return request
-    }
-    
-    @NSManaged public var id: Int32
-    @NSManaged public var urlID: String?
-    @NSManaged public var firstName: String
-    @NSManaged public var middleName: String?
-    @NSManaged public var lastName: String
-    
-    @NSManaged public var rank: String?
-    @NSManaged public var degree: String?
-    @NSManaged public var degreeAbbreviation: String?
-    @NSManaged public var departments: NSSet?
-    @NSManaged public var favroite: Bool
-    @NSManaged public var lessonsUpdateDate: Date?
-    
-    @NSManaged public var educationStart: Date?
-    @NSManaged public var educationEnd: Date?
-    @NSManaged public var examsStart: Date?
-    @NSManaged public var examsEnd: Date?
-    
-    @NSManaged public var photoLink: String?
-    @NSManaged public var photo: Data?
-    
-    @NSManaged public var lessons: NSSet?
-    
-}
-
-//MARK: - Generated accessors for lessons
-
-extension Employee {
-    
-    @objc(addLessonsObject:)
-    @NSManaged public func addToLessons(_ value: Lesson)
-    
-    @objc(removeLessonsObject:)
-    @NSManaged public func removeFromLessons(_ value: Lesson)
-    
-    @objc(addLessons:)
-    @NSManaged public func addToLessons(_ values: NSSet)
-    
-    @objc(removeLessons:)
-    @NSManaged public func removeFromLessons(_ values: NSSet)
-    
-    @objc(addDepartmentsObject:)
-    @NSManaged public func addToDepartments(_ value: Department)
-    
-    @objc(removeDepartmentsObject:)
-    @NSManaged public func removeFromDepartments(_ value: Department)
-    
-    @objc(addDepartments:)
-    @NSManaged public func addToDepartments(_ values: NSSet)
-    
-    @objc(removeDepartments:)
-    @NSManaged public func removeFromDepartments(_ values: NSSet)
-    
-}
-
-extension Employee: Identifiable { }
-extension Employee: Favored { }
-extension Employee: EducationBounded { }
-extension Employee: EducationRanged { }
-
-extension Employee: Scheduled {
-    var title: String { self.lastName }
-}
-
-//MARK: - Fetch
 
 extension Employee: AbleToFetchAll {
     static func fetchAll() async {
@@ -117,7 +41,7 @@ extension Employee: AbleToFetchAll {
         })
         
     }
-    
+
 }
 
 //MARK: - Update
@@ -197,46 +121,4 @@ extension Employee {
         return data
     }
     
-}
-
-//MARK: - Group
-
-extension Group {
-    var employees: [Employee]? {
-        guard let lessons = self.lessons?.allObjects as? [Lesson] else { return nil }
-        
-        let employees = Set(lessons.compactMap { $0.employees?.allObjects as? [Employee] }
-            .flatMap { $0 })
-        .sorted { $0.lastName < $1.lastName }
-        
-        guard employees.isEmpty == false else { return nil }
-        return employees
-    }
-    
-}
-
-//MARK: - Accessors
-
-    extension Employee {
-    
-    var formattedName: String {
-        var formattedName = firstName
-        if let lastName = self.middleName {
-            formattedName.append(" \(lastName)")
-        }
-        return formattedName
-    }
-    
-    var departmentsArray: [Department]? {
-        guard let departments = departments?.allObjects as? [Department] else {
-            return nil
-        }
-        return departments
-    }
-    var departmentsAbbreviations: [String]? {
-        guard let departments = departmentsArray else {
-            return nil
-        }
-        return departments.map { $0.abbreviation }
-    }
 }

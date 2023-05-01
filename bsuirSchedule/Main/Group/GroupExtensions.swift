@@ -7,6 +7,16 @@
 
 import Foundation
 
+extension Group: Identifiable { }
+extension Group: Favored {}
+
+extension Group: EducationBounded { }
+extension Group: EducationRanged { }
+
+extension Group: Scheduled {
+    var title: String { self.name }
+}
+
 //MARK: - Employee
 
 extension Employee {
@@ -23,7 +33,8 @@ extension Employee {
 }
 
 
-//MARK: - Accessors
+//MARK: - Other
+
 extension Group {
     var flow: [Group]? {
         guard var flow = self.speciality?.groups?.allObjects as? [Group] else { return nil }
@@ -37,7 +48,6 @@ extension Group {
     
 }
 
-//MARK: - Additional
 extension Array where Element == Group {
     func description() -> String {
         guard self.isEmpty == false else {

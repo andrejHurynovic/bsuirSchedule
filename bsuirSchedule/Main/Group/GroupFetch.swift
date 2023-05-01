@@ -1,65 +1,14 @@
 //
-//  Group+CoreDataProperties.swift
-//  Group
+//  GroupFetch.swift
+//  bsuirSchedule
 //
-//  Created by Andrej Hurynovič on 6.09.21.
-//
+//  Created by Andrej Hurynovič on 1.05.23.
 //
 
 import CoreData
 
-extension Group {
-    
-    @NSManaged public var name: String
-    @NSManaged public var numberOfStudents: Int16
-    @NSManaged public var educationDegreeValue: Int16
-    @NSManaged public var course: Int16
-    @NSManaged public var favroite: Bool
-    @NSManaged public var lessonsUpdateDate: Date?
-    
-    @NSManaged public var nickname: String?
-    
-    @NSManaged public var speciality: Speciality?
-    
-    @NSManaged public var educationStart: Date?
-    @NSManaged public var educationEnd: Date?
-    @NSManaged public var examsStart: Date?
-    @NSManaged public var examsEnd: Date?
-    
-    @NSManaged public var lessons: NSSet?
-    
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Group> {
-        let request = NSFetchRequest<Group>(entityName: "Group")
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \Group.name, ascending: true)]
-        return request
-    }
-}
-
-//MARK: - Generated accessors for lessons
-extension Group {
-    @objc(addLessonsObject:)
-    @NSManaged public func addToLessons(_ value: Lesson)
-    
-    @objc(removeLessonsObject:)
-    @NSManaged public func removeFromLessons(_ value: Lesson)
-    
-    @objc(addLessons:)
-    @NSManaged public func addToLessons(_ values: NSSet)
-    
-    @objc(removeLessons:)
-    @NSManaged public func removeFromLessons(_ values: NSSet)
-    
-}
-
-extension Group: Identifiable { }
-extension Group: Favored {}
-extension Group: EducationBounded { }
-extension Group: EducationRanged { }
-extension Group: Scheduled {
-    var title: String { self.name }
-}
-
 //MARK: - Fetch
+
 extension Group: AbleToFetchAll {
     static func fetchAll() async {
         let data = try! await URLSession.shared.data(from: FetchDataType.groups.rawValue)

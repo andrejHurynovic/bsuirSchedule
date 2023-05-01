@@ -7,6 +7,6 @@
 
 import Foundation
 
-private enum DepartmentDecodingError: Error {
+enum DepartmentDecodingError: Error {
     case noKeys
 }
