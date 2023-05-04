@@ -45,7 +45,7 @@ struct HomeView: View {
                     AuditoriumNavigationLink(auditorium: auditorium)
                 }
             }
-            .navigationTitle("Избранные")
+                        .navigationTitle("Избранные")
             .toolbar(content: {
                 NavigationLink(destination: SettingsView()) {
                     Image(systemName: "gear")
@@ -54,6 +54,8 @@ struct HomeView: View {
             
             .baseBackground()
         }
+        .navigationViewStyle(.stack)
+
     }
 }
 

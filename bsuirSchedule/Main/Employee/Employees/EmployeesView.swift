@@ -37,7 +37,6 @@ struct EmployeesView: View {
             .onChange(of: searchText) { newText in
                 employees.nsPredicate = viewModel.calculatePredicate(searchText)
             }
-            .navigationViewStyle(StackNavigationViewStyle())
             
             .baseBackground()
     }

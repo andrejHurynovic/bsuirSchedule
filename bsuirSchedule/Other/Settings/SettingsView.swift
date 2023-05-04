@@ -40,7 +40,6 @@ struct SettingsView: View {
             lessonTypes
             developer
         }
-        .navigationViewStyle(StackNavigationViewStyle())
         .navigationTitle("Настройки")
     }
     

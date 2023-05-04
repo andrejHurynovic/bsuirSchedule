@@ -36,7 +36,6 @@ struct GroupsView: View {
             .onChange(of: viewModel.searchText) { newText in
                 groups.nsPredicate = viewModel.calculatePredicate()
             }
-            .navigationViewStyle(StackNavigationViewStyle())
             
             .baseBackground()
     }
