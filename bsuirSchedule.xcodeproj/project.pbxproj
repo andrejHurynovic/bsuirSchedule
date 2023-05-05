@@ -27,6 +27,8 @@
 		F61C523F26E64619002CF234 /* Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61C523B26E64619002CF234 /* Lesson.swift */; };
 		F61C524026E64619002CF234 /* GroupDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61C523C26E64619002CF234 /* GroupDecoder.swift */; };
 		F61C524126E64619002CF234 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61C523D26E64619002CF234 /* Group.swift */; };
+		F62392C52A05505B00A54042 /* FacultyFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62392C42A05505B00A54042 /* FacultyFetch.swift */; };
+		F62392C72A0550B100A54042 /* FacultyExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62392C62A0550B100A54042 /* FacultyExtensions.swift */; };
 		F624A3452913B85500E8CB5B /* FromGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F624A3442913B85500E8CB5B /* FromGroupView.swift */; };
 		F62B3703290319D200FA2BE8 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62B3702290319D200FA2BE8 /* SettingsViewModel.swift */; };
 		F62F764629E201C800959225 /* EducationDegree.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62F764529E201C800959225 /* EducationDegree.swift */; };
@@ -81,8 +83,8 @@
 		F67DF3B5266AA56000D96417 /* EmployeeDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67DF3B3266AA56000D96417 /* EmployeeDecoder.swift */; };
 		F67DF3B6266AA56000D96417 /* Employee.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67DF3B4266AA56000D96417 /* Employee.swift */; };
 		F67E177D29E5E15F00864712 /* GroupsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67E177C29E5E15F00864712 /* GroupsViewModel.swift */; };
-		F68465FB26FA5321000F185E /* Faculty+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68465F926FA5321000F185E /* Faculty+CoreDataClass.swift */; };
-		F68465FC26FA5321000F185E /* Faculty+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68465FA26FA5321000F185E /* Faculty+CoreDataProperties.swift */; };
+		F68465FB26FA5321000F185E /* FacultyDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68465F926FA5321000F185E /* FacultyDecoder.swift */; };
+		F68465FC26FA5321000F185E /* Faculty.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68465FA26FA5321000F185E /* Faculty.swift */; };
 		F6857C7728F06F4300195388 /* DeveloperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6857C7628F06F4300195388 /* DeveloperView.swift */; };
 		F6857C7928F096CE00195388 /* AuditoriesSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6857C7828F096CE00195388 /* AuditoriesSection.swift */; };
 		F6857C7B28F0B5F800195388 /* FromGroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6857C7A28F0B5F800195388 /* FromGroupsView.swift */; };
@@ -172,6 +174,8 @@
 		F61C523B26E64619002CF234 /* Lesson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson.swift; sourceTree = "<group>"; };
 		F61C523C26E64619002CF234 /* GroupDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDecoder.swift; sourceTree = "<group>"; };
 		F61C523D26E64619002CF234 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		F62392C42A05505B00A54042 /* FacultyFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacultyFetch.swift; sourceTree = "<group>"; };
+		F62392C62A0550B100A54042 /* FacultyExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacultyExtensions.swift; sourceTree = "<group>"; };
 		F624A3442913B85500E8CB5B /* FromGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FromGroupView.swift; sourceTree = "<group>"; };
 		F62B3702290319D200FA2BE8 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		F62F764529E201C800959225 /* EducationDegree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationDegree.swift; sourceTree = "<group>"; };
@@ -228,8 +232,8 @@
 		F67DF3B3266AA56000D96417 /* EmployeeDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeDecoder.swift; sourceTree = "<group>"; };
 		F67DF3B4266AA56000D96417 /* Employee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Employee.swift; sourceTree = "<group>"; };
 		F67E177C29E5E15F00864712 /* GroupsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsViewModel.swift; sourceTree = "<group>"; };
-		F68465F926FA5321000F185E /* Faculty+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Faculty+CoreDataClass.swift"; sourceTree = "<group>"; };
-		F68465FA26FA5321000F185E /* Faculty+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Faculty+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F68465F926FA5321000F185E /* FacultyDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacultyDecoder.swift; sourceTree = "<group>"; };
+		F68465FA26FA5321000F185E /* Faculty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Faculty.swift; sourceTree = "<group>"; };
 		F6857C7628F06F4300195388 /* DeveloperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperView.swift; sourceTree = "<group>"; };
 		F6857C7828F096CE00195388 /* AuditoriesSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriesSection.swift; sourceTree = "<group>"; };
 		F6857C7A28F0B5F800195388 /* FromGroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FromGroupsView.swift; sourceTree = "<group>"; };
@@ -608,8 +612,10 @@
 		F68465F826FA52E8000F185E /* Faculty */ = {
 			isa = PBXGroup;
 			children = (
-				F68465F926FA5321000F185E /* Faculty+CoreDataClass.swift */,
-				F68465FA26FA5321000F185E /* Faculty+CoreDataProperties.swift */,
+				F68465FA26FA5321000F185E /* Faculty.swift */,
+				F68465F926FA5321000F185E /* FacultyDecoder.swift */,
+				F62392C42A05505B00A54042 /* FacultyFetch.swift */,
+				F62392C62A0550B100A54042 /* FacultyExtensions.swift */,
 			);
 			path = Faculty;
 			sourceTree = "<group>";
@@ -891,9 +897,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				F60D44BA29DC75710008E4F4 /* EmployeeSectionType.swift in Sources */,
-				F68465FB26FA5321000F185E /* Faculty+CoreDataClass.swift in Sources */,
+				F68465FB26FA5321000F185E /* FacultyDecoder.swift in Sources */,
 				F6CAAA4829F9C96F00836230 /* EducationBounded.swift in Sources */,
-				F68465FC26FA5321000F185E /* Faculty+CoreDataProperties.swift in Sources */,
+				F68465FC26FA5321000F185E /* Faculty.swift in Sources */,
 				F60D44AF29DC68CC0008E4F4 /* SquareGrid.swift in Sources */,
 				F670BEFB2A001F5B00D76D70 /* EmployeeExtensions.swift in Sources */,
 				F695AA3A29D8439D0051A354 /* DepartmentDecoder.swift in Sources */,
@@ -912,6 +918,7 @@
 				F646715529FFDD99004E2953 /* LessonTypesView.swift in Sources */,
 				F6D3C10528E0BAB40055B800 /* WeekDay.swift in Sources */,
 				F632DEF526696CD300E4C55F /* Persistence.swift in Sources */,
+				F62392C72A0550B100A54042 /* FacultyExtensions.swift in Sources */,
 				F69BEF7929FEB01200A9ED5A /* EmplpyeeNavigationLink.swift in Sources */,
 				F67E177D29E5E15F00864712 /* GroupsViewModel.swift in Sources */,
 				F62FC6A129E8217300F6B941 /* Backgrounds.swift in Sources */,
@@ -927,6 +934,7 @@
 				F687043329FEE35E00A3CF0C /* AuditoriumExtensions.swift in Sources */,
 				F666CFDA28FF5C71007F9F28 /* EducationWeek.swift in Sources */,
 				F643071E29E08DEA00B3A98A /* EducationType.swift in Sources */,
+				F62392C52A05505B00A54042 /* FacultyFetch.swift in Sources */,
 				F697BF7D26FFA1BA008FA7A9 /* Auditorium.swift in Sources */,
 				F643071529E06D5700B3A98A /* FormView.swift in Sources */,
 				F6A1084729E5BB11004BA71F /* GroupExtensions.swift in Sources */,
