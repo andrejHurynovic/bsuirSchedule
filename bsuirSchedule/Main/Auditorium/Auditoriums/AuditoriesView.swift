@@ -22,7 +22,7 @@ struct AuditoriesView: View {
     
     var body: some View {
         ScrollView {
-            AuditoriesGridView(sections: auditories.sections(viewModel.selectedSectionType))
+            AuditoriesSectionGridView(sections: auditories.sections(viewModel.selectedSectionType))
             TotalFooterView(text: "Аудиторий", count: auditories.count)
         }
         .navigationTitle("Аудитории")

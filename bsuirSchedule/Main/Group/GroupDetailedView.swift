@@ -119,18 +119,7 @@ struct GroupDetailedView: View {
     }
     @ViewBuilder var employees: some View {
         if let employees = group.employees {
-            DisclosureGroup {
-                ForEach(employees) { employee in
-                    NavigationLink {
-                        EmployeeDetailedView(employee: employee)
-                    } label: {
-                        EmployeeView(employee: employee,
-                                     showDepartments: false)
-                    }
-                }
-            } label: {
-                Label("Преподаватели", systemImage: "person.3")
-            }
+            EmployeesFormView(employees: employees)
         }
     }
     
@@ -140,7 +129,7 @@ struct GroupDetailedView_Previews: PreviewProvider {
     static var previews: some View {
         let groups: [Group] = Group.getAll()
         
-        if let group = groups.first(where: { $0.name == "950503" }) {
+        if let group = groups.first(where: { $0.name == "950502" }) {
             NavigationView {
                 GroupDetailedView(group: group)
             }

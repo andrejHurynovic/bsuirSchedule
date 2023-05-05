@@ -17,7 +17,7 @@
 		F60D44B829DC753B0008E4F4 /* AuditoriumSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60D44B729DC753B0008E4F4 /* AuditoriumSectionType.swift */; };
 		F60D44BA29DC75710008E4F4 /* EmployeeSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60D44B929DC75710008E4F4 /* EmployeeSectionType.swift */; };
 		F612D8B429DB812C00D4DDEB /* SquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F612D8B329DB812C00D4DDEB /* SquareView.swift */; };
-		F612D8B629DB856A00D4DDEB /* AuditoriesGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F612D8B529DB856A00D4DDEB /* AuditoriesGridView.swift */; };
+		F612D8B629DB856A00D4DDEB /* AuditoriesSectionGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F612D8B529DB856A00D4DDEB /* AuditoriesSectionGridView.swift */; };
 		F613E17429DCCC900054C93E /* EmployeesGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F613E17329DCCC900054C93E /* EmployeesGridView.swift */; };
 		F613E17629DCD8C60054C93E /* SectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F613E17529DCD8C60054C93E /* SectionType.swift */; };
 		F614250C271B7EFF006C3CE1 /* AuditoriumDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F614250B271B7EFF006C3CE1 /* AuditoriumDetailedView.swift */; };
@@ -39,6 +39,8 @@
 		F632DEF026696CD300E4C55F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F632DEEF26696CD300E4C55F /* Assets.xcassets */; };
 		F632DEF526696CD300E4C55F /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F632DEF426696CD300E4C55F /* Persistence.swift */; };
 		F632DEF826696CD300E4C55F /* bsuirSchedule.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F632DEF626696CD300E4C55F /* bsuirSchedule.xcdatamodeld */; };
+		F638C0032A056C6D0021FA77 /* DepartmentDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F638C0022A056C6D0021FA77 /* DepartmentDetailedView.swift */; };
+		F638C0052A0572E10021FA77 /* EmployeesFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F638C0042A0572E10021FA77 /* EmployeesFormView.swift */; };
 		F63FC6BD272F01EA00C9F410 /* TaskDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63FC6BC272F01E900C9F410 /* TaskDetailedView.swift */; };
 		F643070929DF7D6800B3A98A /* FavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F643070829DF7D6800B3A98A /* FavoriteButton.swift */; };
 		F643070B29DF7D8500B3A98A /* Favored.swift in Sources */ = {isa = PBXBuildFile; fileRef = F643070A29DF7D8500B3A98A /* Favored.swift */; };
@@ -164,7 +166,7 @@
 		F60D44B729DC753B0008E4F4 /* AuditoriumSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriumSectionType.swift; sourceTree = "<group>"; };
 		F60D44B929DC75710008E4F4 /* EmployeeSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeSectionType.swift; sourceTree = "<group>"; };
 		F612D8B329DB812C00D4DDEB /* SquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareView.swift; sourceTree = "<group>"; };
-		F612D8B529DB856A00D4DDEB /* AuditoriesGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriesGridView.swift; sourceTree = "<group>"; };
+		F612D8B529DB856A00D4DDEB /* AuditoriesSectionGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriesSectionGridView.swift; sourceTree = "<group>"; };
 		F613E17329DCCC900054C93E /* EmployeesGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeesGridView.swift; sourceTree = "<group>"; };
 		F613E17529DCD8C60054C93E /* SectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionType.swift; sourceTree = "<group>"; };
 		F614250B271B7EFF006C3CE1 /* AuditoriumDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriumDetailedView.swift; sourceTree = "<group>"; };
@@ -188,6 +190,8 @@
 		F632DEF426696CD300E4C55F /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		F632DEF726696CD300E4C55F /* bsuirTimetable.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = bsuirTimetable.xcdatamodel; sourceTree = "<group>"; };
 		F632DEF926696CD300E4C55F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F638C0022A056C6D0021FA77 /* DepartmentDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentDetailedView.swift; sourceTree = "<group>"; };
+		F638C0042A0572E10021FA77 /* EmployeesFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeesFormView.swift; sourceTree = "<group>"; };
 		F63FC6BC272F01E900C9F410 /* TaskDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailedView.swift; sourceTree = "<group>"; };
 		F643070829DF7D6800B3A98A /* FavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteButton.swift; sourceTree = "<group>"; };
 		F643070A29DF7D8500B3A98A /* Favored.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favored.swift; sourceTree = "<group>"; };
@@ -354,7 +358,7 @@
 			children = (
 				F697BF8626FFAA02008FA7A9 /* AuditoriesViewModel.swift */,
 				F697BF8426FFA960008FA7A9 /* AuditoriesView.swift */,
-				F612D8B529DB856A00D4DDEB /* AuditoriesGridView.swift */,
+				F612D8B529DB856A00D4DDEB /* AuditoriesSectionGridView.swift */,
 				F69BEF7A29FEB41900A9ED5A /* AuditoriumNavigationLink.swift */,
 				F68E9CDB2729B57300704EB0 /* AuditoriumView.swift */,
 			);
@@ -369,6 +373,7 @@
 				F613E17329DCCC900054C93E /* EmployeesGridView.swift */,
 				F69BEF7829FEB01200A9ED5A /* EmplpyeeNavigationLink.swift */,
 				F64BEDD926E9072900C7AD09 /* EmployeeView.swift */,
+				F638C0042A0572E10021FA77 /* EmployeesFormView.swift */,
 			);
 			path = Employees;
 			sourceTree = "<group>";
@@ -654,6 +659,7 @@
 				F670BEF42A001DD000D76D70 /* DepartmentDecodingError.swift */,
 				F670BEF02A001D5600D76D70 /* DepartmentFetch.swift */,
 				F670BEF22A001D6200D76D70 /* DepartmentExtensions.swift */,
+				F638C0022A056C6D0021FA77 /* DepartmentDetailedView.swift */,
 			);
 			path = Department;
 			sourceTree = "<group>";
@@ -940,7 +946,9 @@
 				F6A1084729E5BB11004BA71F /* GroupExtensions.swift in Sources */,
 				F670BEF92A001F2C00D76D70 /* EmployeeFetch.swift in Sources */,
 				F65309E529DCE1DA001DEC29 /* SectionTypePicker.swift in Sources */,
+				F638C0052A0572E10021FA77 /* EmployeesFormView.swift in Sources */,
 				F613E17429DCCC900054C93E /* EmployeesGridView.swift in Sources */,
+				F638C0032A056C6D0021FA77 /* DepartmentDetailedView.swift in Sources */,
 				F624A3452913B85500E8CB5B /* FromGroupView.swift in Sources */,
 				F6606FD826F93A89002E0B3E /* FavoritesView.swift in Sources */,
 				F6CB615726F000EE00D29807 /* LessonView.swift in Sources */,
@@ -979,7 +987,7 @@
 				F670BEE72A00117700D76D70 /* SpecialityFetch.swift in Sources */,
 				F69C463726E91B430036D6A1 /* EmployeeDetailedView.swift in Sources */,
 				F6748DF328DFB7C80072FB04 /* Scheduled.swift in Sources */,
-				F612D8B629DB856A00D4DDEB /* AuditoriesGridView.swift in Sources */,
+				F612D8B629DB856A00D4DDEB /* AuditoriesSectionGridView.swift in Sources */,
 				F646715129FF1313004E2953 /* LessonTypeExtensions.swift in Sources */,
 				F695AA3529D835C80051A354 /* AuditoriumType+CoreDataProperties.swift in Sources */,
 				F6DCD72326B30EF0003761B0 /* SettingsView.swift in Sources */,

@@ -10,7 +10,9 @@ import CoreData
 extension Employee {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Employee> {
         let request = NSFetchRequest<Employee>(entityName: "Employee")
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \Employee.lastName, ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(keyPath: (\Employee.lastName), ascending: true),
+                                   NSSortDescriptor(keyPath: (\Employee.firstName), ascending: true),
+                                   NSSortDescriptor(keyPath: (\Employee.middleName), ascending: true)]
         return request
     }
     
@@ -38,7 +40,7 @@ extension Employee {
     @NSManaged public var lessons: NSSet?
 }
 
-//MARK: - Generated accessors for lessons
+//MARK: - Generated accessors
 
 extension Employee {
     @objc(addLessonsObject:)
