@@ -63,7 +63,9 @@ struct AuditoriesView: View {
 
 struct AuditoriesView_Previews: PreviewProvider {
     static var previews: some View {
-        AuditoriesView()
-            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+        NavigationView {
+            AuditoriesView()
+                .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+        }
     }
 }

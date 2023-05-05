@@ -11,7 +11,7 @@
 		F601E5A52730B88F00773F02 /* CapturePhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F601E5A42730B88E00773F02 /* CapturePhotoView.swift */; };
 		F601E5A92731AA3900773F02 /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F601E5A82731AA3900773F02 /* TaskViewModel.swift */; };
 		F601E5AB2731E29600773F02 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F601E5AA2731E29600773F02 /* TaskView.swift */; };
-		F60D44AF29DC68CC0008E4F4 /* SquareGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60D44AE29DC68CC0008E4F4 /* SquareGrid.swift */; };
+		F60D44AF29DC68CC0008E4F4 /* SectionsSquareGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60D44AE29DC68CC0008E4F4 /* SectionsSquareGrid.swift */; };
 		F60D44B229DC693F0008E4F4 /* NSManagedObjectsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60D44B129DC693F0008E4F4 /* NSManagedObjectsSection.swift */; };
 		F60D44B629DC74F50008E4F4 /* EmployeesSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60D44B529DC74F50008E4F4 /* EmployeesSections.swift */; };
 		F60D44B829DC753B0008E4F4 /* AuditoriumSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60D44B729DC753B0008E4F4 /* AuditoriumSectionType.swift */; };
@@ -42,6 +42,9 @@
 		F638C0032A056C6D0021FA77 /* DepartmentDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F638C0022A056C6D0021FA77 /* DepartmentDetailedView.swift */; };
 		F638C0052A0572E10021FA77 /* EmployeesFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F638C0042A0572E10021FA77 /* EmployeesFormView.swift */; };
 		F638C0072A0575DB0021FA77 /* AuditoriesFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F638C0062A0575DB0021FA77 /* AuditoriesFormView.swift */; };
+		F638C00A2A057AB70021FA77 /* DepartmentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F638C0092A057AB70021FA77 /* DepartmentsView.swift */; };
+		F638C00E2A057E8E0021FA77 /* DepartmentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F638C00D2A057E8D0021FA77 /* DepartmentsViewModel.swift */; };
+		F638C0102A057FAD0021FA77 /* DepartmentsGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F638C00F2A057FAD0021FA77 /* DepartmentsGridView.swift */; };
 		F63FC6BD272F01EA00C9F410 /* TaskDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63FC6BC272F01E900C9F410 /* TaskDetailedView.swift */; };
 		F643070929DF7D6800B3A98A /* FavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F643070829DF7D6800B3A98A /* FavoriteButton.swift */; };
 		F643070B29DF7D8500B3A98A /* Favored.swift in Sources */ = {isa = PBXBuildFile; fileRef = F643070A29DF7D8500B3A98A /* Favored.swift */; };
@@ -161,7 +164,7 @@
 		F601E5A42730B88E00773F02 /* CapturePhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapturePhotoView.swift; sourceTree = "<group>"; };
 		F601E5A82731AA3900773F02 /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
 		F601E5AA2731E29600773F02 /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
-		F60D44AE29DC68CC0008E4F4 /* SquareGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareGrid.swift; sourceTree = "<group>"; };
+		F60D44AE29DC68CC0008E4F4 /* SectionsSquareGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionsSquareGrid.swift; sourceTree = "<group>"; };
 		F60D44B129DC693F0008E4F4 /* NSManagedObjectsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedObjectsSection.swift; sourceTree = "<group>"; };
 		F60D44B529DC74F50008E4F4 /* EmployeesSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeesSections.swift; sourceTree = "<group>"; };
 		F60D44B729DC753B0008E4F4 /* AuditoriumSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriumSectionType.swift; sourceTree = "<group>"; };
@@ -194,6 +197,9 @@
 		F638C0022A056C6D0021FA77 /* DepartmentDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentDetailedView.swift; sourceTree = "<group>"; };
 		F638C0042A0572E10021FA77 /* EmployeesFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeesFormView.swift; sourceTree = "<group>"; };
 		F638C0062A0575DB0021FA77 /* AuditoriesFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriesFormView.swift; sourceTree = "<group>"; };
+		F638C0092A057AB70021FA77 /* DepartmentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentsView.swift; sourceTree = "<group>"; };
+		F638C00D2A057E8D0021FA77 /* DepartmentsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepartmentsViewModel.swift; sourceTree = "<group>"; };
+		F638C00F2A057FAD0021FA77 /* DepartmentsGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentsGridView.swift; sourceTree = "<group>"; };
 		F63FC6BC272F01E900C9F410 /* TaskDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailedView.swift; sourceTree = "<group>"; };
 		F643070829DF7D6800B3A98A /* FavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteButton.swift; sourceTree = "<group>"; };
 		F643070A29DF7D8500B3A98A /* Favored.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favored.swift; sourceTree = "<group>"; };
@@ -341,7 +347,7 @@
 		F606AFB129DE36B2007180E6 /* Grids */ = {
 			isa = PBXGroup;
 			children = (
-				F60D44AE29DC68CC0008E4F4 /* SquareGrid.swift */,
+				F60D44AE29DC68CC0008E4F4 /* SectionsSquareGrid.swift */,
 				F612D8B329DB812C00D4DDEB /* SquareView.swift */,
 			);
 			path = Grids;
@@ -466,6 +472,16 @@
 				F632DEF926696CD300E4C55F /* Info.plist */,
 			);
 			path = bsuirSchedule;
+			sourceTree = "<group>";
+		};
+		F638C0082A057A9F0021FA77 /* Departments */ = {
+			isa = PBXGroup;
+			children = (
+				F638C00F2A057FAD0021FA77 /* DepartmentsGridView.swift */,
+				F638C0092A057AB70021FA77 /* DepartmentsView.swift */,
+				F638C00D2A057E8D0021FA77 /* DepartmentsViewModel.swift */,
+			);
+			path = Departments;
 			sourceTree = "<group>";
 		};
 		F643070C29DF7DA300B3A98A /* Favorite */ = {
@@ -663,6 +679,7 @@
 				F670BEF02A001D5600D76D70 /* DepartmentFetch.swift */,
 				F670BEF22A001D6200D76D70 /* DepartmentExtensions.swift */,
 				F638C0022A056C6D0021FA77 /* DepartmentDetailedView.swift */,
+				F638C0082A057A9F0021FA77 /* Departments */,
 			);
 			path = Department;
 			sourceTree = "<group>";
@@ -909,7 +926,7 @@
 				F68465FB26FA5321000F185E /* FacultyDecoder.swift in Sources */,
 				F6CAAA4829F9C96F00836230 /* EducationBounded.swift in Sources */,
 				F68465FC26FA5321000F185E /* Faculty.swift in Sources */,
-				F60D44AF29DC68CC0008E4F4 /* SquareGrid.swift in Sources */,
+				F60D44AF29DC68CC0008E4F4 /* SectionsSquareGrid.swift in Sources */,
 				F670BEFB2A001F5B00D76D70 /* EmployeeExtensions.swift in Sources */,
 				F695AA3A29D8439D0051A354 /* DepartmentDecoder.swift in Sources */,
 				F65309E729DCED12001DEC29 /* MenuView.swift in Sources */,
@@ -937,6 +954,7 @@
 				F6B838E729F8717E006BAA23 /* roundTo.swift in Sources */,
 				F670BEF12A001D5600D76D70 /* DepartmentFetch.swift in Sources */,
 				F62B3703290319D200FA2BE8 /* SettingsViewModel.swift in Sources */,
+				F638C00E2A057E8E0021FA77 /* DepartmentsViewModel.swift in Sources */,
 				F687043129FEE25300A3CF0C /* ClosestScheduleView.swift in Sources */,
 				F61C524026E64619002CF234 /* GroupDecoder.swift in Sources */,
 				F643070B29DF7D8500B3A98A /* Favored.swift in Sources */,
@@ -956,9 +974,11 @@
 				F6606FD826F93A89002E0B3E /* FavoritesView.swift in Sources */,
 				F6CB615726F000EE00D29807 /* LessonView.swift in Sources */,
 				F68E9CDC2729B57400704EB0 /* AuditoriumView.swift in Sources */,
+				F638C0102A057FAD0021FA77 /* DepartmentsGridView.swift in Sources */,
 				F63FC6BD272F01EA00C9F410 /* TaskDetailedView.swift in Sources */,
 				F670BEF72A001E5400D76D70 /* AuditoriumDecodingError.swift in Sources */,
 				F61C523F26E64619002CF234 /* Lesson.swift in Sources */,
+				F638C00A2A057AB70021FA77 /* DepartmentsView.swift in Sources */,
 				F6BC18A52811D4A100BA549D /* DateFormatters.swift in Sources */,
 				F6CF52F528EEBB3B00522C89 /* DecoderUpdatable.swift in Sources */,
 				F67DF3B5266AA56000D96417 /* EmployeeDecoder.swift in Sources */,

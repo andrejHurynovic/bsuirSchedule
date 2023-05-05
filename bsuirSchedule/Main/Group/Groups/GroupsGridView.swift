@@ -11,7 +11,7 @@ struct GroupsGridView: View {
     var sections: [NSManagedObjectsSection<Group>]
     
     var body: some View {
-        SquareGrid(sections: sections, content: { group in
+        SectionsSquareGrid(sections: sections, content: { group in
             GroupNavigationLink(group: group)
         })
         .padding([.horizontal, .bottom])

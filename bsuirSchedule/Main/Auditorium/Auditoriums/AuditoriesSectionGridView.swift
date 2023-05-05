@@ -11,7 +11,7 @@ struct AuditoriesSectionGridView: View {
     var sections: [NSManagedObjectsSection<Auditorium>]
     
     var body: some View {
-        SquareGrid(sections: sections, content: { auditorium in
+        SectionsSquareGrid(sections: sections, content: { auditorium in
             AuditoriumNavigationLink(auditorium: auditorium)
         })
         .padding([.horizontal, .bottom])
