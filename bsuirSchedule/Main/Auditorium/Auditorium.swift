@@ -1,6 +1,6 @@
 //
 //  Auditorium.swift
-//  Auditorium
+//  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 25.09.21.
 //
@@ -30,22 +30,16 @@ extension Auditorium {
     @NSManaged public var department: Department?
     
     @NSManaged public var lessons: NSSet?
-    
 }
 
-//MARK: - Generated accessors for lessons
+//MARK: - Generated accessors
 extension Auditorium {
-    
     @objc(addLessonsObject:)
     @NSManaged public func addToLessons(_ value: Lesson)
-    
     @objc(removeLessonsObject:)
     @NSManaged public func removeFromLessons(_ value: Lesson)
-    
     @objc(addLessons:)
     @NSManaged public func addToLessons(_ values: NSSet)
-    
     @objc(removeLessons:)
     @NSManaged public func removeFromLessons(_ values: NSSet)
-    
 }

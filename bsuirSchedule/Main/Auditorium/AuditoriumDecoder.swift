@@ -1,6 +1,6 @@
 //
 //  AuditoriumDecoder.swift
-//  Auditorium
+//  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 25.09.21.
 //

@@ -33,6 +33,7 @@
     </entity>
     <entity name="Department" representedClassName="Department" syncable="YES">
         <attribute name="abbreviation" attributeType="String"/>
+        <attribute name="favorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="auditories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Auditorium" inverseName="department" inverseEntity="Auditorium"/>

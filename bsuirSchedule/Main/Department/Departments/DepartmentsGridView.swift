@@ -13,9 +13,7 @@ struct DepartmentsGridView: View {
     var body: some View {
         SquareGrid {
             ForEach(departments) { department in
-                NavigationLink(destination: DepartmentDetailedView(department: department)) {
-                    SquareView(title: department.abbreviation)
-                }
+                DepartmentNavigationLink(department: department)
             }
         }
         .padding([.horizontal, .bottom])

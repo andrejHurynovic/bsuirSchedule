@@ -7,4 +7,6 @@
 
 import Foundation
 
-extension Department : Identifiable {}
+extension Department: Identifiable {}
+
+extension Department: Favored {}

@@ -24,7 +24,9 @@ struct ScheduleNavigationLink_Previews: PreviewProvider {
         let groups: [Group] = Group.getAll()
         if let testGroup = groups.first(where: { $0.name == "050502" }) {
             NavigationView {
-                ScheduleNavigationLink(scheduled: testGroup)
+                Form {
+                    ScheduleNavigationLink(scheduled: testGroup)
+                }
             }
         }
     }

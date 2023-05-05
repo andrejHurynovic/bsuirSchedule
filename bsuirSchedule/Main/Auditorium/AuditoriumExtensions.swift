@@ -9,6 +9,7 @@ import CoreData
 
 extension Auditorium: Identifiable {}
 extension Auditorium: Favored {}
+
 extension Auditorium: EducationRanged { }
 
 extension Auditorium: Scheduled {

@@ -11,18 +11,6 @@ struct ContentView: View {
     
     var body: some View {
         HomeView()
-//        TabView {
-//            FavoritesView()
-//                .tabItem { Label("Избранные", systemImage: "star.fill") }
-//            GroupsView()
-//                .tabItem { Label("Расписание", systemImage: "calendar") }
-//            EmployeesView()
-//                .tabItem { Label("Преподаватели", systemImage: "person.3") }
-//            AuditoriesView()
-//                .tabItem { Label("Аудитории", systemImage: "mappin") }
-//            SettingsView()
-//                .tabItem { Label("Настройки", systemImage: "gearshape") }
-//        }
     }
 }
 

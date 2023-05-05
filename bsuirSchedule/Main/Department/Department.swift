@@ -17,34 +17,29 @@ extension Department {
     @NSManaged public var id: Int16
     @NSManaged public var name: String?
     @NSManaged public var abbreviation: String
+    
+    @NSManaged public var favroite: Bool
 
     @NSManaged public var auditories: NSSet?
     @NSManaged public var employees: NSSet?
 }
 
-//MARK: - Generated accessors for employees
+//MARK: - Generated accessors
 extension Department {
     @objc(addAuditoriesObject:)
     @NSManaged public func addToAuditories(_ value: Auditorium)
-    
     @objc(removeAuditoriesObject:)
     @NSManaged public func removeFromAuditories(_ value: Auditorium)
-    
     @objc(addAuditories:)
     @NSManaged public func addToAuditories(_ values: NSSet)
-    
     @objc(removeAuditories:)
     @NSManaged public func removeFromAuditories(_ values: NSSet)
-    
     @objc(addEmployeesObject:)
     @NSManaged public func addToEmployees(_ value: Department)
-    
     @objc(removeEmployeesObject:)
     @NSManaged public func removeFromEmployees(_ value: Department)
-    
     @objc(addEmployees:)
     @NSManaged public func addToEmployees(_ values: NSSet)
-    
     @objc(removeEmployees:)
     @NSManaged public func removeFromEmployees(_ values: NSSet)
 }

@@ -22,7 +22,7 @@ struct DepartmentsView: View {
         }
         .navigationTitle("Аудитории")
         .refreshable { await DepartmentsViewModel.update() }
-        
+                
         .searchable(text: $viewModel.searchText, prompt: "Название, аббревиатура")
         .onChange(of: viewModel.predicate) { predicate in
             departments.nsPredicate = predicate
