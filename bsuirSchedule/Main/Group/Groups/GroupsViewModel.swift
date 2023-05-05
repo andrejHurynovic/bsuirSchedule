@@ -6,15 +6,20 @@
 //
 
 import SwiftUI
+import Combine
 
 class GroupsViewModel: ObservableObject {
+    @Published var predicate: NSPredicate?
+    
     @Published var searchText = ""
     
     @Published var selectedSectionType: GroupSectionType = .specialityAbbreviation
-    @Published var selectedFaculty: Faculty? = nil
-    @Published var selectedSpecialtyEducationType: EducationType? = nil
-    @Published var selectedEducationDegree: EducationDegree? = nil
-    @Published var selectedCourse: Int16? = nil
+    @Published var selectedFaculty: Faculty?
+    @Published var selectedSpecialtyEducationType: EducationType?
+    @Published var selectedEducationDegree: EducationDegree?
+    @Published var selectedCourse: Int16?
+    
+    @Published var cancellables = Set<AnyCancellable>()
     
     var menuDefaultRules: [Bool] { [selectedSectionType == .specialityAbbreviation,
                                     selectedFaculty == nil,
@@ -22,12 +27,41 @@ class GroupsViewModel: ObservableObject {
                                     selectedEducationDegree == nil,
                                     selectedCourse == nil] }
     
+    //MARK: - Initialization
+    
+    init() {
+        addSearchTextPublisher()
+        addSelectionSubscribers()
+    }
+    
+    private func addSearchTextPublisher() {
+        $searchText
+            .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.calculatePredicate()
+            }
+            .store(in: &cancellables)
+    }
+    private func addSelectionSubscribers() {
+        Publishers
+            .CombineLatest4($selectedFaculty, $selectedSpecialtyEducationType, $selectedEducationDegree, $selectedCourse)
+            .debounce(for: .milliseconds(500), scheduler:  DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.calculatePredicate()
+            }
+            .store(in: &cancellables)
+    }
+    
+    //MARK: - Methods
+    
     static func update() async {
         await Group.fetchAll()
         await Group.updateGroups()
     }
     
-    func calculatePredicate() -> NSPredicate? {
+    private func calculatePredicate() {
         var predicates: [NSPredicate] = []
         if let selectedFaculty = selectedFaculty {
             predicates.append(NSPredicate(format: "speciality.faculty == %@", selectedFaculty))
@@ -41,16 +75,18 @@ class GroupsViewModel: ObservableObject {
         if let selectedCourse = selectedCourse {
             predicates.append(NSPredicate(format: "course == \(selectedCourse)"))
         }
-        
         if searchText.isEmpty == false {
             predicates.append(NSCompoundPredicate(orPredicateWithSubpredicates: [NSPredicate(format: "name BEGINSWITH %@", searchText),
                                                                                  NSPredicate(format: "speciality.abbreviation BEGINSWITH[c] %@", searchText),
                                                                                  NSPredicate(format: "speciality.name BEGINSWITH[c] %@", searchText)]))
         }
         
-        guard predicates.isEmpty == false else { return nil }
+        guard predicates.isEmpty == false else {
+            self.predicate = nil
+            return
+        }
         
-        return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+        self.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         
     }
     

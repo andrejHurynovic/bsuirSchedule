@@ -33,9 +33,7 @@ struct GroupsView: View {
             .toolbar { toolbar }
             
             .searchable(text: $viewModel.searchText, prompt: "Номер, специальность")
-            .onChange(of: viewModel.searchText) { newText in
-                groups.nsPredicate = viewModel.calculatePredicate()
-            }
+            .onChange(of: viewModel.predicate) { groups.nsPredicate = $0 }
             
             .baseBackground()
     }
@@ -62,9 +60,6 @@ struct GroupsView: View {
                             .tag(faculty.self as Faculty?)
                     }
         }
-        .onChange(of: viewModel.selectedFaculty) { _ in
-            groups.nsPredicate = viewModel.calculatePredicate()
-        }
     }
     @ViewBuilder var specialtyEducationTypeSelector: some View  {
         Text("Форма:")
@@ -74,9 +69,6 @@ struct GroupsView: View {
                 Text(educationType.name)
                     .tag(educationType.self as EducationType?)
             }
-        }
-        .onChange(of: viewModel.selectedSpecialtyEducationType) { _ in
-            groups.nsPredicate = viewModel.calculatePredicate()
         }
     }
     @ViewBuilder var educationDegreeSelector: some View  {
@@ -88,9 +80,6 @@ struct GroupsView: View {
                     .tag(degree.self as EducationDegree?)
             }
         }
-        .onChange(of: viewModel.selectedEducationDegree) { _ in
-            groups.nsPredicate = viewModel.calculatePredicate()
-        }
     }
     @ViewBuilder var courseSelector: some View  {
         Text("Курс:")
@@ -100,9 +89,6 @@ struct GroupsView: View {
                 Text(String(course))
                     .tag(Int16(course.self) as Int16?)
             }
-        }
-        .onChange(of: viewModel.selectedCourse) { _ in
-            groups.nsPredicate = viewModel.calculatePredicate()
         }
     }
     
