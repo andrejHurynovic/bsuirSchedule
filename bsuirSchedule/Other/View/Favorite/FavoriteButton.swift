@@ -12,10 +12,10 @@ struct FavoriteButton<FavoredType: Favored>: View {
     var circle: Bool = false
     
     var labelString: String {
-        item.favroite ? "Убрать из избранных" : "Добавить в избранные"
+        item.favorite ? "Убрать из избранных" : "Добавить в избранные"
     }
     var imageString: String {
-        item.favroite ?
+        item.favorite ?
         (circle ? "star.circle.fill" : "star.slash") :
         (circle ? "star.circle" : "star.fill")
     }
@@ -34,7 +34,7 @@ struct FavoriteButton<FavoredType: Favored>: View {
         let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
         
         if let backgroundItem = backgroundContext.object(with: item.objectID) as? FavoredType {
-            backgroundItem.favroite.toggle()
+            backgroundItem.favorite.toggle()
             
             backgroundContext.perform {
                 try! backgroundContext.save()

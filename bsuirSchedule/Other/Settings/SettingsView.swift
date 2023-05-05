@@ -15,15 +15,15 @@ struct SettingsView: View {
         entity: Group.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Group.name, ascending: true)],
         predicate:
-            NSPredicate(format: "favroite = true"))
-    var favroiteGroups: FetchedResults<Group>
+            NSPredicate(format: "favorite = true"))
+    var favoriteGroups: FetchedResults<Group>
     @FetchRequest(
         entity: Employee.entity(),
         sortDescriptors: [
             NSSortDescriptor(keyPath: \Employee.lastName, ascending: true),
             NSSortDescriptor(keyPath: \Employee.firstName, ascending: true)],
-        predicate: NSPredicate(format: "favroite = true"))
-    var favroiteEmployees: FetchedResults<Employee>
+        predicate: NSPredicate(format: "favorite = true"))
+    var favoriteEmployees: FetchedResults<Employee>
     @FetchRequest(
         entity: Auditorium.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Auditorium.outsideUniversity, ascending: true),
@@ -31,8 +31,8 @@ struct SettingsView: View {
                           NSSortDescriptor(keyPath: \Auditorium.floor, ascending: true),
                           NSSortDescriptor(keyPath: \Auditorium.name, ascending: true)],
         predicate:
-            NSPredicate(format: "favroite = true"))
-    var favroiteAuditories: FetchedResults<Auditorium>
+            NSPredicate(format: "favorite = true"))
+    var favoriteAuditories: FetchedResults<Auditorium>
     
     var body: some View {
         Form {
@@ -68,7 +68,7 @@ struct SettingsView: View {
     @ViewBuilder var primaryGroupPicker: some View {
         Picker(selection: $viewModel.primaryGroup, label: Text("Выбор")) {
             Text("Нет").tag(nil as String?)
-            ForEach(favroiteGroups) { group in
+            ForEach(favoriteGroups) { group in
                 Text(group.name).tag(group.name as String?)
             }
         }
@@ -81,7 +81,7 @@ struct SettingsView: View {
     @ViewBuilder var primaryEmployeePicker: some View {
         Picker(selection: $viewModel.primaryEmployee, label: Text("Выбор")) {
             Text("Нет").tag(nil as Int?)
-            ForEach(favroiteEmployees) { employee in
+            ForEach(favoriteEmployees) { employee in
                 Text(employee.lastName).tag(Int(employee.id) as Int?)
             }
         }
@@ -89,7 +89,7 @@ struct SettingsView: View {
     @ViewBuilder var primaryAuditoriumPicker: some View {
         Picker(selection: $viewModel.primaryAuditorium, label: Text("Выбор")) {
             Text("Нет").tag(nil as String?)
-            ForEach(favroiteAuditories) { auditorium in
+            ForEach(favoriteAuditories) { auditorium in
                 Text(auditorium.formattedName).tag(auditorium.formattedName as String?)
             }
         }

@@ -18,7 +18,7 @@ extension Department {
     @NSManaged public var name: String?
     @NSManaged public var abbreviation: String
     
-    @NSManaged public var favroite: Bool
+    @NSManaged public var favorite: Bool
 
     @NSManaged public var auditories: NSSet?
     @NSManaged public var employees: NSSet?

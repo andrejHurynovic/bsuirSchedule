@@ -9,18 +9,18 @@ import SwiftUI
 
 struct HomeView: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\Group.name)],
-                  predicate: NSPredicate(format: "favroite = true"),
+                  predicate: NSPredicate(format: "favorite = true"),
                   animation: .spring())
     var groups: FetchedResults<Group>
     @FetchRequest(sortDescriptors: [SortDescriptor(\Employee.lastName),
                                     SortDescriptor(\Employee.firstName),
                                     SortDescriptor(\Employee.middleName)],
-                  predicate: NSPredicate(format: "favroite = true"),
+                  predicate: NSPredicate(format: "favorite = true"),
                   animation: .spring())
     var employees: FetchedResults<Employee>
     @FetchRequest(sortDescriptors: [SortDescriptor(\Auditorium.building),
                                     SortDescriptor(\Auditorium.formattedName)],
-                  predicate: NSPredicate(format: "favroite = true"),
+                  predicate: NSPredicate(format: "favorite = true"),
                   animation: .spring())
     var auditories: FetchedResults<Auditorium>
     

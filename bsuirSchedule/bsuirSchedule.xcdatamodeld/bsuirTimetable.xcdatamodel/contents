@@ -3,7 +3,7 @@
     <entity name="Auditorium" representedClassName="Auditorium" syncable="YES">
         <attribute name="building" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="capacity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="favroite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="favorite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="floor" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="formattedName" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
@@ -61,7 +61,7 @@
         <attribute name="educationStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="examsEnd" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="examsStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="favroite" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="favorite" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="firstName" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="Integer 32" usesScalarValueType="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String"/>
@@ -97,7 +97,7 @@
         <attribute name="educationStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="examsEnd" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="examsStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="favroite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="favorite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="lessonsUpdateDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="nickname" optional="YES" attributeType="String"/>

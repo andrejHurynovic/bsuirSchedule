@@ -18,7 +18,7 @@ extension Group {
     @NSManaged public var numberOfStudents: Int16
     @NSManaged public var educationDegreeValue: Int16
     @NSManaged public var course: Int16
-    @NSManaged public var favroite: Bool
+    @NSManaged public var favorite: Bool
     @NSManaged public var lessonsUpdateDate: Date?
     
     @NSManaged public var nickname: String?

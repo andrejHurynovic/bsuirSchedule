@@ -20,7 +20,7 @@ extension Auditorium {
     @NSManaged public var formattedName: String
     ///Used for constraints and effective search when decoding Lessons.
     @NSManaged public var note: String?
-    @NSManaged public var favroite: Bool
+    @NSManaged public var favorite: Bool
     
     @NSManaged public var outsideUniversity: Bool
     @NSManaged public var building: Int16
