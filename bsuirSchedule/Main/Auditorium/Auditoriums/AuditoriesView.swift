@@ -12,10 +12,9 @@ struct AuditoriesView: View {
         SortDescriptor(\Auditorium.building),
         SortDescriptor(\Auditorium.formattedName)],
                   animation: .spring())
-    var auditories: FetchedResults<Auditorium>
-    
+    private var auditories: FetchedResults<Auditorium>
     @FetchRequest(sortDescriptors: [SortDescriptor(\AuditoriumType.id)])
-    var auditoriumTypes: FetchedResults<AuditoriumType>
+    private var auditoriumTypes: FetchedResults<AuditoriumType>
     
     @StateObject private var viewModel = AuditoriesViewModel()
     
@@ -27,12 +26,14 @@ struct AuditoriesView: View {
             TotalFooterView(text: "Аудиторий", count: auditories.count)
         }
         .navigationTitle("Аудитории")
-        .refreshable { await viewModel.update() }
+        .refreshable { await AuditoriesViewModel.update() }
         
         .toolbar { toolbar }
         
         .searchable(text: $viewModel.searchText, prompt: "Номер, подразделение")
-        .onChange(of: viewModel.searchText) { _ in auditories.nsPredicate = viewModel.calculatePredicate() }
+        .onChange(of: viewModel.predicate) { predicate in
+            auditories.nsPredicate = predicate
+        }
         .baseBackground()
     }
     
@@ -54,7 +55,6 @@ struct AuditoriesView: View {
                     .tag(type.self as AuditoriumType?)
             }
         }
-        .onChange(of: viewModel.selectedAuditoriumType) { _ in auditories.nsPredicate = viewModel.calculatePredicate() }
         
     }
     

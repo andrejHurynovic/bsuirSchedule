@@ -20,6 +20,7 @@ class EmployeesViewModel: ObservableObject {
     var menuDefaultRules: [Bool] { [selectedSectionType == .firstLetter] }
     
     //MARK: - Initialization
+    
     init() {
         addSearchTextPublisher()
     }
