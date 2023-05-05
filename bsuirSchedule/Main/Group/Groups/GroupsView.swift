@@ -10,13 +10,13 @@ import SwiftUI
 struct GroupsView: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\Group.name)],
                   animation: .spring())
-    var groups: FetchedResults<Group>
+    private var groups: FetchedResults<Group>
     @FetchRequest(sortDescriptors: [SortDescriptor(\Faculty.abbreviation)],
                   animation: .spring())
-    var faculties: FetchedResults<Faculty>
+    private var faculties: FetchedResults<Faculty>
     @FetchRequest(sortDescriptors: [SortDescriptor(\EducationType.id)],
                   animation: .spring())
-    var educationTypes: FetchedResults<EducationType>
+    private var educationTypes: FetchedResults<EducationType>
     
     @StateObject private var viewModel = GroupsViewModel()
     
