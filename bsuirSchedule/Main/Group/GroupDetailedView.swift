@@ -98,11 +98,7 @@ struct GroupDetailedView: View {
         }
     }
     @ViewBuilder var lessons: some View {
-        NavigationLink {
-            ScheduleView(scheduled: group)
-        } label: {
-            Label("Расписание", systemImage: "calendar")
-        }
+        ScheduleNavigationLink(scheduled: group)
     }
     @ViewBuilder var flow: some View {
         if let flow = group.flow {

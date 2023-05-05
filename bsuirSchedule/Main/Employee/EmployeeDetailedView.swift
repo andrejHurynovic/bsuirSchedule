@@ -115,11 +115,7 @@ struct EmployeeDetailedView: View {
     }
     @ViewBuilder var lessons: some View {
         if let lessons = employee.lessons?.allObjects as? [Lesson], lessons.isEmpty == false {
-            NavigationLink {
-                ScheduleView(scheduled: employee)
-            } label: {
-                Label("Расписание", systemImage: "calendar")
-            }
+            ScheduleNavigationLink(scheduled: employee)
         }
     }
     

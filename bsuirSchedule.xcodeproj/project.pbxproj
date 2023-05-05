@@ -45,6 +45,8 @@
 		F638C00A2A057AB70021FA77 /* DepartmentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F638C0092A057AB70021FA77 /* DepartmentsView.swift */; };
 		F638C00E2A057E8E0021FA77 /* DepartmentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F638C00D2A057E8D0021FA77 /* DepartmentsViewModel.swift */; };
 		F638C0102A057FAD0021FA77 /* DepartmentsGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F638C00F2A057FAD0021FA77 /* DepartmentsGridView.swift */; };
+		F638C0122A05827B0021FA77 /* ScheduleNavigationLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = F638C0112A05827B0021FA77 /* ScheduleNavigationLink.swift */; };
+		F638C0142A0582E70021FA77 /* SquareGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = F638C0132A0582E70021FA77 /* SquareGrid.swift */; };
 		F63FC6BD272F01EA00C9F410 /* TaskDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63FC6BC272F01E900C9F410 /* TaskDetailedView.swift */; };
 		F643070929DF7D6800B3A98A /* FavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F643070829DF7D6800B3A98A /* FavoriteButton.swift */; };
 		F643070B29DF7D8500B3A98A /* Favored.swift in Sources */ = {isa = PBXBuildFile; fileRef = F643070A29DF7D8500B3A98A /* Favored.swift */; };
@@ -200,6 +202,8 @@
 		F638C0092A057AB70021FA77 /* DepartmentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentsView.swift; sourceTree = "<group>"; };
 		F638C00D2A057E8D0021FA77 /* DepartmentsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepartmentsViewModel.swift; sourceTree = "<group>"; };
 		F638C00F2A057FAD0021FA77 /* DepartmentsGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentsGridView.swift; sourceTree = "<group>"; };
+		F638C0112A05827B0021FA77 /* ScheduleNavigationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleNavigationLink.swift; sourceTree = "<group>"; };
+		F638C0132A0582E70021FA77 /* SquareGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareGrid.swift; sourceTree = "<group>"; };
 		F63FC6BC272F01E900C9F410 /* TaskDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailedView.swift; sourceTree = "<group>"; };
 		F643070829DF7D6800B3A98A /* FavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteButton.swift; sourceTree = "<group>"; };
 		F643070A29DF7D8500B3A98A /* Favored.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favored.swift; sourceTree = "<group>"; };
@@ -347,6 +351,7 @@
 		F606AFB129DE36B2007180E6 /* Grids */ = {
 			isa = PBXGroup;
 			children = (
+				F638C0132A0582E70021FA77 /* SquareGrid.swift */,
 				F60D44AE29DC68CC0008E4F4 /* SectionsSquareGrid.swift */,
 				F612D8B329DB812C00D4DDEB /* SquareView.swift */,
 			);
@@ -418,6 +423,7 @@
 			children = (
 				F6748DF228DFB7C80072FB04 /* Scheduled.swift */,
 				F687043029FEE25300A3CF0C /* ClosestScheduleView.swift */,
+				F638C0112A05827B0021FA77 /* ScheduleNavigationLink.swift */,
 				F69009D326F6958000379A74 /* ScheduleViewModel.swift */,
 				F691602D29001F290033AE14 /* ScheduleView.swift */,
 				F62FC6A929E8405F00F6B941 /* Section */,
@@ -925,6 +931,7 @@
 				F60D44BA29DC75710008E4F4 /* EmployeeSectionType.swift in Sources */,
 				F68465FB26FA5321000F185E /* FacultyDecoder.swift in Sources */,
 				F6CAAA4829F9C96F00836230 /* EducationBounded.swift in Sources */,
+				F638C0122A05827B0021FA77 /* ScheduleNavigationLink.swift in Sources */,
 				F68465FC26FA5321000F185E /* Faculty.swift in Sources */,
 				F60D44AF29DC68CC0008E4F4 /* SectionsSquareGrid.swift in Sources */,
 				F670BEFB2A001F5B00D76D70 /* EmployeeExtensions.swift in Sources */,
@@ -977,6 +984,7 @@
 				F638C0102A057FAD0021FA77 /* DepartmentsGridView.swift in Sources */,
 				F63FC6BD272F01EA00C9F410 /* TaskDetailedView.swift in Sources */,
 				F670BEF72A001E5400D76D70 /* AuditoriumDecodingError.swift in Sources */,
+				F638C0142A0582E70021FA77 /* SquareGrid.swift in Sources */,
 				F61C523F26E64619002CF234 /* Lesson.swift in Sources */,
 				F638C00A2A057AB70021FA77 /* DepartmentsView.swift in Sources */,
 				F6BC18A52811D4A100BA549D /* DateFormatters.swift in Sources */,

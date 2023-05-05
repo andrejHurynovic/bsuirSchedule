@@ -67,11 +67,7 @@ struct AuditoriumDetailedView: View {
     }
     @ViewBuilder var scheduleButton: some View {
         if auditorium.lessons?.allObjects.isEmpty == false {
-            NavigationLink {
-                ScheduleView(scheduled: auditorium)
-            } label: {
-                Label("Расписание аудитории", systemImage: "calendar")
-            }
+            ScheduleNavigationLink(scheduled: auditorium)
         }
     }
     
