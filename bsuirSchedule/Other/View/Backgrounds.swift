@@ -12,7 +12,13 @@ import SwiftUI
 struct baseBackgroundViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
+#if os(iOS)
             .background(Color(UIColor.systemGroupedBackground))
+        
+#elseif os(macOS)
+            .background(Color(NSColor.underPageBackgroundColor))
+        
+#endif
     }
 }
 
@@ -28,8 +34,15 @@ extension View {
 struct roundedRectangleBackgroundViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
+#if os(iOS)
             .background(Color(uiColor: .secondarySystemGroupedBackground),
                         in: RoundedRectangle(cornerRadius: 16))
+        
+#elseif os(macOS)
+            .background(Color(NSColor.windowBackgroundColor))
+        
+#endif
+        
     }
 }
 
