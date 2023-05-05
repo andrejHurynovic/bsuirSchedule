@@ -10,7 +10,7 @@ import SwiftUI
 extension Color: RawRepresentable {
     public init?(rawValue: Data) {
         #if os(iOS)
-        guard let uiColor = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: rawValue) else {
+        guard let uiColor = try? NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: rawValue) else {
             self = .primary
             return
         }
