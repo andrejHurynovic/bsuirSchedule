@@ -58,7 +58,7 @@ struct AuditoriumDetailedView: View {
     @ViewBuilder var department: some View {
         if let department = auditorium.department {
             NavigationLink {
-                //                DepartmentDetailedView()
+                DepartmentDetailedView(department: department)
             } label: {
                 Label(department.formattedName,
                       systemImage: "person.2.fill")

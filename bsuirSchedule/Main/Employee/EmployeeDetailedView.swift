@@ -83,7 +83,7 @@ struct EmployeeDetailedView: View {
             //One department.
             if departments.count == 1, let department = departments.first {
                 NavigationLink {
-                    //                            DepartmentDetailedView(department: department)
+                    DepartmentDetailedView(department: department)
                 } label: {
                     Label(department.formattedName,
                           systemImage: "person.2.fill")
@@ -93,7 +93,7 @@ struct EmployeeDetailedView: View {
                 DisclosureGroup {
                     ForEach(departments, id: \.self) { department in
                         NavigationLink {
-                            //                            DepartmentDetailedView(department: department)
+                            DepartmentDetailedView(department: department)
                         } label: {
                             Text(department.formattedName)
                         }
