@@ -11,7 +11,7 @@ import CoreData
 
 extension Group: AbleToFetchAll {
     static func fetchAll() async {
-        let data = try! await URLSession.shared.data(from: FetchDataType.groups.rawValue)
+        guard let data = try? await URLSession.shared.data(for: .groups) else { return }
         let startTime = CFAbsoluteTimeGetCurrent()
         guard let dictionaries = try! JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] else {
             Log.error("Can't create group dictionaries.")

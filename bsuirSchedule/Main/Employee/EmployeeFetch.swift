@@ -9,7 +9,7 @@ import CoreData
 
 extension Employee: AbleToFetchAll {
     static func fetchAll() async {
-        guard let data = try? await URLSession.shared.data(from: FetchDataType.employees.rawValue) else { return }
+        guard let data = try? await URLSession.shared.data(for: .employees) else { return }
         let startTime = CFAbsoluteTimeGetCurrent()
         guard let dictionaries = try! JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] else {
             Log.error("Can't create employees dictionaries.")
