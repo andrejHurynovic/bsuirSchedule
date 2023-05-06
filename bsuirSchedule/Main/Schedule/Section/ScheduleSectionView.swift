@@ -10,18 +10,13 @@ import SwiftUI
 struct ScheduleSectionView: View {
     
     @ObservedObject var section: ScheduleSection
-    @ObservedObject var lessonViewConfiguration: LessonViewConfiguration
-    
-    var today: Bool = false
-    
     @Binding var showDatePicker: Bool
     
     var body: some View {
         Section {
             ForEach(section.lessons) { lesson in
                 LessonView(lesson: lesson,
-                           configuration: lessonViewConfiguration,
-                           today: today
+                           today: section.today
                 )
                 .id(lesson.id(sectionID: section.id))
             }

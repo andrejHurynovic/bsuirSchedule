@@ -19,9 +19,11 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
     var body: some View {
         ZStack(alignment: .center) {
             progressView
-            scrollView
+            schedule
+                .baseBackground()
             searchField
         }
+        .environmentObject(lessonViewConfiguration)
         .sheet(isPresented: $viewModel.showDatePicker) {
             datePicker
                 .presentationDetents([.medium])
@@ -59,38 +61,56 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
                 await viewModel.updateSections(scheduled.lessons?.allObjects as? [Lesson])
             }
         }
+        .onChange(of: viewModel.selectedRepresentationType) { _ in
+            Task {
+                await viewModel.updateSections(scheduled.lessons?.allObjects as? [Lesson])
+            }
+        }
     }
     
-    var scrollView: some View {
+    @ViewBuilder var schedule: some View {
+        if let sections = viewModel.filteredSections,
+           sections.isEmpty == false {
+            switch viewModel.selectedRepresentationType {
+                case .page:
+                    page
+                case .scroll:
+                    scroll
+            }
+        }
+    }
+    var page: some View {
+        TabView(selection: $viewModel.selectedSectionID) {
+            ForEach(viewModel.filteredSections!) { section in
+                ScrollView {
+                    LessonsGridView {
+                        ScheduleSectionView(section: section,
+                                            showDatePicker: $viewModel.showDatePicker)
+                    }
+                    .padding(.horizontal)
+                    
+                }
+            }
+        }
+        .tabViewStyle(.page(indexDisplayMode: . never))
+    }
+    var scroll: some View {
         ScrollView {
             ScrollViewReader { scrollViewProxy in
-                lessonsGrid
-                    .onChange(of: viewModel.targetSection) { targetSection in
-                        viewModel.scrollTo(section: targetSection,
-                                           in: scrollViewProxy)
+                LessonsGridView {
+                    ForEach(viewModel.filteredSections!) { section in
+                        ScheduleSectionView(section: section,
+                                            showDatePicker: $viewModel.showDatePicker)
                     }
+                }
+                .padding(.horizontal)
+                .onChange(of: viewModel.selectedSectionID) { targetID in
+                    viewModel.scrollTo(targetID,
+                                       in: scrollViewProxy)
+                }
             }
         }
         .opacity(viewModel.showScrollView ? 1.0 : 0.0)
-        .baseBackground()
-    }
-    
-    //MARK: - Lessons grid
-    
-    @ViewBuilder var lessonsGrid: some View {
-        if let sections = viewModel.filteredSections,
-           sections.isEmpty == false {
-            
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 240, maximum: 500))], alignment: .leading, spacing: 8, pinnedViews: []) {
-                ForEach(sections) { section in
-                    ScheduleSectionView(section: section,
-                                        lessonViewConfiguration: lessonViewConfiguration,
-                                        showDatePicker: $viewModel.showDatePicker)
-                }
-            }
-            .padding(.horizontal)
-        }
-        
     }
     
     //MARK: - Progress and footnote
@@ -153,7 +173,8 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
     
     @ViewBuilder var datePicker: some View {
         if viewModel.showDatePicker,
-           let educationRange = scheduled.educationRange {
+           let educationRange = scheduled.educationRange ?? (scheduled.lessons?.allObjects as? [Lesson])?.educationRange {
+            
             DatePicker("Выбор даты:",
                        selection: $viewModel.selectedDate,
                        in: educationRange,
@@ -184,6 +205,7 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
         MenuView(defaultRules: [lessonViewConfiguration == ScheduledType.defaultLessonSettings(),
                                 viewModel.defaultRules]) {
             FavoriteButton(item: scheduled)
+            SectionTypePicker(value: $viewModel.selectedRepresentationType)
             SectionTypePicker(value: $viewModel.selectedSectionType)
             subgroupPicker
             lessonSettings
@@ -242,7 +264,7 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
 struct LessonsView_Previews: PreviewProvider {
     static var previews: some View {
         let groups: [Group] = Group.getAll()
-        if let testGroup = groups.first(where: { $0.name == "050502" }) {
+        if let testGroup = groups.first(where: { $0.name == "950502" }) {
             NavigationView {
                 ScheduleView(scheduled: testGroup)
             }

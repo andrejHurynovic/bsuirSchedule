@@ -10,12 +10,13 @@ import Combine
 
 class ScheduleViewModel: ObservableObject {
     
+    @Published var selectedRepresentationType: ScheduleRepresentationType = .page
     @Published var selectedSectionType: ScheduleSectionType = .date
     
     @Published var showScrollView = false
     
-    @Published var targetSection: ScheduleSection?
-    var scrollWithAnimation = true
+    @Published var selectedSectionID: String = ""
+    private var scrollWithAnimation = true
     
     @Published var searchText = ""
     @Published var showSearchField = false
@@ -56,8 +57,7 @@ class ScheduleViewModel: ObservableObject {
     }
     func addSearchTextSubscriber() {
         $searchText
-            .debounce(for: .seconds(0.5),
-                      scheduler: DispatchQueue.main)
+            .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
             .sink { [weak self] searchText in
                 guard let self = self else { return }
                 self.updateFilteredSections()
@@ -69,53 +69,34 @@ class ScheduleViewModel: ObservableObject {
     //MARK: - Sections
     
     func updateSections(_ lessons: [Lesson]?) async {
-        guard let lessons = lessons else { return }
-        
-//        if let dividedEducationDates = lessons.dividedEducationDates {
-//            if let nextDates = dividedEducationDates.nextDates {
-//                let nextSections = await lessons
-//                    .sections(selectedSectionType, educationDates: nextDates)
-//                await MainActor.run {
-//                    self.sections = nextSections
-//                    self.filteredSections = nextSections.filtered(abbreviation: self.searchText, subgroup: self.selectedSubgroup)
-//                }
-//            }
-//
-//            if let previousDates = dividedEducationDates.previousDates {
-//                let previousSections = await lessons
-//                    .sections(selectedSectionType, educationDates: previousDates)
-//                await MainActor.run {
-//                    scrollWithAnimation = false
-//                    targetSection = self.sections?.first
-//                    if self.sections != nil {
-//                        self.sections?.insert(contentsOf: previousSections, at: .zero)
-//                        self.filteredSections?.insert(contentsOf: previousSections
-//                            .filtered(abbreviation: self.searchText, subgroup: self.selectedSubgroup), at: .zero)
-//                    } else {
-//                        self.sections = previousSections
-//                        self.filteredSections = previousSections.filtered(abbreviation: self.searchText, subgroup: self.selectedSubgroup)
-//                    }
-//
-//                                withAnimation(.linear(duration: 0.1)) {
-//                                    showScrollView = true
-//                                }
-//                }
-//            }
-//        }
+        guard let lessons = lessons,
+        lessons.isEmpty == false else { return }
         
         let sections = await lessons.sections(selectedSectionType)
+        let filteredSections = sections.filtered(abbreviation: self.searchText, subgroup: self.selectedSubgroup)
         let closestSection = await sections.closest(to: .now, type: selectedSectionType)
-
+        
         await MainActor.run {
             self.sections = sections
-            self.filteredSections = sections.filtered(abbreviation: self.searchText, subgroup: self.selectedSubgroup)
-
-            scrollWithAnimation = true
-            targetSection = closestSection
-
-            withAnimation(.linear(duration: 0.1)) {
-                showScrollView = true
+            self.filteredSections = filteredSections
+        
+            switch selectedRepresentationType {
+                case .page:
+                    self.selectedSectionID = closestSection?.id ?? ""
+                    showScrollView = false
+                case .scroll:
+                    self.selectedSectionID = ""
+                    Task {
+                        await MainActor.run {
+                            scrollWithAnimation = false
+                            self.selectedSectionID = closestSection?.id ?? ""
+                            withAnimation(.linear(duration: 0.1)) {
+                                showScrollView = true
+                            }
+                        }
+                    }
             }
+            
         }
         
     }
@@ -127,7 +108,7 @@ class ScheduleViewModel: ObservableObject {
             self.filteredSections = sections
             Task {
                 await self.scrollToDate(.now,
-                                        withAnimation: false)
+                                        scrollWithAnimation: false)
             }
             return
         }
@@ -135,33 +116,35 @@ class ScheduleViewModel: ObservableObject {
         self.filteredSections = self.sections.map( { $0.filtered(abbreviation: searchText, subgroup: selectedSubgroup) })
         Task {
             await self.scrollToDate(.now,
-                                    withAnimation: false)
+                                    scrollWithAnimation: false)
         }
     }
     
-    //MARK: - ScrollViewProxy
-    func scrollTo(section: ScheduleSection?,
-                  in proxy: ScrollViewProxy) {
-        if let targetSection = section {
-            if scrollWithAnimation {
-                withAnimation {
-                    proxy.scrollTo(targetSection.id, anchor: .top)
-                }
-            } else {
-                proxy.scrollTo(targetSection.id, anchor: .top)
-            }
-        }
-        self.targetSection = nil
-    }
-    
-    func scrollToDate(_ date: Date, withAnimation: Bool = true) async {
-        self.scrollWithAnimation = withAnimation
+    func scrollToDate(_ date: Date, scrollWithAnimation: Bool = true) async {
+        self.scrollWithAnimation = scrollWithAnimation
         let section = await filteredSections?.closest(to: date,
                                                       type: selectedSectionType)
         await MainActor.run {
-            targetSection = section
+            withAnimation {
+                self.selectedSectionID = section?.id ?? ""
+            }
         }
         
+    }
+    
+    //MARK: - ScrollViewProxy
+    func scrollTo(_ targetID: String?,
+                  in proxy: ScrollViewProxy) {
+        if let targetID = targetID {
+            if scrollWithAnimation {
+                withAnimation {
+                    proxy.scrollTo(targetID, anchor: .top)
+                }
+            } else {
+                proxy.scrollTo(targetID, anchor: .top)
+            }
+        }
+        self.selectedSectionID = ""
     }
     
 }

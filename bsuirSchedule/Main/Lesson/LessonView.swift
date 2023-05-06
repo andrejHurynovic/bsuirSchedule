@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LessonView: View {
     @ObservedObject var lesson: Lesson
-    @ObservedObject var configuration: LessonViewConfiguration
+    @EnvironmentObject var configuration: LessonViewConfiguration
     
     var today: Bool
     var passedLesson: Bool { today && lesson.timeRange.upperBound < Date().time }
@@ -40,13 +40,13 @@ struct LessonView: View {
             }
         } preview: {
             LessonView(lesson: lesson,
-                       configuration: LessonViewConfiguration(showAbbreviation: false,
-                                                    showGroups: true,
-                                                    showEmployees: true,
-                                                    showWeeks: true,
-                                                    showDates: true,
-                                                    showDate: true),
                        today: false)
+            .environmentObject(LessonViewConfiguration(showAbbreviation: false,
+                                                       showGroups: true,
+                                                       showEmployees: true,
+                                                       showWeeks: true,
+                                                       showDates: true,
+                                                       showDate: true))
         }
         
        
@@ -268,11 +268,15 @@ struct LessonView_Previews: PreviewProvider {
             
             ForEach(lessons) { lesson in
                 LessonView(lesson: lesson,
-                           configuration: Group.defaultLessonSettings(),
                            today: true)
                     .padding()
             }
+            .environmentObject(Group.defaultLessonSettings())
             
         }
     }
+}
+
+extension LessonView {
+    static var gridItem = GridItem(.adaptive(minimum: 256, maximum: 512))
 }
