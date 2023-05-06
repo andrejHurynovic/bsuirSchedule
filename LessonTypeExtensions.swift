@@ -16,17 +16,17 @@ extension LessonType {
 		
 		let rawData:
 		[(id: String, 				name: String, 						abbreviation: String, 	color: Color)] =
-		[("ЛК", 					"Лекция", 							"ЛК", 					Color.green),
-		 ("УЛк", 					"Удалённая лекция", 				"УЛК", 					Color.green),
-		 ("ПЗ", 					"Практическое занятие", 			"ПЗ", 					Color.red),
-		 ("УПз", 					"Удалённое практическое занятие", 	"УПз", 					Color.red),
-		 ("ЛР", 					"Лабораторная работа", 				"ЛР", 					Color.blue),
-		 ("УЛР", 					"Удалённая лабораторная работа", 	"УЛР", 					Color.blue),
-		 ("Консультация", 			"Консультация", 					"Конс", 				Color.secondary),
-		 ("Зачет", 					"Зачёт", 							"Зачёт", 				Color.primary),
-		 ("Кандидатский зачет", 	"Кандидатский зачёт", 				"Канд. зч", 			Color.primary),
-		 ("Экзамен", 				"Экзамен", 							"Экз", 					Color.primary),
-		 ("Кандидатский экзамен", 	"Кандидатский экзамен", 			"Канд. экз",		 	Color.primary)]
+		[("ЛК", 					"Лекция", 							"ЛК", 					Constants.Colors.lecture),
+		 ("УЛк", 					"Удалённая лекция", 				"УЛК", 					Constants.Colors.lecture),
+		 ("ПЗ", 					"Практическое занятие", 			"ПЗ", 					Constants.Colors.practice),
+		 ("УПз", 					"Удалённое практическое занятие", 	"УПз", 					Constants.Colors.practice),
+		 ("ЛР", 					"Лабораторная работа", 				"ЛР", 					Constants.Colors.laboratory),
+		 ("УЛР", 					"Удалённая лабораторная работа", 	"УЛР", 					Constants.Colors.laboratory),
+		 ("Консультация", 			"Консультация", 					"Конс", 				Constants.Colors.consultation),
+		 ("Зачет", 					"Зачёт", 							"Зачёт", 				Constants.Colors.exam),
+		 ("Кандидатский зачет", 	"Кандидатский зачёт", 				"Канд. зч", 			Constants.Colors.exam),
+		 ("Экзамен", 				"Экзамен", 							"Экз", 					Constants.Colors.exam),
+		 ("Кандидатский экзамен", 	"Кандидатский экзамен", 			"Канд. экз",		 	Constants.Colors.exam)]
 		
 		let _ = rawData.map { (id, name, abbreviation, color) in
 			LessonType(id: id,

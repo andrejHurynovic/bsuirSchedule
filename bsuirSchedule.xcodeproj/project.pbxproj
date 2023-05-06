@@ -47,6 +47,7 @@
 		F638C0122A05827B0021FA77 /* ScheduleNavigationLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = F638C0112A05827B0021FA77 /* ScheduleNavigationLink.swift */; };
 		F638C0142A0582E70021FA77 /* SquareGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = F638C0132A0582E70021FA77 /* SquareGrid.swift */; };
 		F638C0162A0586170021FA77 /* DepartmentNavigationLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = F638C0152A0586170021FA77 /* DepartmentNavigationLink.swift */; };
+		F638C0182A0588070021FA77 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F638C0172A0588070021FA77 /* Constants.swift */; };
 		F63FC6BD272F01EA00C9F410 /* TaskDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63FC6BC272F01E900C9F410 /* TaskDetailedView.swift */; };
 		F643070929DF7D6800B3A98A /* FavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F643070829DF7D6800B3A98A /* FavoriteButton.swift */; };
 		F643070B29DF7D8500B3A98A /* Favored.swift in Sources */ = {isa = PBXBuildFile; fileRef = F643070A29DF7D8500B3A98A /* Favored.swift */; };
@@ -199,6 +200,7 @@
 		F638C0112A05827B0021FA77 /* ScheduleNavigationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleNavigationLink.swift; sourceTree = "<group>"; };
 		F638C0132A0582E70021FA77 /* SquareGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareGrid.swift; sourceTree = "<group>"; };
 		F638C0152A0586170021FA77 /* DepartmentNavigationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentNavigationLink.swift; sourceTree = "<group>"; };
+		F638C0172A0588070021FA77 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F63FC6BC272F01E900C9F410 /* TaskDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailedView.swift; sourceTree = "<group>"; };
 		F643070829DF7D6800B3A98A /* FavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteButton.swift; sourceTree = "<group>"; };
 		F643070A29DF7D8500B3A98A /* Favored.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favored.swift; sourceTree = "<group>"; };
@@ -459,6 +461,7 @@
 				F632DEF426696CD300E4C55F /* Persistence.swift */,
 				F632DEF626696CD300E4C55F /* bsuirSchedule.xcdatamodeld */,
 				F632DEED26696CCB00E4C55F /* ContentView.swift */,
+				F638C0172A0588070021FA77 /* Constants.swift */,
 				F6D4AAB629BEB5260044481B /* Log.swift */,
 				F643072029E0CC7600B3A98A /* Main */,
 				F601E5A7273191C300773F02 /* Deprecated */,
@@ -914,6 +917,7 @@
 				F670BEFB2A001F5B00D76D70 /* EmployeeExtensions.swift in Sources */,
 				F695AA3A29D8439D0051A354 /* DepartmentDecoder.swift in Sources */,
 				F65309E729DCED12001DEC29 /* MenuView.swift in Sources */,
+				F638C0182A0588070021FA77 /* Constants.swift in Sources */,
 				F65A9A9529FFF9C000244488 /* LessonTypeConfigurationView.swift in Sources */,
 				F670BEE92A0017F900D76D70 /* URLSessionData.swift in Sources */,
 				F6F9AC1329F71B930069DD18 /* LessonViewConfiguration.swift in Sources */,

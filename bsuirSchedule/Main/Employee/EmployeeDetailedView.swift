@@ -86,7 +86,7 @@ struct EmployeeDetailedView: View {
                     DepartmentDetailedView(department: department)
                 } label: {
                     Label(department.formattedName,
-                          systemImage: "person.2.fill")
+                          systemImage: Constants.Symbols.department)
                 }
             } else {
                 //Multiple departments.
@@ -100,7 +100,7 @@ struct EmployeeDetailedView: View {
                     }
                 } label: {
                     Label("Подразделения",
-                          systemImage: "person.2.fill")
+                          systemImage: Constants.Symbols.department)
                 }
             }
         }

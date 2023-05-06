@@ -61,7 +61,7 @@ struct AuditoriumDetailedView: View {
                 DepartmentDetailedView(department: department)
             } label: {
                 Label(department.formattedName,
-                      systemImage: "person.2.fill")
+                      systemImage: Constants.Symbols.department)
             }
         }
     }

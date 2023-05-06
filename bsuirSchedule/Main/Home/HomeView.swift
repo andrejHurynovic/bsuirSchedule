@@ -48,7 +48,7 @@ struct HomeView: View {
                         .navigationTitle("Избранные")
             .toolbar(content: {
                 NavigationLink(destination: SettingsView()) {
-                    Image(systemName: "gear")
+                    Image(systemName: Constants.Symbols.configuration)
                 }
             })
             

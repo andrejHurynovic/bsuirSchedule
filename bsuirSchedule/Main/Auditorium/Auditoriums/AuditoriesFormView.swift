@@ -16,7 +16,7 @@ struct AuditoriesFormView: View {
                 AuditoriumFormNavigationLink(auditorium: auditorium)
             }
         } label: {
-            Label("Аудитории", systemImage: "door.left.hand.open")
+            Label("Аудитории", systemImage: Constants.Symbols.auditorium)
         }
     }
 }

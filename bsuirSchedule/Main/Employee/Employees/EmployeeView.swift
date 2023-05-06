@@ -83,7 +83,7 @@ struct EmployeeView: View {
             .clipShape(Circle())
     }
     var photoPlaceholder: some View {
-        Image(systemName: "person.circle.fill")
+        Image(systemName: Constants.Symbols.employee)
             .resizable()
             .frame(width: imageSize, height: imageSize)
     }

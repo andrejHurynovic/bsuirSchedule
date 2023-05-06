@@ -123,7 +123,7 @@ struct LessonView: View {
     @ViewBuilder var auditories: some View {
         if let auditories = lesson.auditories?.allObjects as? [Auditorium], auditories.isEmpty == false {
             HStack(alignment: .top) {
-                Image(systemName: "mappin")
+                Image(systemName: Constants.Symbols.auditorium)
                 VStack(alignment: .leading) {
                     ForEach(auditories.sorted(by: {$0.name < $1.name}), id: \.self) { auditorium in
                         NavigationLink {
@@ -164,14 +164,14 @@ struct LessonView: View {
         if configuration.showGroups {
             if let groups = self.lesson.groups?.allObjects as? [Group], groups.isEmpty == false {
                 HStack(alignment: .top) {
-                    Image(systemName: "person.2.circle")
+                    Image(systemName: Constants.Symbols.group)
                     Text(groups.description())
                         .contextMenu {
                             ForEach(groups.sorted(by: { String($0.name) < String($1.name) })) { group in
                                 Button {
                                     navigateToGroup(group: group)
                                 } label: {
-                                    Label("\(group.name), \(group.speciality!.abbreviation), \(group.speciality!.faculty!.abbreviation ?? "")", systemImage: "person.2.circle")
+                                    Label("\(group.name), \(group.speciality!.abbreviation), \(group.speciality!.faculty!.abbreviation ?? "")", systemImage: Constants.Symbols.group)
                                 }
                             }
                         }
@@ -195,7 +195,7 @@ struct LessonView: View {
                                     .frame(width: 37.0, height: 37.0)
                                     .clipShape(Circle())
                             } else {
-                                Image(systemName: "person.circle.fill")
+                                Image(systemName: Constants.Symbols.employee)
                                     .resizable()
                                     .frame(width: 37.0, height: 37.0)
                             }
@@ -221,7 +221,7 @@ struct LessonView: View {
     
     @ViewBuilder var weeks: some View {
         if configuration.showWeeks, let weeksString = lesson.weeksDescription {
-            Label(weeksString, systemImage: "calendar")
+            Label(weeksString, systemImage: Constants.Symbols.lessonDatesRange)
         }
     }
     

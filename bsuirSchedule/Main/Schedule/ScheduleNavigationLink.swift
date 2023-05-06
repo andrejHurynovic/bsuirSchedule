@@ -14,7 +14,7 @@ struct ScheduleNavigationLink<ScheduledType: Scheduled>: View where ScheduledTyp
         NavigationLink {
             ScheduleView(scheduled: scheduled)
         } label: {
-            Label("Расписание", systemImage: "calendar")
+            Label("Расписание", systemImage: Constants.Symbols.schedule)
         }
     }
 }

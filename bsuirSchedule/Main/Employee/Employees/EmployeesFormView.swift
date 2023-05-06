@@ -21,7 +21,7 @@ struct EmployeesFormView: View {
                 }
             }
         } label: {
-            Label("Преподаватели", systemImage: "person.3")
+            Label("Преподаватели", systemImage: Constants.Symbols.employees)
         }
     }
 }
