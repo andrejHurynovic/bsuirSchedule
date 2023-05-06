@@ -28,4 +28,7 @@ struct Constants {
         static let schedule = "calendar"
     }
     
+    static let relativeDateFormatterDatesRange = -1...1
+    static let todayCheckPublisherDatesRange = relativeDateFormatterDatesRange.lowerBound...5
+    
 }
