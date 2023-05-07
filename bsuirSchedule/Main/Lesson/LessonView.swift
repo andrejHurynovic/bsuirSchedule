@@ -21,17 +21,17 @@ struct LessonView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            if configuration.showAbbreviation {
-                shortTitle
-            } else {
+            if configuration.showFullSubject {
                 fullTitle
+            } else {
+                shortTitle
             }
-                mainBody
+            mainBody
         }
         .padding()
         .roundedRectangleBackground()
         .opacity(passedLesson ? 0.5 : 1.0)
-
+        
         .contextMenu {
             Text("Добавить задание")
             Button("Удалить занятие") {
@@ -41,15 +41,13 @@ struct LessonView: View {
         } preview: {
             LessonView(lesson: lesson,
                        today: false)
-            .environmentObject(LessonViewConfiguration(showAbbreviation: false,
+            .environmentObject(LessonViewConfiguration(showFullSubject: true,
                                                        showGroups: true,
                                                        showEmployees: true,
                                                        showWeeks: true,
                                                        showDates: true,
                                                        showDate: true))
         }
-        
-       
     }
     
     //MARK: - Title
@@ -59,10 +57,11 @@ struct LessonView: View {
             subjectLabel
             Divider()
             HStack(alignment:.top) {
-                lessonType
-                Spacer()
-                weeks
-                auditories
+                HStack {
+                    lessonType
+                    Spacer()
+                    auditories
+                }
             }
         }
     }
@@ -70,7 +69,6 @@ struct LessonView: View {
         HStack(alignment: .top) {
             subjectLabel
             Spacer()
-            weeks
             auditories
             lessonType
         }
@@ -79,24 +77,28 @@ struct LessonView: View {
     //MARK: - mainBody
     
     var mainBody: some View {
-        HStack(alignment: .bottom) {
-            VStack(alignment: .leading) {
+        VStack(alignment: .leading) {
+            HStack(alignment: .bottom) {
+                VStack(alignment: .leading) {
+                    Spacer()
+                    dates
+                    date
+                    weeks
+                    groups
+                    employees
+                }
                 Spacer()
-                groups
-                employees
-                note
+                time
             }
-            Spacer()
-            time
+            note
+            
         }
     }
-    
-    //MARK: - subjectLabel
     
     @ViewBuilder var subjectLabel: some View {
         HStack(alignment: .top) {
             subject
-            if configuration.showAbbreviation == false {
+            if configuration.showFullSubject == true {
                 Spacer(minLength: 0)
             }
             subgroup
@@ -108,7 +110,7 @@ struct LessonView: View {
     }
     
     @ViewBuilder var subject: some View {
-        let subjectText = configuration.showAbbreviation ? lesson.abbreviation : lesson.subject
+        let subjectText = configuration.showFullSubject ? lesson.subject : lesson.abbreviation
         if let subject = subjectText, subject.isEmpty == false {
             Text(subject)
         }
@@ -147,16 +149,16 @@ struct LessonView: View {
         if let type = lesson.type {
             
             ZStack {
-                if configuration.showAbbreviation {
+                if configuration.showFullSubject {
+                    Text(type.formattedName(abbreviated: false))
+                } else {
                     Text(type.formattedName(abbreviated: true))
                         .foregroundColor(lessonTypeColor)
-                } else {
-                    Text(type.formattedName(abbreviated: false))
                 }
             }
-                .font(.system(.body,
-                              design: .rounded,
-                              weight: .medium))
+            .font(.system(.body,
+                          design: .rounded,
+                          weight: .medium))
         }
     }
     
@@ -169,14 +171,13 @@ struct LessonView: View {
                         .contextMenu {
                             ForEach(groups.sorted(by: { String($0.name) < String($1.name) })) { group in
                                 Button {
-                                    navigateToGroup(group: group)
+                                    
                                 } label: {
                                     Label("\(group.name), \(group.speciality!.abbreviation), \(group.speciality!.faculty!.abbreviation ?? "")", systemImage: Constants.Symbols.group)
                                 }
                             }
                         }
                 }
-                .background(groupNavigationLink)
             }
         }
     }
@@ -219,9 +220,24 @@ struct LessonView: View {
         }
     }
     
+    @ViewBuilder var dates: some View {
+        if configuration.showDates,
+           lesson.date == nil,
+           let startDate = lesson.startLessonDate,
+           let endDate = lesson.endLessonDate {
+            Label("\(startDate.formatted(date: .numeric, time: .omitted))-\(endDate.formatted(date: .numeric, time: .omitted))", systemImage: Constants.Symbols.lessonDates)
+        }
+    }
+    @ViewBuilder var date: some View {
+        if configuration.showDate,
+           let date = lesson.date {
+            Label(date.formatted(date: .numeric, time: .omitted), systemImage: Constants.Symbols.lessonDate)
+        }
+    }
     @ViewBuilder var weeks: some View {
-        if configuration.showWeeks, let weeksString = lesson.weeksDescription {
-            Label(weeksString, systemImage: Constants.Symbols.lessonDatesRange)
+        if configuration.showWeeks,
+           let weeksString = lesson.weeksDescription {
+            Label(weeksString, systemImage: Constants.Symbols.lessonWeeks)
         }
     }
     
@@ -235,7 +251,9 @@ struct LessonView: View {
     }
     
     @ViewBuilder var note: some View {
-        if let note = lesson.note {
+        if let note = lesson.note,
+           note.isEmpty == false {
+            Divider()
             Text(note)
                 .font(.caption)
                 .fontWeight(.regular)
@@ -243,36 +261,25 @@ struct LessonView: View {
         }
     }
     
-    @ViewBuilder var groupNavigationLink: some View {
-        if let _ = linkGroup {
-//            NavigationLink(destination: GroupDetailedView(viewModel: GroupViewModel(linkGroup)), isActive: $groupLinkActive) {
-//                EmptyView()
-//            }
-        }
-    }
-    
-   @State var groupLinkActive = false
-   @State var linkGroup: Group? = nil
-    
-    func navigateToGroup(group: Group) {
-        linkGroup = group
-        groupLinkActive = true
-    }
-    
 }
 
 struct LessonView_Previews: PreviewProvider {
     static var previews: some View {
         let groups: [Group] = Group.getAll()
-        if let group = groups.first(where: { $0.name == "950502" }), let lessons = group.lessons?.allObjects as? [Lesson] {
-            
-            ForEach(lessons) { lesson in
-                LessonView(lesson: lesson,
-                           today: true)
-                    .padding()
+        if let group = groups.first(where: { $0.name == "950502" }),
+           let lessons = group.lessons?.allObjects as? [Lesson] {
+            ScrollView {
+                LessonsGridView {
+                    ForEach(lessons) { lesson in
+                        LessonView(lesson: lesson,
+                                   today: false)
+                    }
+                    .environmentObject(LessonViewConfiguration(showFullSubject: true, showGroups: true, showEmployees: true, showWeeks: true, showDates: true, showDate: true))
+                    
+                }
+                .padding(.horizontal)
             }
-            .environmentObject(Group.defaultLessonSettings())
-            
+            .baseBackground()
         }
     }
 }

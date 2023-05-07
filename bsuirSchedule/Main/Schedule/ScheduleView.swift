@@ -222,7 +222,7 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
     }
     @ViewBuilder var lessonSettings: some View {
         Text("Отображать:")
-        Toggle("Аббревиатуру", isOn: $lessonViewConfiguration.showAbbreviation.animation())
+        Toggle("Аббревиатуру", isOn: $lessonViewConfiguration.showFullSubject.animation())
         Toggle("Группы", isOn: $lessonViewConfiguration.showGroups.animation())
         Toggle("Преподавателей", isOn: $lessonViewConfiguration.showEmployees.animation())
         Toggle("Недели", isOn: $lessonViewConfiguration.showWeeks.animation())

@@ -60,16 +60,14 @@ extension Lesson {
 //MARK: - Others
 
 extension Lesson {
+    ///A string representation of the lesson's weeks.
     var weeksDescription: String? {
         guard self.weeks.isEmpty == false else { return nil }
+        guard self.weeks.count != 1 else { return String(weeks.first! + 1) }
         
-        if weeks.count == 1 {
-            return String(weeks.first! + 1)
-        }
-        
-        var weeks = self.weeks.map {$0 + 1}
+        var weeks = self.weeks.map { $0 + 1 }
 
-        var resultWeeks: [String] = []
+        var subStrings: [String] = []
         var nearWeeks: [Int] = []
 
         repeat {
@@ -85,14 +83,13 @@ extension Lesson {
             }
             
             if nearWeeks.count == 1 {
-                resultWeeks.append(String(nearWeeks.first!))
+                subStrings.append(String(nearWeeks.first!))
             } else {
-                resultWeeks.append("\(nearWeeks.first!)-\(nearWeeks.last!)")
+                subStrings.append("\(nearWeeks.first!)-\(nearWeeks.last!)")
             }
                 
         } while(weeks.isEmpty == false)
 
-       return resultWeeks.joined(separator: ", ")
-
+       return subStrings.joined(separator: ", ")
     }
 }

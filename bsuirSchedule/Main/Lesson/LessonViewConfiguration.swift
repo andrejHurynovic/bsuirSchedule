@@ -8,7 +8,7 @@
 import Foundation
 
 class LessonViewConfiguration: ObservableObject {
-    @Published var showAbbreviation: Bool
+    @Published var showFullSubject: Bool
     
     @Published var showGroups: Bool
     @Published var showEmployees: Bool
@@ -17,13 +17,13 @@ class LessonViewConfiguration: ObservableObject {
     @Published var showDates: Bool
     @Published var showDate: Bool
     
-    init(showAbbreviation: Bool = true,
+    init(showFullSubject: Bool = false,
          showGroups: Bool,
          showEmployees: Bool,
          showWeeks: Bool = false,
          showDates: Bool = false,
          showDate: Bool = false) {
-        self.showAbbreviation = showAbbreviation
+        self.showFullSubject = showFullSubject
         
         self.showGroups = showGroups
         self.showEmployees = showEmployees
@@ -32,14 +32,14 @@ class LessonViewConfiguration: ObservableObject {
         self.showDates = showDates
         self.showDate = showDate
     }
-
+    
 }
 
 //MARK: Equatable
 
 extension LessonViewConfiguration: Equatable {
     static func == (lhs: LessonViewConfiguration, rhs: LessonViewConfiguration) -> Bool {
-        return lhs.showAbbreviation == rhs.showAbbreviation &&
+        return lhs.showFullSubject == rhs.showFullSubject &&
         lhs.showGroups == rhs.showGroups &&
         lhs.showEmployees == rhs.showEmployees &&
         lhs.showWeeks == rhs.showWeeks &&
@@ -59,18 +59,18 @@ protocol DefaultLessonViewSettings {
 extension Group {
     static func defaultLessonSettings() -> LessonViewConfiguration {
         LessonViewConfiguration(showGroups: false,
-                           showEmployees: true)
+                                showEmployees: true)
     }
 }
 extension Employee {
     static func defaultLessonSettings() -> LessonViewConfiguration {
         LessonViewConfiguration(showGroups: true,
-                           showEmployees: false)
+                                showEmployees: false)
     }
 }
 extension Auditorium {
     static func defaultLessonSettings() -> LessonViewConfiguration {
         LessonViewConfiguration(showGroups: true,
-                           showEmployees: true)
+                                showEmployees: true)
     }
 }

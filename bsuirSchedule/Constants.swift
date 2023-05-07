@@ -24,7 +24,9 @@ struct Constants {
         static let employee = "person.circle.fill"
         static let employees = "person.3.fill"
         static let group = "person.2.circle"
-        static let lessonDatesRange = "calendar.badge.clock"
+        static let lessonDates = "calendar.badge.clock"
+        static let lessonDate = "calendar"
+        static let lessonWeeks = "calendar.day.timeline.left"
         static let schedule = "calendar"
     }
     
