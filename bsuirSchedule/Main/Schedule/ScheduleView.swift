@@ -246,11 +246,6 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
                 Text("первая").tag(1 as Int?)
                 Text("вторая").tag(2 as Int?)
             }
-            .onChange(of: viewModel.selectedSubgroup) { _ in
-                Task {
-                    await viewModel.updateFilteredSections(returnToClosestSection: false)
-                }
-            }
         }
     }
     @ViewBuilder var lessonSettings: some View {

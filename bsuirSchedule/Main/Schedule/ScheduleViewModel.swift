@@ -38,13 +38,38 @@ class ScheduleViewModel: ObservableObject {
     }
     
     init() {
-        addSelectedDateSubscriber()
+        addSelectedSubgroupSubscriber()
         addSearchTextSubscriber()
+        addSelectedDateSubscriber()
     }
     
     //MARK: - Subscribers
-    
-    func addSelectedDateSubscriber() {
+
+    private func addSelectedSubgroupSubscriber() {
+        $selectedSubgroup
+            .debounce(for: .milliseconds(1), scheduler: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                Task {
+                    await self.updateFilteredSections(returnToClosestSection: true)
+                }
+            }
+            .store(in: &cancellables)
+
+    }
+    private func addSearchTextSubscriber() {
+        $searchText
+            .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                Task {
+                    await self.updateFilteredSections(returnToClosestSection: true)
+                }
+            }
+            .store(in: &cancellables)
+        
+    }
+    private func addSelectedDateSubscriber() {
         $selectedDate
             .sink { [weak self] date in
                 guard let self = self else { return }
@@ -55,21 +80,8 @@ class ScheduleViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
-    func addSearchTextSubscriber() {
-        $searchText
-            .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
-            .sink { [weak self] searchText in
-                guard let self = self else { return }
-                Task {
-                    await self.updateFilteredSections(returnToClosestSection: true)
-                }
-            }
-            .store(in: &cancellables)
-        
-    }
     
     //MARK: - Sections
-//    Update sections and filtered sections update
     func updateSections(_ lessons: [Lesson]?, educationDates: [Date]? = nil) async {
         guard let lessons = lessons,
         lessons.isEmpty == false else { return }
@@ -79,7 +91,7 @@ class ScheduleViewModel: ObservableObject {
     }
     
     
-    func updateFilteredSections(returnToClosestSection: Bool) async {
+    func updateFilteredSections(returnToClosestSection: Bool = true) async {
         guard let sections = self.sections else { return }
         
         let filteredSections: [ScheduleSection]?
@@ -112,9 +124,7 @@ class ScheduleViewModel: ObservableObject {
                         await MainActor.run {
                             scrollWithAnimation = false
                             self.selectedSectionID = closestSectionID
-//                            withAnimation(.linear(duration: 0.1)) {
-                                showScrollView = true
-//                            }
+                            showScrollView = true
                         }
                     }
             }
@@ -134,9 +144,9 @@ class ScheduleViewModel: ObservableObject {
     }
     
     //MARK: - ScrollViewProxy
-    func scrollTo(_ targetID: String?,
+    func scrollTo(_ targetID: String,
                   in proxy: ScrollViewProxy) {
-        if let targetID = targetID {
+        if targetID.isEmpty == false {
             if scrollWithAnimation {
                 withAnimation {
                     proxy.scrollTo(targetID, anchor: .top)
@@ -144,8 +154,8 @@ class ScheduleViewModel: ObservableObject {
             } else {
                 proxy.scrollTo(targetID, anchor: .top)
             }
+            self.selectedSectionID = ""
         }
-        self.selectedSectionID = ""
     }
     
 }
