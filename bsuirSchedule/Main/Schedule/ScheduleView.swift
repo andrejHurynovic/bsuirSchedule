@@ -62,11 +62,6 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
                                                educationDates: scheduled.educationDates)
             }
         }
-        .onChange(of: viewModel.selectedRepresentationType) { _ in
-            Task {
-                await viewModel.updateFilteredSections(returnToClosestSection: true)
-            }
-        }
     }
     
     @ViewBuilder var schedule: some View {
@@ -262,10 +257,16 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
 
 struct LessonsView_Previews: PreviewProvider {
     static var previews: some View {
-        let groups: [Group] = Group.getAll()
-        if let testGroup = groups.first(where: { $0.name == "950502" }) {
+//        let groups: [Group] = Group.getAll()
+//        if let scheduled = groups.first(where: { $0.name == "950502" }) {
+//            NavigationView {
+//                ScheduleView(scheduled: scheduled)
+//            }
+//        }
+        let employees: [Employee] = Employee.getAll()
+        if let scheduled = employees.first(where: { $0.lastName == "Перцев" }) {
             NavigationView {
-                ScheduleView(scheduled: testGroup)
+                ScheduleView(scheduled: scheduled)
             }
         }
     }

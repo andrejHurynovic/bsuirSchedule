@@ -38,6 +38,7 @@ class ScheduleViewModel: ObservableObject {
     }
     
     init() {
+        addSelectedRepresentationType()
         addSelectedSubgroupSubscriber()
         addSearchTextSubscriber()
         addSelectedDateSubscriber()
@@ -45,6 +46,18 @@ class ScheduleViewModel: ObservableObject {
     
     //MARK: - Subscribers
 
+    private func addSelectedRepresentationType() {
+        $selectedRepresentationType
+            .debounce(for: .milliseconds(1), scheduler: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                Task {
+                    await self.updateFilteredSections(returnToClosestSection: true)
+                }
+            }
+            .store(in: &cancellables)
+        
+    }
     private func addSelectedSubgroupSubscriber() {
         $selectedSubgroup
             .debounce(for: .milliseconds(1), scheduler: DispatchQueue.main)
