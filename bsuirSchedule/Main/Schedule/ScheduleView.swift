@@ -168,30 +168,9 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
     //MARK: - DatePicker
     
     @ViewBuilder var datePicker: some View {
-        if viewModel.showDatePicker,
-           let educationRange = scheduled.educationRange ?? (scheduled.lessons?.allObjects as? [Lesson])?.educationRange {
-            
-            DatePicker("Выбор даты:",
-                       selection: $viewModel.selectedDate,
-                       in: educationRange,
-                       displayedComponents: .date)
-            
-            .datePickerStyle(.graphical)
-            .padding()
-            .presentationDetents([.medium])
-        }
-        Button {
-            viewModel.showDatePicker = false
-        } label: {
-            Text("Готово")
-                .font(.title3)
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .padding()
-                .foregroundColor(.white)
-                .background(Color.accentColor)
-                .cornerRadius(40)
-        }
-        .padding([.horizontal, .bottom])
+        ScheduleDatePicker(showDatePicker: $viewModel.showDatePicker,
+                           selectedDate: $viewModel.selectedDate,
+                           educationRange: scheduled.educationRange ?? (scheduled.lessons?.allObjects as? [Lesson])?.educationRange)
     }
     
     //MARK: - Toolbar

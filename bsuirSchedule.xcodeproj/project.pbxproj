@@ -94,6 +94,7 @@
 		F67DF3B5266AA56000D96417 /* EmployeeDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67DF3B3266AA56000D96417 /* EmployeeDecoder.swift */; };
 		F67DF3B6266AA56000D96417 /* Employee.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67DF3B4266AA56000D96417 /* Employee.swift */; };
 		F67E177D29E5E15F00864712 /* GroupsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67E177C29E5E15F00864712 /* GroupsViewModel.swift */; };
+		F68453AB2A07FA5900756DE4 /* ScheduleDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68453AA2A07FA5900756DE4 /* ScheduleDatePicker.swift */; };
 		F68465FB26FA5321000F185E /* FacultyDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68465F926FA5321000F185E /* FacultyDecoder.swift */; };
 		F68465FC26FA5321000F185E /* Faculty.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68465FA26FA5321000F185E /* Faculty.swift */; };
 		F6857C7728F06F4300195388 /* DeveloperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6857C7628F06F4300195388 /* DeveloperView.swift */; };
@@ -250,6 +251,7 @@
 		F67DF3B3266AA56000D96417 /* EmployeeDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeDecoder.swift; sourceTree = "<group>"; };
 		F67DF3B4266AA56000D96417 /* Employee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Employee.swift; sourceTree = "<group>"; };
 		F67E177C29E5E15F00864712 /* GroupsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsViewModel.swift; sourceTree = "<group>"; };
+		F68453AA2A07FA5900756DE4 /* ScheduleDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDatePicker.swift; sourceTree = "<group>"; };
 		F68465F926FA5321000F185E /* FacultyDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacultyDecoder.swift; sourceTree = "<group>"; };
 		F68465FA26FA5321000F185E /* Faculty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Faculty.swift; sourceTree = "<group>"; };
 		F6857C7628F06F4300195388 /* DeveloperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperView.swift; sourceTree = "<group>"; };
@@ -424,6 +426,7 @@
 				F636C57E2A06F10200925397 /* ScheduleRepresentationType.swift */,
 				F69009D326F6958000379A74 /* ScheduleViewModel.swift */,
 				F691602D29001F290033AE14 /* ScheduleView.swift */,
+				F68453AA2A07FA5900756DE4 /* ScheduleDatePicker.swift */,
 				F62FC6A929E8405F00F6B941 /* Section */,
 				F666CFD928FF5C71007F9F28 /* EducationWeek.swift */,
 				F6D3C10428E0BAB40055B800 /* WeekDay.swift */,
@@ -967,6 +970,7 @@
 				F65309E529DCE1DA001DEC29 /* SectionTypePicker.swift in Sources */,
 				F638C0052A0572E10021FA77 /* EmployeesFormView.swift in Sources */,
 				F613E17429DCCC900054C93E /* EmployeesGridView.swift in Sources */,
+				F68453AB2A07FA5900756DE4 /* ScheduleDatePicker.swift in Sources */,
 				F638C0032A056C6D0021FA77 /* DepartmentDetailedView.swift in Sources */,
 				F624A3452913B85500E8CB5B /* FromGroupView.swift in Sources */,
 				F6CB615726F000EE00D29807 /* LessonView.swift in Sources */,
