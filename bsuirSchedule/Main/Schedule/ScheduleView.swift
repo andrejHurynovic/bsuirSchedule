@@ -112,12 +112,12 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
     //MARK: - Progress and footnote
     
     @ViewBuilder var progressView: some View {
-        if [viewModel.sections == nil,
-            viewModel.sections?.isEmpty,
+        if [viewModel.filteredSections == nil,
+            viewModel.filteredSections?.isEmpty,
             viewModel.showScrollView == false].contains(true)  {
             if viewModel.searchText.isEmpty {
                 ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle(tint: Color.primary))
+                    .progressViewStyle(CircularProgressViewStyle(tint: Color.gray))
             } else {
                 Text("Занятия по таким параметрам отсутствуют"
                     .uppercased())
