@@ -10,8 +10,10 @@ import CoreData
 extension Auditorium {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Auditorium> {
         let request = NSFetchRequest<Auditorium>(entityName: "Auditorium")
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \Auditorium.building, ascending: true),
-                                   NSSortDescriptor(keyPath: \Auditorium.formattedName, ascending: true)]
+        request.sortDescriptors = [
+            NSSortDescriptor(keyPath: \Auditorium.outsideUniversity, ascending: false),
+            NSSortDescriptor(keyPath: \Auditorium.building, ascending: true),
+            NSSortDescriptor(keyPath: \Auditorium.formattedName, ascending: true)]
         return request
     }
     

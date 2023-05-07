@@ -12,6 +12,18 @@ extension Auditorium: Favored {}
 
 extension Auditorium: EducationRanged { }
 
+extension Auditorium: Comparable {
+    public static func < (lhs: Auditorium, rhs: Auditorium) -> Bool {
+        if lhs.building < rhs.building {
+            return true
+        }
+        if lhs.formattedName < rhs.formattedName {
+            return true
+        }
+        return false
+    }
+}
+
 extension Auditorium: Scheduled {
     var title: String { self.formattedName }
 }

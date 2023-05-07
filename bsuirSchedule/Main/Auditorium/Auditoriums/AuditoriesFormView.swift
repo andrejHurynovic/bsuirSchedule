@@ -12,7 +12,7 @@ struct AuditoriesFormView: View {
     
     var body: some View {
         DisclosureGroup {
-            ForEach(auditories.sorted(by: { $0.formattedName < $1.formattedName })) { auditorium in
+            ForEach(auditories.sorted()) { auditorium in
                 AuditoriumFormNavigationLink(auditorium: auditorium)
             }
         } label: {

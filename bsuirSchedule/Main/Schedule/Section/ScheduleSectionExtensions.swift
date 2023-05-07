@@ -77,7 +77,6 @@ extension Array where Element == ScheduleSection {
                 let startOfDate = Calendar.autoupdatingCurrent.startOfDay(for: date)
                 return self.first { $0.date! >= startOfDate }
             case .week:
-                let date = Date()
                 let week = date.educationWeek
                 let weekday = date.weekDay()
                 
