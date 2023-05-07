@@ -26,7 +26,6 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
         .environmentObject(lessonViewConfiguration)
         .sheet(isPresented: $viewModel.showDatePicker) {
             datePicker
-                .presentationDetents([.medium])
         }
 
         
@@ -53,17 +52,19 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
         }
         .onChange(of: scheduled.lessons) { lessons in
             Task {
-                await viewModel.updateSections(lessons?.allObjects as? [Lesson])
+                await viewModel.updateSections(lessons?.allObjects as? [Lesson],
+                                               educationDates: scheduled.educationDates)
             }
         }
         .onChange(of: viewModel.selectedSectionType) { _ in
             Task {
-                await viewModel.updateSections(scheduled.lessons?.allObjects as? [Lesson])
+                await viewModel.updateSections(scheduled.lessons?.allObjects as? [Lesson],
+                                               educationDates: scheduled.educationDates)
             }
         }
         .onChange(of: viewModel.selectedRepresentationType) { _ in
             Task {
-                await viewModel.updateSections(scheduled.lessons?.allObjects as? [Lesson])
+                await viewModel.updateFilteredSections(returnToClosestSection: true)
             }
         }
     }
@@ -182,6 +183,7 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
             
             .datePickerStyle(.graphical)
             .padding()
+            .presentationDetents([.medium])
         }
         Button {
             viewModel.showDatePicker = false
@@ -245,7 +247,9 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
                 Text("вторая").tag(2 as Int?)
             }
             .onChange(of: viewModel.selectedSubgroup) { _ in
-                viewModel.updateFilteredSections()
+                Task {
+                    await viewModel.updateFilteredSections(returnToClosestSection: false)
+                }
             }
         }
     }

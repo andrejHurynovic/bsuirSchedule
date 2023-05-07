@@ -11,7 +11,7 @@ protocol EducationRanged {
     ///Ordered dates created from education start and end dates
     var educationRange: ClosedRange<Date>? { get }
     ///Ordered dates created from educationRange
-    var educationDates: [Date] { get }
+    var educationDates: [Date]? { get }
     
     var lessons: NSSet? { get }
 }
@@ -21,27 +21,28 @@ protocol EducationRanged {
 extension EducationRanged {
     ///Range between the earliest and the latest dates among educationStart, educationEnd, examsStart, examsEnd
     var educationRange: ClosedRange<Date>? {
+        var allDates: [Date]
         if let educationDatesDecodable = self as? any EducationBounded {
-            let dates = [educationDatesDecodable.educationStart,
+            allDates = [educationDatesDecodable.educationStart,
                          educationDatesDecodable.educationEnd,
                          educationDatesDecodable.examsStart,
-                         educationDatesDecodable.examsEnd].compactMap {$0}.sorted()
-            guard dates.isEmpty == false else { return nil }
-            return dates.first!...dates.last!
+                         educationDatesDecodable.examsEnd].compactMap {$0}
         } else {
             guard let lessons = lessons?.allObjects as? [Lesson],
                   lessons.isEmpty == false else { return nil }
-            let allDates = [lessons.compactMap { $0.startLessonDate },
+            allDates = [lessons.compactMap { $0.startLessonDate },
                             lessons.compactMap { $0.endLessonDate },
                             lessons.compactMap { $0.date }].flatMap { $0 }
-            guard allDates.isEmpty == false else { return nil}
-            
-            return allDates.first!...allDates.last!
         }
+        
+        guard allDates.isEmpty == false else { return nil}
+        
+        allDates.sort()
+        return allDates.first!...allDates.last!
     }
     ///Dates between lower and upper bound of educationRange
-    var educationDates: [Date] {
-        guard let range = educationRange else { return [] }
+    var educationDates: [Date]? {
+        guard let range = educationRange else { return nil }
         return datesBetween(range.lowerBound, range.upperBound)
     }
 }

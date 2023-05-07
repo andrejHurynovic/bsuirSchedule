@@ -10,7 +10,7 @@ import Combine
 
 class ScheduleViewModel: ObservableObject {
     
-    @Published var selectedRepresentationType: ScheduleRepresentationType = .page
+    @Published var selectedRepresentationType: ScheduleRepresentationType = .scroll
     @Published var selectedSectionType: ScheduleSectionType = .date
     
     @Published var showScrollView = false
@@ -60,63 +60,64 @@ class ScheduleViewModel: ObservableObject {
             .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
             .sink { [weak self] searchText in
                 guard let self = self else { return }
-                self.updateFilteredSections()
+                Task {
+                    await self.updateFilteredSections(returnToClosestSection: true)
+                }
             }
             .store(in: &cancellables)
         
     }
     
     //MARK: - Sections
-    
-    func updateSections(_ lessons: [Lesson]?) async {
+//    Update sections and filtered sections update
+    func updateSections(_ lessons: [Lesson]?, educationDates: [Date]? = nil) async {
         guard let lessons = lessons,
         lessons.isEmpty == false else { return }
         
-        let sections = await lessons.sections(selectedSectionType)
-        let filteredSections = sections.filtered(abbreviation: self.searchText, subgroup: self.selectedSubgroup)
-        let closestSection = await sections.closest(to: .now, type: selectedSectionType)
+        self.sections = await lessons.sections(selectedSectionType, educationDates: educationDates)
+        await updateFilteredSections(returnToClosestSection: true)
+    }
+    
+    
+    func updateFilteredSections(returnToClosestSection: Bool) async {
+        guard let sections = self.sections else { return }
+        
+        let filteredSections: [ScheduleSection]?
+        if self.searchText.isEmpty == true && selectedSubgroup == nil {
+            filteredSections = sections
+        } else {
+            filteredSections = self.sections.map( { $0.filtered(abbreviation: searchText, subgroup: selectedSubgroup) })
+        }
+        await MainActor.run {
+            withAnimation {
+                self.filteredSections = filteredSections
+            }
+        }
+        if returnToClosestSection {
+            await initialScroll()
+        }
+    }
+    
+    private func initialScroll() async {
+        let closestSectionID = (await self.filteredSections?.closest(to: .now, type: selectedSectionType))?.id ?? ""
         
         await MainActor.run {
-            self.sections = sections
-            self.filteredSections = filteredSections
-        
             switch selectedRepresentationType {
                 case .page:
-                    self.selectedSectionID = closestSection?.id ?? ""
+                    self.selectedSectionID = closestSectionID
                     showScrollView = false
                 case .scroll:
                     self.selectedSectionID = ""
                     Task {
                         await MainActor.run {
                             scrollWithAnimation = false
-                            self.selectedSectionID = closestSection?.id ?? ""
-                            withAnimation(.linear(duration: 0.1)) {
+                            self.selectedSectionID = closestSectionID
+//                            withAnimation(.linear(duration: 0.1)) {
                                 showScrollView = true
-                            }
+//                            }
                         }
                     }
             }
-            
-        }
-        
-    }
-    
-    
-    func updateFilteredSections() {
-        guard let sections = self.sections else { return }
-        guard self.searchText.isEmpty == false || selectedSubgroup != nil else {
-            self.filteredSections = sections
-            Task {
-                await self.scrollToDate(.now,
-                                        scrollWithAnimation: false)
-            }
-            return
-        }
-        
-        self.filteredSections = self.sections.map( { $0.filtered(abbreviation: searchText, subgroup: selectedSubgroup) })
-        Task {
-            await self.scrollToDate(.now,
-                                    scrollWithAnimation: false)
         }
     }
     
