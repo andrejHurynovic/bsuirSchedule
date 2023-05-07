@@ -9,17 +9,26 @@ import SwiftUI
 
 struct LessonView: View {
     @ObservedObject var lesson: Lesson
-    @EnvironmentObject var configuration: LessonViewConfiguration
+    @ObservedObject var viewModel: LessonViewModel
     
-    var today: Bool
-    var passedLesson: Bool { today && lesson.timeRange.upperBound < Date().time }
+    @State var today: Bool
+    @EnvironmentObject var configuration: LessonViewConfiguration
     
     var lessonTypeColor: Color {
         guard let color = lesson.type?.color else { return .primary }
         return color
     }
     
+    init(lesson: Lesson,
+         today: Bool) {
+        self.lesson = lesson
+        self.today = today
+        self.viewModel = LessonViewModel(lesson: lesson, today: today)
+    }
+    
     var body: some View {
+        let _ = print(viewModel.passed)
+
         VStack(alignment: .leading) {
             if configuration.showFullSubject {
                 fullTitle
@@ -30,7 +39,7 @@ struct LessonView: View {
         }
         .padding()
         .roundedRectangleBackground()
-        .opacity(passedLesson ? 0.5 : 1.0)
+        .opacity(viewModel.passed ? 0.5 : 1.0)
         
         .contextMenu {
             Text("Добавить задание")

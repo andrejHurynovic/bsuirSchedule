@@ -44,6 +44,8 @@ class ScheduleSection: ObservableObject {
         Constants.todayCheckPublisherDatesRange.contains(relativity) {
             addTimerCancellable()
             today = (relativity == 0)
+            print(self.title)
+            print(self.today)
         }
     }
     
@@ -52,7 +54,7 @@ class ScheduleSection: ObservableObject {
             case .date:
                 guard let date = date else { return nil }
                 let calendar = Calendar.autoupdatingCurrent
-                let dateComponents = calendar.dateComponents([.day], from: .now, to: calendar.startOfDay(for: date))
+                let dateComponents = calendar.dateComponents([.day], from: calendar.startOfDay(for: .now), to: date)
                 guard let differenceInDays = dateComponents.day else { return nil }
                 
                 return differenceInDays

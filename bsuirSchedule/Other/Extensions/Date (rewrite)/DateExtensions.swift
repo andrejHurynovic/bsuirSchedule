@@ -37,7 +37,7 @@ extension Date {
         return date
     }
     
-    ///Assigns hours, minutes, and seconds to zero.
+//    /Assigns hours, minutes, and seconds to zero.
     var time: Date {
         return DateComponents(calendar: .current, year: 2000, month: 1, day: 1).date!.assignedTime(self.timeDateComponents)
     }
