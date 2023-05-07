@@ -17,10 +17,12 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
     @FocusState var searchFieldFocused: Bool
     
     var body: some View {
-        ZStack(alignment: .center) {
-            progressView
-            schedule
-                .baseBackground()
+        VStack(spacing: 0) {
+            ZStack(alignment: .center) {
+                progressView
+                schedule
+                    .baseBackground()
+            }
             searchField
         }
         .environmentObject(lessonViewConfiguration)
@@ -88,6 +90,7 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
                 }
             }
         }
+        .ignoresSafeArea(.container, edges: .bottom)
         .tabViewStyle(.page(indexDisplayMode: . never))
     }
     var scroll: some View {
@@ -132,35 +135,30 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
     //MARK: - Search field
     
     @ViewBuilder var searchField: some View {
-        VStack {
-            Spacer()
-            VStack {
-                if viewModel.showSearchField {
-                    HStack {
-                        Button {
-                            searchFieldFocused = false
-                            viewModel.showSearchField = false
-                            viewModel.searchText = ""
-                        } label: {
-                            Text("Готово")
-                                .bold()
-                                .foregroundColor(.primary)
-                        }
-                        
-                        TextField("", text: $viewModel.searchText, prompt: Text(Image(systemName: "magnifyingglass")) + Text(" Предмет"))
-                            .focused($searchFieldFocused)
-                            .textFieldStyle(.plain)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 8)
-                            .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 8))
-                        
-                    }
+        if viewModel.showSearchField {
+            HStack {
+                Button {
+                    searchFieldFocused = false
+                    viewModel.showSearchField = false
+                    viewModel.searchText = ""
+                } label: {
+                    Text("Готово")
+                        .bold()
+                        .foregroundColor(.primary)
+                }
+                
+                TextField("", text: $viewModel.searchText, prompt: Text(Image(systemName: "magnifyingglass")) + Text(" Предмет"))
+                    .focused($searchFieldFocused)
+                    .textFieldStyle(.plain)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
-                    .background(.thinMaterial)
-                    
-                }
+                    .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 8))
+                
             }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
+            .background(.thinMaterial)
+            
         }
         
     }
