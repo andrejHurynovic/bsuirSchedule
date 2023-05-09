@@ -11,18 +11,28 @@ struct ClosestScheduleView<ScheduledType: Scheduled>: View {
     @StateObject var viewModel: ClosestScheduleViewModel<ScheduledType>
     
     var body: some View {
+        Section {
         switch viewModel.state {
-            case .updating:
-                ProgressView()
-                    .foregroundColor(.gray)
-            case .showLesson:
-                if let lesson = viewModel.lesson {
-                    LessonView(lesson: lesson, today: false)
-                        .padding(.horizontal)
-                        .environmentObject(ScheduledType.defaultLessonSettings())
+                case .updating:
+                    ProgressView()
+                        .foregroundColor(.gray)
+                case .showLesson:
+                    if let lesson = viewModel.lesson {
+                        LessonView(lesson: lesson, today: false)
+                            .padding(.horizontal)
+                            .environmentObject(ScheduledType.defaultLessonSettings())
+                    }
+                case .noClosestSection:
+                    Text("Все занятия прошли")
                 }
-            case .noClosestSection:
-                Text("Все занятия прошли")
+        } header: {
+            NavigationLink {
+                ScheduleView(scheduled: viewModel.scheduled)
+            } label: {
+                HeaderView(viewModel.scheduled.title + (viewModel.section?.title ?? ""), withArrow: true)
+                    .padding(.horizontal)
+            }
+
         }
     }
 }

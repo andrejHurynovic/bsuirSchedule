@@ -24,10 +24,7 @@ class ScheduleSection: ObservableObject {
     
     //MARK: - Initialization
     
-    init(type: ScheduleSectionType,
-         date: Date? = nil,
-         educationWeek: Int, weekday: Int16,
-         lessons: any Sequence<Lesson>) {
+    init(type: ScheduleSectionType, date: Date? = nil, educationWeek: Int, weekday: Int16, lessons: any Sequence<Lesson>) {
         self.type = type
         self.date = date
         self.educationWeek = educationWeek
@@ -69,13 +66,17 @@ class ScheduleSection: ObservableObject {
         timerCancellable = Timer.publish(every: 1.0, on: .main, in: .default)
             .autoconnect()
             .sink { [weak self] _ in
-                guard let self = self,
-                let relativity = self.checkRelativity(),
-                self.relativity != relativity else { return }
+                guard let self = self else { return }
+                
+                let relativity = self.checkRelativity()!
+                let title = self.dateTitle ?? self.weekTitle
+                
+                guard self.relativity != relativity ||
+                self.title != title else { return }
                 
                 self.relativity = relativity
                 withAnimation {
-                    self.title = self.dateTitle ?? self.weekTitle
+                    self.title = title
                 }
                 guard Constants.todayCheckPublisherDatesRange.contains(relativity) else {
                     timerCancellable?.cancel()
@@ -89,6 +90,19 @@ class ScheduleSection: ObservableObject {
     //MARK: - Title
     
     var dateTitle: String? {
+        if isToday(),
+           let closestLesson = closestLesson() {
+            let nowTime: Date = .now.time
+            if closestLesson.timeRange.contains(nowTime) {
+                let lessonEnd = Date().assignedTime(from: closestLesson.timeRange.upperBound)
+                return "\(lessonEnd.formatted(.relative(presentation: .numeric, unitsStyle: .abbreviated)))"
+            }
+            if nowTime < closestLesson.timeRange.lowerBound {
+                let lessonStart = Date().assignedTime(from: closestLesson.timeRange.lowerBound)
+                return "\(lessonStart.formatted(.relative(presentation: .numeric, unitsStyle: .abbreviated)))"
+            }
+        }
+        
         guard let dateString = dateString else { return nil }
         return "\(dateString), \(educationWeek + 1)-ая неделя"
     }

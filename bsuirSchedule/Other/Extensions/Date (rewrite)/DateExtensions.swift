@@ -24,13 +24,15 @@ func +=(left: inout Date, right: DateComponents) {
 
 extension Date {
     ///Assigns hours, minutes and seconds  to Date from DateComponents.
-    mutating func assignTime(_ dateComponents: DateComponents) {
+    mutating func assignTime(from date: Date) {
+        let dateComponents = Calendar.autoupdatingCurrent.dateComponents([.hour, .minute, .second], from: date)
         self = Calendar.current.date(bySetting: .hour, value: dateComponents.hour!, of: self)!
         self = Calendar.current.date(bySetting: .minute, value: dateComponents.minute!, of: self)!
         self = Calendar.current.date(bySetting: .second, value: dateComponents.second!, of: self)!
     }
     ///Returns Date with assigned hours, minutes and seconds values from DateComponents.
-    func assignedTime(_ dateComponents: DateComponents) -> Date {
+    func assignedTime(from date: Date) -> Date {
+        let dateComponents = Calendar.autoupdatingCurrent.dateComponents([.hour, .minute, .second], from: date)
         var date = Calendar.current.date(bySetting: .hour, value: dateComponents.hour!, of: self)!
         date = Calendar.current.date(bySetting: .minute, value: dateComponents.minute!, of: date)!
         date = Calendar.current.date(bySetting: .second, value: dateComponents.second!, of: date)!
@@ -39,13 +41,13 @@ extension Date {
     
 //    /Assigns hours, minutes, and seconds to zero.
     var time: Date {
-        return DateComponents(calendar: .current, year: 2000, month: 1, day: 1).date!.assignedTime(self.timeDateComponents)
+        return DateComponents(calendar: .current, year: 2000, month: 1, day: 1).date!.assignedTime(from: self)
     }
     
     ///DateComponents with hours, minutes and seconds from provided Date.
-    var timeDateComponents: DateComponents {
-        return Calendar.current.dateComponents([.hour, .minute, .second], from: self)
-    }
+//    var timeDateComponents: DateComponents {
+//        return Calendar.current.dateComponents([.hour, .minute, .second], from: self)
+//    }
     
 }
 
