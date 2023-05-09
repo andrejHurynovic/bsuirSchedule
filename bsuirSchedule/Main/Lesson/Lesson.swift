@@ -40,40 +40,28 @@ extension Lesson {
 
 //MARK: - Generated accessors for groups
 extension Lesson {
-
     @objc(addGroupsObject:)
     @NSManaged public func addToGroups(_ value: Group)
-
     @objc(removeGroupsObject:)
     @NSManaged public func removeFromGroups(_ value: Group)
-
     @objc(addGroups:)
     @NSManaged public func addToGroups(_ values: NSSet)
-
     @objc(removeGroups:)
     @NSManaged public func removeFromGroups(_ values: NSSet)
-    
     @objc(addEmployeesObject:)
     @NSManaged public func addToEmployees(_ value: Employee)
-
     @objc(removeEmployeesObject:)
     @NSManaged public func removeFromEmployees(_ value: Employee)
-
     @objc(addEmployees:)
     @NSManaged public func addToEmployees(_ values: NSSet)
-
     @objc(removeEmployees:)
     @NSManaged public func removeFromEmployees(_ values: NSSet)
-    
     @objc(addAuditoriesObject:)
     @NSManaged public func addToAuditories(_ value: Auditorium)
-
     @objc(removeAuditoriesObject:)
     @NSManaged public func removeFromAuditories(_ value: Auditorium)
-
     @objc(addAuditories:)
     @NSManaged public func addToAuditories(_ values: NSSet)
-
     @objc(removeAuditories:)
     @NSManaged public func removeFromAuditories(_ values: NSSet)
 }

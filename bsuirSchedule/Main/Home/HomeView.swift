@@ -24,12 +24,18 @@ struct HomeView: View {
                   animation: .spring())
     var auditories: FetchedResults<Auditorium>
     
+    @ViewBuilder var ss: some View {
+        ClosestScheduleView(viewModel: ClosestScheduleViewModel(scheduled: groups.first!))
+        ClosestScheduleView(viewModel: ClosestScheduleViewModel(scheduled: employees.first!))
+        ClosestScheduleView(viewModel: ClosestScheduleViewModel(scheduled: auditories.first!))
+    }
+    
     var body: some View {
         NavigationView {
             ScrollView {
-                LessonsGridView {
-                    ClosestScheduleView(viewModel: ClosestScheduleViewModel(scheduled: groups.first!))
-                }
+//                LessonsGridView {
+                    ss
+//                }
 //                LessonsGridView {
 //                    if let group = groups.first {
 //                    }

@@ -27,7 +27,7 @@ struct ScheduleSectionView: View {
                 }
             } label: {
                 VStack(alignment: .leading) {
-                    HeaderView(section.title)
+                    HeaderView(section.title + section.weekDescription)
                 }
             }
         }

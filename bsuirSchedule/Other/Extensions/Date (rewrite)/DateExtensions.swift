@@ -44,11 +44,6 @@ extension Date {
         return DateComponents(calendar: .current, year: 2000, month: 1, day: 1).date!.assignedTime(from: self)
     }
     
-    ///DateComponents with hours, minutes and seconds from provided Date.
-//    var timeDateComponents: DateComponents {
-//        return Calendar.current.dateComponents([.hour, .minute, .second], from: self)
-//    }
-    
 }
 
 //MARK: - Ranges

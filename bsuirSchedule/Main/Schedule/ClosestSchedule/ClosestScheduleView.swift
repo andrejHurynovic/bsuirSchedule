@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct ClosestScheduleView<ScheduledType: Scheduled>: View {
-    @StateObject var viewModel: ClosestScheduleViewModel<ScheduledType>
+    @ObservedObject var viewModel: ClosestScheduleViewModel<ScheduledType>
     
     var body: some View {
         Section {
-        switch viewModel.state {
+            switch viewModel.state {
                 case .updating:
                     ProgressView()
                         .foregroundColor(.gray)
@@ -24,16 +24,17 @@ struct ClosestScheduleView<ScheduledType: Scheduled>: View {
                     }
                 case .noClosestSection:
                     Text("Все занятия прошли")
-                }
+            }
         } header: {
             NavigationLink {
                 ScheduleView(scheduled: viewModel.scheduled)
             } label: {
-                HeaderView(viewModel.scheduled.title + (viewModel.section?.title ?? ""), withArrow: true)
+                HeaderView(viewModel.title, withArrow: true)
                     .padding(.horizontal)
+                
             }
-
         }
+        
     }
 }
 

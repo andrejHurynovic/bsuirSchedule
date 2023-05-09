@@ -15,6 +15,7 @@ class ScheduleSection: ObservableObject {
     var weekday: WeekDay
     
     @Published var title: String = ""
+    var weekDescription: String
     
     @Published var lessons: [Lesson]
     
@@ -28,20 +29,42 @@ class ScheduleSection: ObservableObject {
         self.type = type
         self.date = date
         self.educationWeek = educationWeek
+        self.weekDescription = " ,\(educationWeek + 1)-ая неделя"
         self.weekday = WeekDay(rawValue: weekday)!
         
         self.lessons = lessons
             .sorted(by: {$0.subgroup < $1.subgroup})
             .sorted(by: {$0.timeStart < $1.timeStart})
         
-        self.title = dateTitle ?? weekTitle
+        self.updateTitle()
         
         self.relativity = checkRelativity()
         if let relativity = relativity,
-        Constants.todayCheckPublisherDatesRange.contains(relativity) {
+           Constants.todayCheckPublisherDatesRange.contains(relativity) {
             addTimerCancellable()
             today = (relativity == 0)
         }
+    }
+    
+    
+    private func addTimerCancellable() {
+        timerCancellable = Timer.publish(every: 1.0, on: .main, in: .default)
+            .autoconnect()
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                updateTitle()
+                
+                guard  let relativity = self.checkRelativity(),
+                       self.relativity != relativity else { return }
+                
+                self.relativity = relativity
+                guard Constants.todayCheckPublisherDatesRange.contains(relativity) else {
+                    timerCancellable?.cancel()
+                    today = (relativity == 0)
+                    return
+                }
+            }
+        
     }
     
     private func checkRelativity() -> Int? {
@@ -62,55 +85,31 @@ class ScheduleSection: ObservableObject {
         }
     }
     
-    private func addTimerCancellable() {
-        timerCancellable = Timer.publish(every: 1.0, on: .main, in: .default)
-            .autoconnect()
-            .sink { [weak self] _ in
-                guard let self = self else { return }
-                
-                let relativity = self.checkRelativity()!
-                let title = self.dateTitle ?? self.weekTitle
-                
-                guard self.relativity != relativity ||
-                self.title != title else { return }
-                
-                self.relativity = relativity
-                withAnimation {
-                    self.title = title
-                }
-                guard Constants.todayCheckPublisherDatesRange.contains(relativity) else {
-                    timerCancellable?.cancel()
-                    today = (relativity == 0)
-                    return
-                }
-            }
-        
-    }
-    
     //MARK: - Title
     
-    var dateTitle: String? {
-        if isToday(),
-           let closestLesson = closestLesson() {
-            let nowTime: Date = .now.time
-            if closestLesson.timeRange.contains(nowTime) {
-                let lessonEnd = Date().assignedTime(from: closestLesson.timeRange.upperBound)
-                return "\(lessonEnd.formatted(.relative(presentation: .numeric, unitsStyle: .abbreviated)))"
-            }
-            if nowTime < closestLesson.timeRange.lowerBound {
-                let lessonStart = Date().assignedTime(from: closestLesson.timeRange.lowerBound)
-                return "\(lessonStart.formatted(.relative(presentation: .numeric, unitsStyle: .abbreviated)))"
-            }
+    private func updateTitle() {
+        var updatedTitle: String = todayTitle ?? dateTitle ?? weekTitle
+        withAnimation {
+            self.title = updatedTitle
         }
-        
-        guard let dateString = dateString else { return nil }
-        return "\(dateString), \(educationWeek + 1)-ая неделя"
-    }
-    var weekTitle: String {
-        "\(weekday.description), \(educationWeek + 1)-ая неделя"
     }
     
-    var dateString: String? {
+    private var todayTitle: String? {
+        guard isToday(),
+              let closestLesson = closestLesson() else { return nil }
+        let nowTime: Date = .now.time
+        if closestLesson.timeRange.contains(nowTime) {
+            let lessonEnd = Date().assignedTime(from: closestLesson.timeRange.upperBound)
+            return "\(lessonEnd.formatted(.relative(presentation: .numeric, unitsStyle: .abbreviated)))"
+        }
+        if nowTime < closestLesson.timeRange.lowerBound {
+            let lessonStart = Date().assignedTime(from: closestLesson.timeRange.lowerBound)
+            return "\(lessonStart.formatted(.relative(presentation: .numeric, unitsStyle: .abbreviated)))"
+        }
+        return nil
+    }
+    
+    private var dateTitle: String? {
         guard let date = date else { return nil }
         let calendar = Calendar.autoupdatingCurrent
         let dateComponents = calendar.dateComponents([.day], from: calendar.startOfDay(for: .now), to: date)
@@ -119,7 +118,7 @@ class ScheduleSection: ObservableObject {
         if Constants.relativeDateFormatterDatesRange.contains(differenceInDays) {
             let relativeDateTimeFormatter = RelativeDateTimeFormatter()
             relativeDateTimeFormatter.dateTimeStyle = .named
-                
+            
             return relativeDateTimeFormatter.localizedString(from: dateComponents)
         } else {
             return date.formatted(Date.FormatStyle()
@@ -128,5 +127,7 @@ class ScheduleSection: ObservableObject {
                 .day(.defaultDigits))
         }
     }
-    
+    private var weekTitle: String {
+        weekday.description
+    }
 }
