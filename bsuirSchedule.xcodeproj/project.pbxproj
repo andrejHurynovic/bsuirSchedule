@@ -72,6 +72,8 @@
 		F65333E029DCC3D4004EEF8C /* TotalFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65333DF29DCC3D4004EEF8C /* TotalFooterView.swift */; };
 		F65A9A9529FFF9C000244488 /* LessonTypeConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65A9A9429FFF9C000244488 /* LessonTypeConfigurationView.swift */; };
 		F65F832126E8F37800B8CC4E /* EmployeesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65F832026E8F37800B8CC4E /* EmployeesViewModel.swift */; };
+		F661DE2B2A0A775500B8F108 /* ClosestScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F661DE2A2A0A775500B8F108 /* ClosestScheduleViewModel.swift */; };
+		F661DE2D2A0A777600B8F108 /* ClosestScheduleViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F661DE2C2A0A777600B8F108 /* ClosestScheduleViewState.swift */; };
 		F666CFDA28FF5C71007F9F28 /* EducationWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = F666CFD928FF5C71007F9F28 /* EducationWeek.swift */; };
 		F670BEE72A00117700D76D70 /* SpecialityFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F670BEE62A00117700D76D70 /* SpecialityFetch.swift */; };
 		F670BEE92A0017F900D76D70 /* URLSessionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F670BEE82A0017F900D76D70 /* URLSessionData.swift */; };
@@ -230,6 +232,8 @@
 		F65333DF29DCC3D4004EEF8C /* TotalFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalFooterView.swift; sourceTree = "<group>"; };
 		F65A9A9429FFF9C000244488 /* LessonTypeConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonTypeConfigurationView.swift; sourceTree = "<group>"; };
 		F65F832026E8F37800B8CC4E /* EmployeesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeesViewModel.swift; sourceTree = "<group>"; };
+		F661DE2A2A0A775500B8F108 /* ClosestScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosestScheduleViewModel.swift; sourceTree = "<group>"; };
+		F661DE2C2A0A777600B8F108 /* ClosestScheduleViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosestScheduleViewState.swift; sourceTree = "<group>"; };
 		F666CFD928FF5C71007F9F28 /* EducationWeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationWeek.swift; sourceTree = "<group>"; };
 		F670BEE62A00117700D76D70 /* SpecialityFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialityFetch.swift; sourceTree = "<group>"; };
 		F670BEE82A0017F900D76D70 /* URLSessionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionData.swift; sourceTree = "<group>"; };
@@ -423,7 +427,7 @@
 			isa = PBXGroup;
 			children = (
 				F6748DF228DFB7C80072FB04 /* Scheduled.swift */,
-				F687043029FEE25300A3CF0C /* ClosestScheduleView.swift */,
+				F661DE292A0A773E00B8F108 /* ClosestSchedule */,
 				F638C0112A05827B0021FA77 /* ScheduleNavigationLink.swift */,
 				F636C57E2A06F10200925397 /* ScheduleRepresentationType.swift */,
 				F69009D326F6958000379A74 /* ScheduleViewModel.swift */,
@@ -586,6 +590,16 @@
 				F60D44B429DC74DB0008E4F4 /* Employees */,
 			);
 			path = Employee;
+			sourceTree = "<group>";
+		};
+		F661DE292A0A773E00B8F108 /* ClosestSchedule */ = {
+			isa = PBXGroup;
+			children = (
+				F661DE2C2A0A777600B8F108 /* ClosestScheduleViewState.swift */,
+				F687043029FEE25300A3CF0C /* ClosestScheduleView.swift */,
+				F661DE2A2A0A775500B8F108 /* ClosestScheduleViewModel.swift */,
+			);
+			path = ClosestSchedule;
 			sourceTree = "<group>";
 		};
 		F667332B280F762C00194EAC /* Task */ = {
@@ -982,6 +996,7 @@
 				F638C0102A057FAD0021FA77 /* DepartmentsGridView.swift in Sources */,
 				F63FC6BD272F01EA00C9F410 /* TaskDetailedView.swift in Sources */,
 				F670BEF72A001E5400D76D70 /* AuditoriumDecodingError.swift in Sources */,
+				F661DE2B2A0A775500B8F108 /* ClosestScheduleViewModel.swift in Sources */,
 				F638C0142A0582E70021FA77 /* SquareGrid.swift in Sources */,
 				F61C523F26E64619002CF234 /* Lesson.swift in Sources */,
 				F638C00A2A057AB70021FA77 /* DepartmentsView.swift in Sources */,
@@ -1048,6 +1063,7 @@
 				F632DEEC26696CCB00E4C55F /* bsuirTimetableApp.swift in Sources */,
 				F62F764829E21A6400959225 /* LessonsRefreshableView.swift in Sources */,
 				F67AA4E928FF79F200E5A7C4 /* onLoad.swift in Sources */,
+				F661DE2D2A0A777600B8F108 /* ClosestScheduleViewState.swift in Sources */,
 				F670BEEF2A001CDA00D76D70 /* EducationTypeExtensions.swift in Sources */,
 				F64BEDDA26E9072900C7AD09 /* EmployeeView.swift in Sources */,
 				F643071129DF843000B3A98A /* EducationBoundedView.swift in Sources */,

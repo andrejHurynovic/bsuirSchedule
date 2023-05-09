@@ -13,6 +13,12 @@ extension Lesson : Identifiable {
     }
 }
 
+extension Lesson {
+    public override var description: String {
+        return "\(abbreviation) (\(type?.abbreviation ?? type?.id ?? "no type")) \(timeStart)-\(timeEnd), groups: \((groups?.allObjects as? [Group])?.description() ?? "no groups") employees: \(employeesIDs)"
+    }
+}
+
 //MARK: - Filters
 
 extension Sequence where Element == Lesson {

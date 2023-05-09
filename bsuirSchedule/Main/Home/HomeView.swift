@@ -27,6 +27,9 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             ScrollView {
+                if let group = groups.first {
+                    ClosestScheduleView(viewModel: ClosestScheduleViewModel(scheduled: group))
+                }
                 HomeViewGrid(items: Array(groups),
                              navigationLinkTitle: "Группы",
                              navigationLinkDestination: GroupsView()) { group in

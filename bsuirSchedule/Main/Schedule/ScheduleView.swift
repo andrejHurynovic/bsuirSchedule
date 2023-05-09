@@ -168,7 +168,7 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
     @ViewBuilder var datePicker: some View {
         ScheduleDatePicker(showDatePicker: $viewModel.showDatePicker,
                            selectedDate: $viewModel.selectedDate,
-                           educationRange: scheduled.educationRange ?? (scheduled.lessons?.allObjects as? [Lesson])?.educationRange)
+                           educationRange: scheduled.educationRange)
     }
     
     //MARK: - Toolbar

@@ -45,6 +45,20 @@ extension EducationRanged {
         guard let range = educationRange else { return nil }
         return datesBetween(range.lowerBound, range.upperBound)
     }
+    var dividedEducationDates: (previousDates: [Date]?, nextDates: [Date]?)? {
+        let today = Calendar.autoupdatingCurrent.startOfDay(for: .now)
+        guard let educationDates = self.educationDates else { return (nil, nil) }
+        
+        if today <= educationDates.first! { return (nil, educationDates) }
+        if educationDates.last! < today { return (educationDates, nil) }
+        
+        var dividedArray = educationDates.split(separator: today)
+        let previousDates = Array(dividedArray.removeFirst())
+        
+        guard let nextDates = dividedArray.last else { return (previousDates, [today]) }
+        
+        return (Array(previousDates), [today] + nextDates)
+    }
 }
 
 //MARK: - Lessons sequence Extensions
@@ -62,19 +76,5 @@ extension Sequence where Element == Lesson {
         guard let educationRange = self.educationRange else { return nil }
         
         return datesBetween(educationRange.lowerBound, educationRange.upperBound)
-    }
-    var dividedEducationDates: (previousDates: [Date]?, nextDates: [Date]?)? {
-        let today = Calendar.autoupdatingCurrent.startOfDay(for: .now)
-        guard let educationDates = self.educationDates else { return (nil, nil) }
-        
-        if today <= educationDates.first! { return (nil, educationDates) }
-        if educationDates.last! < today { return (educationDates, nil) }
-        
-        var dividedArray = educationDates.split(separator: today)
-        let previousDates = Array(dividedArray.removeFirst())
-        
-        guard let nextDates = dividedArray.last else { return (previousDates, [today]) }
-        
-        return (Array(previousDates), [today] + nextDates)
     }
 }

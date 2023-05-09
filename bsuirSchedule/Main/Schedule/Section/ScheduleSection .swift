@@ -44,8 +44,6 @@ class ScheduleSection: ObservableObject {
         Constants.todayCheckPublisherDatesRange.contains(relativity) {
             addTimerCancellable()
             today = (relativity == 0)
-            print(self.title)
-            print(self.today)
         }
     }
     

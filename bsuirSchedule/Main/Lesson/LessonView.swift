@@ -27,8 +27,6 @@ struct LessonView: View {
     }
     
     var body: some View {
-        let _ = print(viewModel.passed)
-
         VStack(alignment: .leading) {
             if configuration.showFullSubject {
                 fullTitle
