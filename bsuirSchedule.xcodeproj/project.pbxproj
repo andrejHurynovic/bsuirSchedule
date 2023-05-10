@@ -146,7 +146,6 @@
 		F6CAAA4829F9C96F00836230 /* EducationBounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CAAA4729F9C96F00836230 /* EducationBounded.swift */; };
 		F6CB615726F000EE00D29807 /* LessonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CB615626F000EE00D29807 /* LessonView.swift */; };
 		F6CF52F528EEBB3B00522C89 /* DecoderUpdatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CF52F428EEBB3B00522C89 /* DecoderUpdatable.swift */; };
-		F6D3C10528E0BAB40055B800 /* WeekDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D3C10428E0BAB40055B800 /* WeekDay.swift */; };
 		F6D4AAB729BEB5260044481B /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D4AAB629BEB5260044481B /* Log.swift */; };
 		F6D588D128E4685B00CB58AC /* FetchDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D588CF28E4685B00CB58AC /* FetchDataType.swift */; };
 		F6DCD72326B30EF0003761B0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DCD72226B30EF0003761B0 /* SettingsView.swift */; };
@@ -312,7 +311,6 @@
 		F6CAAA4729F9C96F00836230 /* EducationBounded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationBounded.swift; sourceTree = "<group>"; };
 		F6CB615626F000EE00D29807 /* LessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonView.swift; sourceTree = "<group>"; };
 		F6CF52F428EEBB3B00522C89 /* DecoderUpdatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoderUpdatable.swift; sourceTree = "<group>"; };
-		F6D3C10428E0BAB40055B800 /* WeekDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDay.swift; sourceTree = "<group>"; };
 		F6D4AAB629BEB5260044481B /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		F6D588CF28E4685B00CB58AC /* FetchDataType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchDataType.swift; sourceTree = "<group>"; };
 		F6DCD72226B30EF0003761B0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -443,7 +441,6 @@
 				F68453AA2A07FA5900756DE4 /* ScheduleDatePicker.swift */,
 				F62FC6A929E8405F00F6B941 /* Section */,
 				F666CFD928FF5C71007F9F28 /* EducationWeek.swift */,
-				F6D3C10428E0BAB40055B800 /* WeekDay.swift */,
 				F643070D29DF841100B3A98A /* EducationDated */,
 				F6C0810929DF17F800A1B539 /* LessonsRefreshable */,
 			);
@@ -973,7 +970,6 @@
 				F62F764629E201C800959225 /* EducationDegree.swift in Sources */,
 				F601E5A52730B88F00773F02 /* CapturePhotoView.swift in Sources */,
 				F646715529FFDD99004E2953 /* LessonTypesView.swift in Sources */,
-				F6D3C10528E0BAB40055B800 /* WeekDay.swift in Sources */,
 				F632DEF526696CD300E4C55F /* Persistence.swift in Sources */,
 				F62392C72A0550B100A54042 /* FacultyExtensions.swift in Sources */,
 				F69BEF7929FEB01200A9ED5A /* EmplpyeeNavigationLink.swift in Sources */,

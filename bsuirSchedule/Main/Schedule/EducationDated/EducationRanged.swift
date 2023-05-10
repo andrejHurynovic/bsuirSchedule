@@ -43,7 +43,7 @@ extension EducationRanged {
     ///Dates between lower and upper bound of educationRange
     var educationDates: [Date]? {
         guard let range = educationRange else { return nil }
-        return datesBetween(range.lowerBound, range.upperBound)
+        return datesStride(range.lowerBound, range.upperBound)
     }
     var dividedEducationDates: (previousDates: [Date]?, nextDates: [Date]?)? {
         let today = Calendar.autoupdatingCurrent.startOfDay(for: .now)
@@ -75,6 +75,6 @@ extension Sequence where Element == Lesson {
     var educationDates: [Date]? {
         guard let educationRange = self.educationRange else { return nil }
         
-        return datesBetween(educationRange.lowerBound, educationRange.upperBound)
+        return datesStride(educationRange.lowerBound, educationRange.upperBound)
     }
 }

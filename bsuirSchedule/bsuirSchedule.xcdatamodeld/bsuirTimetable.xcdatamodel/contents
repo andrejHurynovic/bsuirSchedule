@@ -114,9 +114,9 @@
         <attribute name="creation" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="deadline" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="lessonType" optional="YES" attributeType="String"/>
+        <attribute name="note" attributeType="String"/>
         <attribute name="photosData" optional="YES" attributeType="Binary" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[UIImage]"/>
         <attribute name="subject" attributeType="String"/>
-        <attribute name="taskDescription" attributeType="String"/>
     </entity>
     <entity name="Lesson" representedClassName="Lesson" syncable="YES">
         <attribute name="abbreviation" attributeType="String"/>
@@ -165,7 +165,6 @@
     <entity name="Speciality" representedClassName="Speciality" syncable="YES">
         <attribute name="abbreviation" attributeType="String"/>
         <attribute name="code" optional="YES" attributeType="String"/>
-        <attribute name="educationTypeValue" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
         <relationship name="educationType" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EducationType" inverseName="specialities" inverseEntity="EducationType"/>

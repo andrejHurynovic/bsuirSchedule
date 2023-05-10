@@ -26,11 +26,11 @@ protocol EducationBounded {
 extension EducationBounded {
     ///Dates between educationStart and educationEnd inclusive
         var lessonsDates: [Date]? {
-            return datesBetween(educationStart, educationEnd)
+            return datesStride(educationStart, educationEnd)
         }
         ///Dates between examsStart and examsEnd inclusive
         var examsDates: [Date]? {
-            return datesBetween(examsStart, examsEnd)
+            return datesStride(examsStart, examsEnd)
         }
 }
 

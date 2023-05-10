@@ -30,6 +30,11 @@ struct Constants {
         static let schedule = "calendar"
     }
     
+    struct Ranges {
+        static let weeks = 0...3
+        static let weekdays = 1...7
+    }
+    
     static let relativeDateFormatterDatesRange = -1...1
     static let todayCheckPublisherDatesRange = relativeDateFormatterDatesRange.lowerBound...5
     

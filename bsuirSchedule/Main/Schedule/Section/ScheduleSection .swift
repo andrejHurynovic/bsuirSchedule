@@ -12,7 +12,7 @@ class ScheduleSection: ObservableObject {
     var type: ScheduleSectionType
     var date: Date?
     var educationWeek: Int
-    var weekday: WeekDay
+    var weekday: Int16
     
     @Published var title: String = ""
     var weekDescription: String
@@ -30,7 +30,7 @@ class ScheduleSection: ObservableObject {
         self.date = date
         self.educationWeek = educationWeek
         self.weekDescription = ", \(educationWeek + 1)-ая неделя"
-        self.weekday = WeekDay(rawValue: weekday)!
+        self.weekday = weekday
         
         self.lessons = lessons
             .sorted(by: {$0.subgroup < $1.subgroup})
@@ -78,8 +78,8 @@ class ScheduleSection: ObservableObject {
                 return differenceInDays
             case .week:
                 let now: Date = .now
-                let nowRelativity = ((now.educationWeek * 7) + Int(now.weekDay().rawValue))
-                let sectionRelativity = ((self.educationWeek * 7) + Int(self.weekday.rawValue))
+                let nowRelativity = ((now.educationWeek * 7) + Int(now.weekday))
+                let sectionRelativity = ((self.educationWeek * 7) + Int(self.weekday))
                 
                 return sectionRelativity - nowRelativity
         }
@@ -129,6 +129,6 @@ class ScheduleSection: ObservableObject {
         }
     }
     private var weekTitle: String {
-        weekday.description
+        Calendar.autoupdatingCurrent.standaloneWeekdaySymbols[Int(weekday)]
     }
 }

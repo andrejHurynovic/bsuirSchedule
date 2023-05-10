@@ -66,7 +66,7 @@ public class Lesson: NSManagedObject {
         self.timeEnd = try! container.decode(String.self, forKey: .timeEnd)
         
         if let date = (self.date ?? self.startLessonDate) {
-            self.weekday = date.weekDay().rawValue
+            self.weekday = date.weekday
         }
         
         // An array of weeks can take values [0, 1, 2, 3 ,4], but it is more convenient to count the weeks from zero, and in the API 0 means that there is an occupation for all weeks, so we subtract one from all the values of the array.

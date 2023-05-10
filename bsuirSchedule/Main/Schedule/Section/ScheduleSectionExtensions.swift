@@ -32,7 +32,7 @@ extension ScheduleSection {
                 return Calendar.autoupdatingCurrent.isDateInToday(date!)
             case .week:
                 let today: Date = .now
-                return today.educationWeek == self.educationWeek && today.weekDay() == self.weekday
+                return today.educationWeek == self.educationWeek && today.weekday == self.weekday
         }
     }
 }
@@ -56,7 +56,7 @@ extension Sequence where Element == Lesson {
         
         let sections = educationDates.compactMap { date in
             let educationWeek = date.educationWeek
-            let weekday = date.weekDay().rawValue
+            let weekday = date.weekday
             
             let lessons = self.filter( { ($0.weekday == weekday &&
                                           $0.weeks.contains(educationWeek) &&
@@ -80,9 +80,9 @@ extension Sequence where Element == Lesson {
     private func weekSections() async -> [ScheduleSection] {
         let startTime = CFAbsoluteTimeGetCurrent()
         
-        let sections = (0...3).flatMap { week in
+        let sections = Constants.Ranges.weeks.flatMap { week in
             let lessonsInWeek = self.filter{ $0.weeks.contains(week) }
-            return (0...6).compactMap { weekday in
+            return Constants.Ranges.weekdays.compactMap { weekday in
                 let lessonsInWeekday = lessonsInWeek.filter { $0.weekday == weekday }
                 guard lessonsInWeekday.isEmpty == false else { return nil }
                 let section = ScheduleSection(type: .week,
@@ -113,7 +113,7 @@ extension Sequence where Element == ScheduleSection {
                 return ScheduleSection(type: section.type,
                                        date: section.date,
                                        educationWeek: section.educationWeek,
-                                       weekday: section.weekday.rawValue,
+                                       weekday: section.weekday,
                                        lessons: lessons)
             }
         }
@@ -140,10 +140,10 @@ extension Array where Element == ScheduleSection {
                 }
             case .week:
                 let educationWeek = date.educationWeek
-                let weekday = date.weekDay()
+                let weekday = date.weekday
                 
                 return self.first {
-                    guard $0.educationWeek >= educationWeek && $0.weekday.rawValue >= weekday.rawValue else { return false }
+                    guard $0.educationWeek >= educationWeek && $0.weekday >= weekday else { return false }
                     
                     if $0.today {
                         return $0.closestLesson() != nil
