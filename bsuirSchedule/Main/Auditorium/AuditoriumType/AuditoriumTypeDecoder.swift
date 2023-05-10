@@ -1,12 +1,10 @@
 //
-//  AuditoriumType+CoreDataClass.swift
+//  AuditoriumTypeDecoder.swift
 //  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 1.04.23.
 //
-//
 
-import Foundation
 import CoreData
 
 @objc(AuditoriumType)

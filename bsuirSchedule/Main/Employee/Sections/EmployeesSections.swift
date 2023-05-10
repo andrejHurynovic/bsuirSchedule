@@ -24,8 +24,8 @@ extension Sequence where Element == Employee {
                                                    items: $0.value) }
             case .degree:
                 return self.sectioned(by: \.degree)
-                    .sorted { $0.key ?? "" < $1.key ?? "" }
-                    .map { NSManagedObjectsSection(title: $0.key ?? "Без степени",
+                    .sorted { $0.key?.abbreviation ?? "" < $1.key?.abbreviation ?? "" }
+                    .map { NSManagedObjectsSection(title: $0.key?.formattedName ?? "Без степени",
                                                    items: $0.value) }
         }
     }

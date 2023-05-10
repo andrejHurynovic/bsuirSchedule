@@ -31,6 +31,16 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
+    <entity name="Degree" representedClassName="Degree" syncable="YES">
+        <attribute name="abbreviation" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="employees" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Employee" inverseName="degree" inverseEntity="Employee"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="abbreviation"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
     <entity name="Department" representedClassName="Department" syncable="YES">
         <attribute name="abbreviation" attributeType="String"/>
         <attribute name="favorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
@@ -55,8 +65,6 @@
         </uniquenessConstraints>
     </entity>
     <entity name="Employee" representedClassName="Employee" syncable="YES">
-        <attribute name="degree" optional="YES" attributeType="String"/>
-        <attribute name="degreeAbbreviation" optional="YES" attributeType="String"/>
         <attribute name="educationEnd" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="educationStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="examsEnd" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -71,6 +79,7 @@
         <attribute name="photoLink" optional="YES" attributeType="String"/>
         <attribute name="rank" optional="YES" attributeType="String"/>
         <attribute name="urlID" optional="YES" attributeType="String"/>
+        <relationship name="degree" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Degree" inverseName="employees" inverseEntity="Degree"/>
         <relationship name="departments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Department" inverseName="employees" inverseEntity="Department"/>
         <relationship name="lessons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lesson" inverseName="employees" inverseEntity="Lesson"/>
         <uniquenessConstraints>

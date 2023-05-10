@@ -23,8 +23,7 @@ extension Employee {
     @NSManaged public var lastName: String
     
     @NSManaged public var rank: String?
-    @NSManaged public var degree: String?
-    @NSManaged public var degreeAbbreviation: String?
+    @NSManaged public var degree: Degree?
     @NSManaged public var departments: NSSet?
     @NSManaged public var favorite: Bool
     @NSManaged public var lessonsUpdateDate: Date?

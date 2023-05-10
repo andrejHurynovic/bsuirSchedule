@@ -25,9 +25,14 @@ extension Employee: DecoderUpdatable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         decodeEmployee(decoder)
-        decodeDegree(container)
         decodeEducationDates(decoder)
         decodeLessons(container)
+        
+        if let degree = self.degree {
+            try? degree.update(from: decoder)
+        } else {
+            self.degree = try? Degree(from: decoder)
+        }
         
         Log.info("Employee \(self.urlID ?? "no urlID") (\(String(self.id))) has been updated, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds")
     }
@@ -78,28 +83,6 @@ extension Employee: DecoderUpdatable {
         }
         
         self.addToLessons(NSSet(array: lessons))
-    }
-    
-    private func decodeDegree(_ container: KeyedDecodingContainer<Employee.CodingKeys>) {
-        if let degreeString = try? container.decode(String.self, forKey: .degree),
-           degreeString.isEmpty == false  {
-            //Add comments here
-            if degreeString.count < 10 {
-                self.degreeAbbreviation = degreeString
-            } else {
-                self.degree = degreeString
-            }
-        } else {
-            //            self.degree = nil
-        }
-        
-        if let degreeAbbreviationString = try? container.decode(String.self, forKey: .degreeAbbreviation),
-           degreeAbbreviationString.isEmpty == false {
-            self.degreeAbbreviation = degreeAbbreviationString
-        } else {
-            //            self.degreeAbbreviation = nil
-        }
-        
     }
     
 }

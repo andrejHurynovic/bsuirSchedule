@@ -55,10 +55,10 @@ struct EmployeeDetailedView: View {
     
     @ViewBuilder var information: some View {
         Section("Информация") {
-            if let degreeAbbreviation = employee.degreeAbbreviation {
+            if let degree = employee.degree {
                 FormViewWithAlternativeText("Научная степень",
-                                            degreeAbbreviation,
-                                            employee.degree)
+                                            degree.abbreviation,
+                                            degree.name)
             }
             if let rank = employee.rank {
                 FormView("Звание", rank)
@@ -133,7 +133,7 @@ struct EmployeeDetailedView_Previews: PreviewProvider {
         let employees: [Employee] = Employee.getAll()
         if let employee = employees.first(where: {
             $0.departmentsArray != nil &&
-            $0.degreeAbbreviation != nil &&
+            $0.degree != nil &&
             $0.rank != nil &&
             $0.lessons != nil
         }) {
