@@ -777,8 +777,8 @@
 		F6A1084E29E5C0B1004BA71F /* Sections */ = {
 			isa = PBXGroup;
 			children = (
-				F6A1085129E5C6B5004BA71F /* GroupsSections.swift */,
 				F6A1084F29E5C123004BA71F /* GroupSectionType.swift */,
+				F6A1085129E5C6B5004BA71F /* GroupsSections.swift */,
 			);
 			path = Sections;
 			sourceTree = "<group>";
@@ -835,8 +835,8 @@
 		F6C0810A29DF180B00A1B539 /* Sections */ = {
 			isa = PBXGroup;
 			children = (
-				F60D44B529DC74F50008E4F4 /* EmployeesSections.swift */,
 				F60D44B929DC75710008E4F4 /* EmployeeSectionType.swift */,
+				F60D44B529DC74F50008E4F4 /* EmployeesSections.swift */,
 			);
 			path = Sections;
 			sourceTree = "<group>";
