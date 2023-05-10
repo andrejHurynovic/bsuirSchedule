@@ -14,9 +14,9 @@ extension Date {
     ///Returns Date with assigned hours, minutes and seconds values from another date.
     func assignedTime(from date: Date) -> Date {
         let dateComponents = Calendar.autoupdatingCurrent.dateComponents([.hour, .minute, .second], from: date)
-        var date = Calendar.current.date(bySetting: .hour, value: dateComponents.hour!, of: self)!
-        date = Calendar.current.date(bySetting: .minute, value: dateComponents.minute!, of: date)!
-        date = Calendar.current.date(bySetting: .second, value: dateComponents.second!, of: date)!
+        var date = Calendar.autoupdatingCurrent.date(bySetting: .hour, value: dateComponents.hour!, of: self)!
+        date = Calendar.autoupdatingCurrent.date(bySetting: .minute, value: dateComponents.minute!, of: date)!
+        date = Calendar.autoupdatingCurrent.date(bySetting: .second, value: dateComponents.second!, of: date)!
         return date
     }
     var time: Date {

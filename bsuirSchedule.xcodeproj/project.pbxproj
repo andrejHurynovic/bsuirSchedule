@@ -660,7 +660,7 @@
 		F67AA4E528FF795A00E5A7C4 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				F69424A1292789E0006FF042 /* Date (rewrite) */,
+				F69424A1292789E0006FF042 /* Date */,
 				F6B838E529F87166006BAA23 /* Double */,
 				F6B838E429F87153006BAA23 /* String */,
 				F670BEEA2A001B9500D76D70 /* NSManagedObject */,
@@ -687,13 +687,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		F69424A1292789E0006FF042 /* Date (rewrite) */ = {
+		F69424A1292789E0006FF042 /* Date */ = {
 			isa = PBXGroup;
 			children = (
 				F67AA4E128FF788400E5A7C4 /* DateExtensions.swift */,
 				F6BC18A42811D4A100BA549D /* DateFormatters.swift */,
 			);
-			path = "Date (rewrite)";
+			path = Date;
 			sourceTree = "<group>";
 		};
 		F695AA3629D835FF0051A354 /* AuditoriumType */ = {

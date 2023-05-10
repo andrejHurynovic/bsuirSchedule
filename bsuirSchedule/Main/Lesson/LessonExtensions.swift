@@ -42,7 +42,7 @@ extension Lesson {
     ///Converts dateString to Date type
     var date: Date? {
         guard dateString.isEmpty == false,
-              let date = DateFormatters.shared.get(.shortDate).date(from: self.dateString) else {
+              let date = DateFormatters.short.date(from: self.dateString) else {
             return nil
         }
         return date
@@ -58,8 +58,7 @@ extension Lesson {
     
     ///Date range in form timeStart to timeEnd
     var timeRange: ClosedRange<Date> {
-        let dateFormatter = DateFormatters.shared.time
-        return dateFormatter.date(from: timeStart)!...dateFormatter.date(from: timeEnd)!
+        return DateFormatters.time.date(from: timeStart)!...DateFormatters.time.date(from: timeEnd)!
     }
 }
 

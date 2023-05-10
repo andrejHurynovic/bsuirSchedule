@@ -35,7 +35,7 @@ struct Constants {
         static let weekdays = 1...7
     }
     
-    static let relativeDateFormatterDatesRange = -1...1
-    static let todayCheckPublisherDatesRange = relativeDateFormatterDatesRange.lowerBound...5
+    static let relativeFormatDatesRange = -1...1
+    static let todayCheckPublisherRange = relativeFormatDatesRange.lowerBound...5
     
 }

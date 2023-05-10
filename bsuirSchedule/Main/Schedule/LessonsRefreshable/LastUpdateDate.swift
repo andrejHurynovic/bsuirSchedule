@@ -12,13 +12,10 @@ struct LastUpdateDate {
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        if let dateString = try? container.decode(String.self, forKey: .date) {
-            self.date = DateFormatters.shared.get(.shortDate).date(from: dateString)!
-        } else {
-            throw URLError(.badServerResponse)
-        }
+        guard let dateString = try? container.decode(String.self, forKey: .date) else { throw URLError(.badServerResponse) }
+        self.date = DateFormatters.short.date(from: dateString)!
     }
-
+    
 }
 
 extension LastUpdateDate: Decodable {

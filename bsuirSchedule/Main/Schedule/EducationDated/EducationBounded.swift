@@ -38,12 +38,12 @@ extension Group {
     func decodeEducationDates(_ decoder: Decoder) {
         let container = try! decoder.container(keyedBy: EducationDatesCodingKeys.self)
         if let educationStartString = try? container.decode(String.self, forKey: .educationStart) {
-            self.educationStart = DateFormatters.shared.get(.shortDate).date(from: educationStartString)
-            self.educationEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .educationEnd))
+            self.educationStart = DateFormatters.short.date(from: educationStartString)
+            self.educationEnd = DateFormatters.short.date(from: try! container.decode(String.self, forKey: .educationEnd))
         }
         if let examsStartString = try? container.decode(String.self, forKey: .examsStart) {
-            self.examsStart = DateFormatters.shared.get(.shortDate).date(from: examsStartString)
-            self.examsEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .examsEnd))
+            self.examsStart = DateFormatters.short.date(from: examsStartString)
+            self.examsEnd = DateFormatters.short.date(from: try! container.decode(String.self, forKey: .examsEnd))
         }
     }
 }
@@ -52,12 +52,12 @@ extension Employee {
     func decodeEducationDates(_ decoder: Decoder) {
         let container = try! decoder.container(keyedBy: EducationDatesCodingKeys.self)
         if let educationStartString = try? container.decode(String.self, forKey: .educationStart) {
-            self.educationStart = DateFormatters.shared.get(.shortDate).date(from: educationStartString)
-            self.educationEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .educationEnd))
+            self.educationStart = DateFormatters.short.date(from: educationStartString)
+            self.educationEnd = DateFormatters.short.date(from: try! container.decode(String.self, forKey: .educationEnd))
         }
         if let examsStartString = try? container.decode(String.self, forKey: .examsStart) {
-            self.examsStart = DateFormatters.shared.get(.shortDate).date(from: examsStartString)
-            self.examsEnd = DateFormatters.shared.get(.shortDate).date(from: try! container.decode(String.self, forKey: .examsEnd))
+            self.examsStart = DateFormatters.short.date(from: examsStartString)
+            self.examsEnd = DateFormatters.short.date(from: try! container.decode(String.self, forKey: .examsEnd))
         }
     }
 }

@@ -49,8 +49,8 @@ public class Lesson: NSManagedObject {
         
         if let startLessonDateString = try? container.decode(String.self, forKey: .startLessonDate) {
             self.startLessonDateString = startLessonDateString
-            self.startLessonDate = DateFormatters.shared.shortDate.date(from: startLessonDateString)
-            self.endLessonDate = DateFormatters.shared.shortDate.date(from: try! container.decode(String.self, forKey: .endLessonDate))
+            self.startLessonDate = DateFormatters.short.date(from: startLessonDateString)
+            self.endLessonDate = DateFormatters.short.date(from: try! container.decode(String.self, forKey: .endLessonDate))
             
             if let startLessonDate = startLessonDate,
                let endLessonDate = endLessonDate,

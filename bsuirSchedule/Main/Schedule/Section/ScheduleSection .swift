@@ -29,7 +29,7 @@ class ScheduleSection: ObservableObject {
         self.type = type
         self.date = date
         self.educationWeek = educationWeek
-        self.weekDescription = ", \(educationWeek + 1)-ая неделя"
+        self.weekDescription = ", \(educationWeek + 1)-я неделя"
         self.weekday = weekday
         
         self.lessons = lessons
@@ -40,7 +40,7 @@ class ScheduleSection: ObservableObject {
         
         self.relativity = checkRelativity()
         if let relativity = relativity,
-           Constants.todayCheckPublisherDatesRange.contains(relativity) {
+           Constants.todayCheckPublisherRange.contains(relativity) {
             addTimerCancellable()
             today = (relativity == 0)
         }
@@ -58,7 +58,7 @@ class ScheduleSection: ObservableObject {
                        self.relativity != relativity else { return }
                 
                 self.relativity = relativity
-                guard Constants.todayCheckPublisherDatesRange.contains(relativity) else {
+                guard Constants.todayCheckPublisherRange.contains(relativity) else {
                     timerCancellable?.cancel()
                     today = (relativity == 0)
                     return
@@ -116,11 +116,9 @@ class ScheduleSection: ObservableObject {
         let dateComponents = calendar.dateComponents([.day], from: calendar.startOfDay(for: .now), to: date)
         guard let differenceInDays = dateComponents.day else { return nil }
         
-        if Constants.relativeDateFormatterDatesRange.contains(differenceInDays) {
-            let relativeDateTimeFormatter = RelativeDateTimeFormatter()
-            relativeDateTimeFormatter.dateTimeStyle = .named
+        if Constants.relativeFormatDatesRange.contains(differenceInDays) {
             
-            return relativeDateTimeFormatter.localizedString(from: dateComponents)
+            return DateFormatters.relativeNamed.localizedString(from: dateComponents)
         } else {
             return date.formatted(Date.FormatStyle()
                 .weekday(.abbreviated)
