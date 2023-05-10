@@ -25,14 +25,9 @@ extension Employee: DecoderUpdatable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         decodeEmployee(decoder)
+        decodeDegree(decoder)
         decodeEducationDates(decoder)
         decodeLessons(container)
-        
-        if let degree = self.degree {
-            try? degree.update(from: decoder)
-        } else {
-            self.degree = try? Degree(from: decoder)
-        }
         
         Log.info("Employee \(self.urlID ?? "no urlID") (\(String(self.id))) has been updated, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds")
     }
@@ -58,6 +53,14 @@ extension Employee: DecoderUpdatable {
         if let departmentsAbbreviations = try? container.decode([String].self, forKey: .departments) {
             let context = decoder.userInfo[.managedObjectContext] as! NSManagedObjectContext
             self.addToDepartments(NSSet(array: departmentsAbbreviations.compactMap { try? Department(from: $0, in: context) }))
+        }
+    }
+    
+    private func decodeDegree(_ decoder: Decoder) {
+        if let degree = self.degree {
+            try? degree.update(from: decoder)
+        } else {
+            self.degree = try? Degree(from: decoder)
         }
     }
     

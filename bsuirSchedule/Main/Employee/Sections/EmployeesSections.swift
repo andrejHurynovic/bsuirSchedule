@@ -32,6 +32,7 @@ extension Sequence where Element == Employee {
     
     private func departmentSections() -> [NSManagedObjectsSection<Employee>] {
         let departments: [Department] = Department.getAll()
+            .sorted { $0.abbreviation < $1.abbreviation }
         var sections: [NSManagedObjectsSection<Employee>] = departments.compactMap { department in
             
             let employees = self.filter { employee in

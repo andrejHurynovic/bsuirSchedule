@@ -19,22 +19,56 @@ struct EmployeesView: View {
     //MARK: - Body
     
     var body: some View {
-        ScrollView {
-            EmployeesGridView(sections: employees.sections(viewModel.selectedSectionType),
-                              showDepartments: viewModel.showDepartments)
-            TotalFooterView(text: "Преподавателей", count: employees.count)
+        ScrollViewReader { scrollViewProxy in
+            ZStack {
+                ScrollView {
+                    VStack {
+                        EmployeesGridView(sections: employees.sections(viewModel.selectedSectionType),
+                                          showDepartments: viewModel.showDepartments)
+                        .padding(.trailing, viewModel.showSectionIndexes ? 8 : 0)
+                        .id(UUID())
+                        TotalFooterView(text: "Преподавателей", count: employees.count)
+                    }
+                }
+                sectionIndexes
+            }
+            .navigationTitle("Преподаватели")
+            .refreshable { await EmployeesViewModel.update() }
+            
+            .toolbar { toolbar }
+            
+            .searchable(text: $viewModel.searchText, prompt: "Фамилия, имя, подраздедение")
+            .onChange(of: viewModel.predicate) { predicate in
+                employees.nsPredicate = predicate
+            }
+            .onChange(of: viewModel.scrollTargetID, perform: { id in
+                guard let id = id else { return }
+                withAnimation {
+                    scrollViewProxy.scrollTo(id, anchor: .top)
+                }
+            })
+                        
+            .baseBackground()
         }
-        .navigationTitle("Преподаватели")
-        .refreshable { await EmployeesViewModel.update() }
-        
-        .toolbar { toolbar }
-        
-        .searchable(text: $viewModel.searchText, prompt: "Фамилия, имя, подраздедение")
-        .onChange(of: viewModel.predicate) { predicate in
-            employees.nsPredicate = predicate
+    }
+    
+    @ViewBuilder var sectionIndexes: some View {
+        if viewModel.showSectionIndexes {
+            HStack {
+                Spacer()
+                VStack(alignment: .center) {
+                    ForEach(Constants.alphabet, id: \.self) { letter in
+                        Button(action: {
+                            viewModel.scrollTargetID = letter
+                        }, label: {
+                            Text(letter)
+                                .font(.system(size: 12))
+                                .padding(.trailing, 8)
+                        })
+                    }
+                }
+            }
         }
-        
-        .baseBackground()
     }
     
     //MARK: - Toolbar

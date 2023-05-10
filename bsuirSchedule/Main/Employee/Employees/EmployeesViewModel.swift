@@ -15,6 +15,12 @@ class EmployeesViewModel: ObservableObject {
     @Published var selectedSectionType: EmployeeSectionType = .firstLetter
     @Published var showDepartments = false
     
+    @Published var scrollTargetID: String?
+    
+    var showSectionIndexes: Bool {
+        selectedSectionType == .firstLetter
+    }
+    
     @Published var cancellables = Set<AnyCancellable>()
     
     var menuDefaultRules: [Bool] { [selectedSectionType == .firstLetter] }
