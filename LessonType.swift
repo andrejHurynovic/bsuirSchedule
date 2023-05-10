@@ -21,7 +21,7 @@ extension LessonType {
     @NSManaged public var name: String?
     @NSManaged public var abbreviation: String?
     
-    @NSManaged var colorData: Data?
+    @NSManaged var colorData: String?
     
     @NSManaged public var lessons: NSSet?
 }

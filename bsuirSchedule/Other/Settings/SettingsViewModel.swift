@@ -8,4 +8,5 @@
 import SwiftUI
 
 class SettingsViewModel: ObservableObject {
+    @AppStorage("mainColor") var mainColor: Color = Color.blue
 }

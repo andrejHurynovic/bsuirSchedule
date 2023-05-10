@@ -152,7 +152,7 @@
     </entity>
     <entity name="LessonType" representedClassName="LessonType" syncable="YES">
         <attribute name="abbreviation" optional="YES" attributeType="String"/>
-        <attribute name="colorData" optional="YES" attributeType="Binary"/>
+        <attribute name="colorData" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="lessons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lesson" inverseName="type" inverseEntity="Lesson"/>

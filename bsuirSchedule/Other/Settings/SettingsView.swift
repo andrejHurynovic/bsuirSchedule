@@ -10,9 +10,12 @@ import CoreData
 
 struct SettingsView: View {
     
+    @StateObject var viewModel = SettingsViewModel()
+    
     var body: some View {
         Form {
             PrimarySchedulePickerView()
+            ColorPicker("Основной", selection: $viewModel.mainColor)
             lessonTypes
             developer
         }
