@@ -29,7 +29,7 @@ class ScheduleSection: ObservableObject {
         self.type = type
         self.date = date
         self.educationWeek = educationWeek
-        self.weekDescription = " ,\(educationWeek + 1)-ая неделя"
+        self.weekDescription = ", \(educationWeek + 1)-ая неделя"
         self.weekday = WeekDay(rawValue: weekday)!
         
         self.lessons = lessons
@@ -88,7 +88,8 @@ class ScheduleSection: ObservableObject {
     //MARK: - Title
     
     private func updateTitle() {
-        var updatedTitle: String = todayTitle ?? dateTitle ?? weekTitle
+        let updatedTitle: String = todayTitle ?? dateTitle ?? weekTitle
+        guard self.title != updatedTitle else { return }
         withAnimation {
             self.title = updatedTitle
         }
@@ -100,11 +101,11 @@ class ScheduleSection: ObservableObject {
         let nowTime: Date = .now.time
         if closestLesson.timeRange.contains(nowTime) {
             let lessonEnd = Date().assignedTime(from: closestLesson.timeRange.upperBound)
-            return "\(lessonEnd.formatted(.relative(presentation: .numeric, unitsStyle: .abbreviated)))"
+            return "Конец \(lessonEnd.formatted(.relative(presentation: .numeric, unitsStyle: .abbreviated)))"
         }
         if nowTime < closestLesson.timeRange.lowerBound {
             let lessonStart = Date().assignedTime(from: closestLesson.timeRange.lowerBound)
-            return "\(lessonStart.formatted(.relative(presentation: .numeric, unitsStyle: .abbreviated)))"
+            return "Начало \(lessonStart.formatted(.relative(presentation: .numeric, unitsStyle: .abbreviated)))"
         }
         return nil
     }

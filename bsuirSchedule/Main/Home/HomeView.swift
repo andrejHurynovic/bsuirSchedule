@@ -24,22 +24,12 @@ struct HomeView: View {
                   animation: .spring())
     var auditories: FetchedResults<Auditorium>
     
-    @ViewBuilder var ss: some View {
-        ClosestScheduleView(viewModel: ClosestScheduleViewModel(scheduled: groups.first!))
-        ClosestScheduleView(viewModel: ClosestScheduleViewModel(scheduled: employees.first!))
-        ClosestScheduleView(viewModel: ClosestScheduleViewModel(scheduled: auditories.first!))
-    }
+    @StateObject var primarySchedulesViewModel = PrimarySchedulesViewModel()
     
     var body: some View {
         NavigationView {
             ScrollView {
-//                LessonsGridView {
-                    ss
-//                }
-//                LessonsGridView {
-//                    if let group = groups.first {
-//                    }
-//                }
+                primarySchedules
                 
                 HomeViewGrid(items: Array(groups),
                              navigationLinkTitle: "Группы",
@@ -70,6 +60,22 @@ struct HomeView: View {
         }
         .navigationViewStyle(.stack)
 
+    }
+    
+    @ViewBuilder var primarySchedules: some View {
+        if let primaryGroupName = primarySchedulesViewModel.primaryGroup,
+           let primaryGroup = groups.first(where: { $0.name == primaryGroupName }) {
+            PrimaryScheduleView(viewModel: PrimaryScheduleViewModel(scheduled: primaryGroup,
+                                                                    subgroup: primarySchedulesViewModel.primaryGroupSubgroup))
+        }
+        if let primaryEmployeeID = primarySchedulesViewModel.primaryEmployee,
+           let primaryEmployee = employees.first(where: { $0.id == primaryEmployeeID }) {
+            PrimaryScheduleView(viewModel: PrimaryScheduleViewModel(scheduled: primaryEmployee))
+        }
+        if let primaryAuditoriumFormattedName = primarySchedulesViewModel.primaryAuditorium,
+           let primaryAuditorium = auditories.first(where: { $0.formattedName == primaryAuditoriumFormattedName }) {
+            PrimaryScheduleView(viewModel: PrimaryScheduleViewModel(scheduled: primaryAuditorium))
+        }
     }
 }
 

@@ -19,6 +19,7 @@ struct HeaderView: View {
     var body: some View {
         HStack(spacing: 0) {
             Text(title)
+                .multilineTextAlignment(.leading)
                 .foregroundColor(.primary)
             if withArrow {
                 Spacer()

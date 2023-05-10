@@ -1,5 +1,5 @@
 //
-//  ClosestScheduleViewModel.swift
+//  PrimaryScheduleViewModel.swift
 //  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 9.05.23.
@@ -8,22 +8,24 @@
 import SwiftUI
 import Combine
 
-class ClosestScheduleViewModel<ScheduledType: Scheduled>: ObservableObject {
+class PrimaryScheduleViewModel<ScheduledType: Scheduled>: ObservableObject {
     
     var scheduled: ScheduledType
+    var subgroup: Int?
     
     @Published var title: String
     var section: ScheduleSection?
     @Published var lesson: Lesson?
     
-    @Published var state: ClosestScheduleViewState = .updating
+    @Published var state: PrimaryScheduleViewState = .updating
     
     private var timerCancellable: AnyCancellable?
     
     //MARK: - Initialization
     
-    init(scheduled: ScheduledType) {
+    init(scheduled: ScheduledType, subgroup: Int? = nil) {
         self.scheduled = scheduled
+        self.subgroup = subgroup
         self.title = scheduled.title
         Task {
             await update()
@@ -39,7 +41,7 @@ class ClosestScheduleViewModel<ScheduledType: Scheduled>: ObservableObject {
             .autoconnect()
             .sink { [weak self] _ in
                 guard let self = self else { return }
-                Task { await self.updateTitle() }
+//                Task { await self.updateTitle() }
                 let lesson = section?.closestLesson()
                 guard self.lesson != lesson else { return }
                 if let lesson = lesson {
@@ -56,7 +58,10 @@ class ClosestScheduleViewModel<ScheduledType: Scheduled>: ObservableObject {
     //MARK: - Update
     
     private func update() async {
-            if let lessons = scheduled.lessons?.allObjects as? [Lesson] {
+            if var lessons = scheduled.lessons?.allObjects as? [Lesson] {
+                if let subgroup = subgroup {
+                    lessons = Array(lessons.filtered(subgroup: subgroup))
+                }
                 let section = await lessons.sections(.date, educationDates: scheduled.dividedEducationDates?.nextDates)
                     .closest(to: .now, type: .date)
                 self.section = section
@@ -82,7 +87,7 @@ class ClosestScheduleViewModel<ScheduledType: Scheduled>: ObservableObject {
             }
     }
     
-    private func updateTitle() async {
+    private func updateTitle() async { 
         guard let scheduledTitle = section?.title else { return }
         let updatedTitle = scheduled.title + ", \(scheduledTitle)"
         guard self.title != updatedTitle else { return }

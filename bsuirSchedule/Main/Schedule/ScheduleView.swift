@@ -18,11 +18,13 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
     
     var body: some View {
         VStack(spacing: 0) {
+            Spacer(minLength: 0)
             ZStack(alignment: .center) {
                 progressView
                 schedule
                     .baseBackground()
             }
+            Spacer(minLength: 0)
             searchField
         }
         .environmentObject(lessonViewConfiguration)

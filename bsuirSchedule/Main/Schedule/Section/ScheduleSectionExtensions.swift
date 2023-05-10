@@ -151,7 +151,7 @@ extension Array where Element == ScheduleSection {
                         return true
                     }
                     
-                }
+                } ?? self.first
         }
         
     }

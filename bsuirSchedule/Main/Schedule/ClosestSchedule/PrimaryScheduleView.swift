@@ -1,5 +1,5 @@
 //
-//  ClosestScheduleView.swift
+//  PrimaryScheduleView.swift
 //  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 30.04.23.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct ClosestScheduleView<ScheduledType: Scheduled>: View {
-    @ObservedObject var viewModel: ClosestScheduleViewModel<ScheduledType>
+struct PrimaryScheduleView<ScheduledType: Scheduled>: View {
+    @ObservedObject var viewModel: PrimaryScheduleViewModel<ScheduledType>
     
     var body: some View {
         Section {
@@ -44,7 +44,7 @@ struct ClosestScheduleView_Previews: PreviewProvider {
         if let scheduled = employees.first(where: { $0.lastName == "Перцев" }) {
             NavigationView {
                 ScrollView {
-                    ClosestScheduleView(viewModel: ClosestScheduleViewModel(scheduled: scheduled))
+                    PrimaryScheduleView(viewModel: PrimaryScheduleViewModel(scheduled: scheduled))
                         .padding(.horizontal)
                 }
                 .baseBackground()

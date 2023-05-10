@@ -11,7 +11,9 @@ struct LessonsGridView<Content: View>: View {
     var content: () -> Content
     
     var body: some View {
-        LazyVGrid(columns: [LessonView.gridItem], alignment: .leading, spacing: 8, pinnedViews: []) {
+        LazyVGrid(columns: [LessonView.gridItem],
+                  alignment: .leading,
+                  spacing: 8) {
             content()
         }
     }

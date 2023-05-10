@@ -24,19 +24,19 @@ struct DeveloperView: View {
     
     var body: some View {
         Form {
-//            Section("Удаление") {
-//                DeveloperDeleteView(name: "факультеты", symbol: "graduationcap.circle", elements: faculties)
-//                DeveloperDeleteView(name: "формы образования", symbol: "graduationcap.circle", elements: educationTypes)
-//                DeveloperDeleteView(name: "специальности", symbol: "book.circle", elements: specialities)
-//                DeveloperDeleteView(name: "подразделения", symbol: "person.2.circle", elements: departments)
-//                DeveloperDeleteView(name: "аудитории", symbol: Constants.Symbols.auditorium, elements: auditories)
-//                DeveloperDeleteView(name: "типы аудиторий", symbol: "building.columns.circle", elements: auditoriumTypes)
-//                DeveloperDeleteView(name: "группы", symbol: "person.2.circle", elements: groups)
-//                DeveloperDeleteView(name: "преподаватели", symbol: Constants.Symbols.employees, elements: employees)
-//                DeveloperDeleteView(name: "занятия", symbol: "books.vertical.circle", elements: lessons)
-//                DeveloperDeleteView(name: "типы занятий", symbol: "books.vertical.circle", elements: lessonTypes)
-////                DeveloperDeleteView(name: "задания", symbol: "house.circle", elements: tasks)
-//            }
+            Section("Удаление") {
+                DeveloperDeleteView(name: "факультеты", symbol: "graduationcap.circle", elements: faculties)
+                DeveloperDeleteView(name: "формы образования", symbol: "graduationcap.circle", elements: educationTypes)
+                DeveloperDeleteView(name: "специальности", symbol: "book.circle", elements: specialities)
+                DeveloperDeleteView(name: "подразделения", symbol: "person.2.circle", elements: departments)
+                DeveloperDeleteView(name: "аудитории", symbol: Constants.Symbols.auditorium, elements: auditories)
+                DeveloperDeleteView(name: "типы аудиторий", symbol: "building.columns.circle", elements: auditoriumTypes)
+                DeveloperDeleteView(name: "группы", symbol: "person.2.circle", elements: groups)
+                DeveloperDeleteView(name: "преподаватели", symbol: Constants.Symbols.employees, elements: employees)
+                DeveloperDeleteView(name: "занятия", symbol: "books.vertical.circle", elements: lessons)
+                DeveloperDeleteView(name: "типы занятий", symbol: "books.vertical.circle", elements: lessonTypes)
+//                DeveloperDeleteView(name: "задания", symbol: "house.circle", elements: tasks)
+            }
             
             Section("Загрузка") {
                 DeveloperUpdateView<Faculty>(name: "факультеты", symbol: "graduationcap.circle")
