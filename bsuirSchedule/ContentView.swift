@@ -8,11 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    @AppStorage("tintColor") var tintColor: Color = Color.accentColor
-    
     var body: some View {
         HomeView()
-            .tint(tintColor)
     }
 }
 

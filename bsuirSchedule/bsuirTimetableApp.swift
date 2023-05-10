@@ -9,14 +9,13 @@ import SwiftUI
 
 @main
 struct bsuirScheduleApp: App {
-//    @AppStorage("mainColor") var color: Color!
+    @AppStorage("tintColor") var tintColor: Color!
     
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
-//                .tint(color)
-//                .accentColor(color)
+                .accentColor(tintColor)
         }
     }
 }

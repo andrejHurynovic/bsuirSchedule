@@ -15,7 +15,7 @@ struct SettingsView: View {
     var body: some View {
         Form {
             PrimarySchedulePickerView()
-            ColorPicker("Основной", selection: $viewModel.mainColor)
+            ColorPicker("Основной", selection: $viewModel.tintColor)
             lessonTypes
             developer
         }
