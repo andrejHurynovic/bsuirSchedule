@@ -20,7 +20,7 @@ struct DeveloperView: View {
     @FetchRequest(entity: Employee.entity(), sortDescriptors: []) var employees: FetchedResults<Employee>
     @FetchRequest(entity: Lesson.entity(), sortDescriptors: []) var lessons: FetchedResults<Lesson>
     @FetchRequest(entity: LessonType.entity(), sortDescriptors: []) var lessonTypes: FetchedResults<LessonType>
-    @FetchRequest(entity: Hometask.entity(), sortDescriptors: []) var tasks: FetchedResults<Hometask>
+    @FetchRequest(entity: EducationTask.entity(), sortDescriptors: []) var tasks: FetchedResults<EducationTask>
     
     var body: some View {
         Form {

@@ -20,18 +20,19 @@ struct EmployeesView: View {
     
     var body: some View {
         ScrollViewReader { scrollViewProxy in
-            ZStack {
-                ScrollView {
-                    VStack {
-                        EmployeesGridView(sections: employees.sections(viewModel.selectedSectionType),
-                                          showDepartments: viewModel.showDepartments)
-                        .padding(.trailing, viewModel.showSectionIndexes ? 8 : 0)
-                        .id(UUID())
-                        TotalFooterView(text: "Преподавателей", count: employees.count)
-                    }
-                }
+            //            ZStack {
+            ScrollView {
+                //                    VStack {
+                EmployeesGridView(sections: employees.sections(viewModel.selectedSectionType),
+                                  showDepartments: viewModel.showDepartments)
+                .padding(.trailing, viewModel.showSectionIndexes ? 8 : 0)
+                .id(UUID())
+                TotalFooterView(text: "Преподавателей", count: employees.count)
+                //                    }
+            }.overlay(content: {
                 sectionIndexes
-            }
+            })
+            //            }
             .navigationTitle("Преподаватели")
             .refreshable { await EmployeesViewModel.update() }
             
@@ -47,7 +48,7 @@ struct EmployeesView: View {
                     scrollViewProxy.scrollTo(id, anchor: .top)
                 }
             })
-                        
+            
             .baseBackground()
         }
     }

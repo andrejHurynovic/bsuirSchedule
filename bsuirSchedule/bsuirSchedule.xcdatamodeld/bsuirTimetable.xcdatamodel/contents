@@ -54,6 +54,13 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
+    <entity name="EducationTask" representedClassName="EducationTask" syncable="YES">
+        <attribute name="creation" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="deadline" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="note" optional="YES" attributeType="String"/>
+        <attribute name="photosData" optional="YES" attributeType="Binary" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[UIImage]"/>
+        <attribute name="subject" attributeType="String"/>
+    </entity>
     <entity name="EducationType" representedClassName="EducationType" syncable="YES">
         <attribute name="id" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
@@ -118,14 +125,6 @@
                 <constraint value="name"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
-    </entity>
-    <entity name="Hometask" representedClassName="Hometask" syncable="YES" codeGenerationType="class">
-        <attribute name="creation" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="deadline" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="lessonType" optional="YES" attributeType="String"/>
-        <attribute name="note" attributeType="String"/>
-        <attribute name="photosData" optional="YES" attributeType="Binary" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[UIImage]"/>
-        <attribute name="subject" attributeType="String"/>
     </entity>
     <entity name="Lesson" representedClassName="Lesson" syncable="YES">
         <attribute name="abbreviation" attributeType="String"/>

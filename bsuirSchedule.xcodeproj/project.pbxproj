@@ -71,6 +71,9 @@
 		F65309E729DCED12001DEC29 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65309E629DCED12001DEC29 /* MenuView.swift */; };
 		F65333E029DCC3D4004EEF8C /* TotalFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65333DF29DCC3D4004EEF8C /* TotalFooterView.swift */; };
 		F65A9A9529FFF9C000244488 /* LessonTypeConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65A9A9429FFF9C000244488 /* LessonTypeConfigurationView.swift */; };
+		F65D67D62A0D0F9C007D86D0 /* EducationTaskInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65D67D42A0D0F9C007D86D0 /* EducationTaskInitializer.swift */; };
+		F65D67D72A0D0F9C007D86D0 /* EducationTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65D67D52A0D0F9C007D86D0 /* EducationTask.swift */; };
+		F65D67D92A0D0FD3007D86D0 /* EducationTaskExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65D67D82A0D0FD3007D86D0 /* EducationTaskExtensions.swift */; };
 		F65F832126E8F37800B8CC4E /* EmployeesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65F832026E8F37800B8CC4E /* EmployeesViewModel.swift */; };
 		F661DE2B2A0A775500B8F108 /* PrimaryScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F661DE2A2A0A775500B8F108 /* PrimaryScheduleViewModel.swift */; };
 		F661DE2D2A0A777600B8F108 /* PrimaryScheduleViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F661DE2C2A0A777600B8F108 /* PrimaryScheduleViewState.swift */; };
@@ -237,6 +240,9 @@
 		F65309E629DCED12001DEC29 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		F65333DF29DCC3D4004EEF8C /* TotalFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalFooterView.swift; sourceTree = "<group>"; };
 		F65A9A9429FFF9C000244488 /* LessonTypeConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonTypeConfigurationView.swift; sourceTree = "<group>"; };
+		F65D67D42A0D0F9C007D86D0 /* EducationTaskInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationTaskInitializer.swift; sourceTree = "<group>"; };
+		F65D67D52A0D0F9C007D86D0 /* EducationTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationTask.swift; sourceTree = "<group>"; };
+		F65D67D82A0D0FD3007D86D0 /* EducationTaskExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationTaskExtensions.swift; sourceTree = "<group>"; };
 		F65F832026E8F37800B8CC4E /* EmployeesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeesViewModel.swift; sourceTree = "<group>"; };
 		F661DE2A2A0A775500B8F108 /* PrimaryScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryScheduleViewModel.swift; sourceTree = "<group>"; };
 		F661DE2C2A0A777600B8F108 /* PrimaryScheduleViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryScheduleViewState.swift; sourceTree = "<group>"; };
@@ -350,7 +356,6 @@
 		F601E5A7273191C300773F02 /* Deprecated */ = {
 			isa = PBXGroup;
 			children = (
-				F667332B280F762C00194EAC /* Task */,
 				F601E5A62731918400773F02 /* Images */,
 			);
 			path = Deprecated;
@@ -553,6 +558,7 @@
 			isa = PBXGroup;
 			children = (
 				F6794E8529FDBB4700BEE44A /* Home */,
+				F667332B280F762C00194EAC /* EducationTask */,
 				F62FC6A229E83C6100F6B941 /* Schedule */,
 				F6BCE3A626EFCF0A0067B5DA /* Lesson */,
 				F699F21826EA249E00747BE0 /* Group */,
@@ -618,13 +624,16 @@
 			path = ClosestSchedule;
 			sourceTree = "<group>";
 		};
-		F667332B280F762C00194EAC /* Task */ = {
+		F667332B280F762C00194EAC /* EducationTask */ = {
 			isa = PBXGroup;
 			children = (
+				F65D67D52A0D0F9C007D86D0 /* EducationTask.swift */,
+				F65D67D42A0D0F9C007D86D0 /* EducationTaskInitializer.swift */,
+				F65D67D82A0D0FD3007D86D0 /* EducationTaskExtensions.swift */,
 				F63FC6BC272F01E900C9F410 /* TaskDetailedView.swift */,
 				F601E5A82731AA3900773F02 /* TaskViewModel.swift */,
 			);
-			path = Task;
+			path = EducationTask;
 			sourceTree = "<group>";
 		};
 		F66DC1482A0C38B8005EF7E3 /* Degree */ = {
@@ -966,6 +975,7 @@
 				F66DC14A2A0C391A005EF7E3 /* DegreeExtensions.swift in Sources */,
 				F60D44BA29DC75710008E4F4 /* EmployeeSectionType.swift in Sources */,
 				F68465FB26FA5321000F185E /* FacultyDecoder.swift in Sources */,
+				F65D67D62A0D0F9C007D86D0 /* EducationTaskInitializer.swift in Sources */,
 				F6CAAA4829F9C96F00836230 /* EducationBounded.swift in Sources */,
 				F66DC1472A0C3884005EF7E3 /* Degree.swift in Sources */,
 				F638C0122A05827B0021FA77 /* ScheduleNavigationLink.swift in Sources */,
@@ -994,6 +1004,7 @@
 				F69BEF7929FEB01200A9ED5A /* EmployeeNavigationLink.swift in Sources */,
 				F67E177D29E5E15F00864712 /* GroupsViewModel.swift in Sources */,
 				F62FC6A129E8217300F6B941 /* Backgrounds.swift in Sources */,
+				F65D67D72A0D0F9C007D86D0 /* EducationTask.swift in Sources */,
 				F670BEEC2A001BB300D76D70 /* getAll.swift in Sources */,
 				F6857C7928F096CE00195388 /* AuditoriesSection.swift in Sources */,
 				F632DEEE26696CCB00E4C55F /* ContentView.swift in Sources */,
@@ -1008,6 +1019,7 @@
 				F687043329FEE35E00A3CF0C /* AuditoriumExtensions.swift in Sources */,
 				F636C5812A0700C200925397 /* LessonsGridView.swift in Sources */,
 				F666CFDA28FF5C71007F9F28 /* EducationWeek.swift in Sources */,
+				F65D67D92A0D0FD3007D86D0 /* EducationTaskExtensions.swift in Sources */,
 				F643071E29E08DEA00B3A98A /* EducationType.swift in Sources */,
 				F62392C52A05505B00A54042 /* FacultyFetch.swift in Sources */,
 				F697BF7D26FFA1BA008FA7A9 /* Auditorium.swift in Sources */,

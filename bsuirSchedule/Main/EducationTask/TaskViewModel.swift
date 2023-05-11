@@ -13,7 +13,7 @@
 //    var lesson: Lesson?
 ////    var nextSections: [ScheduleSection] = []
 //
-//    var task: Hometask?
+//    var task: EducationTask?
 //
 //    @Published var showDeadline = false
 //    @Published var showLessonsPicker = true
