@@ -131,12 +131,16 @@ struct EducationTaskDetailedView: View {
     var images: some View {
         ForEach(viewModel.imagesData, id: \.self) { data in
             if let uiImage = UIImage(data: data) {
-                Image(uiImage: uiImage)
+                let image = Image(uiImage: uiImage)
+                image
                     .resizable()
                     .aspectRatio(1, contentMode: .fit)
                     .clipped(antialiased: true)
                     .cornerRadius(16)
                     .contextMenu {
+                        ShareLink(item: image,
+                                  preview: SharePreview("Поделиться изображением",
+                                                        image: image))
                         DeleteButton {
                             guard let index = self.viewModel.imagesData.firstIndex(of: data) else { return }
                             let _ = withAnimation {
@@ -144,7 +148,7 @@ struct EducationTaskDetailedView: View {
                             }
                         }
                     } preview: {
-                        Image(uiImage: uiImage)
+                        image
                             .resizable()
                     }
             }

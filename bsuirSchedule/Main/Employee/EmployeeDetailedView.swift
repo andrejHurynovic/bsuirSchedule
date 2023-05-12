@@ -40,7 +40,7 @@ struct EmployeeDetailedView: View {
                let uiImage = UIImage(data: data) {
                 let photo = Image(uiImage: uiImage)
                 ShareLink(item: photo,
-                          preview: SharePreview("Поделиться фото",
+                          preview: SharePreview("Поделиться изображением",
                                                 image: photo))
             }
         } preview: {
