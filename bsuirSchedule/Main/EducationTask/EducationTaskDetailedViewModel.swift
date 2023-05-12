@@ -31,6 +31,7 @@ class EducationTaskDetailedViewModel: ObservableObject {
     init(educationTask: EducationTask) {
         self.backgroundContext = PersistenceController.shared.container.newBackgroundContext()
         self.educationTask = backgroundContext.object(with: educationTask.objectID) as! EducationTask
+        self.noteText = educationTask.note
         if let deadline = educationTask.deadline {
             withAnimation {
                 self.deadline = deadline

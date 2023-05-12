@@ -78,7 +78,7 @@ extension Employee {
         if backgroundEmployee.photoLink != previousPhotoLink || backgroundEmployee.photoLink != nil, backgroundEmployee.photo == nil {
             backgroundEmployee.photo = await fetchPhoto()
         }
-        
+
         await backgroundContext.perform(schedule: .immediate, {
             try! backgroundContext.save()
         })

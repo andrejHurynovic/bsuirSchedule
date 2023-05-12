@@ -51,17 +51,9 @@ struct HomeView: View {
                              navigationLinkDestination: AuditoriesView()) { auditorium in
                     AuditoriumNavigationLink(auditorium: auditorium)
                 }
-                HomeViewGrid(items: Array(educationTasks), navigationLinkTitle: "Задания", navigationLinkDestination: EmptyView()) { educationTask in
-                    NavigationLink {
-                        EducationTaskDetailedView(viewModel: EducationTaskDetailedViewModel(educationTask: educationTask))
-                    } label: {
-                        SquareTextView(title: educationTask.subject, firstSubtitle: educationTask.note, secondSubtitle: educationTask.deadline?.formatted(.relative(presentation: .numeric, unitsStyle: .abbreviated)))
-                    }
-
-                   
-                }
+                educationTasksGrid
             }
-                        .navigationTitle("Избранные")
+            .navigationTitle("Избранные")
             .toolbar(content: {
                 NavigationLink(destination: SettingsView()) {
                     Image(systemName: Constants.Symbols.configuration)
@@ -87,6 +79,23 @@ struct HomeView: View {
         if let primaryAuditoriumFormattedName = primarySchedulesViewModel.primaryAuditorium,
            let primaryAuditorium = auditories.first(where: { $0.formattedName == primaryAuditoriumFormattedName }) {
             PrimaryScheduleView(viewModel: PrimaryScheduleViewModel(scheduled: primaryAuditorium))
+        }
+    }
+    
+    @ViewBuilder var educationTasksGrid: some View {
+        if educationTasks.isEmpty == false {
+            LazyVGrid(columns: [SquareTextView.gridItem],
+                      alignment: .leading,
+                      spacing: 8) {
+                Section {
+                    ForEach(educationTasks, id: \.self) { educationTask in
+                        EducationTaskNavigationLink(educationTask: educationTask)
+                    }
+                } header: {
+                    HeaderView("Задания", withArrow: false)
+                }
+            }
+                      .padding(.horizontal)
         }
     }
 }

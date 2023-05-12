@@ -143,6 +143,10 @@
 		F6A1085229E5C6B5004BA71F /* GroupsSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A1085129E5C6B5004BA71F /* GroupsSections.swift */; };
 		F6A1085429E5CEA7004BA71F /* GroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A1085329E5CEA6004BA71F /* GroupsView.swift */; };
 		F6A1085629E5D328004BA71F /* SpecialityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A1085529E5D328004BA71F /* SpecialityExtensions.swift */; };
+		F6A503312A0E57B40052CCED /* EducationTaskNavigationLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A503302A0E57B40052CCED /* EducationTaskNavigationLink.swift */; };
+		F6A503332A0E580A0052CCED /* EducationTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A503322A0E580A0052CCED /* EducationTaskView.swift */; };
+		F6A503352A0E5AB30052CCED /* DeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A503342A0E5AB30052CCED /* DeleteButton.swift */; };
+		F6A503372A0E691A0052CCED /* EducationTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A503362A0E691A0052CCED /* EducationTaskViewModel.swift */; };
 		F6AFC4622721EC43008CC065 /* ColorRawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AFC4612721EC43008CC065 /* ColorRawRepresentable.swift */; };
 		F6B838E729F8717E006BAA23 /* roundTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B838E629F8717E006BAA23 /* roundTo.swift */; };
 		F6BC18A52811D4A100BA549D /* DateFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BC18A42811D4A100BA549D /* DateFormatters.swift */; };
@@ -314,6 +318,10 @@
 		F6A1085129E5C6B5004BA71F /* GroupsSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsSections.swift; sourceTree = "<group>"; };
 		F6A1085329E5CEA6004BA71F /* GroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsView.swift; sourceTree = "<group>"; };
 		F6A1085529E5D328004BA71F /* SpecialityExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialityExtensions.swift; sourceTree = "<group>"; };
+		F6A503302A0E57B40052CCED /* EducationTaskNavigationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationTaskNavigationLink.swift; sourceTree = "<group>"; };
+		F6A503322A0E580A0052CCED /* EducationTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationTaskView.swift; sourceTree = "<group>"; };
+		F6A503342A0E5AB30052CCED /* DeleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteButton.swift; sourceTree = "<group>"; };
+		F6A503362A0E691A0052CCED /* EducationTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationTaskViewModel.swift; sourceTree = "<group>"; };
 		F6AFC4612721EC43008CC065 /* ColorRawRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorRawRepresentable.swift; sourceTree = "<group>"; };
 		F6B838E629F8717E006BAA23 /* roundTo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = roundTo.swift; sourceTree = "<group>"; };
 		F6BC18A42811D4A100BA549D /* DateFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatters.swift; sourceTree = "<group>"; };
@@ -423,6 +431,7 @@
 				F671F15529E7489F0086681E /* HeaderView.swift */,
 				F65333DF29DCC3D4004EEF8C /* TotalFooterView.swift */,
 				F62FC6A029E8217300F6B941 /* Backgrounds.swift */,
+				F6A503342A0E5AB30052CCED /* DeleteButton.swift */,
 				F6B838E329F8709D006BAA23 /* Modifiers */,
 				F643071829E06F0900B3A98A /* Forms */,
 				F606AFB129DE36B2007180E6 /* Grids */,
@@ -635,6 +644,7 @@
 				F65D67D82A0D0FD3007D86D0 /* EducationTaskExtensions.swift */,
 				F601E5A82731AA3900773F02 /* EducationTaskDetailedViewModel.swift */,
 				F63FC6BC272F01E900C9F410 /* EducationTaskDetailedView.swift */,
+				F6A5032F2A0E579B0052CCED /* EducationTasks */,
 			);
 			path = EducationTask;
 			sourceTree = "<group>";
@@ -811,6 +821,16 @@
 				F6A1085129E5C6B5004BA71F /* GroupsSections.swift */,
 			);
 			path = Sections;
+			sourceTree = "<group>";
+		};
+		F6A5032F2A0E579B0052CCED /* EducationTasks */ = {
+			isa = PBXGroup;
+			children = (
+				F6A503362A0E691A0052CCED /* EducationTaskViewModel.swift */,
+				F6A503322A0E580A0052CCED /* EducationTaskView.swift */,
+				F6A503302A0E57B40052CCED /* EducationTaskNavigationLink.swift */,
+			);
+			path = EducationTasks;
 			sourceTree = "<group>";
 		};
 		F6B838E329F8709D006BAA23 /* Modifiers */ = {
@@ -990,6 +1010,7 @@
 				F661DE2F2A0AF31900B8F108 /* PrimarySchedulePickerView.swift in Sources */,
 				F65A9A9529FFF9C000244488 /* LessonTypeConfigurationView.swift in Sources */,
 				F670BEE92A0017F900D76D70 /* URLSessionData.swift in Sources */,
+				F6A503332A0E580A0052CCED /* EducationTaskView.swift in Sources */,
 				F6F9AC1329F71B930069DD18 /* LessonViewConfiguration.swift in Sources */,
 				F695AA3B29D8439D0051A354 /* Department.swift in Sources */,
 				F697BF8526FFA960008FA7A9 /* AuditoriesView.swift in Sources */,
@@ -1018,6 +1039,7 @@
 				F687043129FEE25300A3CF0C /* PrimaryScheduleView.swift in Sources */,
 				F66DC1462A0C3884005EF7E3 /* DegreeDecoder.swift in Sources */,
 				F61C524026E64619002CF234 /* GroupDecoder.swift in Sources */,
+				F6A503312A0E57B40052CCED /* EducationTaskNavigationLink.swift in Sources */,
 				F643070B29DF7D8500B3A98A /* Favored.swift in Sources */,
 				F687043329FEE35E00A3CF0C /* AuditoriumExtensions.swift in Sources */,
 				F636C5812A0700C200925397 /* LessonsGridView.swift in Sources */,
@@ -1075,6 +1097,7 @@
 				F670BEE72A00117700D76D70 /* SpecialityFetch.swift in Sources */,
 				F69C463726E91B430036D6A1 /* EmployeeDetailedView.swift in Sources */,
 				F6748DF328DFB7C80072FB04 /* Scheduled.swift in Sources */,
+				F6A503352A0E5AB30052CCED /* DeleteButton.swift in Sources */,
 				F612D8B629DB856A00D4DDEB /* AuditoriesSectionGridView.swift in Sources */,
 				F646715129FF1313004E2953 /* LessonTypeExtensions.swift in Sources */,
 				F695AA3529D835C80051A354 /* AuditoriumType.swift in Sources */,
@@ -1091,6 +1114,7 @@
 				F698C25928D4995000C24EFB /* LessonsRefreshable.swift in Sources */,
 				F643071729E06F0300B3A98A /* FormViewWithAlternativeText.swift in Sources */,
 				F6794E8929FDBB6D00BEE44A /* HomeView.swift in Sources */,
+				F6A503372A0E691A0052CCED /* EducationTaskViewModel.swift in Sources */,
 				F670BEFD2A0020EE00D76D70 /* GroupFetch.swift in Sources */,
 				F60D44B229DC693F0008E4F4 /* NSManagedObjectsSection.swift in Sources */,
 				F6A1085029E5C123004BA71F /* GroupSectionType.swift in Sources */,

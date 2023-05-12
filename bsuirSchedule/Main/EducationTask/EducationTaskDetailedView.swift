@@ -95,6 +95,7 @@ struct EducationTaskDetailedView: View {
                 Image(systemName: "keyboard.chevron.compact.down")
                     .bold()
             }
+            .padding(.top, 16)
         }
     }
     
@@ -136,15 +137,12 @@ struct EducationTaskDetailedView: View {
                     .clipped(antialiased: true)
                     .cornerRadius(16)
                     .contextMenu {
-                        Button(role: .destructive) {
+                        DeleteButton {
                             guard let index = self.viewModel.imagesData.firstIndex(of: data) else { return }
                             let _ = withAnimation {
                                 viewModel.imagesData.remove(at: index)
                             }
-                        } label: {
-                            Label("Удалить", systemImage: "trash")
                         }
-                        
                     } preview: {
                         Image(uiImage: uiImage)
                             .resizable()
@@ -173,9 +171,11 @@ class EducationTaskDetailedView_Previews: PreviewProvider {
         if let group = groups.first(where: { $0.name == "250504" }),
            let lessons = group.lessons?.allObjects as? [Lesson],
            let lesson = lessons.randomElement() {
-            EducationTaskDetailedView(viewModel: EducationTaskDetailedViewModel(lesson: lesson,
-                                                                                lessons: lessons.filtered(abbreviation: lesson.abbreviation)))
-            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+            NavigationView {
+                EducationTaskDetailedView(viewModel: EducationTaskDetailedViewModel(lesson: lesson,
+                                                                                    lessons: lessons.filtered(abbreviation: lesson.abbreviation)))
+                .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+            }
         }
     }
 }
