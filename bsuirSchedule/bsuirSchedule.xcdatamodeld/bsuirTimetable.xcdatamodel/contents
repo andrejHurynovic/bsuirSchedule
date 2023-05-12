@@ -57,8 +57,8 @@
     <entity name="EducationTask" representedClassName="EducationTask" syncable="YES">
         <attribute name="creation" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="deadline" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="images" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[Data]"/>
         <attribute name="note" optional="YES" attributeType="String"/>
-        <attribute name="photosData" optional="YES" attributeType="Binary" valueTransformerName="NSSecureUnarchiveFromDataTransformerName" customClassName="[UIImage]"/>
         <attribute name="subject" attributeType="String"/>
     </entity>
     <entity name="EducationType" representedClassName="EducationType" syncable="YES">

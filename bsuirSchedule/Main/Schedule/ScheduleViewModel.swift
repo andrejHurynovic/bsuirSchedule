@@ -26,6 +26,8 @@ class ScheduleViewModel: ObservableObject {
     
     @Published var selectedSubgroup: Int?
     
+    @Published var selectedHometaskLesson: Lesson?
+    
     var sections: [ScheduleSection]?
     @Published var filteredSections: [ScheduleSection]?
     

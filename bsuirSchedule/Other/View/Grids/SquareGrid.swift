@@ -12,7 +12,7 @@ struct SquareGrid<Content: View>: View {
     @ViewBuilder var content: () -> Content
     
     var body: some View {
-        LazyVGrid(columns: [SquareView.gridItem],
+        LazyVGrid(columns: [SquareTextView.gridItem],
                   alignment: .leading,
                   spacing: 8) {
             content()

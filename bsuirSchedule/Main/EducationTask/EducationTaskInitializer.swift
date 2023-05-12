@@ -1,5 +1,5 @@
 //
-//  HometaskInitializer.swift
+//  EducationTaskInitializer.swift
 //  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 11.05.23.
@@ -7,17 +7,13 @@
 
 import CoreData
 
-@objc(Hometask)
+@objc(EducationTask)
 public class EducationTask: NSManagedObject {
-    convenience init(subject: String, note: String, photosData: Data?, deadline: Date?) {
-        let context = PersistenceController.shared.container.newBackgroundContext()
+    convenience init(subject: String, context: NSManagedObjectContext) {
         self.init(entity: EducationTask.entity(), insertInto: context)
         
         self.subject = subject
-        self.note = note
-        self.photosData = photosData
         self.creation = .now
-        self.deadline = deadline
     }
 }
 

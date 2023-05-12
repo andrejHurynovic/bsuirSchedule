@@ -77,4 +77,19 @@ extension Sequence where Element == Lesson {
         
         return datesStride(educationRange.lowerBound, educationRange.upperBound)
     }
+    
+    var dividedEducationDates: (previousDates: [Date]?, nextDates: [Date]?)? {
+        let today = Calendar.autoupdatingCurrent.startOfDay(for: .now)
+        guard let educationDates = self.educationDates else { return (nil, nil) }
+        
+        if today <= educationDates.first! { return (nil, educationDates) }
+        if educationDates.last! < today { return (educationDates, nil) }
+        
+        var dividedArray = educationDates.split(separator: today)
+        let previousDates = Array(dividedArray.removeFirst())
+        
+        guard let nextDates = dividedArray.last else { return (previousDates, [today]) }
+        
+        return (Array(previousDates), [today] + nextDates)
+    }
 }

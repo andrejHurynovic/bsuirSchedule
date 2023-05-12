@@ -14,8 +14,8 @@ extension EducationTask {
         return request
     }
     @NSManaged public var subject: String
-    @NSManaged public var note: String?
-    @NSManaged public var photosData: Data?
+    @NSManaged public var note: String
+    @NSManaged public var images: [Data]?
     
     @NSManaged public var creation: Date
     @NSManaged public var deadline: Date?

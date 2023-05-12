@@ -11,7 +11,7 @@ struct GroupView: View {
     @ObservedObject var group: Group
     
     var body: some View {
-        SquareView(title: group.name,
+        SquareTextView(title: group.name,
                    firstSubtitle: group.nickname ?? group.speciality?.faculty?.abbreviation,
                    secondSubtitle: group.speciality?.abbreviation)
     }

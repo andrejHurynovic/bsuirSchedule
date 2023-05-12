@@ -10,6 +10,8 @@ import SwiftUI
 struct ScheduleSectionView: View {
     
     @ObservedObject var section: ScheduleSection
+    
+    @Binding var selectedHometaskLesson: Lesson?
     @Binding var showDatePicker: Bool
     
     var body: some View {
@@ -18,6 +20,27 @@ struct ScheduleSectionView: View {
                 LessonView(lesson: lesson,
                            today: section.today
                 )
+                .contextMenu {
+                    Button {
+                        self.selectedHometaskLesson = lesson
+                    } label: {
+                        Label("Добавить задание", systemImage: Constants.Symbols.hometask)
+                    }
+
+                    Button("Удалить занятие") {
+                        PersistenceController.shared.container.viewContext.delete(lesson)
+                        try! PersistenceController.shared.container.viewContext.save()
+                    }
+                } preview: {
+                    LessonView(lesson: lesson,
+                               today: false)
+                    .environmentObject(LessonViewConfiguration(showFullSubject: true,
+                                                               showGroups: true,
+                                                               showEmployees: true,
+                                                               showWeeks: true,
+                                                               showDates: true,
+                                                               showDate: true))
+                }
                 .id(lesson.id(sectionID: section.id))
             }
         } header: {

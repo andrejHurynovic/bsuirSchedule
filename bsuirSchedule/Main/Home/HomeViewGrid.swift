@@ -10,7 +10,7 @@ import CoreData
 
 struct HomeViewGrid<ItemType: NSManagedObject, ItemViewContent: View, DestinationContent: View>: View {
     var items: [ItemType]
-    var gridItem: GridItem = SquareView.gridItem
+    var gridItem: GridItem = SquareTextView.gridItem
     
     var navigationLinkTitle: String
     var navigationLinkDestination: DestinationContent

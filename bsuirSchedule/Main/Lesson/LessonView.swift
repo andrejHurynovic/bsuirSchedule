@@ -38,23 +38,6 @@ struct LessonView: View {
         .padding()
         .roundedRectangleBackground()
         .opacity(viewModel.passed ? 0.5 : 1.0)
-        
-        .contextMenu {
-            Text("Добавить задание")
-            Button("Удалить занятие") {
-                PersistenceController.shared.container.viewContext.delete(lesson)
-                try! PersistenceController.shared.container.viewContext.save()
-            }
-        } preview: {
-            LessonView(lesson: lesson,
-                       today: false)
-            .environmentObject(LessonViewConfiguration(showFullSubject: true,
-                                                       showGroups: true,
-                                                       showEmployees: true,
-                                                       showWeeks: true,
-                                                       showDates: true,
-                                                       showDate: true))
-        }
     }
     
     //MARK: - Title

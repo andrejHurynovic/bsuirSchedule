@@ -28,10 +28,6 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
             searchField
         }
         .environmentObject(lessonViewConfiguration)
-        .sheet(isPresented: $viewModel.showDatePicker) {
-            datePicker
-        }
-
         
         .navigationTitle(scheduled.title)
         .navigationBarTitleDisplayMode(.inline)
@@ -41,6 +37,18 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
                 let _ = await refreshableObject.update()
             }
         }
+        
+        .sheet(isPresented: $viewModel.showDatePicker) {
+            datePicker
+        }
+        .sheet(item: $viewModel.selectedHometaskLesson, content: { lesson in
+            let lessons = (scheduled.lessons?.allObjects as? [Lesson])!
+            let filteredLessons = lessons.filtered(abbreviation: lesson.abbreviation)
+            NavigationView {
+                EducationTaskDetailedView(viewModel: EducationTaskDetailedViewModel(lesson: lesson,
+                                                                                    lessons: filteredLessons))
+            }
+        })
         
         .animation(.spring(), value: scheduled.lessons)
         
@@ -85,6 +93,7 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
                 ScrollView {
                     LessonsGridView {
                         ScheduleSectionView(section: section,
+                                            selectedHometaskLesson: $viewModel.selectedHometaskLesson,
                                             showDatePicker: $viewModel.showDatePicker)
                     }
                     .padding(.horizontal)
@@ -101,6 +110,7 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
                 LessonsGridView {
                     ForEach(viewModel.filteredSections!) { section in
                         ScheduleSectionView(section: section,
+                                            selectedHometaskLesson: $viewModel.selectedHometaskLesson,
                                             showDatePicker: $viewModel.showDatePicker)
                     }
                 }

@@ -32,6 +32,8 @@ extension View {
 //MARK: - baseBackground
 
 struct roundedRectangleBackgroundViewModifier: ViewModifier {
+    var cornerRadius: CGFloat
+    
     func body(content: Content) -> some View {
         content
 #if os(iOS)
@@ -39,7 +41,8 @@ struct roundedRectangleBackgroundViewModifier: ViewModifier {
                         in: RoundedRectangle(cornerRadius: 16))
         
 #elseif os(macOS)
-            .background(Color(NSColor.windowBackgroundColor))
+            .background(Color(NSColor.windowBackgroundColor),
+                        in: RoundedRectangle(cornerRadius: 16))
         
 #endif
         
@@ -47,7 +50,7 @@ struct roundedRectangleBackgroundViewModifier: ViewModifier {
 }
 
 extension View {
-    func roundedRectangleBackground() -> some View {
-        modifier(roundedRectangleBackgroundViewModifier())
+    func roundedRectangleBackground(cornerRadius: CGFloat = 16.0) -> some View {
+        modifier(roundedRectangleBackgroundViewModifier(cornerRadius: cornerRadius))
     }
 }

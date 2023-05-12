@@ -11,7 +11,7 @@ struct AuditoriumView: View {
     @ObservedObject var auditorium: Auditorium
     
     var body: some View {
-        SquareView(title: auditorium.formattedName,
+        SquareTextView(title: auditorium.formattedName,
                    firstSubtitle: auditorium.type?.abbreviation,
                    secondSubtitle: auditorium.department?.abbreviation)
     }

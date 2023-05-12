@@ -14,7 +14,7 @@ struct DepartmentNavigationLink: View {
         NavigationLink {
             DepartmentDetailedView(department: department)
         } label: {
-            SquareView(title: department.abbreviation)
+            SquareTextView(title: department.abbreviation)
         }
         .contextMenu {
             FavoriteButton(item: department)

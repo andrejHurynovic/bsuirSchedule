@@ -28,6 +28,7 @@ struct Constants {
         static let lessonDate = "calendar"
         static let lessonWeeks = "calendar.circle"
         static let schedule = "calendar"
+        static let hometask = "pencil.line"
     }
     
     struct Ranges {

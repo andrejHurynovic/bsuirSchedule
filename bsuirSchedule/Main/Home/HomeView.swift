@@ -23,6 +23,9 @@ struct HomeView: View {
                   predicate: NSPredicate(format: "favorite = true"),
                   animation: .spring())
     var auditories: FetchedResults<Auditorium>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\EducationTask.deadline, order: .forward)],
+                  animation: .spring())
+    var educationTasks: FetchedResults<EducationTask>
     
     @StateObject var primarySchedulesViewModel = PrimarySchedulesViewModel()
     
@@ -47,6 +50,15 @@ struct HomeView: View {
                              navigationLinkTitle: "Аудитории",
                              navigationLinkDestination: AuditoriesView()) { auditorium in
                     AuditoriumNavigationLink(auditorium: auditorium)
+                }
+                HomeViewGrid(items: Array(educationTasks), navigationLinkTitle: "Задания", navigationLinkDestination: EmptyView()) { educationTask in
+                    NavigationLink {
+                        EducationTaskDetailedView(viewModel: EducationTaskDetailedViewModel(educationTask: educationTask))
+                    } label: {
+                        SquareTextView(title: educationTask.subject, firstSubtitle: educationTask.note, secondSubtitle: educationTask.deadline?.formatted(.relative(presentation: .numeric, unitsStyle: .abbreviated)))
+                    }
+
+                   
                 }
             }
                         .navigationTitle("Избранные")
