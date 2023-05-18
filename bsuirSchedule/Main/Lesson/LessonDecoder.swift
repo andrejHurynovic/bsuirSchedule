@@ -59,7 +59,7 @@ public class Lesson: NSManagedObject {
                 self.startLessonDate = endLessonDate
             }
         } else {
-#warning("remake")
+
             self.startLessonDateString = ""
         }
         
