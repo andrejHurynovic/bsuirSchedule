@@ -1,5 +1,5 @@
 //
-//  GroupViewModel.swift
+//  GroupDetailedViewModel.swift
 //  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 31.05.22.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class GroupViewModel: ObservableObject {
+class GroupDetailedViewModel: ObservableObject {
     @Published var nicknameString: String = ""
         
     func submitNickname(_ group: Group) {

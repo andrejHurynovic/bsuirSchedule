@@ -19,18 +19,15 @@ extension EducationType {
     @NSManaged public var name: String
 }
 
-//MARK: - Generated accessors for EducationType
+//MARK: - Generated accessors
 
 extension EducationType {
     @objc(addSpecialitiesObject:)
     @NSManaged public func addToSpecialities(_ value: Speciality)
-    
     @objc(removeSpecialitiesObject:)
     @NSManaged public func removeFromSpecialities(_ value: Speciality)
-    
     @objc(addSpecialities:)
     @NSManaged public func addToSpecialities(_ values: NSSet)
-    
     @objc(removeSpecialities:)
     @NSManaged public func removeFromSpecialities(_ values: NSSet)
 }

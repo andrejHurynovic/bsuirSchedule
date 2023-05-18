@@ -18,7 +18,7 @@
 		F613E17429DCCC900054C93E /* EmployeesGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F613E17329DCCC900054C93E /* EmployeesGridView.swift */; };
 		F613E17629DCD8C60054C93E /* SectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F613E17529DCD8C60054C93E /* SectionType.swift */; };
 		F614250C271B7EFF006C3CE1 /* AuditoriumDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F614250B271B7EFF006C3CE1 /* AuditoriumDetailedView.swift */; };
-		F61915B728465F2100A98101 /* GroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61915B628465F2100A98101 /* GroupViewModel.swift */; };
+		F61915B728465F2100A98101 /* GroupDetailedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61915B628465F2100A98101 /* GroupDetailedViewModel.swift */; };
 		F61915B928465F4600A98101 /* LastUpdateDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61915B828465F4600A98101 /* LastUpdateDate.swift */; };
 		F61C523E26E64619002CF234 /* LessonDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61C523A26E64619002CF234 /* LessonDecoder.swift */; };
 		F61C523F26E64619002CF234 /* Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61C523B26E64619002CF234 /* Lesson.swift */; };
@@ -186,7 +186,7 @@
 		F613E17329DCCC900054C93E /* EmployeesGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeesGridView.swift; sourceTree = "<group>"; };
 		F613E17529DCD8C60054C93E /* SectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionType.swift; sourceTree = "<group>"; };
 		F614250B271B7EFF006C3CE1 /* AuditoriumDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriumDetailedView.swift; sourceTree = "<group>"; };
-		F61915B628465F2100A98101 /* GroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewModel.swift; sourceTree = "<group>"; };
+		F61915B628465F2100A98101 /* GroupDetailedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailedViewModel.swift; sourceTree = "<group>"; };
 		F61915B828465F4600A98101 /* LastUpdateDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastUpdateDate.swift; sourceTree = "<group>"; };
 		F61C523A26E64619002CF234 /* LessonDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDecoder.swift; sourceTree = "<group>"; };
 		F61C523B26E64619002CF234 /* Lesson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson.swift; sourceTree = "<group>"; };
@@ -755,7 +755,7 @@
 				F670BEFC2A0020EE00D76D70 /* GroupFetch.swift */,
 				F6A1084629E5BB11004BA71F /* GroupExtensions.swift */,
 				F62F764529E201C800959225 /* EducationDegree.swift */,
-				F61915B628465F2100A98101 /* GroupViewModel.swift */,
+				F61915B628465F2100A98101 /* GroupDetailedViewModel.swift */,
 				F6BC18A62811E8FD00BA549D /* GroupDetailedView.swift */,
 				F6A1084E29E5C0B1004BA71F /* Sections */,
 				F6A1084829E5BB31004BA71F /* Groups */,
@@ -780,8 +780,8 @@
 		F6A1084B29E5BEBD004BA71F /* Sections */ = {
 			isa = PBXGroup;
 			children = (
-				F6857C7828F096CE00195388 /* AuditoriesSection.swift */,
 				F60D44B729DC753B0008E4F4 /* AuditoriumSectionType.swift */,
+				F6857C7828F096CE00195388 /* AuditoriesSection.swift */,
 			);
 			path = Sections;
 			sourceTree = "<group>";
@@ -1043,7 +1043,7 @@
 				F6748DF128DFA2EE0072FB04 /* EducationRanged.swift in Sources */,
 				F6BC18A72811E8FE00BA549D /* GroupDetailedView.swift in Sources */,
 				F69BEF7D29FEBDF600A9ED5A /* HomeViewGrid.swift in Sources */,
-				F61915B728465F2100A98101 /* GroupViewModel.swift in Sources */,
+				F61915B728465F2100A98101 /* GroupDetailedViewModel.swift in Sources */,
 				F697BF8726FFAA02008FA7A9 /* AuditoriesViewModel.swift in Sources */,
 				F61C524126E64619002CF234 /* Group.swift in Sources */,
 				F661DE352A0BB2D300B8F108 /* HomeViewModel.swift in Sources */,

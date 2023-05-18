@@ -19,7 +19,6 @@ extension Faculty {
     @NSManaged public var abbreviation: String?
     
     @NSManaged public var specialities: NSSet?
-    
 }
 
 //MARK: - Generated accessors

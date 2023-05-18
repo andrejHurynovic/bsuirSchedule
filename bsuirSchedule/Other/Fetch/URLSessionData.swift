@@ -13,14 +13,25 @@ extension URLSession {
             Log.error("Can't create url for \(dataType), argument: \(String(describing: argument))")
             throw URLError(.badURL)
         }
-        let (data, urlResponse) = try await URLSession.shared.data(from: url)
         
-        guard data.isEmpty == false else {
-            Log.error("Can't get data from \(dataType), argument: \(String(describing: argument)), urlResponse: \(urlResponse)")
-            return nil
+        for _ in 0...3 {
+            
+            let (data, urlResponse) = try await URLSession.shared.data(from: url)
+            
+            if (200..<300).contains((urlResponse as! HTTPURLResponse).statusCode) {
+                
+                guard data.isEmpty == false else {
+                    Log.error("Can't get data from \(dataType), argument: \(String(describing: argument)), urlResponse: \(urlResponse)")
+                    return nil
+                }
+                
+                return data
+            }
+            
         }
         
-        return data
+        Log.error("Can't get data from \(dataType), argument: \(String(describing: argument)) with 3 retries")
+        return nil
     }
     
     func data(from urlString: String) async throws -> Data {

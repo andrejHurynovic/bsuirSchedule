@@ -16,22 +16,6 @@ protocol EducationBounded {
     var examsStart: Date? { get set }
     /// Exams end date if provided by the API
     var examsEnd: Date? { get set }
-    
-    var lessonsDates: [Date]? { get }
-    ///Ordered dates created from exams start and end dates and mapped from all exams lessons
-    var examsDates: [Date]? { get }
-    ///Range between the first and the last from education and exams dates
-}
-
-extension EducationBounded {
-    ///Dates between educationStart and educationEnd inclusive
-        var lessonsDates: [Date]? {
-            return datesStride(educationStart, educationEnd)
-        }
-        ///Dates between examsStart and examsEnd inclusive
-        var examsDates: [Date]? {
-            return datesStride(examsStart, examsEnd)
-        }
 }
 
 extension Group {

@@ -14,7 +14,7 @@ enum GroupSectionType: SectionType {
     var description: String {
         switch self {
             case .specialityAbbreviation:
-                return "Специальность сокращённая "
+                return "Специальность сокращённая"
             case .specialityName:
                 return "Специальность полная"
             case .faculty:

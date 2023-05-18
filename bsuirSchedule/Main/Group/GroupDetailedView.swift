@@ -10,7 +10,7 @@ import SwiftUI
 struct GroupDetailedView: View {
     
     @ObservedObject var group: Group
-    @StateObject var viewModel = GroupViewModel()
+    @StateObject var viewModel = GroupDetailedViewModel()
     
     var body: some View {
         Form {

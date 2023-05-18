@@ -18,7 +18,7 @@ struct GroupsView: View {
                   animation: .spring())
     private var educationTypes: FetchedResults<EducationType>
     
-    @StateObject private var viewModel = GroupsViewModel()
+    @ObservedObject private var viewModel = GroupsViewModel()
     
     //MARK: - Body
     
