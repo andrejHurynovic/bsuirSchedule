@@ -500,6 +500,18 @@
 			path = Departments;
 			sourceTree = "<group>";
 		};
+		F64290D02A16E2A400CE15E9 /* LessonType */ = {
+			isa = PBXGroup;
+			children = (
+				F646714C29FF11F6004E2953 /* LessonType.swift */,
+				F646714B29FF11F6004E2953 /* LessonTypeDecoder.swift */,
+				F646715029FF1313004E2953 /* LessonTypeExtensions.swift */,
+				F65A9A9429FFF9C000244488 /* LessonTypeConfigurationView.swift */,
+				F646715429FFDD99004E2953 /* LessonTypesView.swift */,
+			);
+			path = LessonType;
+			sourceTree = "<group>";
+		};
 		F643070C29DF7DA300B3A98A /* Favorite */ = {
 			isa = PBXGroup;
 			children = (
@@ -565,19 +577,6 @@
 				F67AA4E028FF779900E5A7C4 /* Fetch */,
 			);
 			path = Other;
-			sourceTree = "<group>";
-		};
-		F646714F29FF122A004E2953 /* LessonType */ = {
-			isa = PBXGroup;
-			children = (
-				F646714C29FF11F6004E2953 /* LessonType.swift */,
-				F646714B29FF11F6004E2953 /* LessonTypeDecoder.swift */,
-				F646715029FF1313004E2953 /* LessonTypeExtensions.swift */,
-				F65A9A9429FFF9C000244488 /* LessonTypeConfigurationView.swift */,
-				F646715429FFDD99004E2953 /* LessonTypesView.swift */,
-			);
-			name = LessonType;
-			path = ../../..;
 			sourceTree = "<group>";
 		};
 		F65F831F26E8F35500B8CC4E /* Employee */ = {
@@ -839,7 +838,7 @@
 				F6F9AC1229F71B930069DD18 /* LessonViewConfiguration.swift */,
 				F6CB615626F000EE00D29807 /* LessonView.swift */,
 				F6923CA52A0833A6006F20D9 /* LessonViewModel.swift */,
-				F646714F29FF122A004E2953 /* LessonType */,
+				F64290D02A16E2A400CE15E9 /* LessonType */,
 			);
 			path = Lesson;
 			sourceTree = "<group>";
@@ -1254,8 +1253,8 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = R38NN26M52;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = bsuirSchedule/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = bsuirSchedule;
@@ -1282,8 +1281,8 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = R38NN26M52;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = bsuirSchedule/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = bsuirSchedule;
