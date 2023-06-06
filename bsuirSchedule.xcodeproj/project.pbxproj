@@ -98,6 +98,7 @@
 		F671F15629E7489F0086681E /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F671F15529E7489F0086681E /* HeaderView.swift */; };
 		F6748DF128DFA2EE0072FB04 /* EducationRanged.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6748DF028DFA2EE0072FB04 /* EducationRanged.swift */; };
 		F6748DF328DFB7C80072FB04 /* Scheduled.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6748DF228DFB7C80072FB04 /* Scheduled.swift */; };
+		F677739A2A2FD7AF0047D06C /* SectionIndexesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67773992A2FD7AF0047D06C /* SectionIndexesView.swift */; };
 		F6794E8929FDBB6D00BEE44A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6794E8829FDBB6D00BEE44A /* HomeView.swift */; };
 		F67AA4E228FF788400E5A7C4 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67AA4E128FF788400E5A7C4 /* DateExtensions.swift */; };
 		F67AA4E928FF79F200E5A7C4 /* onLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67AA4E828FF79F200E5A7C4 /* onLoad.swift */; };
@@ -268,6 +269,7 @@
 		F671F15529E7489F0086681E /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		F6748DF028DFA2EE0072FB04 /* EducationRanged.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationRanged.swift; sourceTree = "<group>"; };
 		F6748DF228DFB7C80072FB04 /* Scheduled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scheduled.swift; sourceTree = "<group>"; };
+		F67773992A2FD7AF0047D06C /* SectionIndexesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionIndexesView.swift; sourceTree = "<group>"; };
 		F6794E8829FDBB6D00BEE44A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		F67AA4E128FF788400E5A7C4 /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		F67AA4E828FF79F200E5A7C4 /* onLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onLoad.swift; sourceTree = "<group>"; };
@@ -405,6 +407,7 @@
 				F65333DF29DCC3D4004EEF8C /* TotalFooterView.swift */,
 				F62FC6A029E8217300F6B941 /* Backgrounds.swift */,
 				F6A503342A0E5AB30052CCED /* DeleteButton.swift */,
+				F67773992A2FD7AF0047D06C /* SectionIndexesView.swift */,
 				F6B838E329F8709D006BAA23 /* Modifiers */,
 				F643071829E06F0900B3A98A /* Forms */,
 				F606AFB129DE36B2007180E6 /* Grids */,
@@ -985,6 +988,7 @@
 				F6F9AC1329F71B930069DD18 /* LessonViewConfiguration.swift in Sources */,
 				F695AA3B29D8439D0051A354 /* Department.swift in Sources */,
 				F697BF8526FFA960008FA7A9 /* AuditoriesView.swift in Sources */,
+				F677739A2A2FD7AF0047D06C /* SectionIndexesView.swift in Sources */,
 				F6923CA62A0833A7006F20D9 /* LessonViewModel.swift in Sources */,
 				F6857C7B28F0B5F800195388 /* FromGroupsView.swift in Sources */,
 				F6F87816271A1ED7005E3C41 /* SpecialityDecoder.swift in Sources */,
@@ -1253,8 +1257,8 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R38NN26M52;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = bsuirSchedule/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = bsuirSchedule;
@@ -1281,8 +1285,8 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R38NN26M52;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = bsuirSchedule/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = bsuirSchedule;

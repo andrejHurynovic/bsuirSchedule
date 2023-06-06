@@ -22,14 +22,18 @@ struct EmployeesView: View {
         ScrollViewReader { scrollViewProxy in
             
             ScrollView {
-                
                 EmployeesGridView(sections: employees.sections(viewModel.selectedSectionType),
                                   showDepartments: viewModel.showDepartments)
                 .padding(.trailing, viewModel.showSectionIndexes ? 8 : 0)
-                TotalFooterView(text: "Преподавателей", count: employees.count)
                 
-            }.overlay(content: {
-                sectionIndexes
+                TotalFooterView(text: "Преподавателей", count: employees.count)
+            }
+            .overlay(content: {
+                if viewModel.showSectionIndexes {
+                    SectionIndexesView(titles: Constants.alphabet,
+                                             scrollTargetID: $viewModel.scrollTargetID)
+                    .padding(.trailing, 8)
+                }
             })
             
             .navigationTitle("Преподаватели")
@@ -42,34 +46,13 @@ struct EmployeesView: View {
                 employees.nsPredicate = predicate
             }
             .onChange(of: viewModel.scrollTargetID, perform: { id in
-                guard let id = id else { return }
-                withAnimation {
-                    scrollViewProxy.scrollTo(id, anchor: .top)
-                }
+                scrollViewProxy.scrollTo(id, anchor: .top)
             })
             
             .baseBackground()
         }
     }
     
-    @ViewBuilder var sectionIndexes: some View {
-        if viewModel.showSectionIndexes {
-            HStack {
-                Spacer()
-                VStack(alignment: .center) {
-                    ForEach(Constants.alphabet, id: \.self) { letter in
-                        Button(action: {
-                            viewModel.scrollTargetID = letter
-                        }, label: {
-                            Text(letter)
-                                .font(.system(size: 12))
-                                .padding(.trailing, 8)
-                        })
-                    }
-                }
-            }
-        }
-    }
     
     //MARK: - Toolbar
     
