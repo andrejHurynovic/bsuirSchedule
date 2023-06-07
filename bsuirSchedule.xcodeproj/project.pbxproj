@@ -99,6 +99,9 @@
 		F6748DF128DFA2EE0072FB04 /* EducationRanged.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6748DF028DFA2EE0072FB04 /* EducationRanged.swift */; };
 		F6748DF328DFB7C80072FB04 /* Scheduled.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6748DF228DFB7C80072FB04 /* Scheduled.swift */; };
 		F677739A2A2FD7AF0047D06C /* SectionIndexesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67773992A2FD7AF0047D06C /* SectionIndexesView.swift */; };
+		F677739C2A30A2FD0047D06C /* Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = F677739B2A30A2FD0047D06C /* Haptic.swift */; };
+		F677739F2A30A42E0047D06C /* chunked.swift in Sources */ = {isa = PBXBuildFile; fileRef = F677739E2A30A42E0047D06C /* chunked.swift */; };
+		F67773A12A30A59A0047D06C /* HapticType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67773A02A30A59A0047D06C /* HapticType.swift */; };
 		F6794E8929FDBB6D00BEE44A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6794E8829FDBB6D00BEE44A /* HomeView.swift */; };
 		F67AA4E228FF788400E5A7C4 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67AA4E128FF788400E5A7C4 /* DateExtensions.swift */; };
 		F67AA4E928FF79F200E5A7C4 /* onLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67AA4E828FF79F200E5A7C4 /* onLoad.swift */; };
@@ -270,6 +273,9 @@
 		F6748DF028DFA2EE0072FB04 /* EducationRanged.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationRanged.swift; sourceTree = "<group>"; };
 		F6748DF228DFB7C80072FB04 /* Scheduled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scheduled.swift; sourceTree = "<group>"; };
 		F67773992A2FD7AF0047D06C /* SectionIndexesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionIndexesView.swift; sourceTree = "<group>"; };
+		F677739B2A30A2FD0047D06C /* Haptic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptic.swift; sourceTree = "<group>"; };
+		F677739E2A30A42E0047D06C /* chunked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chunked.swift; sourceTree = "<group>"; };
+		F67773A02A30A59A0047D06C /* HapticType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticType.swift; sourceTree = "<group>"; };
 		F6794E8829FDBB6D00BEE44A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		F67AA4E128FF788400E5A7C4 /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		F67AA4E828FF79F200E5A7C4 /* onLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onLoad.swift; sourceTree = "<group>"; };
@@ -575,6 +581,7 @@
 			children = (
 				F62B37012903198F00FA2BE8 /* Settings */,
 				F60D44B029DC691A0008E4F4 /* Generics */,
+				F67773A22A30A5A60047D06C /* Haptic */,
 				F67AA4E528FF795A00E5A7C4 /* Extensions */,
 				F612D8B229DB811600D4DDEB /* View */,
 				F67AA4E028FF779900E5A7C4 /* Fetch */,
@@ -651,6 +658,23 @@
 			path = Section;
 			sourceTree = "<group>";
 		};
+		F677739D2A30A41C0047D06C /* Array */ = {
+			isa = PBXGroup;
+			children = (
+				F677739E2A30A42E0047D06C /* chunked.swift */,
+			);
+			path = Array;
+			sourceTree = "<group>";
+		};
+		F67773A22A30A5A60047D06C /* Haptic */ = {
+			isa = PBXGroup;
+			children = (
+				F67773A02A30A59A0047D06C /* HapticType.swift */,
+				F677739B2A30A2FD0047D06C /* Haptic.swift */,
+			);
+			path = Haptic;
+			sourceTree = "<group>";
+		};
 		F6794E8529FDBB4700BEE44A /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -674,6 +698,7 @@
 		F67AA4E528FF795A00E5A7C4 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				F677739D2A30A41C0047D06C /* Array */,
 				F69424A1292789E0006FF042 /* Date */,
 				F6B838E529F87166006BAA23 /* Double */,
 				F6B838E429F87153006BAA23 /* String */,
@@ -978,6 +1003,7 @@
 				F68465FC26FA5321000F185E /* Faculty.swift in Sources */,
 				F60D44AF29DC68CC0008E4F4 /* SectionsSquareGrid.swift in Sources */,
 				F670BEFB2A001F5B00D76D70 /* EmployeeExtensions.swift in Sources */,
+				F677739F2A30A42E0047D06C /* chunked.swift in Sources */,
 				F695AA3A29D8439D0051A354 /* DepartmentDecoder.swift in Sources */,
 				F65309E729DCED12001DEC29 /* MenuView.swift in Sources */,
 				F638C0182A0588070021FA77 /* Constants.swift in Sources */,
@@ -1021,6 +1047,7 @@
 				F65D67D92A0D0FD3007D86D0 /* EducationTaskExtensions.swift in Sources */,
 				F643071E29E08DEA00B3A98A /* EducationType.swift in Sources */,
 				F62392C52A05505B00A54042 /* FacultyFetch.swift in Sources */,
+				F67773A12A30A59A0047D06C /* HapticType.swift in Sources */,
 				F697BF7D26FFA1BA008FA7A9 /* Auditorium.swift in Sources */,
 				F643071529E06D5700B3A98A /* FormView.swift in Sources */,
 				F6A1084729E5BB11004BA71F /* GroupExtensions.swift in Sources */,
@@ -1035,6 +1062,7 @@
 				F68E9CDC2729B57400704EB0 /* AuditoriumView.swift in Sources */,
 				F638C0102A057FAD0021FA77 /* DepartmentsGridView.swift in Sources */,
 				F63FC6BD272F01EA00C9F410 /* EducationTaskDetailedView.swift in Sources */,
+				F677739C2A30A2FD0047D06C /* Haptic.swift in Sources */,
 				F670BEF72A001E5400D76D70 /* AuditoriumDecodingError.swift in Sources */,
 				F661DE2B2A0A775500B8F108 /* PrimaryScheduleViewModel.swift in Sources */,
 				F638C0142A0582E70021FA77 /* SquareGrid.swift in Sources */,
