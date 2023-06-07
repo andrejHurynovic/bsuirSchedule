@@ -42,6 +42,13 @@ struct EmployeesView: View {
             .toolbar { toolbar }
             
             .searchable(text: $viewModel.searchText, prompt: "Фамилия, имя, подраздедение")
+            
+            .overlay(content: {
+                if employees.isEmpty, viewModel.searchText.isEmpty == false {
+                    SearchContentUnavailableView(searchText: viewModel.searchText)
+                }
+            })
+            
             .onChange(of: viewModel.predicate) { predicate in
                 employees.nsPredicate = predicate
             }

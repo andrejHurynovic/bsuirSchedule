@@ -50,7 +50,7 @@ class ScheduleViewModel: ObservableObject {
 
     private func addSelectedRepresentationType() {
         $selectedRepresentationType
-            .debounce(for: .milliseconds(1), scheduler: DispatchQueue.main)
+            .debounce(for: Constants.placeholderDebounce, scheduler: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self = self else { return }
                 Task {
@@ -62,7 +62,7 @@ class ScheduleViewModel: ObservableObject {
     }
     private func addSelectedSubgroupSubscriber() {
         $selectedSubgroup
-            .debounce(for: .milliseconds(1), scheduler: DispatchQueue.main)
+            .debounce(for: Constants.placeholderDebounce, scheduler: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self = self else { return }
                 Task {
@@ -74,7 +74,7 @@ class ScheduleViewModel: ObservableObject {
     }
     private func addSearchTextSubscriber() {
         $searchText
-            .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
+            .debounce(for: Constants.searchDebounceTime, scheduler: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self = self else { return }
                 Task {

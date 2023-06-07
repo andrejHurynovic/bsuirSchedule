@@ -7,10 +7,12 @@
 
 import SwiftUI
 
-struct ToolbarCircleModifier: ViewModifier {
+struct ToolbarCircleModifier<ShapeType: ShapeStyle>: ViewModifier {
+    var shapeStyle: ShapeType
+    
     func body(content: Content) -> some View {
         Circle()
-            .fill(.tertiary)
+            .fill(shapeStyle)
             .padding(-4)
             .frame(width: 22, height: 22)
             .overlay(
@@ -23,7 +25,13 @@ struct ToolbarCircleModifier: ViewModifier {
 }
 
 extension View {
-    func toolbarCircle() -> some View {
-        modifier(ToolbarCircleModifier())
+    func toolbarCircle<ShapeType: ShapeStyle>(shapeStyle: ShapeType = .tertiary) -> some View {
+        modifier(ToolbarCircleModifier(shapeStyle: shapeStyle))
+    }
+}
+
+class ToolbarCircleModifier_Previews: PreviewProvider {
+    static var previews: some View {
+        MenuView(defaultRules: [false]) { }
     }
 }

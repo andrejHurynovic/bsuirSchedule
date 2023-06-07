@@ -31,6 +31,13 @@ struct AuditoriesView: View {
         .toolbar { toolbar }
         
         .searchable(text: $viewModel.searchText, prompt: "Номер, подразделение")
+        
+        .overlay(content: {
+            if auditories.isEmpty, viewModel.searchText.isEmpty == false {
+                SearchContentUnavailableView(searchText: viewModel.searchText)
+            }
+        })
+        
         .onChange(of: viewModel.predicate) { predicate in
             auditories.nsPredicate = predicate
         }

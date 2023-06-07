@@ -134,12 +134,7 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle(tint: Color.gray))
             } else {
-                Text("Занятия по таким параметрам отсутствуют"
-                    .uppercased())
-                .multilineTextAlignment(.center)
-                .font(.footnote)
-                .foregroundColor(.gray)
-                .padding()
+                SearchContentUnavailableView(searchText: viewModel.searchText)
             }
         }
     }

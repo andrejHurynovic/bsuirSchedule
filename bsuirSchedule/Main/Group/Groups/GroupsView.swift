@@ -33,8 +33,15 @@ struct GroupsView: View {
             .toolbar { toolbar }
             
             .searchable(text: $viewModel.searchText, prompt: "Номер, специальность")
+        
+            .overlay(content: {
+                if groups.isEmpty, viewModel.searchText.isEmpty == false {
+                    SearchContentUnavailableView(searchText: viewModel.searchText)
+                }
+            })
+        
             .onChange(of: viewModel.predicate) { groups.nsPredicate = $0 }
-            
+        
             .baseBackground()
     }
     

@@ -36,7 +36,7 @@ class GroupsViewModel: ObservableObject {
     
     private func addSearchTextPublisher() {
         $searchText
-            .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
+            .debounce(for: Constants.searchDebounceTime, scheduler: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self = self else { return }
                 self.calculatePredicate()
@@ -46,7 +46,7 @@ class GroupsViewModel: ObservableObject {
     private func addSelectionSubscribers() {
         Publishers
             .CombineLatest4($selectedFaculty, $selectedSpecialtyEducationType, $selectedEducationDegree, $selectedCourse)
-            .debounce(for: .milliseconds(500), scheduler:  DispatchQueue.main)
+            .debounce(for: Constants.searchDebounceTime, scheduler:  DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self = self else { return }
                 self.calculatePredicate()

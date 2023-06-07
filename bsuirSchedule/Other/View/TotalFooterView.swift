@@ -12,14 +12,16 @@ struct TotalFooterView: View {
     var count: Int
     
     var body: some View {
-        HStack {
-            Text("Всего \(text): \(count)".uppercased())
-                .font(.footnote)
-                .foregroundColor(.gray)
-        Spacer()
+        if count > 0 {
+            HStack {
+                Text("Всего \(text): \(count)".uppercased())
+                    .font(.footnote)
+                    .foregroundColor(.gray)
+                Spacer()
+            }
+            .padding(.top, -16)
+            .padding([.horizontal, .bottom])
         }
-        .padding(.top, -16)
-        .padding([.horizontal, .bottom])
     }
 }
 

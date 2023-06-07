@@ -121,6 +121,9 @@
 		F687043529FEE38B00A3CF0C /* AuditoriumFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F687043429FEE38B00A3CF0C /* AuditoriumFetch.swift */; };
 		F68B4CEE284535C000C8DBF6 /* ScheduleSection .swift in Sources */ = {isa = PBXBuildFile; fileRef = F68B4CED284535C000C8DBF6 /* ScheduleSection .swift */; };
 		F68E9CDC2729B57400704EB0 /* AuditoriumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68E9CDB2729B57300704EB0 /* AuditoriumView.swift */; };
+		F68FB7F52A312DDD00F224A7 /* ContentUnavailablePlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68FB7F42A312DDD00F224A7 /* ContentUnavailablePlaceholderView.swift */; };
+		F68FB7F82A31317D00F224A7 /* SearchContentUnavailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68FB7F72A31317D00F224A7 /* SearchContentUnavailableView.swift */; };
+		F68FB7FA2A313FBF00F224A7 /* RestoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68FB7F92A313FBF00F224A7 /* RestoreButton.swift */; };
 		F69009D426F6958100379A74 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69009D326F6958000379A74 /* ScheduleViewModel.swift */; };
 		F691602E29001F290033AE14 /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F691602D29001F290033AE14 /* ScheduleView.swift */; };
 		F691603429002BCD0033AE14 /* ScheduleSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F691603329002BCD0033AE14 /* ScheduleSectionView.swift */; };
@@ -297,6 +300,9 @@
 		F68B4CED284535C000C8DBF6 /* ScheduleSection .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduleSection .swift"; sourceTree = "<group>"; };
 		F68E9CDB2729B57300704EB0 /* AuditoriumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriumView.swift; sourceTree = "<group>"; };
 		F68E9CEB2729FFE600704EB0 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		F68FB7F42A312DDD00F224A7 /* ContentUnavailablePlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentUnavailablePlaceholderView.swift; sourceTree = "<group>"; };
+		F68FB7F72A31317D00F224A7 /* SearchContentUnavailableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchContentUnavailableView.swift; sourceTree = "<group>"; };
+		F68FB7F92A313FBF00F224A7 /* RestoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreButton.swift; sourceTree = "<group>"; };
 		F69009D326F6958000379A74 /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
 		F691602D29001F290033AE14 /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
 		F691603329002BCD0033AE14 /* ScheduleSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSectionView.swift; sourceTree = "<group>"; };
@@ -415,6 +421,7 @@
 				F65333DF29DCC3D4004EEF8C /* TotalFooterView.swift */,
 				F62FC6A029E8217300F6B941 /* Backgrounds.swift */,
 				F6A503342A0E5AB30052CCED /* DeleteButton.swift */,
+				F68FB7F92A313FBF00F224A7 /* RestoreButton.swift */,
 				F67773992A2FD7AF0047D06C /* SectionIndexesView.swift */,
 				F6B838E329F8709D006BAA23 /* Modifiers */,
 				F643071829E06F0900B3A98A /* Forms */,
@@ -582,6 +589,7 @@
 			isa = PBXGroup;
 			children = (
 				F62B37012903198F00FA2BE8 /* Settings */,
+				F68FB7F62A31316000F224A7 /* ContentUnavailable */,
 				F60D44B029DC691A0008E4F4 /* Generics */,
 				F67773A22A30A5A60047D06C /* Haptic */,
 				F67AA4E528FF795A00E5A7C4 /* Extensions */,
@@ -726,6 +734,15 @@
 				F68E9CEB2729FFE600704EB0 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F68FB7F62A31316000F224A7 /* ContentUnavailable */ = {
+			isa = PBXGroup;
+			children = (
+				F68FB7F42A312DDD00F224A7 /* ContentUnavailablePlaceholderView.swift */,
+				F68FB7F72A31317D00F224A7 /* SearchContentUnavailableView.swift */,
+			);
+			path = ContentUnavailable;
 			sourceTree = "<group>";
 		};
 		F69424A1292789E0006FF042 /* Date */ = {
@@ -1010,6 +1027,7 @@
 				F677739F2A30A42E0047D06C /* chunked.swift in Sources */,
 				F695AA3A29D8439D0051A354 /* DepartmentDecoder.swift in Sources */,
 				F65309E729DCED12001DEC29 /* MenuView.swift in Sources */,
+				F68FB7F82A31317D00F224A7 /* SearchContentUnavailableView.swift in Sources */,
 				F638C0182A0588070021FA77 /* Constants.swift in Sources */,
 				F661DE2F2A0AF31900B8F108 /* PrimarySchedulePickerView.swift in Sources */,
 				F65A9A9529FFF9C000244488 /* LessonTypeConfigurationView.swift in Sources */,
@@ -1027,6 +1045,7 @@
 				F62F764629E201C800959225 /* EducationDegree.swift in Sources */,
 				F646715529FFDD99004E2953 /* LessonTypesView.swift in Sources */,
 				F632DEF526696CD300E4C55F /* Persistence.swift in Sources */,
+				F68FB7F52A312DDD00F224A7 /* ContentUnavailablePlaceholderView.swift in Sources */,
 				F62392C72A0550B100A54042 /* FacultyExtensions.swift in Sources */,
 				F69BEF7929FEB01200A9ED5A /* EmployeeNavigationLink.swift in Sources */,
 				F67E177D29E5E15F00864712 /* GroupsViewModel.swift in Sources */,
@@ -1055,6 +1074,7 @@
 				F697BF7D26FFA1BA008FA7A9 /* Auditorium.swift in Sources */,
 				F643071529E06D5700B3A98A /* FormView.swift in Sources */,
 				F6A1084729E5BB11004BA71F /* GroupExtensions.swift in Sources */,
+				F68FB7FA2A313FBF00F224A7 /* RestoreButton.swift in Sources */,
 				F670BEF92A001F2C00D76D70 /* EmployeeFetch.swift in Sources */,
 				F65309E529DCE1DA001DEC29 /* SectionTypePicker.swift in Sources */,
 				F638C0052A0572E10021FA77 /* EmployeesFormView.swift in Sources */,

@@ -12,8 +12,6 @@ struct LessonTypesView: View {
                   animation: .default)
     var lessonTypes: FetchedResults<LessonType>
     
-    @State private var showingRestoreDefault: Bool = false
-    
     var body: some View {
         Form {
             colorsForm
@@ -33,18 +31,10 @@ struct LessonTypesView: View {
     
     var restoreButton: some View {
         Section {
-            Button {
-                showingRestoreDefault = true
-            } label: {
-                Label("Сбросить", systemImage: "arrow.uturn.left.circle")
-                    .foregroundColor(.red)
-            }.alert("Вы уверены?", isPresented: $showingRestoreDefault) {
-                Button ("Сбросить", role: .destructive) {
-                    Task{
-                        await LessonType.initDefaultLessonTypes()
-                    }
+            RestoreButton {
+                Task {
+                    await LessonType.initDefaultLessonTypes()
                 }
-                Button ("Отмена", role: .cancel) {}
             }
         } footer: {
             Text("Будут восстановлены цвета, названия и аббревиатуры")

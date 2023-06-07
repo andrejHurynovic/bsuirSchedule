@@ -24,12 +24,18 @@ struct DepartmentsView: View {
         .refreshable { await DepartmentsViewModel.update() }
                 
         .searchable(text: $viewModel.searchText, prompt: "Название, аббревиатура")
+        
+        .overlay(content: {
+            if departments.isEmpty, viewModel.searchText.isEmpty == false {
+                SearchContentUnavailableView(searchText: viewModel.searchText)
+            }
+        })
+        
         .onChange(of: viewModel.predicate) { predicate in
             departments.nsPredicate = predicate
         }
+        
         .baseBackground()
-        
-        
         
     }
 }

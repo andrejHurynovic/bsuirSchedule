@@ -15,11 +15,20 @@ struct SettingsView: View {
     var body: some View {
         Form {
             PrimarySchedulePickerView()
-            ColorPicker("Основной", selection: $viewModel.tintColor)
+            tintColorPicker
             lessonTypes
             developer
         }
         .navigationTitle("Настройки")
+    }
+    
+    @ViewBuilder var tintColorPicker: some View {
+        Section("Основной цвет") {
+            ColorPicker("Основной", selection: $viewModel.tintColor)
+            RestoreButton {
+                viewModel.tintColor = .blue
+            }
+        }
     }
     
     var lessonTypes: some View {

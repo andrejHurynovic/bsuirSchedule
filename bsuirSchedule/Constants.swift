@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct Constants {
     
@@ -41,6 +42,9 @@ struct Constants {
     }
     
     static let alphabet = ["А", "Б", "В", "Г", "Д", "Е", "Ё", "Ж", "З", "И", "Й", "К", "Л", "М", "Н", "О", "П", "Р", "С", "Т", "У", "Ф", "Х", "Ц", "Ч", "Ш", "Щ", "Ъ", "Ы", "Ь", "Э", "Ю", "Я"]
+    
+    static let searchDebounceTime: DispatchQueue.SchedulerTimeType.Stride = .milliseconds(200)
+    static let placeholderDebounce: DispatchQueue.SchedulerTimeType.Stride = .milliseconds(1)
     
     static let relativeFormatDatesRange = -1...1
     static let todayCheckPublisherRange = relativeFormatDatesRange.lowerBound...5

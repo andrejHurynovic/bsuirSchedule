@@ -23,7 +23,7 @@ class DepartmentsViewModel: ObservableObject {
     
     private func addSearchTextPublisher() {
         $searchText
-            .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
+            .debounce(for: Constants.searchDebounceTime, scheduler: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self = self else { return }
                 self.calculatePredicate()

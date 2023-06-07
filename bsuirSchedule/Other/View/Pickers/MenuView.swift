@@ -12,14 +12,6 @@ struct MenuView<Content: View>: View {
     var satisfyDefaultRules: Bool {
         !defaultRules.contains(false)
     }
-    var imageName: String {
-        if satisfyDefaultRules {
-             return "line.3.horizontal.decrease.circle"
-        } else {
-             return "line.3.horizontal.decrease.circle.fill"
-            
-        }
-    }
     
     @ViewBuilder var content: () -> Content
     
@@ -27,9 +19,19 @@ struct MenuView<Content: View>: View {
         Menu {
             content()
         } label: {
-            Image(systemName: satisfyDefaultRules ? "line.3.horizontal.decrease" : "line.3.horizontal.decrease.fill")
-                .toolbarCircle()
+            Image(systemName: "line.3.horizontal.decrease")
+                .foregroundColor(satisfyDefaultRules ? .accentColor : .primary)
+                .toolbarCircle(shapeStyle: satisfyDefaultRules ? .tertiary : .primary)
         }
         
+    }
+}
+
+class MenuView_Previews: PreviewProvider {
+    static var previews: some View {
+        HStack(spacing: 16) {
+            MenuView(defaultRules: [true]) { }
+            MenuView(defaultRules: [false]) { }
+        }
     }
 }
