@@ -15,9 +15,7 @@ struct FavoriteButton<FavoredType: Favored>: View {
         item.favorite ? "Убрать из избранных" : "Добавить в избранные"
     }
     var imageString: String {
-        item.favorite ?
-        (circle ? "star.circle.fill" : "star.slash") :
-        (circle ? "star.circle" : "star.fill")
+        item.favorite ? "star.slash" : "star.fill"
     }
     
     var body: some View {
@@ -26,7 +24,12 @@ struct FavoriteButton<FavoredType: Favored>: View {
                 toggle()
             }
         } label: {
-            Label(labelString, systemImage: imageString)
+            if circle {
+                Label(labelString, systemImage: imageString)
+                    .toolbarCircle()
+            } else {
+                Label(labelString, systemImage: imageString)
+            }
         }
     }
     
@@ -50,6 +53,13 @@ struct FavoriteButton_Previews: PreviewProvider {
         if let auditorium = auditories.first {
             FavoriteButton(item: auditorium, circle: false)
             FavoriteButton(item: auditorium, circle: true)
+            NavigationView {
+                Text("")
+                    .toolbar {
+                        FavoriteButton(item: auditorium, circle: false)
+                        FavoriteButton(item: auditorium, circle: true)
+                    }
+            }
         }
         
     }

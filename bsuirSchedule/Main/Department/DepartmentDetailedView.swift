@@ -17,7 +17,8 @@ struct DepartmentDetailedView: View {
         }
         .navigationTitle(department.abbreviation)
         
-        .toolbar{ FavoriteButton(item: department) }
+        .toolbar{ FavoriteButton(item: department,
+                                 circle: true) }
     }
     
     @ViewBuilder var nameSection: some View {

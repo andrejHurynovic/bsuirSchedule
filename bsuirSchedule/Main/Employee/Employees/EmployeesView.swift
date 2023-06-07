@@ -46,7 +46,7 @@ struct EmployeesView: View {
                 employees.nsPredicate = predicate
             }
             .onChange(of: viewModel.scrollTargetID, perform: { id in
-                Haptic.impact()
+                Haptic.impact(.light)
                 scrollViewProxy.scrollTo(id, anchor: .top)
             })
             

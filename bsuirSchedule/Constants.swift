@@ -10,6 +10,9 @@ import SwiftUI
 struct Constants {
     
     struct Colors {
+        static let background = Color(UIColor.systemGroupedBackground)
+        static let element = Color(UIColor.secondarySystemGroupedBackground)
+        
         static let lecture = Color.green
         static let practice = Color.red
         static let laboratory = Color.blue
@@ -29,6 +32,7 @@ struct Constants {
         static let lessonWeeks = "calendar.circle"
         static let schedule = "calendar"
         static let hometask = "pencil.line"
+        static let information = "info"
     }
     
     struct Ranges {

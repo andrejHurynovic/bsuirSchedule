@@ -26,8 +26,6 @@ struct LessonTypesView: View {
             ForEach(lessonTypes, id: \.self) { lessonType in
                 LessonTypeConfigurationView(lessonType: lessonType)
             }
-        } header: {
-            Text("Цвета")
         } footer: {
             Text("Изменяйте цвета, названия и аббревиатуры типов занятий")
         }

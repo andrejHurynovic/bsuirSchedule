@@ -57,6 +57,7 @@ struct HomeView: View {
             .toolbar(content: {
                 NavigationLink(destination: SettingsView()) {
                     Image(systemName: Constants.Symbols.configuration)
+                        .toolbarCircle()
                 }
             })
             

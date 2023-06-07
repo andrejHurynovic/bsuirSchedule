@@ -27,7 +27,8 @@ struct MenuView<Content: View>: View {
         Menu {
             content()
         } label: {
-            Image(systemName: satisfyDefaultRules ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
+            Image(systemName: satisfyDefaultRules ? "line.3.horizontal.decrease" : "line.3.horizontal.decrease.fill")
+                .toolbarCircle()
         }
         
     }

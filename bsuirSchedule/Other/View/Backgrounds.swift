@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-//MARK: - roundedRectangleBackground
+//MARK: - baseBackground
 
 struct baseBackgroundViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
 #if os(iOS)
-            .background(Color(UIColor.systemGroupedBackground))
+            .background(Constants.Colors.background)
         
 #elseif os(macOS)
             .background(Color(NSColor.underPageBackgroundColor))
@@ -29,7 +29,7 @@ extension View {
 }
 
 
-//MARK: - baseBackground
+//MARK: - roundedRectangleBackground
 
 struct roundedRectangleBackgroundViewModifier: ViewModifier {
     var cornerRadius: CGFloat
@@ -37,7 +37,7 @@ struct roundedRectangleBackgroundViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
 #if os(iOS)
-            .background(Color(uiColor: .secondarySystemGroupedBackground),
+            .background(Constants.Colors.element,
                         in: RoundedRectangle(cornerRadius: 16))
         
 #elseif os(macOS)

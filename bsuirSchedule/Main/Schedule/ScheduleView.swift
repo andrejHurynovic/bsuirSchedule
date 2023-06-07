@@ -203,7 +203,8 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
             viewModel.showSearchField.toggle()
             viewModel.searchText = ""
         } label: {
-            Image(systemName: viewModel.showSearchField ? "magnifyingglass.circle.fill" : "magnifyingglass.circle")
+            Image(systemName: viewModel.showSearchField ? "text.magnifyingglass" : "magnifyingglass")
+                .toolbarCircle()
         }
     }
     @ViewBuilder var detailedViewNavigationLink: some View {
@@ -218,7 +219,8 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
                 AuditoriumDetailedView(auditorium: auditorium)
             }
         } label: {
-            Image(systemName: "info.circle")
+            Image(systemName: Constants.Symbols.information)
+                .toolbarCircle()
         }
         
     }
