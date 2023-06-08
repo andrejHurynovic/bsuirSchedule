@@ -34,8 +34,7 @@ class ScheduleViewModel: ObservableObject {
     var cancellables = Set<AnyCancellable>()
     
     var defaultRules: Bool {
-        return ![searchText.isEmpty,
-                 selectedSubgroup == nil,
+        return ![selectedSubgroup == nil,
                  selectedSectionType == .date].contains(false)
     }
     

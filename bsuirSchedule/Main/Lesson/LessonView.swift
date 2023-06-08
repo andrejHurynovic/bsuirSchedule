@@ -15,7 +15,7 @@ struct LessonView: View {
     @EnvironmentObject var configuration: LessonViewConfiguration
     
     var lessonTypeColor: Color {
-        guard let color = lesson.type?.color else { return .primary }
+        guard let color = lesson.type?.color else { return Constants.Colors.defaultLessonType }
         return color
     }
     

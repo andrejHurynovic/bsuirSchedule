@@ -17,8 +17,10 @@ struct Constants {
         static let lecture = Color.green
         static let practice = Color.red
         static let laboratory = Color.blue
-        static let consultation = Color.gray
+        static let consultation = Color.indigo
         static let exam = Color.yellow
+        
+        static let defaultLessonType = Color.gray
     }
     
     struct Symbols {
