@@ -39,37 +39,38 @@ class LessonViewConfiguration: ObservableObject {
 
 extension LessonViewConfiguration: Equatable {
     static func == (lhs: LessonViewConfiguration, rhs: LessonViewConfiguration) -> Bool {
-        return lhs.showFullSubject == rhs.showFullSubject &&
-        lhs.showGroups == rhs.showGroups &&
-        lhs.showEmployees == rhs.showEmployees &&
-        lhs.showWeeks == rhs.showWeeks &&
-        lhs.showDates == rhs.showDates &&
-        lhs.showDate == rhs.showDate
+        return [lhs.showFullSubject == rhs.showFullSubject,
+                lhs.showGroups == rhs.showGroups,
+                lhs.showEmployees == rhs.showEmployees,
+                lhs.showWeeks == rhs.showWeeks,
+                lhs.showDates == rhs.showDates,
+                lhs.showDate == rhs.showDate]
+            .allSatisfy { $0 == true }
     }
 }
 
 //MARK: Protocol
 
 protocol DefaultLessonViewSettings {
-    static func defaultLessonSettings() -> LessonViewConfiguration
+    static func defaultLessonConfiguration() -> LessonViewConfiguration
 }
 
 //MARK: Extensions
 
 extension Group {
-    static func defaultLessonSettings() -> LessonViewConfiguration {
+    static func defaultLessonConfiguration() -> LessonViewConfiguration {
         LessonViewConfiguration(showGroups: false,
                                 showEmployees: true)
     }
 }
 extension Employee {
-    static func defaultLessonSettings() -> LessonViewConfiguration {
+    static func defaultLessonConfiguration() -> LessonViewConfiguration {
         LessonViewConfiguration(showGroups: true,
                                 showEmployees: false)
     }
 }
 extension Auditorium {
-    static func defaultLessonSettings() -> LessonViewConfiguration {
+    static func defaultLessonConfiguration() -> LessonViewConfiguration {
         LessonViewConfiguration(showGroups: true,
                                 showEmployees: true)
     }

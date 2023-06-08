@@ -12,7 +12,7 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
     @ObservedObject var scheduled: ScheduledType
     
     @StateObject var viewModel = ScheduleViewModel()
-    @StateObject var lessonViewConfiguration = ScheduledType.defaultLessonSettings()
+    @StateObject var lessonViewConfiguration = ScheduledType.defaultLessonConfiguration()
     
     @FocusState var searchFieldFocused: Bool
     
@@ -42,12 +42,7 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
             datePicker
         }
         .sheet(item: $viewModel.selectedHometaskLesson, content: { lesson in
-            let lessons = (scheduled.lessons?.allObjects as? [Lesson])!
-            let filteredLessons = lessons.filtered(abbreviation: lesson.abbreviation)
-            NavigationView {
-                EducationTaskDetailedView(viewModel: EducationTaskDetailedViewModel(lesson: lesson,
-                                                                                    lessons: filteredLessons))
-            }
+            selectedHometaskSheet(lesson)
         })
         
         .animation(.spring(), value: scheduled.lessons)
@@ -183,13 +178,13 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
     @ViewBuilder var toolbar : some View {
         searchFieldToggle
         detailedViewNavigationLink
-        MenuView(defaultRules: [lessonViewConfiguration == ScheduledType.defaultLessonSettings(),
+        MenuView(defaultRules: [lessonViewConfiguration == ScheduledType.defaultLessonConfiguration(),
                                 viewModel.defaultRules]) {
             FavoriteButton(item: scheduled)
             SectionTypePicker(value: $viewModel.selectedRepresentationType)
             SectionTypePicker(value: $viewModel.selectedSectionType)
             subgroupPicker
-            lessonSettings
+            LessonViewConfigurationView(lessonViewConfiguration: lessonViewConfiguration)
         }
     }
     var searchFieldToggle: some View {
@@ -229,14 +224,14 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
             }
         }
     }
-    @ViewBuilder var lessonSettings: some View {
-        Text("Отображать:")
-        Toggle("Аббревиатуру", isOn: $lessonViewConfiguration.showFullSubject.animation())
-        Toggle("Группы", isOn: $lessonViewConfiguration.showGroups.animation())
-        Toggle("Преподавателей", isOn: $lessonViewConfiguration.showEmployees.animation())
-        Toggle("Недели", isOn: $lessonViewConfiguration.showWeeks.animation())
-        Toggle("Период", isOn: $lessonViewConfiguration.showDates.animation())
-        Toggle("Дату", isOn: $lessonViewConfiguration.showDate.animation())
+    
+    func selectedHometaskSheet(_ lesson: Lesson) -> some View {
+        let lessons = (scheduled.lessons?.allObjects as? [Lesson])!
+        let filteredLessons = lessons.filtered(abbreviation: lesson.abbreviation)
+        return NavigationView {
+            EducationTaskDetailedView(viewModel: EducationTaskDetailedViewModel(lesson: lesson,
+                                                                                lessons: filteredLessons))
+        }
     }
     
 }

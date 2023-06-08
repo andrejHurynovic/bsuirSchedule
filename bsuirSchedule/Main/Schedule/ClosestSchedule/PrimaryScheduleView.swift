@@ -20,7 +20,7 @@ struct PrimaryScheduleView<ScheduledType: Scheduled>: View {
                     if let lesson = viewModel.lesson {
                         LessonView(lesson: lesson, today: false)
                             .padding(.horizontal)
-                            .environmentObject(ScheduledType.defaultLessonSettings())
+                            .environmentObject(ScheduledType.defaultLessonConfiguration())
                     }
                 case .noClosestSection:
                     Text("Все занятия прошли")

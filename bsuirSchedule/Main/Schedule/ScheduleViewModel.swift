@@ -12,6 +12,7 @@ class ScheduleViewModel: ObservableObject {
     
     @Published var selectedRepresentationType: ScheduleRepresentationType = .scroll
     @Published var selectedSectionType: ScheduleSectionType = .date
+    @Published var state: ScheduleViewState = .initialSectionUpdating
     
     @Published var showScrollView = false
     
