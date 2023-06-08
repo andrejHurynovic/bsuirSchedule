@@ -66,6 +66,9 @@ extension Group {
         decoder.userInfo[.groupEmbeddedContainer] = true
         
         var backgroundGroup = backgroundContext.object(with: self.objectID) as! Group
+        if let existingLessonsNSSet = backgroundGroup.lessons {
+            backgroundGroup.removeFromLessons(existingLessonsNSSet)
+        }
         try! decoder.update(&backgroundGroup, from: data)
         
         await backgroundContext.perform(schedule: .immediate, {

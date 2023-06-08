@@ -69,6 +69,10 @@ extension Employee {
         var backgroundEmployee = backgroundContext.object(with: self.objectID) as! Employee
         let previousPhotoLink = backgroundEmployee.photoLink
         
+        if let existingLessonsNSSet = backgroundEmployee.lessons {
+            backgroundEmployee.removeFromLessons(existingLessonsNSSet)
+        }
+        
         try! decoder.update(&backgroundEmployee, from: data)
         
         await backgroundContext.perform(schedule: .immediate, {

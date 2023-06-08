@@ -11,19 +11,19 @@ struct LessonsRefreshableView<ObjectType: LessonsRefreshable>: View {
     
     @ObservedObject var item: ObjectType
     
+    @State var lastUpdateDate: Date?
+    
     var body: some View {
         HStack {
             Text("Последнее обновление")
             Spacer()
-            if let date = item.lessonsUpdateDate {
+            if let date = lastUpdateDate {
                 Text(date.formatted(date: .numeric, time: .omitted))
                     .foregroundColor(.secondary)
             } else {
                 ProgressView()
                     .task {
-                        if item.lessonsUpdateDate == nil {
-                            await fetchLastUpdateDate()
-                        }
+                        await fetchLastUpdateDate()
                     }
                     .progressViewStyle(CircularProgressViewStyle(tint: .gray))
             }
@@ -35,12 +35,14 @@ struct LessonsRefreshableView<ObjectType: LessonsRefreshable>: View {
         
         await MainActor.run {
             withAnimation {
-                item.lessonsUpdateDate = fetchedLastUpdateDate
+                self.lastUpdateDate = fetchedLastUpdateDate
             }
         }
 //        if let itemLastUpdateDate = item.lessonsUpdateDate,
 //           itemLastUpdateDate < fetchedLastUpdateDate {
-//            let _ = await item.update()
+//            Task {
+//                let _ = await item.update()
+//            }
 //        }
     }
 }

@@ -31,7 +31,9 @@ extension LessonsRefreshable {
         if let fetchedLastUpdateDate = await fetchLastUpdateDate(),
            let scheduledItemLastUpdateDate = self.lessonsUpdateDate,
            scheduledItemLastUpdateDate < fetchedLastUpdateDate {
-            let _ = await self.update()
+            Task {
+                let _ = await self.update()
+            }
             return true
         }
         return false
@@ -43,7 +45,7 @@ extension LessonsRefreshable {
 
 extension Group: LessonsRefreshable {
     func fetchLastUpdateDate() async -> Date? {
-        guard let data = try? await URLSession.shared.data(from: FetchDataType.groupUpdateDate.rawValue + self.name) else { return nil }
+        guard let data = try? await URLSession.shared.data(for: .groupUpdateDate, with: self.name) else { return nil }
         
         guard let lastUpdateDate = try? JSONDecoder().decode(LastUpdateDate.self, from: data) else { return nil }
         return lastUpdateDate.date
@@ -53,7 +55,7 @@ extension Group: LessonsRefreshable {
 extension Employee: LessonsRefreshable {
     func fetchLastUpdateDate() async -> Date? {
         guard let urlID = self.urlID,
-              let data = try? await URLSession.shared.data(from: FetchDataType.employeeUpdateDate.rawValue + urlID) else { return nil }
+              let data = try? await URLSession.shared.data(for: .employeeUpdateDate, with: urlID) else { return nil }
         
         guard let lastUpdateDate = try? JSONDecoder().decode(LastUpdateDate.self, from: data) else { return nil }
         return lastUpdateDate.date
