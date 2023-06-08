@@ -28,6 +28,8 @@ extension Group: DecoderUpdatable {
         decodeSpeciality(decoder)
         decodeLessons(container)
         
+        self.lessonsUpdateDate = Date()
+        
         Log.info("Group (\(String(self.name))) has been updated, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds")
     }
     
@@ -61,15 +63,8 @@ extension Group: DecoderUpdatable {
     }
     
     private func decodeLessons(_ container: KeyedDecodingContainer<Group.CodingKeys>) {
-        let lessons = try? container.decode([String:[Lesson]].self, forKey: .lessons)
-        let exams = try? container.decode([Lesson].self, forKey: .exams)
-        
-        self.lessonsUpdateDate = Date()
-        
-//        let lessons = NSSet
-        
-//        if lessons != nil || exams != nil {
-//        }
+        let _ = try? container.decode([String:[Lesson]].self, forKey: .lessons)
+        let _ = try? container.decode([Lesson].self, forKey: .exams)
     }
     
 }

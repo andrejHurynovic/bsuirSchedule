@@ -29,6 +29,8 @@ extension Employee: DecoderUpdatable {
         decodeEducationDates(decoder)
         decodeLessons(container)
         
+        lessonsUpdateDate = Date()
+        
         Log.info("Employee \(self.urlID ?? "no urlID") (\(String(self.id))) has been updated, time: \((CFAbsoluteTimeGetCurrent() - startTime).roundTo(places: 3)) seconds")
     }
     
@@ -79,10 +81,6 @@ extension Employee: DecoderUpdatable {
         
         for lesson in lessons {
             lesson.employeesIDs = [self.id]
-        }
-        
-        if lessons.isEmpty == false {
-            lessonsUpdateDate = Date()
         }
         
         self.addToLessons(NSSet(array: lessons))
