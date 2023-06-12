@@ -11,4 +11,5 @@ enum ScheduleViewState {
     case noConnection
     case showingSections
     case contentUnavailable
+    case searchContentUnavailable
 }

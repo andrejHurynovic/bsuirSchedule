@@ -17,16 +17,7 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
     @FocusState var searchFieldFocused: Bool
     
     var body: some View {
-        VStack(spacing: 0) {
-            Spacer(minLength: 0)
-            ZStack(alignment: .center) {
-                progressView
-                schedule
-                    .baseBackground()
-            }
-            Spacer(minLength: 0)
-            searchField
-        }
+        state
         .environmentObject(lessonViewConfiguration)
         
         .navigationTitle(scheduled.title)
@@ -54,7 +45,21 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
         }
         .task {
             if let lessonsRefreshable = scheduled as? (any LessonsRefreshable) {
-                let _ = await lessonsRefreshable.checkForLessonsUpdates()
+                
+                if scheduled.lessons?.count == 0 {
+                    viewModel.state = .fetchingUpdate
+                    if let updatedResult = await lessonsRefreshable.update() as? any LessonsRefreshable {
+                        if updatedResult.lessons?.count == 0 {
+                            viewModel.state = .contentUnavailable
+                        }
+                    } else {
+                        viewModel.state = .noConnection
+                    }
+                    
+                } else {
+                    let _ = await lessonsRefreshable.checkForLessonsUpdates()
+                }
+                
             }
         }
         .onChange(of: scheduled.lessons) { lessons in
@@ -71,18 +76,57 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
         }
     }
     
+    @ViewBuilder var state: some View {
+        
+        ZStack {
+            switch viewModel.state {
+                case .initialSectionUpdating:
+                    ContentUnavailablePlaceholderView(systemName: "calendar",
+                                                      title: "Расписание загружается",
+                                                      subtitle: nil)
+                    .ignoresSafeArea()
+                case .fetchingUpdate:
+                    ContentUnavailablePlaceholderView(systemName: "square.and.arrow.down",
+                                                      title: "Расписание обновляется",
+                                                      subtitle: "Это может занять несколько секунд")
+                case .noConnection:
+                    ContentUnavailablePlaceholderView(systemName: "exclamationmark.triangle",
+                                                      title: "Отсутствует сетевое соединение",
+                                                      subtitle: nil)
+                case .showingSections:
+                    EmptyView()
+                case .contentUnavailable:
+                    ContentUnavailablePlaceholderView(systemName: "clear",
+                                                      title: "Нет занятий",
+                                                      subtitle: "Возможно они появятся позже")
+                case .searchContentUnavailable:
+                    SearchContentUnavailableView(searchText: viewModel.searchText)
+            }
+            
+            VStack(spacing: 0) {
+                schedule
+                    .baseBackground()
+                searchField
+            }
+            
+        }
+        
+        
+        
+    }
+    
     @ViewBuilder var schedule: some View {
         if let sections = viewModel.filteredSections,
            sections.isEmpty == false {
             switch viewModel.selectedRepresentationType {
                 case .page:
-                    page
+                    pageSchedule
                 case .scroll:
-                    scroll
+                    scrollSchedule
             }
         }
     }
-    var page: some View {
+    var pageSchedule: some View {
         TabView(selection: $viewModel.selectedSectionID) {
             ForEach(viewModel.filteredSections!) { section in
                 ScrollView {
@@ -99,7 +143,7 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
         .ignoresSafeArea(.container, edges: .bottom)
         .tabViewStyle(.page(indexDisplayMode: . never))
     }
-    var scroll: some View {
+    var scrollSchedule: some View {
         ScrollView {
             ScrollViewReader { scrollViewProxy in
                 LessonsGridView {
@@ -116,23 +160,23 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
                 }
             }
         }
-        .opacity(viewModel.showScrollView ? 1.0 : 0.0)
+//        .opacity(viewModel.showScrollView ? 1.0 : 0.0)
     }
     
     //MARK: - Progress and footnote
     
-    @ViewBuilder var progressView: some View {
-        if [viewModel.filteredSections == nil,
-            viewModel.filteredSections?.isEmpty,
-            viewModel.showScrollView == false].contains(true)  {
-            if viewModel.searchText.isEmpty {
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle(tint: Color.gray))
-            } else {
-                SearchContentUnavailableView(searchText: viewModel.searchText)
-            }
-        }
-    }
+//    @ViewBuilder var progressView: some View {
+//        if [viewModel.filteredSections == nil,
+//            viewModel.filteredSections?.isEmpty,
+//            viewModel.showScrollView == false].contains(true)  {
+//            if viewModel.searchText.isEmpty {
+//                ProgressView()
+//                    .progressViewStyle(CircularProgressViewStyle(tint: Color.gray))
+//            } else {
+//
+//            }
+//        }
+//    }
     
     //MARK: - Search field
     
@@ -236,7 +280,7 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
     
 }
 
-struct LessonsView_Previews: PreviewProvider {
+struct SchdueleView_Previews: PreviewProvider {
     static var previews: some View {
 //        let groups: [Group] = Group.getAll()
 //        if let scheduled = groups.first(where: { $0.name == "950502" }) {

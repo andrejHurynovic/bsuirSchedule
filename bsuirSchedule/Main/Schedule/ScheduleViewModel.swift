@@ -122,7 +122,17 @@ class ScheduleViewModel: ObservableObject {
         }
         if returnToClosestSection {
             await initialScroll()
+        } else {
+            await MainActor.run {
+                withAnimation {
+                    self.state = .showingSections
+                }
+            }
         }
+    }
+    
+    func updateState() async {
+
     }
     
     private func initialScroll() async {
@@ -140,6 +150,7 @@ class ScheduleViewModel: ObservableObject {
                             scrollWithAnimation = false
                             self.selectedSectionID = closestSectionID
                             showScrollView = true
+                            self.state = .showingSections
                         }
                     }
             }
