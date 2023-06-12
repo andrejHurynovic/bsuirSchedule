@@ -78,9 +78,11 @@ struct EmployeeView: View {
     }
     var photo: some View {
         Image(uiImage: UIImage(data: employee.photo!)!)
-            .resizable()
+            .resizable(resizingMode: .stretch)
+            .aspectRatio(contentMode: .fill)
             .frame(width: imageSize, height: imageSize)
-            .clipShape(Circle())
+            .clipShape(Circle(), style: .init(eoFill: true, antialiased: true))
+//            .clipShape(Circle())
     }
     var photoPlaceholder: some View {
         Image(systemName: Constants.Symbols.employee)
@@ -92,8 +94,10 @@ struct EmployeeView: View {
 
 struct EmployeeView_Previews: PreviewProvider {
     static var previews: some View {
-        EmployeesView()
-            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+        NavigationView {
+            EmployeesView()
+                .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+        }
     }
 }
 

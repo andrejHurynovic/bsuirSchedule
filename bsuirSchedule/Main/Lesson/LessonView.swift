@@ -183,6 +183,7 @@ struct LessonView: View {
                             if let photo = employee.photo {
                                 Image(uiImage: UIImage(data: photo)!)
                                     .resizable()
+                                    .aspectRatio(contentMode: .fill)
                                     .frame(width: 37.0, height: 37.0)
                                     .clipShape(Circle())
                             } else {
