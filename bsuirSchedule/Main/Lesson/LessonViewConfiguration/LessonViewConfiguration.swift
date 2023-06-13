@@ -8,7 +8,7 @@
 import Foundation
 
 class LessonViewConfiguration: ObservableObject {
-    @Published var showFullSubject: Bool
+//    @Published var showFullSubject: Bool
     
     @Published var showGroups: Bool
     @Published var showEmployees: Bool
@@ -23,7 +23,7 @@ class LessonViewConfiguration: ObservableObject {
          showWeeks: Bool = false,
          showDates: Bool = false,
          showDate: Bool = false) {
-        self.showFullSubject = showFullSubject
+//        self.showFullSubject = showFullSubject
         
         self.showGroups = showGroups
         self.showEmployees = showEmployees
@@ -39,7 +39,8 @@ class LessonViewConfiguration: ObservableObject {
 
 extension LessonViewConfiguration: Equatable {
     static func == (lhs: LessonViewConfiguration, rhs: LessonViewConfiguration) -> Bool {
-        return [lhs.showFullSubject == rhs.showFullSubject,
+//        return [lhs.showFullSubject == rhs.showFullSubject,
+                return [
                 lhs.showGroups == rhs.showGroups,
                 lhs.showEmployees == rhs.showEmployees,
                 lhs.showWeeks == rhs.showWeeks,

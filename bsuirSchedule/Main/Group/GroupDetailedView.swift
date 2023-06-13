@@ -45,7 +45,7 @@ struct GroupDetailedView: View {
                                             speciality.faculty?.name)
                 FormView("Степень", group.educationDegree?.description)
                 FormView("Форма обучения", speciality.educationType?.name)
-                FormView("Шифр", speciality.code)
+                FormView("Код", speciality.code)
             }
         }
         

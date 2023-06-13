@@ -25,7 +25,8 @@ extension Employee {
         
         let groups = Set(lessons.compactMap { $0.groups?.allObjects as? [Group] }
             .flatMap { $0 })
-            .sorted { $0.id < $1.id }
+            .sorted { $0.name < $1.name }
+        print(groups.map( { $0.name }))
         
         guard groups.isEmpty == false else { return nil }
         return groups
@@ -43,7 +44,7 @@ extension Group {
         guard flow.isEmpty == false else {
             return nil
         }
-        return flow.sorted { $0.id < $1.id }
+        return flow.sorted { $0.name < $1.name }
     }
     
 }

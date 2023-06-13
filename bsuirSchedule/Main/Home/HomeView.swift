@@ -26,6 +26,10 @@ struct HomeView: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\EducationTask.deadline, order: .forward)],
                   animation: .spring())
     var educationTasks: FetchedResults<EducationTask>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\Department.abbreviation, order: .forward)],
+                  predicate: NSPredicate(format: "favorite = true"),
+                  animation: .spring())
+    var departments: FetchedResults<Department>
     
     @StateObject var primarySchedulesViewModel = PrimarySchedulesViewModel()
     
@@ -50,6 +54,11 @@ struct HomeView: View {
                              navigationLinkTitle: "Аудитории",
                              navigationLinkDestination: AuditoriesView()) { auditorium in
                     AuditoriumNavigationLink(auditorium: auditorium)
+                }
+                HomeViewGrid(items: Array(departments),
+                             navigationLinkTitle: "Подразделения",
+                             navigationLinkDestination: DepartmentsView()) { department in
+                    DepartmentNavigationLink(department: department)
                 }
                 educationTasksGrid
             }

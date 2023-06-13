@@ -15,7 +15,7 @@ struct FromGroupsView: View {
         
         if let lastSection = sections.last {
             let _ = sections.removeLast()
-            ForEach(sections, id: \.title) { section in
+            ForEach(sections, id: \.id) { section in
                 Section(section.title) {
                     ForEach(section.items, id: \.id, content: { group in
                         FromGroupView(group: group)
@@ -24,7 +24,7 @@ struct FromGroupsView: View {
             }
             
             Section {
-                ForEach(lastSection.items, id: \.id, content: { group in
+                ForEach(lastSection.items, id: \.name, content: { group in
                     FromGroupView(group: group)
                 })
             } header: {

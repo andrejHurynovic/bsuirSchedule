@@ -80,6 +80,8 @@ extension Employee {
         })
         
         if backgroundEmployee.photoLink != previousPhotoLink || backgroundEmployee.photoLink != nil, backgroundEmployee.photo == nil {
+            
+            #warning("CRASH")
             backgroundEmployee.photo = await fetchPhoto()
         }
 

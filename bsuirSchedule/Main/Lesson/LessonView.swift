@@ -12,6 +12,7 @@ struct LessonView: View {
     @ObservedObject var viewModel: LessonViewModel
     
     @State var today: Bool
+    @State var showFullSubject: Bool = false
     @EnvironmentObject var configuration: LessonViewConfiguration
     
     var lessonTypeColor: Color {
@@ -28,11 +29,20 @@ struct LessonView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            if configuration.showFullSubject {
-                fullTitle
-            } else {
-                shortTitle
+            Button {
+                withAnimation {
+                    self.showFullSubject.toggle()
+                }
+            } label: {
+                if showFullSubject {
+                    fullTitle
+                } else {
+                    shortTitle
+                }
             }
+            .foregroundColor(.primary)
+
+            
             mainBody
         }
         .padding()
@@ -88,7 +98,7 @@ struct LessonView: View {
     @ViewBuilder var subjectLabel: some View {
         HStack(alignment: .top) {
             subject
-            if configuration.showFullSubject == true {
+            if showFullSubject == true {
                 Spacer(minLength: 0)
             }
             subgroup
@@ -100,7 +110,7 @@ struct LessonView: View {
     }
     
     @ViewBuilder var subject: some View {
-        let subjectText = configuration.showFullSubject ? lesson.subject : lesson.abbreviation
+        let subjectText = showFullSubject ? lesson.subject : lesson.abbreviation
         if let subject = subjectText, subject.isEmpty == false {
             Text(subject)
         }
@@ -139,7 +149,7 @@ struct LessonView: View {
         if let type = lesson.type {
             
             ZStack {
-                if configuration.showFullSubject {
+                if showFullSubject {
                     Text(type.formattedName(abbreviated: false))
                 } else {
                     Text(type.formattedName(abbreviated: true))

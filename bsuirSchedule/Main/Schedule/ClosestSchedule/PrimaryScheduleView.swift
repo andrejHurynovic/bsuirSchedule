@@ -23,7 +23,14 @@ struct PrimaryScheduleView<ScheduledType: Scheduled>: View {
                             .environmentObject(ScheduledType.defaultLessonConfiguration())
                     }
                 case .noClosestSection:
-                    Text("Все занятия прошли")
+                    VStack {
+                        Image(systemName: "calendar.badge.minus")
+                            .font(.title2)
+                            .bold()
+                        Text("Больше занятий нет")
+                            .foregroundColor(.gray)
+                            .font(.footnote)
+                    }
             }
         } header: {
             NavigationLink {

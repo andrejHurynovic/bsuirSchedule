@@ -30,8 +30,8 @@ struct DepartmentDetailedView: View {
     }
     
     @ViewBuilder var links: some View {
-        if[department.auditories != nil,
-           department.employees != nil].contains(true) {
+        if[department.auditories?.count != 0,
+           department.employees?.count != 0].contains(true) {
             Section("Ссылки") {
                 auditories
                 employees

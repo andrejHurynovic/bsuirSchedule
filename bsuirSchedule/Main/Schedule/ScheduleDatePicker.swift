@@ -27,12 +27,15 @@ struct ScheduleDatePicker: View {
             showDatePicker = false
         } label: {
             Text("Готово")
-                .font(.title3)
+                .bold()
+                .foregroundColor(.white)
                 .frame(minWidth: 0, maxWidth: .infinity)
                 .padding()
-                .foregroundColor(.white)
-                .background(Color.accentColor)
-                .cornerRadius(40)
+                .background(RoundedRectangle(cornerRadius: 16)
+                    .fill(Color.accentColor)
+                    .shadow(radius: 8)
+                )
+                
         }
         .padding([.horizontal, .bottom])
     }
