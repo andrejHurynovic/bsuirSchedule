@@ -58,7 +58,7 @@ class GroupsViewModel: ObservableObject {
     
     static func update() async {
         await Group.fetchAll()
-//        await Group.updateGroups()
+        await Group.updateGroups()
     }
     
     private func calculatePredicate() {

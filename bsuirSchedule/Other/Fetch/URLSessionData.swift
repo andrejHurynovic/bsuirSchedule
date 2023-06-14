@@ -14,7 +14,7 @@ extension URLSession {
             throw URLError(.badURL)
         }
         
-        for _ in 0...3 {
+        for _ in 0...10 {
             
             let (data, urlResponse) = try await URLSession.shared.data(from: url)
             
