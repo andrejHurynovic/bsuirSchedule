@@ -13,23 +13,12 @@ struct AuditoriesFormView: View {
     var body: some View {
         DisclosureGroup {
             ForEach(auditories.sorted()) { auditorium in
-                AuditoriumFormNavigationLink(auditorium: auditorium)
+                AuditoriumNavigationLink(auditorium: auditorium, style: .form)
             }
         } label: {
             Label("Аудитории", systemImage: Constants.Symbols.auditorium)
         }
     }
-}
-
-struct AuditoriumFormNavigationLink: View {
-    @ObservedObject var auditorium: Auditorium
-    
-    var body: some View {
-        NavigationLink(auditorium.formattedName) {
-            AuditoriumDetailedView(auditorium: auditorium)
-        }
-    }
-    
 }
 
 struct AuditoriesFormView_Previews: PreviewProvider {

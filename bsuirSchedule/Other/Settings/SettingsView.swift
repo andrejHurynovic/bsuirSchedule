@@ -17,7 +17,7 @@ struct SettingsView: View {
             PrimarySchedulePickerView()
             tintColorPicker
             lessonTypes
-            developer
+//            developer
         }
         .navigationTitle("Настройки")
     }

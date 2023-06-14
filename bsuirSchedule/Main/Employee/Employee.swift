@@ -58,4 +58,13 @@ extension Employee {
     @NSManaged public func addToDepartments(_ values: NSSet)
     @objc(removeDepartments:)
     @NSManaged public func removeFromDepartments(_ values: NSSet)
+    @objc(addCompoundSchedulesObject:)
+    @NSManaged public func addToCompoundSchedules(_ value: CompoundSchedule)
+    @objc(removeCompoundSchedulesObject:)
+    @NSManaged public func removeFromCompoundSchedules(_ value: CompoundSchedule)
+    @objc(addCompoundSchedules:)
+    @NSManaged public func addToCompoundSchedules(_ values: NSSet)
+    @objc(removeCompoundSchedules:)
+    @NSManaged public func removeFromCompoundSchedules(_ values: NSSet)
+
 }

@@ -32,7 +32,7 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="CompoundSchedule" representedClassName="CompoundSchedule" syncable="YES">
+    <entity name="CompoundSchedule" representedClassName="CompoundSchedule" syncable="YES" codeGenerationType="class">
         <attribute name="name" attributeType="String"/>
         <relationship name="auditories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Auditorium" inverseName="compoundSchedules" inverseEntity="Auditorium"/>
         <relationship name="employees" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Employee" inverseName="compoundSchedules" inverseEntity="Employee"/>

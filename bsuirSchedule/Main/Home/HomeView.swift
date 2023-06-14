@@ -23,13 +23,16 @@ struct HomeView: View {
                   predicate: NSPredicate(format: "favorite = true"),
                   animation: .spring())
     var auditories: FetchedResults<Auditorium>
-    @FetchRequest(sortDescriptors: [SortDescriptor(\EducationTask.deadline, order: .forward)],
-                  animation: .spring())
-    var educationTasks: FetchedResults<EducationTask>
     @FetchRequest(sortDescriptors: [SortDescriptor(\Department.abbreviation, order: .forward)],
                   predicate: NSPredicate(format: "favorite = true"),
                   animation: .spring())
     var departments: FetchedResults<Department>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\EducationTask.deadline, order: .forward)],
+                  animation: .spring())
+    var educationTasks: FetchedResults<EducationTask>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\CompoundSchedule.name, order: .forward)],
+                  animation: .spring())
+    var compoundSchedules: FetchedResults<CompoundSchedule>
     
     @StateObject var primarySchedulesViewModel = PrimarySchedulesViewModel()
     
@@ -61,6 +64,7 @@ struct HomeView: View {
                     DepartmentNavigationLink(department: department)
                 }
                 educationTasksGrid
+                compoundSchedulesGrid
             }
             .navigationTitle("Избранные")
             .toolbar(content: {
@@ -103,6 +107,22 @@ struct HomeView: View {
                     }
                 } header: {
                     HeaderView("Задания", withArrow: false)
+                }
+            }
+                      .padding(.horizontal)
+        }
+    }
+    @ViewBuilder var compoundSchedulesGrid: some View {
+        if compoundSchedules.isEmpty == false {
+            LazyVGrid(columns: [SquareTextView.gridItem],
+                      alignment: .leading,
+                      spacing: 8) {
+                Section {
+                    ForEach(compoundSchedules, id: \.self) { compoundSchedule in
+                        CompoundScheduleNavigationLink(compoundSchedule: compoundSchedule)
+                    }
+                } header: {
+                    HeaderView("Совм. расписания", withArrow: false)
                 }
             }
                       .padding(.horizontal)

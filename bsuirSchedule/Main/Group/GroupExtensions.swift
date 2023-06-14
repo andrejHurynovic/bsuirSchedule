@@ -16,6 +16,7 @@ extension Group: EducationRanged { }
 extension Group: Scheduled {
     var title: String { self.name }
 }
+extension Group: CompoundScheduled { }
 
 //MARK: - Employee
 

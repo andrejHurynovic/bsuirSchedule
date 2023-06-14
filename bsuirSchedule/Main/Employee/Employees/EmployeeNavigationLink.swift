@@ -11,18 +11,27 @@ struct EmployeeNavigationLink: View {
     @ObservedObject var employee: Employee
     
     var showDepartments: Bool
+    var style: NavigationLinkStyle = .grid
     
     var body: some View {
         NavigationLink {
             ScheduleView(scheduled: employee)
         } label: {
-            EmployeeView(employee: employee,
-                         showDepartments: showDepartments)
-            .padding()
-            .roundedRectangleBackground()
+            switch style {
+                case .grid:
+                    EmployeeView(employee: employee,
+                                 showDepartments: showDepartments)
+                    .padding()
+                    .roundedRectangleBackground()
+                case .form:
+                    EmployeeView(employee: employee,
+                                 showDepartments: false)
+            }
+            
         }
         .contextMenu {
             FavoriteButton(item: employee)
+            CompoundScheduleButton(item: employee)
         }
     }
 }

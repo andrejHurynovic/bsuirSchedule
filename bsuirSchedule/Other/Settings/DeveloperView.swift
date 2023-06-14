@@ -55,6 +55,65 @@ struct DeveloperView: View {
             }
             
             Section("Дополнительно") {
+                
+                Button {
+                    let favoriteGroups = ["950502", "950503", "921701", "921703", "051006"]
+                    let favoriteEmployees = ["l-podenok","v-login","d-marchenkov","d-kupriianova","d-pertsev","d-odinets"]
+                    let favoriteAuditoriums = ["207-5","512-5", "321-4"]
+                    let favoriteDepartments = ["ЭВМ","ПОИТ","ЭВС"]
+                    let chadGroups = groups.filter { favoriteGroups.contains($0.name) }
+                    let chadEmployees = employees.filter { favoriteEmployees.contains($0.urlID ?? "") }
+                    let chadAuditoriums = auditories.filter { favoriteAuditoriums.contains($0.formattedName) }
+                    let chadDepartments = departments.filter { favoriteDepartments.contains($0.abbreviation) }
+                    for chadGroup in chadGroups {
+                        chadGroup.favorite = true
+                    }
+                    for chadEmployee in chadEmployees {
+                        chadEmployee.favorite = true
+                    }
+                    for chadAuditorium in chadAuditoriums {
+                        chadAuditorium.favorite = true
+                    }
+                    for chadDepartment in chadDepartments {
+                        chadDepartment.favorite = true
+                    }
+                    let task = EducationTask(subject: "ДП", context: PersistenceController.shared.container.viewContext)
+                    task.note = "ГЭК"
+                    task.deadline = Date(timeIntervalSince1970: 1686808800)
+                    
+                    
+                    let cs1 = CompoundSchedule(context: PersistenceController.shared.container.viewContext)
+                    cs1.addToGroups(NSSet(array: chadGroups))
+                    cs1.name = "Друзья"
+                    let cs2 = CompoundSchedule(context: PersistenceController.shared.container.viewContext)
+                    cs2.name = "ГЭК"
+                    cs2.addToEmployees(NSSet(array: chadEmployees))
+                    
+                    try! PersistenceController.shared.container.viewContext.save()
+                } label: {
+                    Text("VERY IMPORTANT")
+                }
+                
+                Button {
+                    let backgroundContext = PersistenceController.shared.container.newBackgroundContext()
+                    let compoundSchedule = CompoundSchedule(context: backgroundContext)
+                    compoundSchedule.name = "TestBaka"
+                    if let auditorium = auditories.first(where: { $0.formattedName == "207-5" }),
+                       let backgroundAuditorium = backgroundContext.object(with: auditorium.objectID) as? Auditorium {
+                        compoundSchedule.addToAuditories(backgroundAuditorium)
+                    }
+                    if let group = groups.first(where: { $0.name == "950502" }),
+                       let backgroundGroup = backgroundContext.object(with: group.objectID) as? Group {
+                        compoundSchedule.addToGroups(backgroundGroup)
+                    }
+                    if let employee = employees.first(where: { $0.lastName == "Перцев" }),
+                       let backgroundEmployees = backgroundContext.object(with: employee.objectID) as? Employee {
+                        compoundSchedule.addToEmployees(backgroundEmployees)
+                    }
+                    try! backgroundContext.save()
+                } label: {
+                    Label("Test compound schedule", systemImage: "person.crop.circle")
+                }
                 Button {
                     Log.info("Number of students: \(groups.map( {$0.numberOfStudents} ).reduce(0, +))")
                 } label: {

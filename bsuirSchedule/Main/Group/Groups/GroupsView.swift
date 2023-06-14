@@ -29,10 +29,18 @@ struct GroupsView: View {
             }
             .navigationTitle("Группы")
             .refreshable { await GroupsViewModel.update() }
+            .searchable(text: $viewModel.searchText, prompt: "Номер, специальность")
             
             .toolbar { toolbar }
-            
-            .searchable(text: $viewModel.searchText, prompt: "Номер, специальность")
+        
+        //.envoirment!
+        //.envoirment!
+        //.envoirment!
+        //.envoirment!
+        //.envoirment!
+        //.envoirment!
+        //.envoirment!
+        
         
             .overlay(content: {
                 if groups.isEmpty, viewModel.searchText.isEmpty == false {

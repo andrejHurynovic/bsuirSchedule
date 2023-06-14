@@ -33,7 +33,7 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
             datePicker
         }
         .sheet(item: $viewModel.selectedHometaskLesson, content: { lesson in
-            selectedHometaskSheet(lesson)
+            selectedEducationTaskSheet(lesson)
         })
         
         .animation(.spring(), value: scheduled.lessons)
@@ -106,6 +106,7 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
             VStack(spacing: 0) {
                 schedule
                     .baseBackground()
+                Spacer(minLength: 0)
                 searchField
             }
             
@@ -224,7 +225,9 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
         detailedViewNavigationLink
         MenuView(defaultRules: [lessonViewConfiguration == ScheduledType.defaultLessonConfiguration(),
                                 viewModel.defaultRules]) {
-            FavoriteButton(item: scheduled)
+            if (ScheduledType.self == CompoundScheduled.self) == false {
+                FavoriteButton(item: scheduled)
+            }
             SectionTypePicker(value: $viewModel.selectedRepresentationType)
             SectionTypePicker(value: $viewModel.selectedSectionType)
             subgroupPicker
@@ -252,6 +255,9 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
             if let auditorium = scheduled as? Auditorium {
                 AuditoriumDetailedView(auditorium: auditorium)
             }
+            if let compoundSchedule = scheduled as? CompoundSchedule {
+                CompoundScheduleDetailedView(compoundSchedule: compoundSchedule)
+            }
         } label: {
             Image(systemName: Constants.Symbols.information)
                 .toolbarCircle()
@@ -269,7 +275,7 @@ struct ScheduleView<ScheduledType: Scheduled>: View where ScheduledType: Observa
         }
     }
     
-    func selectedHometaskSheet(_ lesson: Lesson) -> some View {
+    func selectedEducationTaskSheet(_ lesson: Lesson) -> some View {
         let lessons = (scheduled.lessons?.allObjects as? [Lesson])!
         let filteredLessons = lessons.filtered(abbreviation: lesson.abbreviation)
         return NavigationView {

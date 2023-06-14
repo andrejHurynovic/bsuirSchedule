@@ -104,9 +104,7 @@ struct GroupDetailedView: View {
         if let flow = group.flow {
             DisclosureGroup {
                 ForEach(flow) { group in
-                    NavigationLink(destination: GroupDetailedView(group: group)){
-                        Text(group.name)
-                    }
+                    GroupNavigationLink(group: group, style: .form)
                 }
             } label: {
                 Label("Поток", systemImage: "bookmark")

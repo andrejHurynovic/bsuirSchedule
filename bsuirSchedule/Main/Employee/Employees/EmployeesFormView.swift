@@ -13,12 +13,7 @@ struct EmployeesFormView: View {
     var body: some View {
         DisclosureGroup {
             ForEach(employees.sorted(by: { $0.lastName < $1.lastName })) { employee in
-                NavigationLink {
-                    EmployeeDetailedView(employee: employee)
-                } label: {
-                    EmployeeView(employee: employee,
-                                 showDepartments: false)
-                }
+                EmployeeNavigationLink(employee: employee, showDepartments: false, style: .form)
             }
         } label: {
             Label("Преподаватели", systemImage: Constants.Symbols.employees)

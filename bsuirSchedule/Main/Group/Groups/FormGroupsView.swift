@@ -1,5 +1,5 @@
 //
-//  FromGroupsView.swift
+//  FormGroupsView.swift
 //  bsuirSchedule
 //
 //  Created by Andrej Hurynovič on 7.10.22.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FromGroupsView: View {
+struct FormGroupsView: View {
     var groups: [Group]
     
     @ViewBuilder var body: some View {
@@ -18,14 +18,14 @@ struct FromGroupsView: View {
             ForEach(sections, id: \.id) { section in
                 Section(section.title) {
                     ForEach(section.items, id: \.id, content: { group in
-                        FromGroupView(group: group)
+                        GroupNavigationLink(group: group, style: .form)
                     })
                 }
             }
             
             Section {
                 ForEach(lastSection.items, id: \.name, content: { group in
-                    FromGroupView(group: group)
+                    GroupNavigationLink(group: group, style: .form)
                 })
             } header: {
                 Text(lastSection.title)
@@ -44,7 +44,7 @@ struct FormGroupsView_Previews: PreviewProvider {
         
         NavigationView {
             Form {
-                FromGroupsView(groups: groups)
+                FormGroupsView(groups: groups)
             }
         }
     }

@@ -8,8 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var compoundSchedulePickerViewModel = CompoundSchedulePickerViewModel()
+    
     var body: some View {
         HomeView()
+            .sheet(isPresented: $compoundSchedulePickerViewModel.showCompoundSchedulePickerSheet, content: {
+                CompoundSchedulePickerSheet()
+            })
+            .environmentObject(compoundSchedulePickerViewModel)
     }
 }
 

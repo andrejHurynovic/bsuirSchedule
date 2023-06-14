@@ -5,19 +5,32 @@
 //  Created by Andrej Hurynovič on 30.04.23.
 //
 
+enum NavigationLinkStyle {
+    case grid
+    case form
+}
+
 import SwiftUI
 
 struct GroupNavigationLink: View {
     @ObservedObject var group: Group
+    var style: NavigationLinkStyle = .grid
     
     var body: some View {
         NavigationLink {
             ScheduleView(scheduled: group)
         } label: {
-            GroupView(group: group)
+            switch style {
+                case .grid:
+                    GroupView(group: group)
+                case .form:
+                    Text(group.name)
+            }
+            
         }
         .contextMenu {
             FavoriteButton(item: group)
+            CompoundScheduleButton(item: group)
         }
     }
 }

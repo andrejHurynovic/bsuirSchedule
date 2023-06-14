@@ -26,7 +26,6 @@
 		F61C524126E64619002CF234 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61C523D26E64619002CF234 /* Group.swift */; };
 		F62392C52A05505B00A54042 /* FacultyFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62392C42A05505B00A54042 /* FacultyFetch.swift */; };
 		F62392C72A0550B100A54042 /* FacultyExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62392C62A0550B100A54042 /* FacultyExtensions.swift */; };
-		F624A3452913B85500E8CB5B /* FromGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F624A3442913B85500E8CB5B /* FromGroupView.swift */; };
 		F62B3703290319D200FA2BE8 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62B3702290319D200FA2BE8 /* SettingsViewModel.swift */; };
 		F62F764629E201C800959225 /* EducationDegree.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62F764529E201C800959225 /* EducationDegree.swift */; };
 		F62F764829E21A6400959225 /* LessonsRefreshableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62F764729E21A6400959225 /* LessonsRefreshableView.swift */; };
@@ -115,7 +114,7 @@
 		F68465FC26FA5321000F185E /* Faculty.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68465FA26FA5321000F185E /* Faculty.swift */; };
 		F6857C7728F06F4300195388 /* DeveloperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6857C7628F06F4300195388 /* DeveloperView.swift */; };
 		F6857C7928F096CE00195388 /* AuditoriesSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6857C7828F096CE00195388 /* AuditoriesSection.swift */; };
-		F6857C7B28F0B5F800195388 /* FromGroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6857C7A28F0B5F800195388 /* FromGroupsView.swift */; };
+		F6857C7B28F0B5F800195388 /* FormGroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6857C7A28F0B5F800195388 /* FormGroupsView.swift */; };
 		F687043129FEE25300A3CF0C /* PrimaryScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F687043029FEE25300A3CF0C /* PrimaryScheduleView.swift */; };
 		F687043329FEE35E00A3CF0C /* AuditoriumExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F687043229FEE35E00A3CF0C /* AuditoriumExtensions.swift */; };
 		F687043529FEE38B00A3CF0C /* AuditoriumFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F687043429FEE38B00A3CF0C /* AuditoriumFetch.swift */; };
@@ -165,6 +164,16 @@
 		F6CF69412A32643C003D2C36 /* LessonViewConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CF69402A32643C003D2C36 /* LessonViewConfigurationView.swift */; };
 		F6D4AAB729BEB5260044481B /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D4AAB629BEB5260044481B /* Log.swift */; };
 		F6D588D128E4685B00CB58AC /* FetchDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D588CF28E4685B00CB58AC /* FetchDataType.swift */; };
+		F6DBD82C2A38EA6C00DBE4B3 /* CompoundScheduleDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DBD82B2A38EA6C00DBE4B3 /* CompoundScheduleDetailedView.swift */; };
+		F6DBD82E2A39169000DBE4B3 /* CompoundScheduleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DBD82D2A39169000DBE4B3 /* CompoundScheduleButton.swift */; };
+		F6DBD8302A3917B900DBE4B3 /* CompoundSchedulePickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DBD82F2A3917B900DBE4B3 /* CompoundSchedulePickerSheet.swift */; };
+		F6DBD8322A391D2C00DBE4B3 /* CompoundScheduled.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DBD8312A391D2C00DBE4B3 /* CompoundScheduled.swift */; };
+		F6DBD8382A39AE4E00DBE4B3 /* CompoundSchedulePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DBD8372A39AE4E00DBE4B3 /* CompoundSchedulePickerViewModel.swift */; };
+		F6DBD8402A39B71D00DBE4B3 /* CompoundSchedulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DBD83F2A39B71D00DBE4B3 /* CompoundSchedulesView.swift */; };
+		F6DBD8422A39B75F00DBE4B3 /* CompoundSchedulesGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DBD8412A39B75F00DBE4B3 /* CompoundSchedulesGrid.swift */; };
+		F6DBD8442A39B76F00DBE4B3 /* CompoundScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DBD8432A39B76F00DBE4B3 /* CompoundScheduleView.swift */; };
+		F6DBD8462A39B82000DBE4B3 /* CompoundScheduleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DBD8452A39B82000DBE4B3 /* CompoundScheduleExtensions.swift */; };
+		F6DBD8482A39BA4F00DBE4B3 /* CompoundScheduleNavigationLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DBD8472A39BA4F00DBE4B3 /* CompoundScheduleNavigationLink.swift */; };
 		F6DCD72326B30EF0003761B0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DCD72226B30EF0003761B0 /* SettingsView.swift */; };
 		F6F87816271A1ED7005E3C41 /* SpecialityDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F87810271A1ED7005E3C41 /* SpecialityDecoder.swift */; };
 		F6F87817271A1ED7005E3C41 /* Speciality.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F87811271A1ED7005E3C41 /* Speciality.swift */; };
@@ -204,7 +213,6 @@
 		F61C523D26E64619002CF234 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		F62392C42A05505B00A54042 /* FacultyFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacultyFetch.swift; sourceTree = "<group>"; };
 		F62392C62A0550B100A54042 /* FacultyExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacultyExtensions.swift; sourceTree = "<group>"; };
-		F624A3442913B85500E8CB5B /* FromGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FromGroupView.swift; sourceTree = "<group>"; };
 		F62B3702290319D200FA2BE8 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		F62F764529E201C800959225 /* EducationDegree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationDegree.swift; sourceTree = "<group>"; };
 		F62F764729E21A6400959225 /* LessonsRefreshableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsRefreshableView.swift; sourceTree = "<group>"; };
@@ -295,7 +303,7 @@
 		F68465FA26FA5321000F185E /* Faculty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Faculty.swift; sourceTree = "<group>"; };
 		F6857C7628F06F4300195388 /* DeveloperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperView.swift; sourceTree = "<group>"; };
 		F6857C7828F096CE00195388 /* AuditoriesSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriesSection.swift; sourceTree = "<group>"; };
-		F6857C7A28F0B5F800195388 /* FromGroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FromGroupsView.swift; sourceTree = "<group>"; };
+		F6857C7A28F0B5F800195388 /* FormGroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormGroupsView.swift; sourceTree = "<group>"; };
 		F687043029FEE25300A3CF0C /* PrimaryScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryScheduleView.swift; sourceTree = "<group>"; };
 		F687043229FEE35E00A3CF0C /* AuditoriumExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriumExtensions.swift; sourceTree = "<group>"; };
 		F687043429FEE38B00A3CF0C /* AuditoriumFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditoriumFetch.swift; sourceTree = "<group>"; };
@@ -347,6 +355,16 @@
 		F6CF69402A32643C003D2C36 /* LessonViewConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonViewConfigurationView.swift; sourceTree = "<group>"; };
 		F6D4AAB629BEB5260044481B /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		F6D588CF28E4685B00CB58AC /* FetchDataType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchDataType.swift; sourceTree = "<group>"; };
+		F6DBD82B2A38EA6C00DBE4B3 /* CompoundScheduleDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoundScheduleDetailedView.swift; sourceTree = "<group>"; };
+		F6DBD82D2A39169000DBE4B3 /* CompoundScheduleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoundScheduleButton.swift; sourceTree = "<group>"; };
+		F6DBD82F2A3917B900DBE4B3 /* CompoundSchedulePickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoundSchedulePickerSheet.swift; sourceTree = "<group>"; };
+		F6DBD8312A391D2C00DBE4B3 /* CompoundScheduled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoundScheduled.swift; sourceTree = "<group>"; };
+		F6DBD8372A39AE4E00DBE4B3 /* CompoundSchedulePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoundSchedulePickerViewModel.swift; sourceTree = "<group>"; };
+		F6DBD83F2A39B71D00DBE4B3 /* CompoundSchedulesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoundSchedulesView.swift; sourceTree = "<group>"; };
+		F6DBD8412A39B75F00DBE4B3 /* CompoundSchedulesGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoundSchedulesGrid.swift; sourceTree = "<group>"; };
+		F6DBD8432A39B76F00DBE4B3 /* CompoundScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoundScheduleView.swift; sourceTree = "<group>"; };
+		F6DBD8452A39B82000DBE4B3 /* CompoundScheduleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoundScheduleExtensions.swift; sourceTree = "<group>"; };
+		F6DBD8472A39BA4F00DBE4B3 /* CompoundScheduleNavigationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoundScheduleNavigationLink.swift; sourceTree = "<group>"; };
 		F6DCD72226B30EF0003761B0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		F6F87810271A1ED7005E3C41 /* SpecialityDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialityDecoder.swift; sourceTree = "<group>"; };
 		F6F87811271A1ED7005E3C41 /* Speciality.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speciality.swift; sourceTree = "<group>"; };
@@ -578,6 +596,7 @@
 			children = (
 				F6794E8529FDBB4700BEE44A /* Home */,
 				F667332B280F762C00194EAC /* EducationTask */,
+				F6DBD82A2A38EA4200DBE4B3 /* CompoundSchedule */,
 				F62FC6A229E83C6100F6B941 /* Schedule */,
 				F6BCE3A626EFCF0A0067B5DA /* Lesson */,
 				F699F21826EA249E00747BE0 /* Group */,
@@ -818,12 +837,11 @@
 			isa = PBXGroup;
 			children = (
 				F67E177C29E5E15F00864712 /* GroupsViewModel.swift */,
+				F6857C7A28F0B5F800195388 /* FormGroupsView.swift */,
 				F6A1085329E5CEA6004BA71F /* GroupsView.swift */,
 				F6A1084C29E5BEE5004BA71F /* GroupsGridView.swift */,
 				F6A1084929E5BB47004BA71F /* GroupView.swift */,
-				F6857C7A28F0B5F800195388 /* FromGroupsView.swift */,
 				F69BEF7629FE9F7100A9ED5A /* GroupNavigationLink.swift */,
-				F624A3442913B85500E8CB5B /* FromGroupView.swift */,
 			);
 			path = Groups;
 			sourceTree = "<group>";
@@ -922,6 +940,39 @@
 				F6CF69402A32643C003D2C36 /* LessonViewConfigurationView.swift */,
 			);
 			path = LessonViewConfiguration;
+			sourceTree = "<group>";
+		};
+		F6DBD82A2A38EA4200DBE4B3 /* CompoundSchedule */ = {
+			isa = PBXGroup;
+			children = (
+				F6DBD8312A391D2C00DBE4B3 /* CompoundScheduled.swift */,
+				F6DBD8452A39B82000DBE4B3 /* CompoundScheduleExtensions.swift */,
+				F6DBD82B2A38EA6C00DBE4B3 /* CompoundScheduleDetailedView.swift */,
+				F6DBD82D2A39169000DBE4B3 /* CompoundScheduleButton.swift */,
+				F6DBD8392A39B62E00DBE4B3 /* CompoundSchedulePicker */,
+				F6DBD83A2A39B69400DBE4B3 /* CompoundSchedules */,
+			);
+			path = CompoundSchedule;
+			sourceTree = "<group>";
+		};
+		F6DBD8392A39B62E00DBE4B3 /* CompoundSchedulePicker */ = {
+			isa = PBXGroup;
+			children = (
+				F6DBD8372A39AE4E00DBE4B3 /* CompoundSchedulePickerViewModel.swift */,
+				F6DBD82F2A3917B900DBE4B3 /* CompoundSchedulePickerSheet.swift */,
+			);
+			path = CompoundSchedulePicker;
+			sourceTree = "<group>";
+		};
+		F6DBD83A2A39B69400DBE4B3 /* CompoundSchedules */ = {
+			isa = PBXGroup;
+			children = (
+				F6DBD83F2A39B71D00DBE4B3 /* CompoundSchedulesView.swift */,
+				F6DBD8412A39B75F00DBE4B3 /* CompoundSchedulesGrid.swift */,
+				F6DBD8472A39BA4F00DBE4B3 /* CompoundScheduleNavigationLink.swift */,
+				F6DBD8432A39B76F00DBE4B3 /* CompoundScheduleView.swift */,
+			);
+			path = CompoundSchedules;
 			sourceTree = "<group>";
 		};
 		F6F87818271A1F36005E3C41 /* Speciality */ = {
@@ -1044,6 +1095,7 @@
 				F68FB7F82A31317D00F224A7 /* SearchContentUnavailableView.swift in Sources */,
 				F638C0182A0588070021FA77 /* Constants.swift in Sources */,
 				F661DE2F2A0AF31900B8F108 /* PrimarySchedulePickerView.swift in Sources */,
+				F6DBD82C2A38EA6C00DBE4B3 /* CompoundScheduleDetailedView.swift in Sources */,
 				F65A9A9529FFF9C000244488 /* LessonTypeConfigurationView.swift in Sources */,
 				F670BEE92A0017F900D76D70 /* URLSessionData.swift in Sources */,
 				F6A503332A0E580A0052CCED /* EducationTaskView.swift in Sources */,
@@ -1052,7 +1104,8 @@
 				F697BF8526FFA960008FA7A9 /* AuditoriesView.swift in Sources */,
 				F677739A2A2FD7AF0047D06C /* SectionIndexesView.swift in Sources */,
 				F6923CA62A0833A7006F20D9 /* LessonViewModel.swift in Sources */,
-				F6857C7B28F0B5F800195388 /* FromGroupsView.swift in Sources */,
+				F6857C7B28F0B5F800195388 /* FormGroupsView.swift in Sources */,
+				F6DBD8382A39AE4E00DBE4B3 /* CompoundSchedulePickerViewModel.swift in Sources */,
 				F6F87816271A1ED7005E3C41 /* SpecialityDecoder.swift in Sources */,
 				F646714D29FF11F6004E2953 /* LessonTypeDecoder.swift in Sources */,
 				F6CF693E2A324F6E003D2C36 /* ScheduleViewState.swift in Sources */,
@@ -1071,10 +1124,12 @@
 				F6CF69412A32643C003D2C36 /* LessonViewConfigurationView.swift in Sources */,
 				F6857C7928F096CE00195388 /* AuditoriesSection.swift in Sources */,
 				F632DEEE26696CCB00E4C55F /* ContentView.swift in Sources */,
+				F6DBD8322A391D2C00DBE4B3 /* CompoundScheduled.swift in Sources */,
 				F6B838E729F8717E006BAA23 /* roundTo.swift in Sources */,
 				F670BEF12A001D5600D76D70 /* DepartmentFetch.swift in Sources */,
 				F62B3703290319D200FA2BE8 /* SettingsViewModel.swift in Sources */,
 				F638C00E2A057E8E0021FA77 /* DepartmentsViewModel.swift in Sources */,
+				F6DBD8482A39BA4F00DBE4B3 /* CompoundScheduleNavigationLink.swift in Sources */,
 				F687043129FEE25300A3CF0C /* PrimaryScheduleView.swift in Sources */,
 				F66DC1462A0C3884005EF7E3 /* DegreeDecoder.swift in Sources */,
 				F61C524026E64619002CF234 /* GroupDecoder.swift in Sources */,
@@ -1097,7 +1152,6 @@
 				F613E17429DCCC900054C93E /* EmployeesGridView.swift in Sources */,
 				F68453AB2A07FA5900756DE4 /* ScheduleDatePicker.swift in Sources */,
 				F638C0032A056C6D0021FA77 /* DepartmentDetailedView.swift in Sources */,
-				F624A3452913B85500E8CB5B /* FromGroupView.swift in Sources */,
 				F6CB615726F000EE00D29807 /* LessonView.swift in Sources */,
 				F68E9CDC2729B57400704EB0 /* AuditoriumView.swift in Sources */,
 				F638C0102A057FAD0021FA77 /* DepartmentsGridView.swift in Sources */,
@@ -1124,7 +1178,9 @@
 				F61915B928465F4600A98101 /* LastUpdateDate.swift in Sources */,
 				F695AA3429D835C80051A354 /* AuditoriumTypeDecoder.swift in Sources */,
 				F6A1085629E5D328004BA71F /* SpecialityExtensions.swift in Sources */,
+				F6DBD8302A3917B900DBE4B3 /* CompoundSchedulePickerSheet.swift in Sources */,
 				F643071D29E08DEA00B3A98A /* EducationTypeDecoder.swift in Sources */,
+				F6DBD82E2A39169000DBE4B3 /* CompoundScheduleButton.swift in Sources */,
 				F691602E29001F290033AE14 /* ScheduleView.swift in Sources */,
 				F6F87817271A1ED7005E3C41 /* Speciality.swift in Sources */,
 				F68B4CEE284535C000C8DBF6 /* ScheduleSection .swift in Sources */,
@@ -1148,6 +1204,7 @@
 				F6AFC4622721EC43008CC065 /* ColorRawRepresentable.swift in Sources */,
 				F6A1084A29E5BB47004BA71F /* GroupView.swift in Sources */,
 				F6D4AAB729BEB5260044481B /* Log.swift in Sources */,
+				F6DBD8402A39B71D00DBE4B3 /* CompoundSchedulesView.swift in Sources */,
 				F612D8B429DB812C00D4DDEB /* SquareTextView.swift in Sources */,
 				F60D44B829DC753B0008E4F4 /* AuditoriumSectionType.swift in Sources */,
 				F64AD7B0266A816D00115E6B /* EmployeesView.swift in Sources */,
@@ -1159,9 +1216,11 @@
 				F670BEFD2A0020EE00D76D70 /* GroupFetch.swift in Sources */,
 				F60D44B229DC693F0008E4F4 /* NSManagedObjectsSection.swift in Sources */,
 				F6A1085029E5C123004BA71F /* GroupSectionType.swift in Sources */,
+				F6DBD8442A39B76F00DBE4B3 /* CompoundScheduleView.swift in Sources */,
 				F687043529FEE38B00A3CF0C /* AuditoriumFetch.swift in Sources */,
 				F661DE332A0AF4C100B8F108 /* PrimaryType.swift in Sources */,
 				F601E5A92731AA3900773F02 /* EducationTaskDetailedViewModel.swift in Sources */,
+				F6DBD8422A39B75F00DBE4B3 /* CompoundSchedulesGrid.swift in Sources */,
 				F670BEF32A001D6200D76D70 /* DepartmentExtensions.swift in Sources */,
 				F69BEF7B29FEB41900A9ED5A /* AuditoriumNavigationLink.swift in Sources */,
 				F614250C271B7EFF006C3CE1 /* AuditoriumDetailedView.swift in Sources */,
@@ -1169,6 +1228,7 @@
 				F69BEF7729FE9F7100A9ED5A /* GroupNavigationLink.swift in Sources */,
 				F697BF7C26FFA1BA008FA7A9 /* AuditoriumDecoder.swift in Sources */,
 				F691603429002BCD0033AE14 /* ScheduleSectionView.swift in Sources */,
+				F6DBD8462A39B82000DBE4B3 /* CompoundScheduleExtensions.swift in Sources */,
 				F632DEEC26696CCB00E4C55F /* bsuirTimetableApp.swift in Sources */,
 				F62F764829E21A6400959225 /* LessonsRefreshableView.swift in Sources */,
 				F67AA4E928FF79F200E5A7C4 /* onLoad.swift in Sources */,

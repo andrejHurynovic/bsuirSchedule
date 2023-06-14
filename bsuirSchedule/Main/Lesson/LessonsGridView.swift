@@ -16,6 +16,7 @@ struct LessonsGridView<Content: View>: View {
                   spacing: 8) {
             content()
         }
+        
     }
 }
 

@@ -80,7 +80,7 @@ struct LessonView: View {
         VStack(alignment: .leading) {
             HStack(alignment: .bottom) {
                 VStack(alignment: .leading) {
-                    Spacer()
+//                    Spacer()
                     dates
                     date
                     weeks
@@ -113,6 +113,7 @@ struct LessonView: View {
         let subjectText = showFullSubject ? lesson.subject : lesson.abbreviation
         if let subject = subjectText, subject.isEmpty == false {
             Text(subject)
+                .multilineTextAlignment(.leading)
         }
     }
     
@@ -151,6 +152,7 @@ struct LessonView: View {
             ZStack {
                 if showFullSubject {
                     Text(type.formattedName(abbreviated: false))
+                        .multilineTextAlignment(.leading)
                 } else {
                     Text(type.formattedName(abbreviated: true))
                         .foregroundColor(lessonTypeColor)
@@ -286,5 +288,5 @@ struct LessonView_Previews: PreviewProvider {
 }
 
 extension LessonView {
-    static var gridItem = GridItem(.adaptive(minimum: 256, maximum: 512))
+    static var gridItem = GridItem(.adaptive(minimum: 296, maximum: 512))
 }

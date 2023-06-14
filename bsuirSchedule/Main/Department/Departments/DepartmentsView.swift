@@ -20,7 +20,7 @@ struct DepartmentsView: View {
             DepartmentsGridView(departments: Array(departments))
             TotalFooterView(text: "Подразделений", count: departments.count)
         }
-        .navigationTitle("Аудитории")
+        .navigationTitle("Подразделения")
         .refreshable { await DepartmentsViewModel.update() }
                 
         .searchable(text: $viewModel.searchText, prompt: "Название, аббревиатура")

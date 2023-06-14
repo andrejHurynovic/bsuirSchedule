@@ -123,7 +123,7 @@ struct EmployeeDetailedView: View {
     
     @ViewBuilder var groups: some View {
         if let groups = employee.groups {
-            FromGroupsView(groups: groups)
+            FormGroupsView(groups: groups)
         }
     }
 }
