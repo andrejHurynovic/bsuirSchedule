@@ -75,7 +75,8 @@ struct AuditoriumDetailedView: View {
     
     @ViewBuilder var groups: some View {
         if let groups = auditorium.groups {
-            FormGroupsView(groups: groups)
+            FormGroupsView(groups: groups.sorted(by: {                 $0.name < $1.name
+            }))
         }
     }
     
