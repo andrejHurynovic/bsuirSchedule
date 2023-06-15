@@ -75,9 +75,9 @@ extension Employee {
         
         try! decoder.update(&backgroundEmployee, from: data)
         
-        await backgroundContext.perform(schedule: .immediate, {
-            try! backgroundContext.save()
-        })
+//        await backgroundContext.perform(schedule: .immediate, {
+//            try! backgroundContext.save()
+//        })
         
         if backgroundEmployee.photoLink != previousPhotoLink || backgroundEmployee.photoLink != nil, backgroundEmployee.photo == nil {
             
